@@ -16,8 +16,8 @@ struct RESTModule: RoutingModule {
     var routes: [Route] = []
     
     init() {
-        let youtube = Route(comparison: .Contains, string:"https://www.youtube.com", call: self.youtubeCall)
-        let twitter = Route(comparison: .Contains, string: "twitter.com", call: self.twitterCall)
+        let youtube = Route(comparisons: [.Contains: "https://www.youtube.com"], call: self.youtubeCall)
+        let twitter = Route(comparisons: [.Contains: "twitter.com"], call: self.twitterCall)
         routes = [youtube, twitter]
         
         let twitterInstance = Twitter()

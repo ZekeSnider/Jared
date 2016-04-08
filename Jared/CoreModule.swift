@@ -13,10 +13,10 @@ struct CoreModule: RoutingModule {
     var routes: [Route] = []
     
     init() {
-        let ping = Route(comparison: .StartsWith, string:"/ping", call: self.pingCall)
-        let thankYou = Route(comparison: .StartsWith, string: "Thank you Jared", call: self.thanksJared)
-        let version = Route(comparison: .StartsWith, string: "/version", call: self.getVersion)
-        let send = Route(comparison: .StartsWith, string: "/send", call: self.hello)
+        let ping = Route(comparisons: [.StartsWith: "/ping"], call: self.pingCall)
+        let thankYou = Route(comparisons: [.StartsWith: "Thank you Jared"], call: self.thanksJared)
+        let version = Route(comparisons: [.StartsWith: "/version"], call: self.getVersion)
+        let send = Route(comparisons: [.StartsWith: "/send"], call: self.hello)
         
 
         routes = [ping, thankYou, version, send]

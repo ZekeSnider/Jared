@@ -8,9 +8,6 @@
 
 import Foundation
 
-//myTest()
-//MessageReceive()
-
 func SendText(message:String, toRoom: Room) {
     print("I want to send text \(message)")
     
@@ -35,8 +32,7 @@ struct Room {
 }
 
 struct Route {
-    var comparison: Compare
-    var string: String
+    var comparisons: [Compare: String]
     var call: (String, Room) -> Void
 }
 
@@ -49,25 +45,27 @@ struct MessageRouting {
     func routeMessage(myMessage: String, fromBuddy: String, forRoom: Room) {
         RootLoop: for aModule in modules {
             for aRoute in aModule.routes {
-                
-                if aRoute.comparison == .StartsWith {
-                    if myMessage.hasPrefix(aRoute.string) {
-                        aRoute.call(myMessage, forRoom)
-                        break RootLoop
+                for aComparison in aRoute.comparisons {
+                    
+                    if aComparison.0 == .StartsWith {
+                        if myMessage.hasPrefix(aComparison.1) {
+                            aRoute.call(myMessage, forRoom)
+                            break RootLoop
+                        }
                     }
-                }
-                
-                else if aRoute.comparison == .Contains {
-                    if myMessage.containsString(aRoute.string) {
-                        aRoute.call(myMessage, forRoom)
-                        break RootLoop
+                        
+                    else if aComparison.0 == .Contains {
+                        if myMessage.containsString(aComparison.1) {
+                            aRoute.call(myMessage, forRoom)
+                            break RootLoop
+                        }
                     }
-                }
-                
-                else if aRoute.comparison == .Is {
-                    if myMessage == aRoute.string {
-                        aRoute.call(myMessage, forRoom)
-                        break RootLoop
+                        
+                    else if aComparison.0 == .Is {
+                        if myMessage == aComparison.1 {
+                            aRoute.call(myMessage, forRoom)
+                            break RootLoop
+                        }
                     }
                 }
             }
