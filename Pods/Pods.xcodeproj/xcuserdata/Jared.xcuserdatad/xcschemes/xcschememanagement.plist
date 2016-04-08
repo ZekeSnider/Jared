@@ -4,25 +4,35 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Jared.xcscheme</key>
+		<key>Alamofire.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>0</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>JaredUI.xcscheme</key>
+		<key>Pods.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>1</integer>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>SwiftyJSON.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>B33278761CB2CB1300BBDD3A</key>
+		<key>79C040AFDDCE1BCBF6D8B5EB0B85887F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B39EC1711CB01F55002C3161</key>
+		<key>8972D1B3785A7CF11C5D31FB702BCB0E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EA5783E1E72DAF034F5567D9F2721A2E</key>
 		<dict>
 			<key>primary</key>
 			<true/>

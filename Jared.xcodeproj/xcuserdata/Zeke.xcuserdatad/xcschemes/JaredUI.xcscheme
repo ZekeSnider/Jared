@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B39EC1711CB01F55002C3161"
-               BuildableName = "JaredCommandLine"
-               BlueprintName = "JaredCommandLine"
+               BlueprintIdentifier = "B33278761CB2CB1300BBDD3A"
+               BuildableName = "JaredUI.app"
+               BlueprintName = "JaredUI"
                ReferencedContainer = "container:Jared.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -32,9 +32,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "B39EC1711CB01F55002C3161"
-            BuildableName = "JaredCommandLine"
-            BlueprintName = "JaredCommandLine"
+            BlueprintIdentifier = "B33278761CB2CB1300BBDD3A"
+            BuildableName = "JaredUI.app"
+            BlueprintName = "JaredUI"
             ReferencedContainer = "container:Jared.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -55,9 +55,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "B39EC1711CB01F55002C3161"
-            BuildableName = "JaredCommandLine"
-            BlueprintName = "JaredCommandLine"
+            BlueprintIdentifier = "B33278761CB2CB1300BBDD3A"
+            BuildableName = "JaredUI.app"
+            BlueprintName = "JaredUI"
             ReferencedContainer = "container:Jared.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -74,9 +74,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "B39EC1711CB01F55002C3161"
-            BuildableName = "JaredCommandLine"
-            BlueprintName = "JaredCommandLine"
+            BlueprintIdentifier = "B33278761CB2CB1300BBDD3A"
+            BuildableName = "JaredUI.app"
+            BlueprintName = "JaredUI"
             ReferencedContainer = "container:Jared.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

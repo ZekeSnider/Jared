@@ -1,0 +1,14 @@
+/* 
+  CoreStrings.strings
+  Jared
+
+  Created by Zeke Snider on 4/5/16.
+  Copyright © 2016 Zeke Snider. All rights reserved.
+*/
+
+"hello" = "bonjour"
+
+/* Response for /ping command */
+"Pong!" = "Pong!"
+
+/* Response for thanking jared command */
