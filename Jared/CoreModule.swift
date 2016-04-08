@@ -10,30 +10,36 @@ import Foundation
 import Cocoa
 
 struct CoreModule: RoutingModule {
-    var routes: [Route]
+    var routes: [Route] = []
     
     init() {
-        let ping = Route(comparison: .StartsWith, string:"/ping", call: CoreModule.pingCall)
-        let thankYou = Route(comparison: .StartsWith, string: "Thank you Jared", call: CoreModule.thanksJared)
-        let version = Route(comparison: .StartsWith, string: "/version", call: CoreModule.getVersion)
-        let send = Route(comparison: .StartsWith, string: "/send", call: CoreModule.sendRepeat)
+        let ping = Route(comparison: .StartsWith, string:"/ping", call: self.pingCall)
+        let thankYou = Route(comparison: .StartsWith, string: "Thank you Jared", call: self.thanksJared)
+        let version = Route(comparison: .StartsWith, string: "/version", call: self.getVersion)
+        let send = Route(comparison: .StartsWith, string: "/send", call: self.hello)
+        
+
         routes = [ping, thankYou, version, send]
     }
     
-    static func pingCall(message:String, myRoom: Room) -> Void {
+    func hello(message:String, myRoom: Room) -> Void{
+        print("shitty")
+    }
+    
+    func pingCall(message:String, myRoom: Room) -> Void {
         let responseLocalized = NSLocalizedString("Pong!", comment: "Response for ping! command")
         SendText(responseLocalized, toRoom: myRoom)
     }
     
-    static func thanksJared(message:String, myRoom: Room) -> Void {
+    func thanksJared(message:String, myRoom: Room) -> Void {
         SendText("You're welcome.", toRoom: myRoom)
     }
     
-    static func getVersion(message:String, myRoom: Room) -> Void {
+    func getVersion(message:String, myRoom: Room) -> Void {
         SendText("I am version 3.0 beta of Jared, compiled on Swift 2.2!", toRoom: myRoom)
     }
     
-    static func sendRepeat(message:String, myRoom: Room) -> Void {
+    func sendRepeat(message:String, myRoom: Room) -> Void {
         let parameters = message.componentsSeparatedByString(",") as? [String]
         let repeatNum: Int = Int(parameters![1])!
         let delay = Int(parameters![2])

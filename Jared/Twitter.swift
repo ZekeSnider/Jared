@@ -11,8 +11,8 @@ import Alamofire
 
 class Twitter {
     var accessToken: String?
-    let consumerKey = "xaiF2Dezl1ljwdEovPjFM4VUb"
-    let consumerSecret = "g0mE3IIVpcOX1Og3DU4vJSmBmeK6hgtcJYYmEbRnohh6dRIFmT"
+    let consumerKey = ""
+    let consumerSecret = ""
     let baseUrlString = "https://api.twitter.com/1.1/"
     let pageSize = 20
     

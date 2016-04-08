@@ -13,20 +13,17 @@ import SwiftyJSON
 var twitterInstance: Twitter = Twitter()
 
 struct RESTModule: RoutingModule {
-    var routes: [Route]
+    var routes: [Route] = []
     
     init() {
-        let youtube = Route(comparison: .Contains, string:"https://www.youtube.com", call: RESTModule.youtubeCall)
-        let twitter = Route(comparison: .Contains, string: "twitter.com", call: twitterCall)
+        let youtube = Route(comparison: .Contains, string:"https://www.youtube.com", call: self.youtubeCall)
+        let twitter = Route(comparison: .Contains, string: "twitter.com", call: self.twitterCall)
         routes = [youtube, twitter]
         
         let twitterInstance = Twitter()
     }
-    //44264062496-85e4e1okm58o8qb46052g7j7np2dfh5c.apps.googleusercontent.com
-    //K5GZswnqZaO7G8pnDU0D0tMm
     
-    //AIzaSyDxbro_6_9B6y2BKiBcwz05jLMGl527VbI
-    static func youtubeCall(message:String, myRoom: Room) -> Void {
+    func youtubeCall(message:String, myRoom: Room) -> Void {
         do {
             let regex = try NSRegularExpression(pattern: "v=(.+?)(?=$|&)", options: NSRegularExpressionOptions.CaseInsensitive)
             let match: NSTextCheckingResult? = regex.firstMatchInString(message, options: NSMatchingOptions(rawValue: 0), range: NSMakeRange(0, message.characters.count))
@@ -42,9 +39,10 @@ struct RESTModule: RoutingModule {
             print("error")
         }
     }
+    func twitterCall(message:String, myRoom: Room) -> Void {
+        let mystring = "narcissawright"
+        twitterInstance.getTimelineForScreenName("narcissawright")
+    }
 }
 
-func twitterCall(message:String, myRoom: Room) -> Void {
-    let mystring = "narcissawright"
-    twitterInstance.getTimelineForScreenName("narcissawright")
-}
+

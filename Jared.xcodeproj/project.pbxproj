@@ -125,8 +125,8 @@
 			children = (
 				B39EC17D1CB01FEF002C3161 /* CoreModule.swift */,
 				B3BBA7CD1CB3259A00E1749C /* CoreStrings.strings */,
-				7FEF4A551CB3F4960032A5CC /* Twitter.swift */,
 				7FEF4A511CB3CA020032A5CC /* RESTModule.swift */,
+				7FEF4A551CB3F4960032A5CC /* Twitter.swift */,
 			);
 			name = Modules;
 			sourceTree = "<group>";
