@@ -82,16 +82,17 @@ class TwitterModule: RoutingModule {
                     print(response.response)
                     
                     if let myJSON = response.result.value {
-                        let JSONParse = JSON(myJSON)
-                        self.sendTweet(Tweet(Text: JSONParse["text"].string!), toChat: sendToGroupID)
+                        self.sendTweet(myJSON as! String, toChat: sendToGroupID)
                     }
             }
             
         }
     }
     
-    func sendTweet(myTweet: Tweet, toChat: String) {
-        SendText(myTweet.Text, toRoom: Room(GUID: toChat))
+    func sendTweet(tweetJSON: String, toChat: String) {
+        let JSONParse = JSON(tweetJSON)
+        let TweetString = "\"\(JSONParse["text"].stringValue)\" -\(JSONParse["user"]["name"].stringValue) \(JSONParse["created_at"])"
+        SendText(TweetString, toRoom: Room(GUID: toChat))
     }
     
     func getTimelineForScreenName(screenName: String) {
