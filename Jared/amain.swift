@@ -39,7 +39,7 @@ struct Route {
 struct MessageRouting {
     var modules:[RoutingModule]
     init () {
-        modules = [CoreModule(), RESTModule()]
+        modules = [CoreModule(), RESTModule(), TwitterModule()]
     }
     
     func routeMessage(myMessage: String, fromBuddy: String, forRoom: Room) {
@@ -70,6 +70,5 @@ struct MessageRouting {
                 }
             }
         }
-        print("Done looking...")
     }
 }

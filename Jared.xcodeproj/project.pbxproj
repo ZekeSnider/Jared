@@ -9,12 +9,13 @@
 /* Begin PBXBuildFile section */
 		7FE220ED1CB3C8340081CE23 /* podfile in Resources */ = {isa = PBXBuildFile; fileRef = 7FE220EC1CB3C8340081CE23 /* podfile */; };
 		7FEF4A521CB3CA020032A5CC /* RESTModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEF4A511CB3CA020032A5CC /* RESTModule.swift */; };
-		7FEF4A561CB3F4960032A5CC /* Twitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEF4A551CB3F4960032A5CC /* Twitter.swift */; };
 		B332787A1CB2CB1300BBDD3A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33278791CB2CB1300BBDD3A /* AppDelegate.swift */; };
 		B332787C1CB2CB1300BBDD3A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B332787B1CB2CB1300BBDD3A /* ViewController.swift */; };
 		B332787E1CB2CB1300BBDD3A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B332787D1CB2CB1300BBDD3A /* Assets.xcassets */; };
 		B33278811CB2CB1300BBDD3A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B332787F1CB2CB1300BBDD3A /* Main.storyboard */; };
 		B33278891CB2D0C600BBDD3A /* Jared.sdef in Resources */ = {isa = PBXBuildFile; fileRef = B33278881CB2D0C600BBDD3A /* Jared.sdef */; };
+		B379EB391CB8B496008E2A33 /* Twitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B379EB381CB8B496008E2A33 /* Twitter.swift */; };
+		B379EB3B1CB8B4BF008E2A33 /* TwitterModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = B379EB3A1CB8B4BF008E2A33 /* TwitterModule.swift */; };
 		B39F2B391CB3BCA700C0D35C /* SendText.scpt in Resources */ = {isa = PBXBuildFile; fileRef = B39F2B381CB3BCA700C0D35C /* SendText.scpt */; };
 		B3BBA7CA1CB2F69800E1749C /* MessageReceive.swift in Sources */ = {isa = PBXBuildFile; fileRef = B332784D1CB2C4D000BBDD3A /* MessageReceive.swift */; };
 		B3BBA7D11CB3284A00E1749C /* CoreModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39EC17D1CB01FEF002C3161 /* CoreModule.swift */; };
@@ -27,7 +28,6 @@
 		61E9953E47FCCA8F17A7A007 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		7FE220EC1CB3C8340081CE23 /* podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = podfile; sourceTree = SOURCE_ROOT; };
 		7FEF4A511CB3CA020032A5CC /* RESTModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RESTModule.swift; sourceTree = "<group>"; };
-		7FEF4A551CB3F4960032A5CC /* Twitter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Twitter.swift; sourceTree = "<group>"; };
 		940D363B410942855CF46EC4 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		B332784D1CB2C4D000BBDD3A /* MessageReceive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageReceive.swift; path = ../Jared/MessageReceive.swift; sourceTree = "<group>"; };
 		B33278511CB2C94700BBDD3A /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -38,6 +38,8 @@
 		B33278801CB2CB1300BBDD3A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B33278821CB2CB1300BBDD3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B33278881CB2D0C600BBDD3A /* Jared.sdef */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Jared.sdef; sourceTree = "<group>"; };
+		B379EB381CB8B496008E2A33 /* Twitter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Twitter.swift; sourceTree = "<group>"; };
+		B379EB3A1CB8B4BF008E2A33 /* TwitterModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwitterModule.swift; sourceTree = "<group>"; };
 		B39EC1751CB01F55002C3161 /* amain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = amain.swift; sourceTree = "<group>"; };
 		B39EC17D1CB01FEF002C3161 /* CoreModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreModule.swift; sourceTree = "<group>"; };
 		B39F2B381CB3BCA700C0D35C /* SendText.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = SendText.scpt; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 		B39EC1741CB01F55002C3161 /* Jared */ = {
 			isa = PBXGroup;
 			children = (
+				B379EB381CB8B496008E2A33 /* Twitter.swift */,
 				B39F2B381CB3BCA700C0D35C /* SendText.scpt */,
 				B39EC1751CB01F55002C3161 /* amain.swift */,
 				B39EC17C1CB01FDD002C3161 /* Modules */,
@@ -124,9 +127,9 @@
 			isa = PBXGroup;
 			children = (
 				B39EC17D1CB01FEF002C3161 /* CoreModule.swift */,
-				B3BBA7CD1CB3259A00E1749C /* CoreStrings.strings */,
+				B379EB3A1CB8B4BF008E2A33 /* TwitterModule.swift */,
 				7FEF4A511CB3CA020032A5CC /* RESTModule.swift */,
-				7FEF4A551CB3F4960032A5CC /* Twitter.swift */,
+				B3BBA7CD1CB3259A00E1749C /* CoreStrings.strings */,
 			);
 			name = Modules;
 			sourceTree = "<group>";
@@ -260,12 +263,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				B3BBA7D21CB3288500E1749C /* amain.swift in Sources */,
-				7FEF4A561CB3F4960032A5CC /* Twitter.swift in Sources */,
+				B379EB391CB8B496008E2A33 /* Twitter.swift in Sources */,
 				7FEF4A521CB3CA020032A5CC /* RESTModule.swift in Sources */,
 				B3BBA7D11CB3284A00E1749C /* CoreModule.swift in Sources */,
 				B3BBA7CA1CB2F69800E1749C /* MessageReceive.swift in Sources */,
 				B332787C1CB2CB1300BBDD3A /* ViewController.swift in Sources */,
 				B332787A1CB2CB1300BBDD3A /* AppDelegate.swift in Sources */,
+				B379EB3B1CB8B4BF008E2A33 /* TwitterModule.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -301,8 +305,10 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = JaredUI/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = self.edu.zeke.JaredUI;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_INTERFACE_HEADER_NAME = "";
 			};
 			name = Debug;
 		};
@@ -314,8 +320,11 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = JaredUI/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = self.edu.zeke.JaredUI;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_INTERFACE_HEADER_NAME = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Release;
 		};

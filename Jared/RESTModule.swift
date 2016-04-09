@@ -10,17 +10,14 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 
-var twitterInstance: Twitter = Twitter()
 
 struct RESTModule: RoutingModule {
     var routes: [Route] = []
     
     init() {
         let youtube = Route(comparisons: [.Contains: "https://www.youtube.com"], call: self.youtubeCall)
-        let twitter = Route(comparisons: [.Contains: "twitter.com"], call: self.twitterCall)
-        routes = [youtube, twitter]
+        routes = [youtube]
         
-        let twitterInstance = Twitter()
     }
     
     func youtubeCall(message:String, myRoom: Room) -> Void {
@@ -38,10 +35,6 @@ struct RESTModule: RoutingModule {
         } catch _ {
             print("error")
         }
-    }
-    func twitterCall(message:String, myRoom: Room) -> Void {
-        let mystring = "narcissawright"
-        twitterInstance.getTimelineForScreenName("narcissawright")
     }
 }
 

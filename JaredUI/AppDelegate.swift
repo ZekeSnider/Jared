@@ -15,6 +15,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(aNotification: NSNotification) {
         // Insert code here to initialize your application
+        //myTwitter.getTweet("718262644579442695")
     }
 
     func applicationWillTerminate(aNotification: NSNotification) {
