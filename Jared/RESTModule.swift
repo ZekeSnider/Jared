@@ -20,7 +20,15 @@ struct RESTModule: RoutingModule {
         
     }
     
+    func apiTest() {
+        Alamofire.request(.GET, "https://www.googleapis.com/youtube/v3/videos", parameters: ["key": "AIzaSyCVvhTV-pnl4Ue6Y8-lZWIrhSsoYxPy-fM", "part": "snippet", "id": "eXhNtH8CrbA"]).responseJSON {response in
+            print(response.result.value)
+        }
+    }
+    
     func youtubeCall(message:String, myRoom: Room) -> Void {
+        apiTest()
+        /*
         do {
             let regex = try NSRegularExpression(pattern: "v=(.+?)(?=$|&)", options: NSRegularExpressionOptions.CaseInsensitive)
             let match: NSTextCheckingResult? = regex.firstMatchInString(message, options: NSMatchingOptions(rawValue: 0), range: NSMakeRange(0, message.characters.count))
@@ -34,7 +42,7 @@ struct RESTModule: RoutingModule {
             
         } catch _ {
             print("error")
-        }
+        }*/
     }
 }
 

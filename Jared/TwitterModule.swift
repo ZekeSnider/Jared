@@ -78,21 +78,21 @@ class TwitterModule: RoutingModule {
                 "include_entities": false
             ]
             Alamofire.request(.GET, self.baseUrlString + "statuses/show.json", headers: headers, parameters: params)
-                .responseJSON { response in
+                .responseString { response in
                     print(response.response)
                     
-                    if let myJSON = response.result.value {
-                        self.sendTweet(myJSON as! String, toChat: sendToGroupID)
-                    }
+                    self.sendTweet(response.result.value!, toChat: sendToGroupID)
             }
             
         }
     }
     
     func sendTweet(tweetJSON: String, toChat: String) {
-        let JSONParse = JSON(tweetJSON)
-        let TweetString = "\"\(JSONParse["text"].stringValue)\" -\(JSONParse["user"]["name"].stringValue) \(JSONParse["created_at"])"
-        SendText(TweetString, toRoom: Room(GUID: toChat))
+        if let dataFromString = tweetJSON.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) {
+            let JSONParse = JSON(data: dataFromString)
+            let TweetString = "\"\(JSONParse["text"].stringValue)\" -\(JSONParse["user"]["name"].stringValue) \(JSONParse["created_at"])"
+            SendText(TweetString, toRoom: Room(GUID: toChat))
+        }
     }
     
     func getTimelineForScreenName(screenName: String) {
