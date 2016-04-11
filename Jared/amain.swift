@@ -33,7 +33,13 @@ struct Room {
 
 struct Route {
     var comparisons: [Compare: String]
+    var parameterSyntax: String?
     var call: (String, Room) -> Void
+    
+    init(comparisons:[Compare: String], call: (String, Room) -> Void) {
+        self.comparisons = comparisons
+        self.call = call
+    }
 }
 
 func backgroundThread(delay: Double = 0.0, background: (() -> Void)? = nil, completion: (() -> Void)? = nil) {
