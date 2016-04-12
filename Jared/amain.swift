@@ -88,7 +88,6 @@ extension CollectionType {
 
 
 func matchesForRegexInText(regex: String!, text: String!) -> [String] {
-    
     do {
         let regex = try NSRegularExpression(pattern: regex, options: [])
         let nsString = text as NSString
