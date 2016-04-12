@@ -11,19 +11,25 @@ import Foundation
 func SendText(message:String, toRoom: Room) {
     print("I want to send text \(message)")
     
-    let task = NSTask()
-    task.launchPath = "/usr/bin/osascript"
-    task.arguments = ["/Users/Jared/Desktop/New Jared/Jared/Jared/SendText.scpt", message, toRoom.GUID]
-    task.launch()
+    if let scriptPath = NSBundle.mainBundle().URLForResource("SendText", withExtension: "scpt")?.path {
+        let task = NSTask()
+        task.launchPath = "/usr/bin/osascript"
+        task.arguments = [scriptPath, message, toRoom.GUID]
+        task.launch()
+    }
+    
 }
 
 func SendImage(imagePath:String, toRoom: Room) {
     print("I want to send image \(imagePath)")
     
-    let task = NSTask()
-    task.launchPath = "/usr/bin/osascript"
-    task.arguments = ["/Users/Jared/Desktop/new/Jared/Jared/SendImage.scpt", imagePath, toRoom.GUID]
-    task.launch()
+    if let scriptPath = NSBundle.mainBundle().URLForResource("SendImage", withExtension: "scpt")?.path {
+        let task = NSTask()
+        task.launchPath = "/usr/bin/osascript"
+        task.arguments = [scriptPath, imagePath, toRoom.GUID]
+        task.launch()
+    }
+    
 }
 
 func SendImageAndDelete(imagePath:String, toRoom: Room) {
