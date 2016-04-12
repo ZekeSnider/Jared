@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7F9621601CBD2BDE0047644D /* EpicModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F96215F1CBD2BDE0047644D /* EpicModule.swift */; };
+		7F9621641CBD301A0047644D /* Big_Buck_Bunny_Trailer.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 7F9621631CBD301A0047644D /* Big_Buck_Bunny_Trailer.m4v */; };
 		7FE220ED1CB3C8340081CE23 /* podfile in Resources */ = {isa = PBXBuildFile; fileRef = 7FE220EC1CB3C8340081CE23 /* podfile */; };
 		7FEF4A521CB3CA020032A5CC /* RESTModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEF4A511CB3CA020032A5CC /* RESTModule.swift */; };
 		7FF077EB1CBCFFCB008E33CB /* SendImage.scpt in Resources */ = {isa = PBXBuildFile; fileRef = 7FF077EA1CBCFFCB008E33CB /* SendImage.scpt */; };
@@ -30,6 +31,7 @@
 		19C9C2FBC44EE08B0C7851EA /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		61E9953E47FCCA8F17A7A007 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		7F96215F1CBD2BDE0047644D /* EpicModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EpicModule.swift; path = Modules/EpicModule/EpicModule.swift; sourceTree = "<group>"; };
+		7F9621631CBD301A0047644D /* Big_Buck_Bunny_Trailer.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; name = Big_Buck_Bunny_Trailer.m4v; path = Modules/EpicModule/Big_Buck_Bunny_Trailer.m4v; sourceTree = "<group>"; };
 		7FE220EC1CB3C8340081CE23 /* podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = podfile; sourceTree = SOURCE_ROOT; };
 		7FEF4A511CB3CA020032A5CC /* RESTModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RESTModule.swift; sourceTree = "<group>"; };
 		7FF077EA1CBCFFCB008E33CB /* SendImage.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = SendImage.scpt; sourceTree = "<group>"; };
@@ -77,6 +79,7 @@
 		7FF077F31CBD227B008E33CB /* EpicModule */ = {
 			isa = PBXGroup;
 			children = (
+				7F9621631CBD301A0047644D /* Big_Buck_Bunny_Trailer.m4v */,
 				7FF077F41CBD22B5008E33CB /* Fedora.jpg */,
 			);
 			name = EpicModule;
@@ -217,6 +220,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B39F2B391CB3BCA700C0D35C /* SendText.scpt in Resources */,
+				7F9621641CBD301A0047644D /* Big_Buck_Bunny_Trailer.m4v in Resources */,
 				B332787E1CB2CB1300BBDD3A /* Assets.xcassets in Resources */,
 				7FF077F51CBD22B5008E33CB /* Fedora.jpg in Resources */,
 				7FE220ED1CB3C8340081CE23 /* podfile in Resources */,

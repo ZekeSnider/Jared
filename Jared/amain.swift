@@ -125,7 +125,7 @@ struct MessageRouting {
         
         let detector = try! NSDataDetector(types: NSTextCheckingType.Link.rawValue)
         let matches = detector.matchesInString(myMessage, options: [], range: NSMakeRange(0, myMessage.characters.count))
-        
+        let myLowercaseMessage = myMessage.lowercaseString
         
         
         RootLoop: for aModule in modules {
@@ -143,21 +143,21 @@ struct MessageRouting {
                     
                     
                     else if aComparison.0 == .StartsWith {
-                        if myMessage.hasPrefix(aComparison.1) {
+                        if myLowercaseMessage.hasPrefix(aComparison.1.lowercaseString) {
                             aRoute.call(myMessage, forRoom)
                             break RootLoop
                         }
                     }
                         
                     else if aComparison.0 == .Contains {
-                        if myMessage.containsString(aComparison.1) {
+                        if myLowercaseMessage.containsString(aComparison.1.lowercaseString) {
                             aRoute.call(myMessage, forRoom)
                             break RootLoop
                         }
                     }
                         
                     else if aComparison.0 == .Is {
-                        if myMessage == aComparison.1 {
+                        if myLowercaseMessage == aComparison.1.lowercaseString {
                             aRoute.call(myMessage, forRoom)
                             break RootLoop
                         }

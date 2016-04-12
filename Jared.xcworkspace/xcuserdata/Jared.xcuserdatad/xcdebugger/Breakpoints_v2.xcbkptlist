@@ -354,11 +354,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Jared/Modules/EpicModule/EpicModule.swift"
-            timestampString = "482160160.752588"
+            timestampString = "482160839.738084"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "35"
-            endingLineNumber = "35"
+            startingLineNumber = "41"
+            endingLineNumber = "41"
             landmarkName = "tipBuddy(_:myRoom:)"
             landmarkType = "5">
          </BreakpointContent>

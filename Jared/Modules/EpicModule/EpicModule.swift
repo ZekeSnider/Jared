@@ -18,10 +18,17 @@ struct EpicModule: RoutingModule {
         let stop = Route(comparisons: [.Contains: "stop"], call: self.dontStop)
         let hello = Route(comparisons: [.Contains: "hello"], call: self.sendHello)
         let rate = Route(comparisons: [.StartsWith: "/10"], call: self.rateMessage)
+        let bigBunny = Route(comparisons: [.Contains: "Hey jared please send me the big buck bunny movie trailer"], call: self.bigBunny)
         
-        routes = [fuccboi, tip, bazinga, nice, stop, hello, rate]
+        routes = [fuccboi, tip, bazinga, nice, stop, hello, rate, bigBunny]
     }
     
+    func bigBunny(message:String, myRoom: Room) -> Void{
+        SendText("Sure thing, buddy!", toRoom: myRoom)
+        if let MoviePath = NSBundle.mainBundle().pathForResource("Big_Buck_Bunny_Trailer", ofType: "m4v") {
+            SendImage(MoviePath, toRoom: myRoom)
+        }
+    }
     
     func youreFuccboi(message:String, myRoom: Room) -> Void{
         if let theBuddy = myRoom.buddyName {
