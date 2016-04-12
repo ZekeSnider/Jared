@@ -19,8 +19,11 @@ struct EpicModule: RoutingModule {
         let hello = Route(comparisons: [.Contains: "hello"], call: self.sendHello)
         let rate = Route(comparisons: [.StartsWith: "/10"], call: self.rateMessage)
         let bigBunny = Route(comparisons: [.Contains: "Hey jared please send me the big buck bunny movie trailer"], call: self.bigBunny)
+        let slots = Route(comparisons: [.StartsWith: "/slots"], call: self.spinSlots)
+        let kill = Route(comparisons: [.StartsWith: "/kill"], call: self.killJared)
+        let clear = Route(comparisons: [.StartsWith: "/clear"], call: self.clearChat)
         
-        routes = [fuccboi, tip, bazinga, nice, stop, hello, rate, bigBunny]
+        routes = [fuccboi, tip, bazinga, nice, stop, hello, rate, bigBunny, slots, kill, clear]
     }
     
     func bigBunny(message:String, myRoom: Room) -> Void{
@@ -88,5 +91,36 @@ struct EpicModule: RoutingModule {
         else {
             SendText("I give that post a \(rando)/10!", toRoom: myRoom)
         }
+    }
+    
+    func spinSlots(message:String, myRoom: Room) -> Void {
+        let s1 = Int(arc4random_uniform(7)) + 1
+        let s2 = Int(arc4random_uniform(7)) + 1
+        let s3 = Int(arc4random_uniform(7)) + 1
+        let s4 = Int(arc4random_uniform(500))
+        
+        if s4 == 100
+        {
+            SendText("JEW | JEW | JEW\nYOU WIN!!!", toRoom: myRoom)
+        }
+        else {
+            SendText("\(s1) | \(s2) | \(s3)", toRoom: myRoom)
+            if s1 == 7 && s2 == 7 && s3 == 7 {
+                SendText("Nice! You get the Jared seal of approval", toRoom: myRoom)
+            }
+            if s1 == 6 && s2 == 6 && s3 == 6 {
+                SendText("lol u r the devil", toRoom: myRoom)
+            }
+        }
+    }
+    
+    func killJared(message:String, myRoom: Room) -> Void {
+        if let theBuddy = myRoom.buddyName {
+            SendText("fite me irl \(theBuddy)", toRoom: myRoom)
+        }
+    }
+    
+    func clearChat(message:String, myRoom: Room) -> Void {
+        SendText("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n:^)", toRoom: myRoom)
     }
 }
