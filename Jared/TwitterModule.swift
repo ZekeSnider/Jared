@@ -33,7 +33,7 @@ class TwitterModule: RoutingModule {
     let pageSize = 20
     
     init() {
-        let twitterStatus = Route(comparisons: [.Contains: "twitter.com"], call: self.twitterStatusID)
+        let twitterStatus = Route(comparisons: [.ContainsURL: "twitter.com"], call: self.twitterStatusID)
         
         routes = [twitterStatus]
         
@@ -90,8 +90,8 @@ class TwitterModule: RoutingModule {
     func sendTweet(tweetJSON: String, toChat: String) {
         if let dataFromString = tweetJSON.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) {
             let JSONParse = JSON(data: dataFromString)
-            let TweetString = "\"\(JSONParse["text"].stringValue)\" -\(JSONParse["user"]["name"].stringValue) \(JSONParse["created_at"])"
-            SendText(TweetString, toRoom: Room(GUID: toChat))
+            let TweetString = "\"\(JSONParse["text"].stringValue)\" -\(JSONParse["user"]["name"].stringValue) \n\(JSONParse["created_at"])"
+            SendText(TweetString, toRoom: Room(GUID: toChat, buddyName: nil))
         }
     }
     

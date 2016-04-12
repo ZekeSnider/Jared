@@ -16,14 +16,15 @@ struct CoreModule: RoutingModule {
         let ping = Route(comparisons: [.StartsWith: "/ping"], call: self.pingCall)
         let thankYou = Route(comparisons: [.StartsWith: "Thank you Jared"], call: self.thanksJared)
         let version = Route(comparisons: [.StartsWith: "/version"], call: self.getVersion)
-        let send = Route(comparisons: [.StartsWith: "/send"], call: self.hello)
+        let send = Route(comparisons: [.StartsWith: "/send"], call: self.sendRepeat)
+        let test = Route(comparisons: [.StartsWith: "/test"], call: self.hello)
         
 
-        routes = [ping, thankYou, version, send]
+        routes = [ping, thankYou, version, send, test]
     }
     
     func hello(message:String, myRoom: Room) -> Void{
-        print("shitty")
+        SendImage("/Users/Jared/Desktop/Video Message.mov", toRoom: myRoom)
     }
     
     func pingCall(message:String, myRoom: Room) -> Void {
