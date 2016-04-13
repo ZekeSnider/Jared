@@ -29,7 +29,21 @@ func SendImage(imagePath:String, toRoom: Room) {
         task.arguments = [scriptPath, imagePath, toRoom.GUID]
         task.launch()
     }
+}
+
+func SendImage(imagePath:String, toRoom: Room, blockThread: Bool) {
+    print("I want to send image \(imagePath)")
     
+    if let scriptPath = NSBundle.mainBundle().URLForResource("SendImage", withExtension: "scpt")?.path {
+        let task = NSTask()
+        task.launchPath = "/usr/bin/osascript"
+        task.arguments = [scriptPath, imagePath, toRoom.GUID]
+        task.launch()
+        if blockThread {
+            task.waitUntilExit()
+            NSThread.sleepForTimeInterval(Double(5))
+        }
+    }
 }
 
 func SendImageAndDelete(imagePath:String, toRoom: Room) {

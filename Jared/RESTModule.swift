@@ -66,7 +66,8 @@ struct RESTModule: RoutingModule {
                             .response { (request, response, _, error) in
                                 print(response)
                                 let localPath = getAppSupportDirectory().URLByAppendingPathComponent(localFileName + response!.suggestedFilename!)
-                                SendImageAndDelete(localPath.path!, toRoom: toChat)
+                                SendImage(localPath.path!, toRoom: toChat, blockThread: true)
+                                try! NSFileManager.defaultManager().removeItemAtPath(localPath.path!)
                                 
                                 
                                 print("Downloaded file to \(localPath)!")
