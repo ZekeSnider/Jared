@@ -46,9 +46,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "87"
-            endingLineNumber = "87"
-            landmarkName = "RESTModule"
-            landmarkType = "3">
+            endingLineNumber = "87">
             <Locations>
                <Location
                   shouldBeEnabled = "No"
@@ -139,8 +137,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "136"
             endingLineNumber = "136"
-            landmarkName = "MessageRouting"
-            landmarkType = "3">
+            landmarkName = "init()"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -359,7 +357,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "41"
             endingLineNumber = "41"
-            landmarkName = "tipBuddy(_:myRoom:)"
+            landmarkName = "youreFuccboi(_:myRoom:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
