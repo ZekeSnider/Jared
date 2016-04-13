@@ -41,23 +41,27 @@ struct CoreModule: RoutingModule {
     }
     
     func sendRepeat(message:String, myRoom: Room) -> Void {
-        let parameters = message.componentsSeparatedByString(",") as? [String]
-        let repeatNum: Int = Int(parameters![1])!
-        let delay = Int(parameters![2])
-        print(parameters?.count)
-        var textToSend: String
-        
-        if (parameters?.count > 4) {
-            textToSend = (parameters![3..<((parameters?.count)!-1)] as? String)!
+        let parameters = message.componentsSeparatedByString(",")
+        if let repeatNum: Int = Int(parameters[1]), let delay = Int(parameters[2]) {
+            print(parameters.count)
+            var textToSend: String
+            
+            if (parameters.count > 4) {
+                textToSend = "lol"
+            }
+            else {
+                textToSend = parameters[3]
+            }
+            
+            for _ in 1...repeatNum {
+                SendText(textToSend, toRoom: myRoom)
+                NSThread.sleepForTimeInterval(Double(delay))
+            }
         }
-        else {
-            textToSend = parameters![3]
-        }
         
         
-        for _ in 1...repeatNum {
-            SendText(textToSend, toRoom: myRoom)
-            NSThread.sleepForTimeInterval(Double(delay!))
-        }
+        
+        
+        
     }
 }
