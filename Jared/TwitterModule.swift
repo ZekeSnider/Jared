@@ -34,7 +34,7 @@ class TwitterModule: RoutingModule {
     let pageSize = 20
     
     init() {
-        let twitterStatus = Route(comparisons: [.ContainsURL: "twitter.com"], call: self.twitterStatusID)
+        let twitterStatus = Route(comparisons: [.ContainsURL: "twitter.com"], call: self.twitterStatusID, description: "Twitter integration to get detail of a tweet URLs")
         
         routes = [twitterStatus]
         

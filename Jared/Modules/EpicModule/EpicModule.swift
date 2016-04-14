@@ -6,6 +6,7 @@
 //  Copyright © 2016 Zeke Snider. All rights reserved.
 //
 
+
 import Foundation
 import Cocoa
 struct EpicModule: RoutingModule {
@@ -13,17 +14,17 @@ struct EpicModule: RoutingModule {
     var description = "Contains a lot of epic commands with personality"
     
     init() {
-        let fuccboi = Route(comparisons: [.StartsWith: "/fuccboi"], call: self.youreFuccboi)
-        let tip = Route(comparisons: [.StartsWith: "/tip"], call: self.tipBuddy)
-        let bazinga = Route(comparisons: [.StartsWith: "/bazinga"], call: self.sendBazing)
-        let nice = Route(comparisons: [.StartsWith: "/nice"], call: self.sendNice)
-        let stop = Route(comparisons: [.Contains: "stop"], call: self.dontStop)
-        let hello = Route(comparisons: [.Contains: "hello"], call: self.sendHello)
-        let rate = Route(comparisons: [.StartsWith: "/10"], call: self.rateMessage)
-        let bigBunny = Route(comparisons: [.Contains: "Hey jared please send me the big buck bunny movie trailer"], call: self.bigBunny)
-        let slots = Route(comparisons: [.StartsWith: "/slots"], call: self.spinSlots)
-        let kill = Route(comparisons: [.StartsWith: "/kill"], call: self.killJared)
-        let clear = Route(comparisons: [.StartsWith: "/clear"], call: self.clearChat)
+        let fuccboi = Route(comparisons: [.StartsWith: "/fuccboi"], call: self.youreFuccboi, description: "Call Jared a fuccboi")
+        let tip = Route(comparisons: [.StartsWith: "/tip"], call: self.tipBuddy, description: "Tip your fedora to a fellow gentlesir", parameterSyntax: ["/tip,[Name of friend (optional)]"])
+        let bazinga = Route(comparisons: [.StartsWith: "/bazinga"], call: self.sendBazing, description: "Become epic like sheldon cooper")
+        let nice = Route(comparisons: [.StartsWith: "/nice"], call: self.sendNice, description: "Congratulate someone on an epic accomplishment")
+        let stop = Route(comparisons: [.Contains: "stop"], call: self.dontStop, description: "Stop Jared")
+        let hello = Route(comparisons: [.Contains: "hello"], call: self.sendHello, description: "Say hello to Jared")
+        let rate = Route(comparisons: [.StartsWith: "/10"], call: self.rateMessage, description: "Rate out of 10")
+        let bigBunny = Route(comparisons: [.Contains: "Hey jared please send me the big buck bunny movie trailer"], call: self.bigBunny, description: "Send the big buck bunny movie trailer")
+        let slots = Route(comparisons: [.StartsWith: "/slots"], call: self.spinSlots, description: "Play slots")
+        let kill = Route(comparisons: [.StartsWith: "/kill"], call: self.killJared, description: "Kill Jared")
+        let clear = Route(comparisons: [.StartsWith: "/clear"], call: self.clearChat, description: "Clear the chat")
         
         routes = [fuccboi, tip, bazinga, nice, stop, hello, rate, bigBunny, slots, kill, clear]
     }

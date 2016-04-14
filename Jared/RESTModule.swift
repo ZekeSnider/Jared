@@ -16,7 +16,7 @@ struct RESTModule: RoutingModule {
     var description = "Integration with various REST APIs. Currently: Youtube"
     
     init() {
-        let youtube = Route(comparisons: [.ContainsURL: "youtu.be"], call: self.youtubeCall)
+        let youtube = Route(comparisons: [.ContainsURL: "youtu.be"], call: self.youtubeCall, description: "Youtube integration to get details of youtube video url")
         routes = [youtube]
     }
     
