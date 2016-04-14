@@ -10,6 +10,8 @@ import Foundation
 import Cocoa
 struct EpicModule: RoutingModule {
     var routes: [Route] = []
+    var description = "Contains a lot of epic commands with personality"
+    
     init() {
         let fuccboi = Route(comparisons: [.StartsWith: "/fuccboi"], call: self.youreFuccboi)
         let tip = Route(comparisons: [.StartsWith: "/tip"], call: self.tipBuddy)

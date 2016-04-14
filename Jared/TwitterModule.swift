@@ -23,6 +23,7 @@ struct Tweet {
 
 class TwitterModule: RoutingModule {
     var routes: [Route] = []
+    var description = "Twitter Integration"
     var accessToken: String?
     let consumerKey = "xV2TXhB3w0GPxuSAm6pIuzpwy"
     let consumerSecret = "0LxuGGcy2JugU8NjOkXDEvvCqRVwIrjM6WvmLQE7lcPFuMqdnk"

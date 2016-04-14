@@ -64,6 +64,7 @@ enum Compare {
 
 protocol RoutingModule {
     var routes: [Route] {get}
+    var description: String {get}
 }
 
 struct Room {

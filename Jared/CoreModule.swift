@@ -10,6 +10,7 @@ import Foundation
 import Cocoa
 
 struct CoreModule: RoutingModule {
+    var description = "Core functionality for Jared with universal uses"
     var routes: [Route] = []
     
     init() {

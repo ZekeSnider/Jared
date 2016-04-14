@@ -13,28 +13,11 @@ import SwiftyJSON
 
 struct RESTModule: RoutingModule {
     var routes: [Route] = []
+    var description = "Integration with various REST APIs. Currently: Youtube"
     
     init() {
         let youtube = Route(comparisons: [.ContainsURL: "youtu.be"], call: self.youtubeCall)
         routes = [youtube]
-        
-        /*
-        var localPath: NSURL?
-        Alamofire.download(.GET,
-            "http://jplayer.org/video/m4v/Big_Buck_Bunny_Trailer.m4v",
-            destination: { (temporaryURL, response) in
-                let directoryURL = getAppSupportDirectory()
-                let pathComponent = response.suggestedFilename
-                
-                localPath = directoryURL.URLByAppendingPathComponent(pathComponent!)
-                return localPath!
-        })
-            .response { (request, response, _, error) in
-                print(response)
-                print("Downloaded file to !)")
-        }*/
-
-        
     }
     
     func getVideo(videoID: String, toChat: Room) {
