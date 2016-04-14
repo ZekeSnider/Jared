@@ -160,7 +160,7 @@ struct MessageRouting {
                 }
             }
         }
-        SendText(myMessage, toRoom: forRoom)
+        SendText(documentation, toRoom: forRoom)
     }
     
     func routeMessage(myMessage: String, fromBuddy: String, forRoom: Room) {
