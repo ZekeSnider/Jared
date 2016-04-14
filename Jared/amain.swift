@@ -143,6 +143,25 @@ struct MessageRouting {
         
         modules = [CoreModule(), RESTModule(), TwitterModule(), EpicModule()]
     }
+    func sendDocumentation(myMessage: String, forRoom: Room) {
+        var documentation: String = ""
+        for aModule in modules {
+            documentation += aModule.description
+            documentation += "\n"
+            
+            for aRoute in aModule.routes {
+                if let aRouteDescription = aRoute.description {
+                    documentation += aRouteDescription
+                    documentation += "\n"
+                }
+                if let aRouteSyntax = aRoute.parameterSyntax?[safe:0] {
+                    documentation += aRouteSyntax
+                    documentation += "\n"
+                }
+            }
+        }
+        SendText(myMessage, toRoom: forRoom)
+    }
     
     func routeMessage(myMessage: String, fromBuddy: String, forRoom: Room) {
         
@@ -150,6 +169,10 @@ struct MessageRouting {
         let matches = detector.matchesInString(myMessage, options: [], range: NSMakeRange(0, myMessage.characters.count))
         let myLowercaseMessage = myMessage.lowercaseString
         
+        
+        if myLowercaseMessage == "/help" {
+            sendDocumentation(myMessage, forRoom: forRoom)
+        }
         
         RootLoop: for aModule in modules {
             for aRoute in aModule.routes {
