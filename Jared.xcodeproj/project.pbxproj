@@ -7,14 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7F9621641CBD301A0047644D /* Big_Buck_Bunny_Trailer.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 7F9621631CBD301A0047644D /* Big_Buck_Bunny_Trailer.m4v */; };
 		7FE220ED1CB3C8340081CE23 /* podfile in Resources */ = {isa = PBXBuildFile; fileRef = 7FE220EC1CB3C8340081CE23 /* podfile */; };
+		7FE3971E1CC0B13600A7C13A /* EpicModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE3971D1CC0B13600A7C13A /* EpicModule.swift */; };
 		7FEF4A521CB3CA020032A5CC /* RESTModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEF4A511CB3CA020032A5CC /* RESTModule.swift */; };
+		7FF077EB1CBCFFCB008E33CB /* SendImage.scpt in Resources */ = {isa = PBXBuildFile; fileRef = 7FF077EA1CBCFFCB008E33CB /* SendImage.scpt */; };
+		7FF077ED1CBD1A33008E33CB /* SendImageAndDelete.scpt in Resources */ = {isa = PBXBuildFile; fileRef = 7FF077EC1CBD1A33008E33CB /* SendImageAndDelete.scpt */; };
+		7FF077F51CBD22B5008E33CB /* Fedora.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7FF077F41CBD22B5008E33CB /* Fedora.jpg */; };
 		B332787A1CB2CB1300BBDD3A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33278791CB2CB1300BBDD3A /* AppDelegate.swift */; };
 		B332787C1CB2CB1300BBDD3A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B332787B1CB2CB1300BBDD3A /* ViewController.swift */; };
 		B332787E1CB2CB1300BBDD3A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B332787D1CB2CB1300BBDD3A /* Assets.xcassets */; };
 		B33278811CB2CB1300BBDD3A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B332787F1CB2CB1300BBDD3A /* Main.storyboard */; };
 		B33278891CB2D0C600BBDD3A /* Jared.sdef in Resources */ = {isa = PBXBuildFile; fileRef = B33278881CB2D0C600BBDD3A /* Jared.sdef */; };
-		B379EB391CB8B496008E2A33 /* Twitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B379EB381CB8B496008E2A33 /* Twitter.swift */; };
 		B379EB3B1CB8B4BF008E2A33 /* TwitterModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = B379EB3A1CB8B4BF008E2A33 /* TwitterModule.swift */; };
 		B39F2B391CB3BCA700C0D35C /* SendText.scpt in Resources */ = {isa = PBXBuildFile; fileRef = B39F2B381CB3BCA700C0D35C /* SendText.scpt */; };
 		B3BBA7CA1CB2F69800E1749C /* MessageReceive.swift in Sources */ = {isa = PBXBuildFile; fileRef = B332784D1CB2C4D000BBDD3A /* MessageReceive.swift */; };
@@ -26,8 +30,13 @@
 /* Begin PBXFileReference section */
 		19C9C2FBC44EE08B0C7851EA /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		61E9953E47FCCA8F17A7A007 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		7F9621631CBD301A0047644D /* Big_Buck_Bunny_Trailer.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; name = Big_Buck_Bunny_Trailer.m4v; path = Modules/EpicModule/Big_Buck_Bunny_Trailer.m4v; sourceTree = "<group>"; };
 		7FE220EC1CB3C8340081CE23 /* podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = podfile; sourceTree = SOURCE_ROOT; };
+		7FE3971D1CC0B13600A7C13A /* EpicModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpicModule.swift; sourceTree = "<group>"; };
 		7FEF4A511CB3CA020032A5CC /* RESTModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RESTModule.swift; sourceTree = "<group>"; };
+		7FF077EA1CBCFFCB008E33CB /* SendImage.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = SendImage.scpt; sourceTree = "<group>"; };
+		7FF077EC1CBD1A33008E33CB /* SendImageAndDelete.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = SendImageAndDelete.scpt; sourceTree = "<group>"; };
+		7FF077F41CBD22B5008E33CB /* Fedora.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = Fedora.jpg; path = Modules/EpicModule/Fedora.jpg; sourceTree = "<group>"; };
 		940D363B410942855CF46EC4 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		B332784D1CB2C4D000BBDD3A /* MessageReceive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageReceive.swift; path = ../Jared/MessageReceive.swift; sourceTree = "<group>"; };
 		B33278511CB2C94700BBDD3A /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -38,7 +47,6 @@
 		B33278801CB2CB1300BBDD3A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B33278821CB2CB1300BBDD3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B33278881CB2D0C600BBDD3A /* Jared.sdef */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Jared.sdef; sourceTree = "<group>"; };
-		B379EB381CB8B496008E2A33 /* Twitter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Twitter.swift; sourceTree = "<group>"; };
 		B379EB3A1CB8B4BF008E2A33 /* TwitterModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwitterModule.swift; sourceTree = "<group>"; };
 		B39EC1751CB01F55002C3161 /* amain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = amain.swift; sourceTree = "<group>"; };
 		B39EC17D1CB01FEF002C3161 /* CoreModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreModule.swift; sourceTree = "<group>"; };
@@ -66,6 +74,15 @@
 				19C9C2FBC44EE08B0C7851EA /* Pods.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7FF077F31CBD227B008E33CB /* EpicModule */ = {
+			isa = PBXGroup;
+			children = (
+				7F9621631CBD301A0047644D /* Big_Buck_Bunny_Trailer.m4v */,
+				7FF077F41CBD22B5008E33CB /* Fedora.jpg */,
+			);
+			name = EpicModule;
 			sourceTree = "<group>";
 		};
 		8C62C36413640EF4B69CD61C /* Pods */ = {
@@ -114,7 +131,8 @@
 		B39EC1741CB01F55002C3161 /* Jared */ = {
 			isa = PBXGroup;
 			children = (
-				B379EB381CB8B496008E2A33 /* Twitter.swift */,
+				7FF077EC1CBD1A33008E33CB /* SendImageAndDelete.scpt */,
+				7FF077EA1CBCFFCB008E33CB /* SendImage.scpt */,
 				B39F2B381CB3BCA700C0D35C /* SendText.scpt */,
 				B39EC1751CB01F55002C3161 /* amain.swift */,
 				B39EC17C1CB01FDD002C3161 /* Modules */,
@@ -126,7 +144,9 @@
 		B39EC17C1CB01FDD002C3161 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				7FE3971D1CC0B13600A7C13A /* EpicModule.swift */,
 				B39EC17D1CB01FEF002C3161 /* CoreModule.swift */,
+				7FF077F31CBD227B008E33CB /* EpicModule */,
 				B379EB3A1CB8B4BF008E2A33 /* TwitterModule.swift */,
 				7FEF4A511CB3CA020032A5CC /* RESTModule.swift */,
 				B3BBA7CD1CB3259A00E1749C /* CoreStrings.strings */,
@@ -200,9 +220,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				B39F2B391CB3BCA700C0D35C /* SendText.scpt in Resources */,
+				7F9621641CBD301A0047644D /* Big_Buck_Bunny_Trailer.m4v in Resources */,
 				B332787E1CB2CB1300BBDD3A /* Assets.xcassets in Resources */,
+				7FF077F51CBD22B5008E33CB /* Fedora.jpg in Resources */,
 				7FE220ED1CB3C8340081CE23 /* podfile in Resources */,
+				7FF077EB1CBCFFCB008E33CB /* SendImage.scpt in Resources */,
 				B33278811CB2CB1300BBDD3A /* Main.storyboard in Resources */,
+				7FF077ED1CBD1A33008E33CB /* SendImageAndDelete.scpt in Resources */,
 				B33278891CB2D0C600BBDD3A /* Jared.sdef in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -263,8 +287,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				B3BBA7D21CB3288500E1749C /* amain.swift in Sources */,
-				B379EB391CB8B496008E2A33 /* Twitter.swift in Sources */,
 				7FEF4A521CB3CA020032A5CC /* RESTModule.swift in Sources */,
+				7FE3971E1CC0B13600A7C13A /* EpicModule.swift in Sources */,
 				B3BBA7D11CB3284A00E1749C /* CoreModule.swift in Sources */,
 				B3BBA7CA1CB2F69800E1749C /* MessageReceive.swift in Sources */,
 				B332787C1CB2CB1300BBDD3A /* ViewController.swift in Sources */,

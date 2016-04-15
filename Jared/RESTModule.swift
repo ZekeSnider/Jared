@@ -13,11 +13,11 @@ import SwiftyJSON
 
 struct RESTModule: RoutingModule {
     var routes: [Route] = []
+    var description = "Integration with various REST APIs. Currently: Youtube"
     
     init() {
-        let youtube = Route(comparisons: [.Contains: "https://www.youtube.com"], call: self.youtubeCall)
+        let youtube = Route(comparisons: [.ContainsURL: "youtu.be"], call: self.youtubeCall, description: "Youtube integration to get details of youtube video url")
         routes = [youtube]
-        
     }
     
     func apiTest() {
@@ -36,8 +36,29 @@ struct RESTModule: RoutingModule {
             let videoID = (message as NSString).substringWithRange(match!.range).stringByReplacingOccurrencesOfString("v=", withString: "")
             print(videoID)
             
-            Alamofire.request(.GET, "https://gdata.youtube.com/feeds/api/videos/\(videoID)?v=2").responseJSON { response in
-                
+            if let videoTitle = myVideo["title"], uploader = myVideo["channelTitle"], publishDate = myVideo["publishedAt"]
+                {
+                    let VideoString = "\(videoTitle) uploaded by \(uploader) \non \(publishDate)"
+                    SendText(VideoString, toRoom: toChat)
+                    
+                    let localFileName = NSUUID().UUIDString
+                    
+                    if let thumbnailURL = myVideo["thumbnails"]?["standard"]["url"].string {
+                        Alamofire.download(.GET, thumbnailURL,
+                            destination: { (temporaryURL, response) in
+                                let localPath = getAppSupportDirectory().URLByAppendingPathComponent(localFileName + response.suggestedFilename!)
+                                return localPath
+                        })
+                            .response { (request, response, _, error) in
+                                print(response)
+                                let localPath = getAppSupportDirectory().URLByAppendingPathComponent(localFileName + response!.suggestedFilename!)
+                                SendImage(localPath.path!, toRoom: toChat, blockThread: true)
+                                try! NSFileManager.defaultManager().removeItemAtPath(localPath.path!)
+                                
+                                
+                                print("Downloaded file to \(localPath)!")
+                        }
+                    }
             }
             
         } catch _ {

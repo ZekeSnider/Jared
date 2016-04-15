@@ -23,6 +23,7 @@ struct Tweet {
 
 class TwitterModule: RoutingModule {
     var routes: [Route] = []
+    var description = "Twitter Integration"
     var accessToken: String?
     let consumerKey = "xV2TXhB3w0GPxuSAm6pIuzpwy"
     let consumerSecret = "0LxuGGcy2JugU8NjOkXDEvvCqRVwIrjM6WvmLQE7lcPFuMqdnk"
@@ -33,7 +34,7 @@ class TwitterModule: RoutingModule {
     let pageSize = 20
     
     init() {
-        let twitterStatus = Route(comparisons: [.Contains: "twitter.com"], call: self.twitterStatusID)
+        let twitterStatus = Route(comparisons: [.ContainsURL: "twitter.com"], call: self.twitterStatusID, description: "Twitter integration to get detail of a tweet URLs")
         
         routes = [twitterStatus]
         

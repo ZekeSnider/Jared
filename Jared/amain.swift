@@ -11,9 +11,47 @@ import Foundation
 func SendText(message:String, toRoom: Room) {
     print("I want to send text \(message)")
     
+    if let scriptPath = NSBundle.mainBundle().URLForResource("SendText", withExtension: "scpt")?.path {
+        let task = NSTask()
+        task.launchPath = "/usr/bin/osascript"
+        task.arguments = [scriptPath, message, toRoom.GUID]
+        task.launch()
+    }
+    
+}
+
+func SendImage(imagePath:String, toRoom: Room) {
+    print("I want to send image \(imagePath)")
+    
+    if let scriptPath = NSBundle.mainBundle().URLForResource("SendImage", withExtension: "scpt")?.path {
+        let task = NSTask()
+        task.launchPath = "/usr/bin/osascript"
+        task.arguments = [scriptPath, imagePath, toRoom.GUID]
+        task.launch()
+    }
+}
+
+func SendImage(imagePath:String, toRoom: Room, blockThread: Bool) {
+    print("I want to send image \(imagePath)")
+    
+    if let scriptPath = NSBundle.mainBundle().URLForResource("SendImage", withExtension: "scpt")?.path {
+        let task = NSTask()
+        task.launchPath = "/usr/bin/osascript"
+        task.arguments = [scriptPath, imagePath, toRoom.GUID]
+        task.launch()
+        if blockThread {
+            task.waitUntilExit()
+            NSThread.sleepForTimeInterval(Double(5))
+        }
+    }
+}
+
+func SendImageAndDelete(imagePath:String, toRoom: Room) {
+    print("I want to send image \(imagePath)")
+    
     let task = NSTask()
     task.launchPath = "/usr/bin/osascript"
-    task.arguments = ["/Users/Jared/Desktop/New Jared/Jared/Jared/SendText.scpt", message, toRoom.GUID]
+    task.arguments = ["/Users/Jared/Desktop/new/Jared/Jared/SendImageAndDelete.scpt", imagePath, toRoom.GUID]
     task.launch()
 }
 
@@ -21,14 +59,17 @@ enum Compare {
     case StartsWith
     case Contains
     case Is
+    case ContainsURL
 }
 
 protocol RoutingModule {
     var routes: [Route] {get}
+    var description: String {get}
 }
 
 struct Room {
     var GUID: String
+    var buddyName: String?
 }
 
 struct Route {
@@ -55,31 +96,79 @@ func backgroundThread(delay: Double = 0.0, background: (() -> Void)? = nil, comp
 
 struct MessageRouting {
     var modules:[RoutingModule]
+    var supportDir: NSURL?
     init () {
-        modules = [CoreModule(), RESTModule(), TwitterModule()]
+        let filemanager = NSFileManager.defaultManager()
+        let appsupport = NSFileManager.defaultManager().URLsForDirectory(.ApplicationSupportDirectory, inDomains: .UserDomainMask)[0]
+        let supportDir = appsupport.URLByAppendingPathComponent("Jared")
+        
+        try! filemanager.createDirectoryAtURL(supportDir, withIntermediateDirectories: true, attributes: nil)
+        
+        print(supportDir.absoluteString)
+        
+        modules = [CoreModule(), RESTModule(), TwitterModule(), EpicModule()]
+    }
+    func sendDocumentation(myMessage: String, forRoom: Room) {
+        var documentation: String = ""
+        for aModule in modules {
+            documentation += aModule.description
+            documentation += "\n"
+            
+            for aRoute in aModule.routes {
+                if let aRouteDescription = aRoute.description {
+                    documentation += aRouteDescription
+                    documentation += "\n"
+                }
+                if let aRouteSyntax = aRoute.parameterSyntax?[safe:0] {
+                    documentation += aRouteSyntax
+                    documentation += "\n"
+                }
+            }
+        }
+        SendText(documentation, toRoom: forRoom)
     }
     
     func routeMessage(myMessage: String, fromBuddy: String, forRoom: Room) {
+        
+        let detector = try! NSDataDetector(types: NSTextCheckingType.Link.rawValue)
+        let matches = detector.matchesInString(myMessage, options: [], range: NSMakeRange(0, myMessage.characters.count))
+        let myLowercaseMessage = myMessage.lowercaseString
+        
+        
+        if myLowercaseMessage == "/help" {
+            sendDocumentation(myMessage, forRoom: forRoom)
+        }
+        
         RootLoop: for aModule in modules {
             for aRoute in aModule.routes {
                 for aComparison in aRoute.comparisons {
                     
-                    if aComparison.0 == .StartsWith {
-                        if myMessage.hasPrefix(aComparison.1) {
+                    if aComparison.0 == .ContainsURL {
+                        for match in matches {
+                            let url = (myMessage as NSString).substringWithRange(match.range)
+                            if url.containsString(aComparison.1) {
+                                aRoute.call(url, forRoom)
+                            }
+                        }
+                    }
+                    
+                    
+                    else if aComparison.0 == .StartsWith {
+                        if myLowercaseMessage.hasPrefix(aComparison.1.lowercaseString) {
                             aRoute.call(myMessage, forRoom)
                             break RootLoop
                         }
                     }
                         
                     else if aComparison.0 == .Contains {
-                        if myMessage.containsString(aComparison.1) {
+                        if myLowercaseMessage.containsString(aComparison.1.lowercaseString) {
                             aRoute.call(myMessage, forRoom)
                             break RootLoop
                         }
                     }
                         
                     else if aComparison.0 == .Is {
-                        if myMessage == aComparison.1 {
+                        if myLowercaseMessage == aComparison.1.lowercaseString {
                             aRoute.call(myMessage, forRoom)
                             break RootLoop
                         }

@@ -10,20 +10,22 @@ import Foundation
 import Cocoa
 
 struct CoreModule: RoutingModule {
+    var description = "Core functionality for Jared with universal uses"
     var routes: [Route] = []
     
     init() {
-        let ping = Route(comparisons: [.StartsWith: "/ping"], call: self.pingCall)
-        let thankYou = Route(comparisons: [.StartsWith: "Thank you Jared"], call: self.thanksJared)
-        let version = Route(comparisons: [.StartsWith: "/version"], call: self.getVersion)
-        let send = Route(comparisons: [.StartsWith: "/send"], call: self.hello)
+        let ping = Route(comparisons: [.StartsWith: "/ping"], call: self.pingCall, description: "Check if the chat bot is available")
+        let thankYou = Route(comparisons: [.StartsWith: "Thank you Jared"], call: self.thanksJared, description: "Thank Jared")
+        let version = Route(comparisons: [.StartsWith: "/version"], call: self.getVersion, description: "Get what version Jared is running")
+        let send = Route(comparisons: [.StartsWith: "/send"], call: self.sendRepeat, description: "Send a message repeatedly", parameterSyntax: ["/send,[number of times to send],[delay],Message"])
+        let test = Route(comparisons: [.StartsWith: "/test"], call: self.hello, description: "A test command")
         
 
-        routes = [ping, thankYou, version, send]
+        routes = [ping, thankYou, version, send, test]
     }
     
     func hello(message:String, myRoom: Room) -> Void{
-        print("shitty")
+        SendImage("/Users/Jared/Desktop/Video Message.mov", toRoom: myRoom)
     }
     
     func pingCall(message:String, myRoom: Room) -> Void {
@@ -40,23 +42,27 @@ struct CoreModule: RoutingModule {
     }
     
     func sendRepeat(message:String, myRoom: Room) -> Void {
-        let parameters = message.componentsSeparatedByString(",") as? [String]
-        let repeatNum: Int = Int(parameters![1])!
-        let delay = Int(parameters![2])
-        print(parameters?.count)
-        var textToSend: String
-        
-        if (parameters?.count > 4) {
-            textToSend = (parameters![3..<((parameters?.count)!-1)] as? String)!
+        let parameters = message.componentsSeparatedByString(",")
+        if let repeatNum: Int = Int(parameters[1]), let delay = Int(parameters[2]) {
+            print(parameters.count)
+            var textToSend: String
+            
+            if (parameters.count > 4) {
+                textToSend = "lol"
+            }
+            else {
+                textToSend = parameters[3]
+            }
+            
+            for _ in 1...repeatNum {
+                SendText(textToSend, toRoom: myRoom)
+                NSThread.sleepForTimeInterval(Double(delay))
+            }
         }
-        else {
-            textToSend = parameters![3]
-        }
         
         
-        for _ in 1...repeatNum {
-            SendText(textToSend, toRoom: myRoom)
-            NSThread.sleepForTimeInterval(Double(delay!))
-        }
+        
+        
+        
     }
 }
