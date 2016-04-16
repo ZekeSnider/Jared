@@ -97,3 +97,21 @@ public struct Route {
     }
 }
 
+public func getAppSupportDirectory() -> NSURL{
+    let appsupport = NSFileManager.defaultManager().URLsForDirectory(.ApplicationSupportDirectory, inDomains: .UserDomainMask)[0]
+    return appsupport.URLByAppendingPathComponent("Jared")
+}
+
+public func matchesForRegexInText(regex: String!, text: String!) -> [String] {
+    
+    do {
+        let regex = try NSRegularExpression(pattern: regex, options: [])
+        let nsString = text as NSString
+        let results = regex.matchesInString(text,
+                                            options: [], range: NSMakeRange(0, nsString.length))
+        return results.map { nsString.substringWithRange($0.range)}
+    } catch let error as NSError {
+        print("invalid regex: \(error.localizedDescription)")
+        return []
+    }
+}
