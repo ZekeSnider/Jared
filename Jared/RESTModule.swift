@@ -9,6 +9,7 @@
 import Foundation
 import Alamofire
 import SwiftyJSON
+import JaredFramework
 
 
 struct RESTModule: RoutingModule {
@@ -21,18 +22,21 @@ struct RESTModule: RoutingModule {
         routes = [youtube, Reddit]
     }
     
-    func getVideo(videoID: String, toChat: Room) {
-        print(videoID)
-        Alamofire.request(.GET, "https://www.googleapis.com/youtube/v3/videos", parameters: ["key": "AIzaSyCVvhTV-pnl4Ue6Y8-lZWIrhSsoYxPy-fM", "part": "snippet", "id": videoID]).responseString {response in
-            print(response.result.value!)
-            self.sendVideoInfo(response.result.value!, toChat: toChat)
+    func apiTest() {
+        Alamofire.request(.GET, "https://www.googleapis.com/youtube/v3/videos", parameters: ["key": "AIzaSyCVvhTV-pnl4Ue6Y8-lZWIrhSsoYxPy-fM", "part": "snippet", "id": "eXhNtH8CrbA"]).responseJSON {response in
+            print(response.result.value)
         }
     }
     
-    func sendVideoInfo(videoJSON: String, toChat: Room) {
-        if let dataFromString = videoJSON.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) {
-            let JSONParse = JSON(data: dataFromString)
-            let myVideo = JSONParse["items"][0]["snippet"].dictionaryValue
+    func youtubeCall(message:String, myRoom: Room) -> Void {
+        apiTest()
+        /*
+        do {
+            let regex = try NSRegularExpression(pattern: "v=(.+?)(?=$|&)", options: NSRegularExpressionOptions.CaseInsensitive)
+            let match: NSTextCheckingResult? = regex.firstMatchInString(message, options: NSMatchingOptions(rawValue: 0), range: NSMakeRange(0, message.characters.count))
+            print(match)
+            let videoID = (message as NSString).substringWithRange(match!.range).stringByReplacingOccurrencesOfString("v=", withString: "")
+            print(videoID)
             
             if let videoTitle = myVideo["title"], uploader = myVideo["channelTitle"], publishDate = myVideo["publishedAt"]
                 {
@@ -58,6 +62,7 @@ struct RESTModule: RoutingModule {
                         }
                     }
             }
+<<<<<<< HEAD
         }
     }
     func sendRedditComment(commentJSON: String, toChat: Room) {
@@ -86,6 +91,12 @@ struct RESTModule: RoutingModule {
         if let youtubeID = regexMatches[safe:0] {
             getVideo(youtubeID, toChat: myRoom)
         }
+=======
+            
+        } catch _ {
+            print("error")
+        }*/
+>>>>>>> origin/master
     }
 }
 
