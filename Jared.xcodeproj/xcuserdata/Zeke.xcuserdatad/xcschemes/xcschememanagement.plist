@@ -9,15 +9,30 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>JaredFramework.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>6</integer>
+		</dict>
 		<key>JaredUI.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
+		<key>JaredUI.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>5</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>B33278761CB2CB1300BBDD3A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B39A65D01CC1F8BC003E26B0</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -8,7 +8,7 @@
 
 import Foundation
 
-func SendText(message:String, toRoom: Room) {
+public func SendText(message:String, toRoom: Room) {
     print("I want to send text \(message)")
     
     if let scriptPath = NSBundle.mainBundle().URLForResource("SendText", withExtension: "scpt")?.path {
@@ -20,7 +20,7 @@ func SendText(message:String, toRoom: Room) {
     
 }
 
-func SendImage(imagePath:String, toRoom: Room) {
+public func SendImage(imagePath:String, toRoom: Room) {
     print("I want to send image \(imagePath)")
     
     if let scriptPath = NSBundle.mainBundle().URLForResource("SendImage", withExtension: "scpt")?.path {
@@ -31,7 +31,7 @@ func SendImage(imagePath:String, toRoom: Room) {
     }
 }
 
-func SendImage(imagePath:String, toRoom: Room, blockThread: Bool) {
+public func SendImage(imagePath:String, toRoom: Room, blockThread: Bool) {
     print("I want to send image \(imagePath)")
     
     if let scriptPath = NSBundle.mainBundle().URLForResource("SendImage", withExtension: "scpt")?.path {
@@ -46,7 +46,7 @@ func SendImage(imagePath:String, toRoom: Room, blockThread: Bool) {
     }
 }
 
-func SendImageAndDelete(imagePath:String, toRoom: Room) {
+public func SendImageAndDelete(imagePath:String, toRoom: Room) {
     print("I want to send image \(imagePath)")
     
     let task = NSTask()
@@ -55,126 +55,45 @@ func SendImageAndDelete(imagePath:String, toRoom: Room) {
     task.launch()
 }
 
-enum Compare {
+public enum Compare {
     case StartsWith
     case Contains
     case Is
     case ContainsURL
 }
 
-protocol RoutingModule {
+public protocol RoutingModule {
     var routes: [Route] {get}
     var description: String {get}
+    init()
 }
 
-struct Room {
-    var GUID: String
-    var buddyName: String?
+public struct Room {
+    public var GUID: String
+    public var buddyName: String?
+    public init(GUID: String, buddyName: String) {
+        self.GUID = GUID
+        self.buddyName = buddyName
+    }
+    public init(GUID:String) {
+        self.GUID = GUID
+    }
 }
 
-struct Route {
-    var comparisons: [Compare: String]
-    var parameterSyntax: String?
-    var call: (String, Room) -> Void
+public struct Route {
+    public var comparisons: [Compare: String]
+    public var parameterSyntax: String?
+    public var description: String?
+    public var call: (String, Room) -> Void
     
-    init(comparisons:[Compare: String], call: (String, Room) -> Void) {
+    public init(comparisons:[Compare: String], call: (String, Room) -> Void) {
         self.comparisons = comparisons
         self.call = call
     }
-}
-
-func backgroundThread(delay: Double = 0.0, background: (() -> Void)? = nil, completion: (() -> Void)? = nil) {
-    dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_USER_INITIATED.rawValue), 0)) {
-        if(background != nil){ background!(); }
-        
-        let popTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay * Double(NSEC_PER_SEC)))
-        dispatch_after(popTime, dispatch_get_main_queue()) {
-            if(completion != nil){ completion!(); }
-        }
+    public init(comparisons:[Compare: String], call: (String, Room) -> Void, description: String) {
+        self.comparisons = comparisons
+        self.call = call
+        self.description = description
     }
 }
 
-struct MessageRouting {
-    var modules:[RoutingModule]
-    var supportDir: NSURL?
-    init () {
-        let filemanager = NSFileManager.defaultManager()
-        let appsupport = NSFileManager.defaultManager().URLsForDirectory(.ApplicationSupportDirectory, inDomains: .UserDomainMask)[0]
-        let supportDir = appsupport.URLByAppendingPathComponent("Jared")
-        
-        try! filemanager.createDirectoryAtURL(supportDir, withIntermediateDirectories: true, attributes: nil)
-        
-        print(supportDir.absoluteString)
-        
-        modules = [CoreModule(), RESTModule(), TwitterModule(), EpicModule()]
-    }
-    func sendDocumentation(myMessage: String, forRoom: Room) {
-        var documentation: String = ""
-        for aModule in modules {
-            documentation += aModule.description
-            documentation += "\n"
-            
-            for aRoute in aModule.routes {
-                if let aRouteDescription = aRoute.description {
-                    documentation += aRouteDescription
-                    documentation += "\n"
-                }
-                if let aRouteSyntax = aRoute.parameterSyntax?[safe:0] {
-                    documentation += aRouteSyntax
-                    documentation += "\n"
-                }
-            }
-        }
-        SendText(documentation, toRoom: forRoom)
-    }
-    
-    func routeMessage(myMessage: String, fromBuddy: String, forRoom: Room) {
-        
-        let detector = try! NSDataDetector(types: NSTextCheckingType.Link.rawValue)
-        let matches = detector.matchesInString(myMessage, options: [], range: NSMakeRange(0, myMessage.characters.count))
-        let myLowercaseMessage = myMessage.lowercaseString
-        
-        
-        if myLowercaseMessage == "/help" {
-            sendDocumentation(myMessage, forRoom: forRoom)
-        }
-        
-        RootLoop: for aModule in modules {
-            for aRoute in aModule.routes {
-                for aComparison in aRoute.comparisons {
-                    
-                    if aComparison.0 == .ContainsURL {
-                        for match in matches {
-                            let url = (myMessage as NSString).substringWithRange(match.range)
-                            if url.containsString(aComparison.1) {
-                                aRoute.call(url, forRoom)
-                            }
-                        }
-                    }
-                    
-                    
-                    else if aComparison.0 == .StartsWith {
-                        if myLowercaseMessage.hasPrefix(aComparison.1.lowercaseString) {
-                            aRoute.call(myMessage, forRoom)
-                            break RootLoop
-                        }
-                    }
-                        
-                    else if aComparison.0 == .Contains {
-                        if myLowercaseMessage.containsString(aComparison.1.lowercaseString) {
-                            aRoute.call(myMessage, forRoom)
-                            break RootLoop
-                        }
-                    }
-                        
-                    else if aComparison.0 == .Is {
-                        if myLowercaseMessage == aComparison.1.lowercaseString {
-                            aRoute.call(myMessage, forRoom)
-                            break RootLoop
-                        }
-                    }
-                }
-            }
-        }
-    }
-}

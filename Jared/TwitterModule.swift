@@ -8,6 +8,7 @@
 
 import Foundation
 import Alamofire
+import JaredFramework
 import SwiftyJSON
 
 private extension String {
@@ -33,7 +34,7 @@ class TwitterModule: RoutingModule {
     let baseUrlString = "https://api.twitter.com/1.1/"
     let pageSize = 20
     
-    init() {
+    required init() {
         let twitterStatus = Route(comparisons: [.ContainsURL: "twitter.com"], call: self.twitterStatusID, description: "Twitter integration to get detail of a tweet URLs")
         
         routes = [twitterStatus]

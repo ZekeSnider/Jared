@@ -9,6 +9,7 @@
 import Foundation
 import Alamofire
 import SwiftyJSON
+import JaredFramework
 
 
 struct RESTModule: RoutingModule {

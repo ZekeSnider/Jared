@@ -8,13 +8,15 @@
 
 import Foundation
 import Cocoa
+import JaredFramework
+
 class EpicModule: RoutingModule {
     var routes: [Route] = []
     var description = "fucLk"
     
-    init() {
+    required init() {
         let fuccboi = Route(comparisons: [.StartsWith: "/fuccboi"], call: self.youreFuccboi, description: "Call Jared a fuccboi")
-        let tip = Route(comparisons: [.StartsWith: "/tip"], call: self.tipBuddy, description: "Tip your fedora to a fellow gentlesir", parameterSyntax: ["/tip,[Name of friend (optional)]"])
+        let tip = Route(comparisons: [.StartsWith: "/tip"], call: self.tipBuddy, description: "Tip your fedora to a fellow gentlesir")
         let bazinga = Route(comparisons: [.StartsWith: "/bazinga"], call: self.sendBazing, description: "Become epic like sheldon cooper")
         let nice = Route(comparisons: [.StartsWith: "/nice"], call: self.sendNice, description: "Congratulate someone on an epic accomplishment")
         let stop = Route(comparisons: [.Contains: "stop"], call: self.dontStop, description: "Stop Jared")
@@ -241,3 +243,11 @@ class EpicModule: RoutingModule {
         SendText("            ✡\n          ✡  ✡\n✡✡✡✡✡✡✡✡✡✡✡\n  ✡  ✡           ✡  ✡\n   ✡               ✡\n  ✡  ✡           ✡  ✡\n✡✡✡✡✡✡✡✡✡✡✡\n          ✡  ✡\n            ✡", toRoom: myRoom)
     }
 }
+
+extension CollectionType {
+    /// Returns the element at the specified index iff it is within bounds, otherwise nil.
+    subscript (safe index: Index) -> Generator.Element? {
+        return indices.contains(index) ? self[index] : nil
+    }
+}
+

@@ -8,6 +8,7 @@
 
 import Foundation
 import Cocoa
+import JaredFramework
 
 struct CoreModule: RoutingModule {
     var description = "Core functionality for Jared with universal uses"
@@ -17,7 +18,7 @@ struct CoreModule: RoutingModule {
         let ping = Route(comparisons: [.StartsWith: "/ping"], call: self.pingCall, description: "Check if the chat bot is available")
         let thankYou = Route(comparisons: [.StartsWith: "Thank you Jared"], call: self.thanksJared, description: "Thank Jared")
         let version = Route(comparisons: [.StartsWith: "/version"], call: self.getVersion, description: "Get what version Jared is running")
-        let send = Route(comparisons: [.StartsWith: "/send"], call: self.sendRepeat, description: "Send a message repeatedly", parameterSyntax: ["/send,[number of times to send],[delay],Message"])
+        let send = Route(comparisons: [.StartsWith: "/send"], call: self.sendRepeat, description: "Send a message repeatedly")
         let test = Route(comparisons: [.StartsWith: "/test"], call: self.hello, description: "A test command")
         
 
