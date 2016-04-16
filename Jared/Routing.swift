@@ -61,11 +61,28 @@ struct MessageRouting {
     func sendDocumentation(myMessage: String, forRoom: Room) {
         var documentation: String = ""
         for aModule in modules {
-            documentation += String(aModule)
+            documentation += String(aModule.dynamicType)
+            documentation += ": "
             documentation += aModule.description
-            documentation += "\n"
+            documentation += "\n==============\n"
             
             for aRoute in aModule.routes {
+                if let StartsWithComparison = aRoute.comparisons[.StartsWith] {
+                    for startsCompar in aRoute.comparisons[.StartsWith]! {
+                        documentation += startsCompar
+                        documentation += ": "
+                    }
+                }
+                
+                if let StartsWithComparison = aRoute.comparisons[.Contains] {
+                    for startsCompar in aRoute.comparisons[.Contains]! {
+                        documentation += "{contains: "
+                        documentation += startsCompar
+                        documentation += "}: "
+                    }
+                }
+                
+                
                 if let aRouteDescription = aRoute.description {
                     documentation += aRouteDescription
                     documentation += "\n"

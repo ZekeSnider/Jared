@@ -607,6 +607,7 @@
 				B39A65DB1CC1F8BC003E26B0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B39EC16D1CB01F55002C3161 /* Build configuration list for PBXProject "Jared" */ = {
 			isa = XCConfigurationList;
