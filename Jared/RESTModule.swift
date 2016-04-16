@@ -17,7 +17,8 @@ struct RESTModule: RoutingModule {
     
     init() {
         let youtube = Route(comparisons: [.ContainsURL: "youtu.be"], call: self.youtubeCall, description: "Youtube integration to get details of youtube video url")
-        routes = [youtube]
+        let Reddit = Route(comparisons: [.ContainsURL: "reddit.com"], call: self.redditCall, description: "Reddit integration")
+        routes = [youtube, Reddit]
     }
     
     func getVideo(videoID: String, toChat: Room) {
@@ -58,6 +59,26 @@ struct RESTModule: RoutingModule {
                     }
             }
         }
+    }
+    func sendRedditComment(commentJSON: String, toChat: Room) {
+        if let dataFromString = commentJSON.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) {
+            let JSONParse = JSON(data: dataFromString)
+            let commentAuthor = JSONParse[1]["data"]["children"][0]["data"]["author"]
+            let commentBody = JSONParse[1]["data"]["children"][0]["data"]["body"]
+            let message = "\"\(commentBody)\" -\(commentAuthor)"
+            SendText(message, toRoom: toChat)
+        }
+
+    }
+    
+    func redditCall(url: String, myRoom: Room) -> Void {
+        let JSONurl: String = url + ".json"
+        if JSONurl.containsString("/comments/") {
+            Alamofire.request(.GET, JSONurl).responseString {response in
+                self.sendRedditComment(response.result.value!, toChat: myRoom)
+            }
+        }
+        
     }
     
     func youtubeCall(url:String, myRoom: Room) -> Void {

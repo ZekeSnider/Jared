@@ -30,9 +30,11 @@ class EpicModule: RoutingModule {
         let done = Route(comparisons: [.StartsWith: "/done"], call: self.donezo, description: "Declare your completion of a task")
         let choose = Route(comparisons: [.StartsWith: "/choose"], call: self.makeChoice, description: "Make a tough decision easily")
         let guess = Route(comparisons: [.StartsWith: "/guess"], call: self.guessNumber, description: "Fun Number guessing game")
+        let face = Route(comparisons: [.StartsWith: "/grin", .Contains: ":^)"], call: self.printFace, description: "Send a shit eating grin")
+        let muslim = Route(comparisons: [.StartsWith: "/isjalenmuslim", .Contains: "Is Jalen Muslim"], call: self.isJalenMuslim, description: "Check if Jalen is a muslim")
         let jew = Route(comparisons: [.StartsWith: "/jew"], call: self.printJew, description: "Jew")
         
-        routes = [fuccboi, tip, bazinga, nice, stop, hello, rate, bigBunny, slots, kill, clear, kin, correction, done, choose, guess, jew]
+        routes = [fuccboi, tip, bazinga, nice, stop, hello, rate, bigBunny, slots, kill, clear, kin, correction, done, choose, guess, jew, face, muslim]
     }
     
     func bigBunny(message:String, myRoom: Room) -> Void{
@@ -236,8 +238,15 @@ class EpicModule: RoutingModule {
         }
     }
     
+    func isJalenMuslim(message:String, myRoom: Room) -> Void {
+        SendText("Yes", toRoom: myRoom)
+    }
+    
     func printJew(message:String, myRoom: Room) -> Void  {
         //This is not anti-semetic, this ia tribute to our fellow sons of god. <no sarcasm>
-        SendText("            ✡\n          ✡  ✡\n✡✡✡✡✡✡✡✡✡✡✡\n  ✡  ✡           ✡  ✡\n   ✡               ✡\n  ✡  ✡           ✡  ✡\n✡✡✡✡✡✡✡✡✡✡✡\n          ✡  ✡\n            ✡", toRoom: myRoom)
+        SendText("                   ✡️\n                ✡️  ✡️\n✡️✡️✡️✡️✡️✡️✡️✡️✡️\n   ✡️  ✡️                ✡️  ✡️\n      ✡️                       ✡️\n   ✡️  ✡️                ✡️  ✡️\n✡️✡️✡️✡️✡️✡️✡️✡️✡️\n                ✡️  ✡️\n                    ✡️", toRoom: myRoom)
+    }
+    func printFace(message:String, myRoom: Room) -> Void {
+        SendText("               :^)\n:^)    :^)      :^)\n       :^):^)     :^)\n      :^)  :^)    :^)\n:^)              :^)\n               :^)", toRoom: myRoom)
     }
 }
