@@ -61,6 +61,7 @@ struct MessageRouting {
     func sendDocumentation(myMessage: String, forRoom: Room) {
         var documentation: String = ""
         for aModule in modules {
+            documentation += String(aModule)
             documentation += aModule.description
             documentation += "\n"
             
@@ -75,6 +76,7 @@ struct MessageRouting {
                     documentation += "\n"
                 }*/
             }
+            documentation += "\n"
         }
         SendText(documentation, toRoom: forRoom)
     }
@@ -100,31 +102,39 @@ struct MessageRouting {
                         if aComparison.0 == .ContainsURL {
                             for match in matches {
                                 let url = (myMessage as NSString).substringWithRange(match.range)
-                                if url.containsString(aComparison.1) {
-                                    aRoute.call(url, forRoom)
+                                for comparisonString in aComparison.1 {
+                                    if url.containsString(comparisonString) {
+                                        aRoute.call(url, forRoom)
+                                    }
                                 }
                             }
                         }
                             
                             
                         else if aComparison.0 == .StartsWith {
-                            if myLowercaseMessage.hasPrefix(aComparison.1.lowercaseString) {
-                                aRoute.call(myMessage, forRoom)
-                                break RootLoop
+                            for comparisonString in aComparison.1 {
+                                if myLowercaseMessage.hasPrefix(comparisonString.lowercaseString) {
+                                    aRoute.call(myMessage, forRoom)
+                                    break RootLoop
+                                }
                             }
                         }
                             
                         else if aComparison.0 == .Contains {
-                            if myLowercaseMessage.containsString(aComparison.1.lowercaseString) {
-                                aRoute.call(myMessage, forRoom)
-                                break RootLoop
+                            for comparisonString in aComparison.1 {
+                                if myLowercaseMessage.containsString(comparisonString.lowercaseString) {
+                                    aRoute.call(myMessage, forRoom)
+                                    break RootLoop
+                                }
                             }
                         }
                             
                         else if aComparison.0 == .Is {
-                            if myLowercaseMessage == aComparison.1.lowercaseString {
-                                aRoute.call(myMessage, forRoom)
-                                break RootLoop
+                            for comparisonString in aComparison.1 {
+                                if myLowercaseMessage == comparisonString.lowercaseString {
+                                    aRoute.call(myMessage, forRoom)
+                                    break RootLoop
+                                }
                             }
                         }
                     }
