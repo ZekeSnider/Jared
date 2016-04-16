@@ -1,29 +1,13 @@
 import Foundation
 import JaredFramework
 
-public class EmoteModule: RoutingModule {
-    public var routes: [Route] = []
-    public var description = "fucLk"
-    
-    required public init() {
-        let fuccboi = Route(comparisons: [.StartsWith: "/moduletest"], call: self.test, description: "TEST")
-        routes = [fuccboi]
-    }
-    
-    public func test(message:String, myRoom: Room) -> Void {
-        SendText("Nigga this command was loaded from a modularized bundle", toRoom: myRoom)
-    }
-}
-
-
-
-
 struct MessageRouting {
     var modules:[RoutingModule] = []
     var supportDir: NSURL?
+    
     init () {
         let filemanager = NSFileManager.defaultManager()
-        let appsupport = NSFileManager.defaultManager().URLsForDirectory(.ApplicationSupportDirectory, inDomains: .UserDomainMask)[0]
+        let appsupport = filemanager.URLsForDirectory(.ApplicationSupportDirectory, inDomains: .UserDomainMask)[0]
         let supportDir = appsupport.URLByAppendingPathComponent("Jared")
         let pluginDir = supportDir.URLByAppendingPathComponent("Plugins")
         
@@ -39,7 +23,16 @@ struct MessageRouting {
         //let obj: RoutingModule = principleclass!.init()
         //print(obj.description)
         
+        loadPlugins(pluginDir)
         
+        let internalModules: [RoutingModule] = [CoreModule(), RESTModule(), TwitterModule(), EpicModule()]
+        
+        modules.appendContentsOf(internalModules)
+    }
+    
+    
+    mutating func loadPlugins(pluginDir: NSURL) {
+        let filemanager = NSFileManager.defaultManager()
         let files = filemanager.enumeratorAtURL(pluginDir, includingPropertiesForKeys: [], options: [.SkipsHiddenFiles, .SkipsPackageDescendants], errorHandler: nil)
         while let file = files?.nextObject() {
             if let currentURL = file as? NSURL {
@@ -54,11 +47,17 @@ struct MessageRouting {
                 }
             }
         }
-        
-        let internalModules: [RoutingModule] = [CoreModule(), RESTModule(), TwitterModule(), EpicModule()]
-        
-        modules.appendContentsOf(internalModules)
     }
+    
+    mutating func reloadPlugins() {
+        let appsupport = NSFileManager.defaultManager().URLsForDirectory(.ApplicationSupportDirectory, inDomains: .UserDomainMask)[0]
+        let supportDir = appsupport.URLByAppendingPathComponent("Jared")
+        let pluginDir = supportDir.URLByAppendingPathComponent("Plugins")
+        
+        modules = []
+        loadPlugins(pluginDir)
+    }
+    
     func sendDocumentation(myMessage: String, forRoom: Room) {
         var documentation: String = ""
         for aModule in modules {
@@ -80,7 +79,7 @@ struct MessageRouting {
         SendText(documentation, toRoom: forRoom)
     }
     
-    func routeMessage(myMessage: String, fromBuddy: String, forRoom: Room) {
+    mutating func routeMessage(myMessage: String, fromBuddy: String, forRoom: Room) {
         
         let detector = try! NSDataDetector(types: NSTextCheckingType.Link.rawValue)
         let matches = detector.matchesInString(myMessage, options: [], range: NSMakeRange(0, myMessage.characters.count))
@@ -90,39 +89,43 @@ struct MessageRouting {
         if myLowercaseMessage == "/help" {
             sendDocumentation(myMessage, forRoom: forRoom)
         }
-        
-        RootLoop: for aModule in modules {
-            for aRoute in aModule.routes {
-                for aComparison in aRoute.comparisons {
-                    
-                    if aComparison.0 == .ContainsURL {
-                        for match in matches {
-                            let url = (myMessage as NSString).substringWithRange(match.range)
-                            if url.containsString(aComparison.1) {
-                                aRoute.call(url, forRoom)
+        else if myLowercaseMessage == "/reload" {
+            reloadPlugins()
+        }
+        else {
+            RootLoop: for aModule in modules {
+                for aRoute in aModule.routes {
+                    for aComparison in aRoute.comparisons {
+                        
+                        if aComparison.0 == .ContainsURL {
+                            for match in matches {
+                                let url = (myMessage as NSString).substringWithRange(match.range)
+                                if url.containsString(aComparison.1) {
+                                    aRoute.call(url, forRoom)
+                                }
                             }
                         }
-                    }
-                        
-                        
-                    else if aComparison.0 == .StartsWith {
-                        if myLowercaseMessage.hasPrefix(aComparison.1.lowercaseString) {
-                            aRoute.call(myMessage, forRoom)
-                            break RootLoop
+                            
+                            
+                        else if aComparison.0 == .StartsWith {
+                            if myLowercaseMessage.hasPrefix(aComparison.1.lowercaseString) {
+                                aRoute.call(myMessage, forRoom)
+                                break RootLoop
+                            }
                         }
-                    }
-                        
-                    else if aComparison.0 == .Contains {
-                        if myLowercaseMessage.containsString(aComparison.1.lowercaseString) {
-                            aRoute.call(myMessage, forRoom)
-                            break RootLoop
+                            
+                        else if aComparison.0 == .Contains {
+                            if myLowercaseMessage.containsString(aComparison.1.lowercaseString) {
+                                aRoute.call(myMessage, forRoom)
+                                break RootLoop
+                            }
                         }
-                    }
-                        
-                    else if aComparison.0 == .Is {
-                        if myLowercaseMessage == aComparison.1.lowercaseString {
-                            aRoute.call(myMessage, forRoom)
-                            break RootLoop
+                            
+                        else if aComparison.0 == .Is {
+                            if myLowercaseMessage == aComparison.1.lowercaseString {
+                                aRoute.call(myMessage, forRoom)
+                                break RootLoop
+                            }
                         }
                     }
                 }
