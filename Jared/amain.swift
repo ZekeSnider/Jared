@@ -113,9 +113,8 @@ public func getAppSupportDirectory() -> NSURL{
 }
 
 public func matchesForRegexInText(regex: String!, text: String!) -> [String] {
-    
     do {
-        let regex = try NSRegularExpression(pattern: regex, options: [])
+        let regex = try NSRegularExpression(pattern: regex, options: [NSRegularExpressionOptions.CaseInsensitive])
         let nsString = text as NSString
         let results = regex.matchesInString(text,
                                             options: [], range: NSMakeRange(0, nsString.length))

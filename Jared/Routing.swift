@@ -16,13 +16,6 @@ struct MessageRouting {
         
         print(supportDir.absoluteString)
         
-        
-        //let path = "/Users/Zeke/Library/Developer/Xcode/DerivedData/EmoteModule-abvbbpvesnwseuaewkvascbwqpan/Build/Products/Debug/EmoteModule.bundle"
-        //let myBundle = NSBundle(path: path)
-        //let principleclass = myBundle?.principalClass as? RoutingModule.Type
-        //let obj: RoutingModule = principleclass!.init()
-        //print(obj.description)
-        
         loadPlugins(pluginDir)
         
         let internalModules: [RoutingModule] = [CoreModule(), RESTModule(), TwitterModule(), EpicModule()]

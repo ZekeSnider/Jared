@@ -44,9 +44,17 @@ class TwitterModule: RoutingModule {
     
     
     func twitterStatusID(message:String, myRoom: Room) -> Void {
-        let urlComp = message.componentsSeparatedByString("/status/")
-        let tweetID = urlComp[1]
-        getTweet(tweetID, sendToGroupID: myRoom.GUID)
+        if message.containsString("/status") {
+            let urlComp = message.componentsSeparatedByString("/status/")
+            let tweetID = urlComp[1]
+            getTweet(tweetID, sendToGroupID: myRoom.GUID)
+        }
+        else {
+            let urlComp = message.componentsSeparatedByString("/")
+            let count = urlComp.count
+            getTwitterUser(urlComp[count-1], sendToGroupID: myRoom.GUID)
+        }
+        
     }
     
     func authenticate(completionBlock: Void -> ()) {
@@ -89,10 +97,39 @@ class TwitterModule: RoutingModule {
         }
     }
     
+    func getTwitterUser(fromUser: String, sendToGroupID: String) {
+        authenticate {
+            guard let token = self.accessToken else {
+                // TODO: Show authentication error
+                return
+            }
+            
+            let headers = ["Authorization": "Bearer \(token)"]
+            let params: [String : AnyObject] = [
+                "screen_name" : fromUser
+            ]
+            Alamofire.request(.GET, self.baseUrlString + "users/show.json", headers: headers, parameters: params)
+                .responseString { response in
+                    print(response.response)
+                    
+                    self.sendTwitterUser(response.result.value!, toChat: sendToGroupID)
+            }
+            
+        }
+    }
+    
     func sendTweet(tweetJSON: String, toChat: String) {
         if let dataFromString = tweetJSON.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) {
             let JSONParse = JSON(data: dataFromString)
             let TweetString = "\"\(JSONParse["text"].stringValue)\" -\(JSONParse["user"]["name"].stringValue) \(JSONParse["created_at"])"
+            SendText(TweetString, toRoom: Room(GUID: toChat))
+        }
+    }
+    
+    func sendTwitterUser(tweetJSON: String, toChat: String) {
+        if let dataFromString = tweetJSON.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) {
+            let JSONParse = JSON(data: dataFromString)
+            let TweetString = "\(JSONParse["name"].stringValue)\n\"\(JSONParse["description"].stringValue)\"\n\(JSONParse["statuses_count"]) Tweets\n\(JSONParse["followers_count"]) Followers\n\(JSONParse["friends_count"]) Following\nJoined Twitter on \(JSONParse["created_at"])\n"
             SendText(TweetString, toRoom: Room(GUID: toChat))
         }
     }
