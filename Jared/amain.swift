@@ -98,6 +98,13 @@ public struct Route {
         self.call = call
         self.description = description
     }
+    public init(name: String, comparisons:[Compare: [String]], call: (String, Room) -> Void, description: String, parameterSyntax: String) {
+        self.name = name
+        self.comparisons = comparisons
+        self.call = call
+        self.description = description
+        self.parameterSyntax = parameterSyntax
+    }
 }
 
 public func getAppSupportDirectory() -> NSURL{

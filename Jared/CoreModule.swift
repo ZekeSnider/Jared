@@ -18,7 +18,7 @@ struct CoreModule: RoutingModule {
         let ping = Route(name:"/ping", comparisons: [.StartsWith: ["/ping"]], call: self.pingCall, description: "Check if the chat bot is available")
         let thankYou = Route(name:"Thank You", comparisons: [.StartsWith: ["Thank you Jared"]], call: self.thanksJared, description: "Thank Jared")
         let version = Route(name: "/version", comparisons: [.StartsWith: ["/version"]], call: self.getVersion, description: "Get what version Jared is running")
-        let send = Route(name: "/send", comparisons: [.StartsWith: ["/send"]], call: self.sendRepeat, description: "Send a message repeatedly")
+        let send = Route(name: "/send", comparisons: [.StartsWith: ["/send"]], call: self.sendRepeat, description: "Send a message repeatedly",parameterSyntax: "/send,[number of times],[send delay],[message to send]")
         let test = Route(name: "/test", comparisons: [.StartsWith: ["/test"]], call: self.hello, description: "A test command")
         
 

@@ -58,7 +58,41 @@ struct MessageRouting {
         loadPlugins(pluginDir)
     }
     
+    func sendSingleDocumentation(routeName: String, forRoom: Room) {
+        for aModule in modules {
+            for aRoute in aModule.routes {
+                if aRoute.name.lowercaseString == routeName.lowercaseString {
+                    var documentation = "Command: "
+                    documentation += routeName
+                    documentation += "\n===========\n"
+                    if aRoute.description != nil {
+                        documentation += aRoute.description!
+                    }
+                    else {
+                        documentation += "Description not provided."
+                    }
+                    documentation += "\n\n"
+                    if let parameterString = aRoute.parameterSyntax {
+                        documentation += "Parameters: "
+                        documentation += parameterString
+                    }
+                    else {
+                        documentation += "The developer of this route did not provide parameter documentation."
+                    }
+                    SendText(documentation, toRoom: forRoom)
+                }
+            }
+        }
+    }
+    
     func sendDocumentation(myMessage: String, forRoom: Room) {
+        let parsedMessage = myMessage.componentsSeparatedByString(",")
+        
+        if parsedMessage.count > 1 {
+            sendSingleDocumentation(parsedMessage[1], forRoom: forRoom)
+            return
+        }
+        
         var documentation: String = ""
         for aModule in modules {
             documentation += String(aModule.dynamicType)
@@ -87,7 +121,7 @@ struct MessageRouting {
         let myLowercaseMessage = myMessage.lowercaseString
         
         
-        if myLowercaseMessage == "/help" {
+        if myLowercaseMessage.containsString("/help") {
             sendDocumentation(myMessage, forRoom: forRoom)
         }
         else if myLowercaseMessage == "/reload" {
