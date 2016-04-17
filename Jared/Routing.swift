@@ -67,31 +67,13 @@ struct MessageRouting {
             documentation += "\n==============\n"
             
             for aRoute in aModule.routes {
-                if let StartsWithComparison = aRoute.comparisons[.StartsWith] {
-                    for startsCompar in aRoute.comparisons[.StartsWith]! {
-                        documentation += startsCompar
-                        documentation += ": "
-                    }
-                }
-                
-                if let StartsWithComparison = aRoute.comparisons[.Contains] {
-                    for startsCompar in aRoute.comparisons[.Contains]! {
-                        documentation += "{contains: "
-                        documentation += startsCompar
-                        documentation += "}: "
-                    }
-                }
-                
+                documentation += aRoute.name
+                documentation += ": "
                 
                 if let aRouteDescription = aRoute.description {
                     documentation += aRouteDescription
                     documentation += "\n"
                 }
-                /*
-                if let aRouteSyntax = aRoute.parameterSyntax?[safe:0] {
-                    documentation += aRouteSyntax
-                    documentation += "\n"
-                }*/
             }
             documentation += "\n"
         }

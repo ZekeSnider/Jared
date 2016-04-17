@@ -81,16 +81,19 @@ public struct Room {
 }
 
 public struct Route {
+    public var name: String
     public var comparisons: [Compare: [String]]
     public var parameterSyntax: String?
     public var description: String?
     public var call: (String, Room) -> Void
     
-    public init(comparisons:[Compare: [String]], call: (String, Room) -> Void) {
+    public init(name: String, comparisons:[Compare: [String]], call: (String, Room) -> Void) {
+        self.name = name
         self.comparisons = comparisons
         self.call = call
     }
-    public init(comparisons:[Compare: [String]], call: (String, Room) -> Void, description: String) {
+    public init(name: String, comparisons:[Compare: [String]], call: (String, Room) -> Void, description: String) {
+        self.name = name
         self.comparisons = comparisons
         self.call = call
         self.description = description
