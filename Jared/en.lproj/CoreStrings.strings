@@ -6,9 +6,18 @@
   Copyright © 2016 Zeke Snider. All rights reserved.
 */
 
-"hello" = "bonjour"
+/* Response for /ping command */
+"hello"="bonjour";
 
 /* Response for /ping command */
-"Pong!" = "Pong!"
+"PongResponse"="Pong!";
 
-/* Response for thanking jared command */
+
+/* You're welcome string */
+"WelcomeResponse"="You're welcome.";
+
+/* Thank you command */
+"ThanksJaredCommand"="Thank you Jared";
+
+
+

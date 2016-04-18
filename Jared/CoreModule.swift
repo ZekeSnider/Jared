@@ -16,7 +16,7 @@ struct CoreModule: RoutingModule {
     
     init() {
         let ping = Route(name:"/ping", comparisons: [.StartsWith: ["/ping"]], call: self.pingCall, description: "Check if the chat bot is available")
-        let thankYou = Route(name:"Thank You", comparisons: [.StartsWith: ["Thank you Jared"]], call: self.thanksJared, description: "Thank Jared")
+        let thankYou = Route(name:"Thank You", comparisons: [.StartsWith: [NSLocalizedString("ThanksJaredCommand", tableName: "CoreStrings", comment: "command for thanking jared")]], call: self.thanksJared, description: "Thank Jared")
         let version = Route(name: "/version", comparisons: [.StartsWith: ["/version"]], call: self.getVersion, description: "Get what version Jared is running")
         let send = Route(name: "/send", comparisons: [.StartsWith: ["/send"]], call: self.sendRepeat, description: "Send a message repeatedly",parameterSyntax: "/send,[number of times],[send delay],[message to send]")
         let test = Route(name: "/test", comparisons: [.StartsWith: ["/test"]], call: self.hello, description: "A test command")
@@ -30,12 +30,12 @@ struct CoreModule: RoutingModule {
     }
     
     func pingCall(message:String, myRoom: Room) -> Void {
-        let responseLocalized = NSLocalizedString("Pong!", comment: "Response for ping! command")
+        let responseLocalized = NSLocalizedString("PongResponse", tableName: "CoreStrings", comment: "Response for ping! command")
         SendText(responseLocalized, toRoom: myRoom)
     }
     
     func thanksJared(message:String, myRoom: Room) -> Void {
-        SendText("You're welcome.", toRoom: myRoom)
+        SendText(NSLocalizedString("WelcomeResponse", tableName: "CoreStrings", comment: "Response for thank you command"), toRoom: myRoom)
     }
     
     func getVersion(message:String, myRoom: Room) -> Void {

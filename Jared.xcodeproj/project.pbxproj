@@ -11,6 +11,7 @@
 		7F84B6261CC506790059A82B /* JaredFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F84B61F1CC506790059A82B /* JaredFramework.framework */; };
 		7F84B6271CC506790059A82B /* JaredFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7F84B61F1CC506790059A82B /* JaredFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7F84B62B1CC5069C0059A82B /* amain.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39EC1751CB01F55002C3161 /* amain.swift */; };
+		7F84B62E1CC511B80059A82B /* CoreStrings.strings in Resources */ = {isa = PBXBuildFile; fileRef = B3BBA7CD1CB3259A00E1749C /* CoreStrings.strings */; };
 		7F9621641CBD301A0047644D /* Big_Buck_Bunny_Trailer.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 7F9621631CBD301A0047644D /* Big_Buck_Bunny_Trailer.m4v */; };
 		7FE220ED1CB3C8340081CE23 /* podfile in Resources */ = {isa = PBXBuildFile; fileRef = 7FE220EC1CB3C8340081CE23 /* podfile */; };
 		7FE3971E1CC0B13600A7C13A /* EpicModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE3971D1CC0B13600A7C13A /* EpicModule.swift */; };
@@ -197,10 +198,10 @@
 			isa = PBXGroup;
 			children = (
 				7FE3971D1CC0B13600A7C13A /* EpicModule.swift */,
-				B39EC17D1CB01FEF002C3161 /* CoreModule.swift */,
 				7FF077F31CBD227B008E33CB /* EpicModule */,
 				B379EB3A1CB8B4BF008E2A33 /* TwitterModule.swift */,
 				7FEF4A511CB3CA020032A5CC /* RESTModule.swift */,
+				B39EC17D1CB01FEF002C3161 /* CoreModule.swift */,
 				B3BBA7CD1CB3259A00E1749C /* CoreStrings.strings */,
 			);
 			name = Modules;
@@ -313,6 +314,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F84B62E1CC511B80059A82B /* CoreStrings.strings in Resources */,
 				B39F2B391CB3BCA700C0D35C /* SendText.scpt in Resources */,
 				7F9621641CBD301A0047644D /* Big_Buck_Bunny_Trailer.m4v in Resources */,
 				B332787E1CB2CB1300BBDD3A /* Assets.xcassets in Resources */,
@@ -598,6 +600,7 @@
 				7F84B62A1CC506790059A82B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B33278831CB2CB1300BBDD3A /* Build configuration list for PBXNativeTarget "JaredUI" */ = {
 			isa = XCConfigurationList;
