@@ -2,6 +2,7 @@ import Foundation
 import JaredFramework
 
 struct MessageRouting {
+    var FrameworkVersion:String = "J1.0.0"
     var modules:[RoutingModule] = []
     var supportDir: NSURL?
     
@@ -25,21 +26,52 @@ struct MessageRouting {
     
     
     mutating func loadPlugins(pluginDir: NSURL) {
+        //Loop through all files in our plugin directory
         let filemanager = NSFileManager.defaultManager()
         let files = filemanager.enumeratorAtURL(pluginDir, includingPropertiesForKeys: [], options: [.SkipsHiddenFiles, .SkipsPackageDescendants], errorHandler: nil)
         while let file = files?.nextObject() {
-            if let currentURL = file as? NSURL {
-                if currentURL.pathExtension == "bundle" {
-                    if let myBundle = NSBundle(URL: currentURL) {
-                        let principleClass = myBundle.principalClass as? RoutingModule.Type
-                        if let module: RoutingModule = principleClass?.init() {
-                            print(module.description)
-                            modules.append(module)
-                        }
-                    }
+            guard let currentURL = file as? NSURL
+                else {
+                    continue
                 }
-            }
+            
+            //Only unpackage bundles
+            guard currentURL.pathExtension == "bundle"
+                else {
+                    continue
+                }
+            
+            guard let myBundle = NSBundle(URL: currentURL)
+                else {
+                    continue
+                }
+            
+            //Load it
+            loadBundle(myBundle)
         }
+    }
+    
+    mutating func loadBundle(myBundle: NSBundle) {
+        //Check version of the framework that this plugin is using
+        guard myBundle.infoDictionary?["JaredFrameworkVersion"] as? String == self.FrameworkVersion
+            else {
+                return
+            }
+        
+        //Cast the class to RoutingModule protocol
+        guard let principleClass = myBundle.principalClass as? RoutingModule.Type
+            else {
+                return
+            }
+        
+        //Initialize it
+        guard let module: RoutingModule = principleClass.init()
+            else {
+                return
+            }
+        
+        //Add it to our modules
+        modules.append(module)
     }
     
     mutating func reloadPlugins() {
