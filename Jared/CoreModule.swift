@@ -11,7 +11,7 @@ import Cocoa
 import JaredFramework
 
 struct CoreModule: RoutingModule {
-    var description = "Core functionality for Jared with universal uses"
+    var description: String = "Core functionality for Jared with universal uses"
     var routes: [Route] = []
     
     init() {
@@ -60,10 +60,6 @@ struct CoreModule: RoutingModule {
                 NSThread.sleepForTimeInterval(Double(delay))
             }
         }
-        
-        
-        
-        
         
     }
 }
