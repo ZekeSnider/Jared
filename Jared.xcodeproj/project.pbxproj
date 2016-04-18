@@ -7,7 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7F84B6001CC4F8190059A82B /* amain.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39EC1751CB01F55002C3161 /* amain.swift */; };
+		7F84B6221CC506790059A82B /* JaredFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F84B6211CC506790059A82B /* JaredFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7F84B6261CC506790059A82B /* JaredFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F84B61F1CC506790059A82B /* JaredFramework.framework */; };
+		7F84B6271CC506790059A82B /* JaredFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7F84B61F1CC506790059A82B /* JaredFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7F84B62B1CC5069C0059A82B /* amain.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39EC1751CB01F55002C3161 /* amain.swift */; };
 		7F9621641CBD301A0047644D /* Big_Buck_Bunny_Trailer.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 7F9621631CBD301A0047644D /* Big_Buck_Bunny_Trailer.m4v */; };
 		7FE220ED1CB3C8340081CE23 /* podfile in Resources */ = {isa = PBXBuildFile; fileRef = 7FE220EC1CB3C8340081CE23 /* podfile */; };
 		7FE3971E1CC0B13600A7C13A /* EpicModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE3971D1CC0B13600A7C13A /* EpicModule.swift */; };
@@ -28,6 +31,16 @@
 		D456EE98BC637C3C6B405285 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19C9C2FBC44EE08B0C7851EA /* Pods.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		7F84B6241CC506790059A82B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B39EC16A1CB01F55002C3161 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7F84B61E1CC506790059A82B;
+			remoteInfo = JaredFramework;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		B39A65DD1CC1F8BC003E26B0 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -35,6 +48,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				7F84B6271CC506790059A82B /* JaredFramework.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -44,6 +58,9 @@
 /* Begin PBXFileReference section */
 		19C9C2FBC44EE08B0C7851EA /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		61E9953E47FCCA8F17A7A007 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		7F84B61F1CC506790059A82B /* JaredFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = JaredFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7F84B6211CC506790059A82B /* JaredFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JaredFramework.h; sourceTree = "<group>"; };
+		7F84B6231CC506790059A82B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7F9621631CBD301A0047644D /* Big_Buck_Bunny_Trailer.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; name = Big_Buck_Bunny_Trailer.m4v; path = Modules/EpicModule/Big_Buck_Bunny_Trailer.m4v; sourceTree = "<group>"; };
 		7FE220EC1CB3C8340081CE23 /* podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = podfile; sourceTree = SOURCE_ROOT; };
 		7FE3971D1CC0B13600A7C13A /* EpicModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpicModule.swift; sourceTree = "<group>"; };
@@ -62,8 +79,6 @@
 		B33278821CB2CB1300BBDD3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B33278881CB2D0C600BBDD3A /* Jared.sdef */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Jared.sdef; sourceTree = "<group>"; };
 		B379EB3A1CB8B4BF008E2A33 /* TwitterModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwitterModule.swift; sourceTree = "<group>"; };
-		B39A65D31CC1F8BC003E26B0 /* JaredFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JaredFramework.h; sourceTree = "<group>"; };
-		B39A65D51CC1F8BC003E26B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B39A65DF1CC1FB1B003E26B0 /* Routing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Routing.swift; sourceTree = "<group>"; };
 		B39EC1751CB01F55002C3161 /* amain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = amain.swift; path = ../Jared/amain.swift; sourceTree = "<group>"; };
 		B39EC17D1CB01FEF002C3161 /* CoreModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreModule.swift; sourceTree = "<group>"; };
@@ -74,10 +89,18 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		7F84B61B1CC506790059A82B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B33278741CB2CB1300BBDD3A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F84B6261CC506790059A82B /* JaredFramework.framework in Frameworks */,
 				D456EE98BC637C3C6B405285 /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -91,6 +114,16 @@
 				19C9C2FBC44EE08B0C7851EA /* Pods.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7F84B6201CC506790059A82B /* JaredFramework */ = {
+			isa = PBXGroup;
+			children = (
+				7F84B6211CC506790059A82B /* JaredFramework.h */,
+				B39EC1751CB01F55002C3161 /* amain.swift */,
+				7F84B6231CC506790059A82B /* Info.plist */,
+			);
+			path = JaredFramework;
 			sourceTree = "<group>";
 		};
 		7FF077F31CBD227B008E33CB /* EpicModule */ = {
@@ -125,23 +158,13 @@
 			path = JaredUI;
 			sourceTree = "<group>";
 		};
-		B39A65D21CC1F8BC003E26B0 /* JaredFramework */ = {
-			isa = PBXGroup;
-			children = (
-				B39A65D31CC1F8BC003E26B0 /* JaredFramework.h */,
-				B39EC1751CB01F55002C3161 /* amain.swift */,
-				B39A65D51CC1F8BC003E26B0 /* Info.plist */,
-			);
-			path = JaredFramework;
-			sourceTree = "<group>";
-		};
 		B39EC1691CB01F55002C3161 = {
 			isa = PBXGroup;
 			children = (
 				B33278511CB2C94700BBDD3A /* AppKit.framework */,
 				B39EC1741CB01F55002C3161 /* Jared */,
 				B33278781CB2CB1300BBDD3A /* JaredUI */,
-				B39A65D21CC1F8BC003E26B0 /* JaredFramework */,
+				7F84B6201CC506790059A82B /* JaredFramework */,
 				B39EC1731CB01F55002C3161 /* Products */,
 				8C62C36413640EF4B69CD61C /* Pods */,
 				739CD530157F72CF2AD79314 /* Frameworks */,
@@ -152,6 +175,7 @@
 			isa = PBXGroup;
 			children = (
 				B33278771CB2CB1300BBDD3A /* JaredUI.app */,
+				7F84B61F1CC506790059A82B /* JaredFramework.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -184,7 +208,36 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		7F84B61C1CC506790059A82B /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7F84B6221CC506790059A82B /* JaredFramework.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
+		7F84B61E1CC506790059A82B /* JaredFramework */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7F84B6281CC506790059A82B /* Build configuration list for PBXNativeTarget "JaredFramework" */;
+			buildPhases = (
+				7F84B61A1CC506790059A82B /* Sources */,
+				7F84B61B1CC506790059A82B /* Frameworks */,
+				7F84B61C1CC506790059A82B /* Headers */,
+				7F84B61D1CC506790059A82B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = JaredFramework;
+			productName = JaredFramework;
+			productReference = 7F84B61F1CC506790059A82B /* JaredFramework.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		B33278761CB2CB1300BBDD3A /* JaredUI */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B33278831CB2CB1300BBDD3A /* Build configuration list for PBXNativeTarget "JaredUI" */;
@@ -200,6 +253,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				7F84B6251CC506790059A82B /* PBXTargetDependency */,
 			);
 			name = JaredUI;
 			productName = JaredUI;
@@ -219,6 +273,9 @@
 				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = "Zeke Snider";
 				TargetAttributes = {
+					7F84B61E1CC506790059A82B = {
+						CreatedOnToolsVersion = 7.3;
+					};
 					B33278761CB2CB1300BBDD3A = {
 						CreatedOnToolsVersion = 7.3;
 					};
@@ -239,11 +296,19 @@
 			projectRoot = "";
 			targets = (
 				B33278761CB2CB1300BBDD3A /* JaredUI */,
+				7F84B61E1CC506790059A82B /* JaredFramework */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		7F84B61D1CC506790059A82B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B33278751CB2CB1300BBDD3A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -311,11 +376,18 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		7F84B61A1CC506790059A82B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7F84B62B1CC5069C0059A82B /* amain.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B33278731CB2CB1300BBDD3A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7F84B6001CC4F8190059A82B /* amain.swift in Sources */,
 				B39A65E01CC1FB1B003E26B0 /* Routing.swift in Sources */,
 				7FEF4A521CB3CA020032A5CC /* RESTModule.swift in Sources */,
 				7FE3971E1CC0B13600A7C13A /* EpicModule.swift in Sources */,
@@ -328,6 +400,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7F84B6251CC506790059A82B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7F84B61E1CC506790059A82B /* JaredFramework */;
+			targetProxy = 7F84B6241CC506790059A82B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		B332787F1CB2CB1300BBDD3A /* Main.storyboard */ = {
@@ -351,6 +431,48 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		7F84B6291CC506790059A82B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = JaredFramework/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.zeke.JaredFramework;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		7F84B62A1CC506790059A82B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = JaredFramework/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.zeke.JaredFramework;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 		B33278841CB2CB1300BBDD3A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 940D363B410942855CF46EC4 /* Pods.debug.xcconfig */;
@@ -469,6 +591,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		7F84B6281CC506790059A82B /* Build configuration list for PBXNativeTarget "JaredFramework" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7F84B6291CC506790059A82B /* Debug */,
+				7F84B62A1CC506790059A82B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		B33278831CB2CB1300BBDD3A /* Build configuration list for PBXNativeTarget "JaredUI" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
