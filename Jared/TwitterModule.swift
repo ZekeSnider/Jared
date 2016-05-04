@@ -121,7 +121,7 @@ class TwitterModule: RoutingModule {
     func sendTweet(tweetJSON: String, toChat: String) {
         if let dataFromString = tweetJSON.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) {
             let JSONParse = JSON(data: dataFromString)
-            let TweetString = "\"\(JSONParse["text"].stringValue)\" -\(JSONParse["user"]["name"].stringValue) \(JSONParse["created_at"])"
+            let TweetString = "\"\(JSONParse["text"].stringValue)\"\n-\(JSONParse["user"]["name"].stringValue)\n\(convertJSONDate(JSONParse["created_at"].stringValue))"
             SendText(TweetString, toRoom: Room(GUID: toChat))
         }
     }
@@ -129,7 +129,7 @@ class TwitterModule: RoutingModule {
     func sendTwitterUser(tweetJSON: String, toChat: String) {
         if let dataFromString = tweetJSON.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) {
             let JSONParse = JSON(data: dataFromString)
-            let TweetString = "\(JSONParse["name"].stringValue)\n\"\(JSONParse["description"].stringValue)\"\n\(JSONParse["statuses_count"]) Tweets\n\(JSONParse["followers_count"]) Followers\n\(JSONParse["friends_count"]) Following\nJoined Twitter on \(JSONParse["created_at"])\n"
+            let TweetString = "\(JSONParse["name"].stringValue)\n\"\(JSONParse["description"].stringValue)\"\n\(JSONParse["statuses_count"]) Tweets\n\(JSONParse["followers_count"]) Followers\n\(JSONParse["friends_count"]) Following\nJoined Twitter on \(convertJSONDate(JSONParse["created_at"].stringValue))\n"
             SendText(TweetString, toRoom: Room(GUID: toChat))
         }
     }

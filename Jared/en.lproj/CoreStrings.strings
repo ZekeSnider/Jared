@@ -19,5 +19,17 @@
 /* Thank you command */
 "ThanksJaredCommand"="Thank you Jared";
 
+"Thank Jared" = "Thank Jared"
+
+"pingDescription" = "Check if the chat bot is available"
+
+/* Version */
+"versionDescription" = "Get what version Jared is running"
+
+"sendSyntax" = "/send,[number of times],[send delay],[message to send]"
 
 
+"sendDescription" = "Send a message repeatedly"
+
+
+"versionResponse" = "I am version 3.0 beta of Jared, compiled on Swift 2.2!"

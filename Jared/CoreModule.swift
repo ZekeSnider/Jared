@@ -10,15 +10,23 @@ import Foundation
 import Cocoa
 import JaredFramework
 
+public func NSLocalizedString(key: String) -> String {
+    return NSLocalizedString(key, tableName: "CoreStrings", comment: "")
+}
+
 struct CoreModule: RoutingModule {
     var description: String = "Core functionality for Jared with universal uses"
     var routes: [Route] = []
     
     init() {
-        let ping = Route(name:"/ping", comparisons: [.StartsWith: ["/ping"]], call: self.pingCall, description: "Check if the chat bot is available")
-        let thankYou = Route(name:"Thank You", comparisons: [.StartsWith: [NSLocalizedString("ThanksJaredCommand", tableName: "CoreStrings", comment: "command for thanking jared")]], call: self.thanksJared, description: "Thank Jared")
-        let version = Route(name: "/version", comparisons: [.StartsWith: ["/version"]], call: self.getVersion, description: "Get what version Jared is running")
-        let send = Route(name: "/send", comparisons: [.StartsWith: ["/send"]], call: self.sendRepeat, description: "Send a message repeatedly",parameterSyntax: "/send,[number of times],[send delay],[message to send]")
+        let ping = Route(name:"/ping", comparisons: [.StartsWith: ["/ping"]], call: self.pingCall, description: NSLocalizedString("pingDescription"))
+        
+        let thankYou = Route(name:"Thank You", comparisons: [.StartsWith: [NSLocalizedString("ThanksJaredCommand")]], call: self.thanksJared, description: NSLocalizedString("Thank Jared"))
+        
+        let version = Route(name: "/version", comparisons: [.StartsWith: ["/version"]], call: self.getVersion, description: "versionDescription")
+        
+        let send = Route(name: "/send", comparisons: [.StartsWith: ["/send"]], call: self.sendRepeat, description: NSLocalizedString("sendDescription"),parameterSyntax: NSLocalizedString("sendSyntax"))
+        
         let test = Route(name: "/test", comparisons: [.StartsWith: ["/test"]], call: self.hello, description: "A test command")
         
 
@@ -30,16 +38,15 @@ struct CoreModule: RoutingModule {
     }
     
     func pingCall(message:String, myRoom: Room) -> Void {
-        let responseLocalized = NSLocalizedString("PongResponse", tableName: "CoreStrings", comment: "Response for ping! command")
-        SendText(responseLocalized, toRoom: myRoom)
+        SendText(NSLocalizedString("PongResponse"), toRoom: myRoom)
     }
     
     func thanksJared(message:String, myRoom: Room) -> Void {
-        SendText(NSLocalizedString("WelcomeResponse", tableName: "CoreStrings", comment: "Response for thank you command"), toRoom: myRoom)
+        SendText(NSLocalizedString("WelcomeResponse"), toRoom: myRoom)
     }
     
     func getVersion(message:String, myRoom: Room) -> Void {
-        SendText("I am version 3.0 beta of Jared, compiled on Swift 2.2!", toRoom: myRoom)
+        SendText(NSLocalizedString("versionResponse"), toRoom: myRoom)
     }
     
     func sendRepeat(message:String, myRoom: Room) -> Void {

@@ -10,6 +10,7 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 import JaredFramework
+import Cocoa
 
 
 struct RESTModule: RoutingModule {
@@ -95,6 +96,28 @@ struct RESTModule: RoutingModule {
             getVideo(youtubeID, toChat: myRoom)
         }
     }
+    
+    
+}
+
+func convertJSONDate(twitterDate: String) -> String {
+    let formatter = NSDateFormatter()
+    
+    formatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+    formatter.timeZone = (NSTimeZone.systemTimeZone())
+    formatter.formatterBehavior = .BehaviorDefault
+    formatter.dateFormat = "eee MMM dd HH:mm:ss ZZZZ yyyy"
+    
+    let indate = formatter.dateFromString(twitterDate)
+    
+    let outputFormatter = NSDateFormatter()
+    outputFormatter.dateFormat = "hh:mm a MM/dd/yy"
+    var outputDate:String?
+    if let d = indate {
+        outputDate = outputFormatter.stringFromDate(d)
+    }
+    
+    return outputDate!;
 }
 
 
