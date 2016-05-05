@@ -12,6 +12,20 @@ import SwiftyJSON
 import JaredFramework
 import Cocoa
 
+extension NSURL
+{
+    func resolveWithCompletionHandler(completion: NSURL -> Void)
+    {
+        let originalURL = self
+        let req = NSMutableURLRequest(URL: originalURL)
+        req.HTTPMethod = "HEAD"
+        
+        NSURLSession.sharedSession().dataTaskWithRequest(req) { body, response, error in
+            completion(response?.URL ?? originalURL)
+            }.resume()
+    }
+}
+
 
 struct RESTModule: RoutingModule {
     var routes: [Route] = []
@@ -20,7 +34,9 @@ struct RESTModule: RoutingModule {
     init() {
         let youtube = Route(name: "Youtube Video Integration", comparisons: [.ContainsURL: ["youtu.be"]], call: self.youtubeCall, description: "Youtube integration to get details of youtube video url")
         let Reddit = Route(name: "Reddit comment integration", comparisons: [.ContainsURL: ["reddit.com"]], call: self.redditCall, description: "Reddit integration")
-        routes = [youtube, Reddit]
+        let iTunes = Route(name: "iTunes link integration", comparisons: [.ContainsURL: ["itunes.apple.com"]], call: self.iTunesCall, description: "iTunes url integration")
+        let iTunesShort = Route(name: "iTunes shortlink", comparisons: [.ContainsURL: ["itun.es"]], call: self.iTunesShortCall, description: "itun.es")
+        routes = [youtube, Reddit, iTunes, iTunesShort]
     }
     
     func apiTest() {
@@ -37,6 +53,14 @@ struct RESTModule: RoutingModule {
         }
     }
     
+    func getiTunesFromID(iTunesID: String, toChat: Room) {
+        print(iTunesID)
+        Alamofire.request(.GET, "https://itunes.apple.com/lookup", parameters: ["id": iTunesID]).responseString {response in
+            print(response.result.value!)
+            self.sendiTunesInfo(response.result.value!, toChat: toChat)
+        }
+    }
+    
     func sendVideoInfo(videoJSON: String, toChat: Room) {
         if let dataFromString = videoJSON.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) {
             let JSONParse = JSON(data: dataFromString)
@@ -44,7 +68,7 @@ struct RESTModule: RoutingModule {
             
             if let videoTitle = myVideo["title"], uploader = myVideo["channelTitle"], publishDate = myVideo["publishedAt"]
             {
-                let VideoString = "\(videoTitle) uploaded by \(uploader) \non \(publishDate)"
+                let VideoString = "\"\(videoTitle)\"\nuploaded by \(uploader)\non \(convertYoutubeDate(publishDate.stringValue))"
                 SendText(VideoString, toRoom: toChat)
                 
                 let localFileName = NSUUID().UUIDString
@@ -77,7 +101,41 @@ struct RESTModule: RoutingModule {
             let message = "\"\(commentBody)\" -\(commentAuthor)"
             SendText(message, toRoom: toChat)
         }
+        
+    }
+    
+    
+    func sendiTunesInfo(resultJSON: String, toChat: Room) {
+        if let dataFromString = resultJSON.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) {
+            
+            let JSONParse = JSON(data: dataFromString)
+            
+            let theResult = JSONParse["results"][0]
+            
+            let collectionName = theResult["collectionName"]
+            let type = theResult["collectionType"]
+            let artistName = theResult["artistName"]
+            let price = theResult["collectionPrice"]
+            let currency = theResult["currency"]
+            let genre = theResult["primaryGenreName"]
+            let trackCount = theResult["trackCount"]
+            
+            
+            let message = "\(collectionName)\nAn \(type) by \(artistName)\nGenre: \(genre)\n\(trackCount) tracks\n\(price) \(currency)"
+            SendText(message, toRoom: toChat)
+        }
 
+    }
+    
+    func send(commentJSON: String, toChat: Room) {
+        if let dataFromString = commentJSON.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) {
+            let JSONParse = JSON(data: dataFromString)
+            let commentAuthor = JSONParse[1]["data"]["children"][0]["data"]["author"]
+            let commentBody = JSONParse[1]["data"]["children"][0]["data"]["body"]
+            let message = "\"\(commentBody)\" -\(commentAuthor)"
+            SendText(message, toRoom: toChat)
+        }
+        
     }
     
     func redditCall(url: String, myRoom: Room) -> Void {
@@ -97,8 +155,43 @@ struct RESTModule: RoutingModule {
         }
     }
     
+    func iTunesCall(url:String, myRoom: Room) -> Void {
+        let regexMatches = matchesForRegexInText("id(\\d+)", text:url)
+        if let iTunesID = regexMatches[safe:0] {
+            getiTunesFromID(String(iTunesID.characters.dropFirst(2)), toChat: myRoom)
+        }
+    }
+    
+    func iTunesShortCall(url:String, myRoom: Room) -> Void {
+        NSURL(string: url)!.resolveWithCompletionHandler {
+            print(($0))  // prints https://itunes.apple.com/us/album/blackstar/id1059043043
+            self.iTunesCall($0.absoluteString, myRoom: myRoom)
+        }
+    }
+    
     
 }
+
+func convertYoutubeDate(inputDateString: String) -> String {
+    let formatter = NSDateFormatter()
+    
+    formatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+    formatter.timeZone = (NSTimeZone.systemTimeZone())
+    formatter.formatterBehavior = .BehaviorDefault
+    formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+    
+    let indate = formatter.dateFromString(inputDateString)
+    
+    let outputFormatter = NSDateFormatter()
+    outputFormatter.dateFormat = "hh:mm a MM/dd/yy"
+    var outputDate:String?
+    if let d = indate {
+        outputDate = outputFormatter.stringFromDate(d)
+    }
+    
+    return outputDate!;
+}
+
 
 func convertJSONDate(twitterDate: String) -> String {
     let formatter = NSDateFormatter()

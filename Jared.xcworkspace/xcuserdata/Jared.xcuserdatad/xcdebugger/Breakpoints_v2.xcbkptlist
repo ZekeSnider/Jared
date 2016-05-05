@@ -38,11 +38,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Jared/RESTModule.swift"
-            timestampString = "484075635.837694"
+            timestampString = "484122341.446733"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "128"
-            endingLineNumber = "128">
+            startingLineNumber = "221"
+            endingLineNumber = "221">
             <Locations>
                <Location
                   shouldBeEnabled = "No"
@@ -98,11 +98,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Jared/RESTModule.swift"
-            timestampString = "484075635.837694"
+            timestampString = "484122341.446733"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "145"
-            endingLineNumber = "145">
+            startingLineNumber = "238"
+            endingLineNumber = "238">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -112,11 +112,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Jared/RESTModule.swift"
-            timestampString = "484075635.837694"
+            timestampString = "484122341.446733"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "139"
-            endingLineNumber = "139">
+            startingLineNumber = "232"
+            endingLineNumber = "232">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -170,11 +170,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Jared/RESTModule.swift"
-            timestampString = "484074899.320746"
+            timestampString = "484122341.446733"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "50"
-            endingLineNumber = "50"
+            startingLineNumber = "74"
+            endingLineNumber = "74"
             landmarkName = "sendVideoInfo(_:toChat:)"
             landmarkType = "5">
             <Locations>
@@ -246,11 +246,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Jared/RESTModule.swift"
-            timestampString = "484075635.837694"
+            timestampString = "484122341.446733"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "123"
-            endingLineNumber = "123">
+            startingLineNumber = "216"
+            endingLineNumber = "216">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -290,11 +290,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Jared/CoreModule.swift"
-            timestampString = "482669801.605093"
+            timestampString = "484119652.536918"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "31"
-            endingLineNumber = "31"
+            startingLineNumber = "42"
+            endingLineNumber = "42"
             landmarkName = "CoreModule"
             landmarkType = "3">
          </BreakpointContent>
@@ -350,12 +350,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Jared/RESTModule.swift"
-            timestampString = "484074899.320746"
+            timestampString = "484122341.446733"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "79"
-            endingLineNumber = "79"
-            landmarkName = "sendRedditComment(_:toChat:)"
+            startingLineNumber = "126"
+            endingLineNumber = "126"
+            landmarkName = "sendiTunesInfo(_:toChat:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -398,11 +398,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Jared/Routing.swift"
-            timestampString = "482669874.152892"
+            timestampString = "484119652.536918"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "29"
-            endingLineNumber = "29"
+            startingLineNumber = "31"
+            endingLineNumber = "31"
             landmarkName = "loadPlugins(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -414,11 +414,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Jared/Routing.swift"
-            timestampString = "482673871.643903"
+            timestampString = "484119652.536918"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "67"
-            endingLineNumber = "67"
+            startingLineNumber = "69"
+            endingLineNumber = "69"
             landmarkName = "loadBundle(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -430,11 +430,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Jared/Routing.swift"
-            timestampString = "482671734.871818"
+            timestampString = "484119652.536918"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "56"
-            endingLineNumber = "56"
+            startingLineNumber = "58"
+            endingLineNumber = "58"
             landmarkName = "loadBundle(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -446,13 +446,93 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Jared/RESTModule.swift"
-            timestampString = "484075635.837694"
+            timestampString = "484122341.446733"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "119"
-            endingLineNumber = "119"
+            startingLineNumber = "212"
+            endingLineNumber = "212"
             landmarkName = "convertJSONDate(_:)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Jared/RESTModule.swift"
+            timestampString = "484122341.446733"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "58"
+            endingLineNumber = "58"
+            landmarkName = "getiTunesFromID(_:toChat:)"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "JaredUI.RESTModule.getiTunesFromID (Swift.String, toChat : JaredFramework.Room) -&gt; ()"
+                  moduleName = "JaredUI"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Jared/Desktop/new/Jared/Jared/RESTModule.swift"
+                  timestampString = "484120580.370972"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "42"
+                  endingLineNumber = "42"
+                  offsetFromSymbolStart = "131">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "JaredUI.RESTModule.(getiTunesFromID (Swift.String, toChat : JaredFramework.Room) -&gt; ()).(closure #1)"
+                  moduleName = "JaredUI"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Jared/Desktop/new/Jared/Jared/RESTModule.swift"
+                  timestampString = "484120580.371209"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "43"
+                  endingLineNumber = "43"
+                  offsetFromSymbolStart = "150">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Jared/RESTModule.swift"
+            timestampString = "484122341.446733"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "59"
+            endingLineNumber = "59"
+            landmarkName = "getiTunesFromID(_:toChat:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Jared/RESTModule.swift"
+            timestampString = "484122341.446733"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "160"
+            endingLineNumber = "160"
+            landmarkName = "iTunesCall(_:myRoom:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

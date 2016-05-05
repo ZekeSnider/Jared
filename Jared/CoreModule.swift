@@ -14,14 +14,17 @@ public func NSLocalizedString(key: String) -> String {
     return NSLocalizedString(key, tableName: "CoreStrings", comment: "")
 }
 
+
 struct CoreModule: RoutingModule {
-    var description: String = "Core functionality for Jared with universal uses"
+    var description: String = NSLocalizedString("CoreDescription")
     var routes: [Route] = []
+    
+    let mystring = NSLocalizedString("hello", tableName: "CoreStrings", value: "", comment: "")
     
     init() {
         let ping = Route(name:"/ping", comparisons: [.StartsWith: ["/ping"]], call: self.pingCall, description: NSLocalizedString("pingDescription"))
         
-        let thankYou = Route(name:"Thank You", comparisons: [.StartsWith: [NSLocalizedString("ThanksJaredCommand")]], call: self.thanksJared, description: NSLocalizedString("Thank Jared"))
+        let thankYou = Route(name:"Thank You", comparisons: [.StartsWith: [NSLocalizedString("ThanksJaredCommand")]], call: self.thanksJared, description: NSLocalizedString("ThanksJaredResponse"))
         
         let version = Route(name: "/version", comparisons: [.StartsWith: ["/version"]], call: self.getVersion, description: "versionDescription")
         
