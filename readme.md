@@ -1,5 +1,10 @@
 #Jared  
 
+##Download Links:
+###OS X
+Main Application: [1.0](Download Link)
+Handler Script: [1.0](/Users/Jared/Desktop/new/Jared/Builds/Handler/1.0/Jared.scpt)
+
 ##What is Jared?
 A powerful and easily extensibile iMessage bot. It makes it possible to add fancy chat bot features to any iMessage group chats (single person chats coming soon). It currently includes Twitter and Youtube link integrations, and some basic commands. API integrations, games, custom emotes, and much more can be added by installing plugins. 
 
@@ -8,7 +13,9 @@ A powerful and easily extensibile iMessage bot. It makes it possible to add fanc
 Any pull requests and new GitHub issues are much appreciated! If you would like to develop a plugin for Jared, see the plugin section below. I'm always available on [Twitter](https://twitter.com/tngzeke) if you have any ideas/suggestions.
 
 ##Installation
-Jared must be run a machine running OS X with an active messages account logged in. It has only been tests on 10.11 El Capitan. It may work in older OS X versions but nothing is guarenteed as there may have been changes to the Applescript scripting support. If you don't want Jared posting as you, it is recommended that you create a new Apple ID and user account on your mac, and run it in the background under that user. That way it's not using your main Apple ID.
+Jared must be run a machine running OS X with an active messages account logged in. It has only been tests on 10.11 El Capitan. It may work in older OS X versions but I can't guarentee anything as there may have been changes to the Applescript scripting support. If you don't want Jared posting as you, it is recommended that you create a new Apple ID and user account on your mac, and run it in the background under that user. That way it's not using your main Apple ID.
+
+Once you have Jared setup you can type /help to get a list of commands. /help,[command name] will give you specific information. Use /reload to reload plugins.
 
 1. Download the Jared app and run it from the applications folder.  
 You currently have to build it from source. A stable download will be available at a later date.  
