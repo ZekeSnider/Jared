@@ -1,10 +1,14 @@
 #Jared  
-An powerful and easily extensibile iMessage bot
 
 ##What is Jared?
+A powerful and easily extensibile iMessage bot. It makes it possible to add fancy chat bot features to any iMessage chat (group chats) included. It currently includes Twitter and Youtube link integrations, and some basic commands. API integrations, games, custom emotes, and much more can be added by installing plugins. 
+
+
+
+Any pull requests and new GitHub issues are much appreciated! If you would like to develop a plugin for Jared, see the plugin section below. I'm always available on [Twitter](https://twitter.com/tngzeke) if you have any ideas/suggestions.
 
 ##Installation
-Jared must be run a machine running OS X with an active messages account logged in. It has only been tests on 10.11 El Capitan. It may work in older OS X versions but nothing is guarenteed as there may have been changes to the Applescript scripting support.
+Jared must be run a machine running OS X with an active messages account logged in. It has only been tests on 10.11 El Capitan. It may work in older OS X versions but nothing is guarenteed as there may have been changes to the Applescript scripting support. If you don't want Jared posting as you, it is recommended that you create a new Apple ID and user account on your mac, and run it in the background under that user. That way it's not using your main Apple ID.
 
 1. Download the Jared app and run it from the applications folder.  
 You currently have to build it from source. A stable download will be available at a later date.  
@@ -25,11 +29,8 @@ Plugins are loaded dynamically from the /Users/Your_User/Library/Application Sup
 * None yet!  
 If you developed any plugins, please contact me a link so I can add a link here! 
 
+
+###Development
 If you would like to develop your own plugins, you need to build a .bundle to be loaded by Jared. You must include the JaredFramework.framework in your project and define a public subclass of RoutingModule. This class must be set this class as the principle class in Info.plist. Info.plist must also contain a string for "JaredFrameworkVersion", the current version number is "J1.0.0".
 
-Take a look at the EmoteModule to see how the project should be configured. Also look at the modules in contained in the main project for examples of more complicated routings.  
-
-
-
-
-
+Take a look at the [Sample project](/SampleModule) to see how the project should be configured. Also look at the modules in contained in the main project for examples of more complicated routings.  
