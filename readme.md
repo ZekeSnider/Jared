@@ -2,8 +2,8 @@
 
 ##Download Links:
 ###OS X
-Main Application: [1.0](Download Link)
-Handler Script: [1.0](/Users/Jared/Desktop/new/Jared/Builds/Handler/1.0/Jared.scpt)
+Main Application: [1.0](/Builds/MainApp/1.0/JaredUI.zip)
+Handler Script: [1.0](/Builds/Handler/1.0/Jared.scpt)
 
 ##What is Jared?
 A powerful and easily extensibile iMessage bot. It makes it possible to add fancy chat bot features to any iMessage group chats (single person chats coming soon). It currently includes Twitter and Youtube link integrations, and some basic commands. API integrations, games, custom emotes, and much more can be added by installing plugins. 
@@ -18,7 +18,7 @@ Jared must be run a machine running OS X with an active messages account logged 
 Once you have Jared setup you can type /help to get a list of commands. /help,[command name] will give you specific information. Use /reload to reload plugins.
 
 1. Download the Jared app and run it from the applications folder.  
-You currently have to build it from source. A stable download will be available at a later date.  
+See download section at the top. 
 
 2. (Optional) Set API Keys
 ![API Entry](/Screenshots/Preferences.png)
