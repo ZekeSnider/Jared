@@ -12,6 +12,7 @@ import JaredFramework
 struct MessageRouting {
     var FrameworkVersion:String = "J1.0.0"
     var modules:[RoutingModule] = []
+    var bundles:[NSBundle] = []
     var supportDir: NSURL?
     
     init () {
@@ -26,7 +27,10 @@ struct MessageRouting {
         print(supportDir.absoluteString)
         
         loadPlugins(pluginDir)
-        
+        addInternalModules()
+    }
+    
+    mutating func addInternalModules() {
         let internalModules: [RoutingModule] = [CoreModule(), RESTModule(), TwitterModule()]
         
         modules.appendContentsOf(internalModules)
@@ -77,6 +81,7 @@ struct MessageRouting {
             else {
                 return
             }
+        bundles.append(myBundle)
         
         //Add it to our modules
         modules.append(module)
@@ -88,7 +93,11 @@ struct MessageRouting {
         let pluginDir = supportDir.URLByAppendingPathComponent("Plugins")
         
         modules = []
+        for bundle in bundles {
+            bundle.unload()
+        }
         loadPlugins(pluginDir)
+        addInternalModules()
     }
     
     func sendSingleDocumentation(routeName: String, forRoom: Room) {
@@ -159,6 +168,7 @@ struct MessageRouting {
         }
         else if myLowercaseMessage == "/reload" {
             reloadPlugins()
+            SendText("Successfully reloaded plugins.", toRoom: forRoom)
         }
         else {
             RootLoop: for aModule in modules {

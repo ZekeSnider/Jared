@@ -29,8 +29,7 @@ Plugins are loaded dynamically from the /Users/Your_User/Library/Application Sup
 * None yet!  
 If you developed any plugins, please contact me a link so I can add a link here! 
 
-
 ###Development
-If you would like to develop your own plugins, you need to build a .bundle to be loaded by Jared. You must include the JaredFramework.framework in your project and define a public subclass of RoutingModule. This class must be set this class as the principle class in Info.plist. Info.plist must also contain a string for "JaredFrameworkVersion", the current version number is "J1.0.0".
+If you would like to develop your own plugins, you need to build a .bundle to be loaded by Jared. You must include the [JaredFramework.framework](/JaredFramework/JaredFramework.framework) in your project and define a public subclass of RoutingModule. This class must be set this class as the principle class in Info.plist. Info.plist must also contain a string for "JaredFrameworkVersion", the current version number is "J1.0.0".
 
 Take a look at the [Sample project](/SampleModule) to see how the project should be configured. Also look at the modules in contained in the main project for examples of more complicated routings.  
