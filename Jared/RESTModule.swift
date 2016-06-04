@@ -2,7 +2,7 @@
 //  RESTModule.swift
 //  Jared
 //
-//  Created by Jared Derulo on 4/5/16.
+//  Created by Zeke Snider on 4/5/16.
 //  Copyright © 2016 Zeke Snider. All rights reserved.
 //
 

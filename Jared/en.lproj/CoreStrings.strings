@@ -7,7 +7,7 @@
 */
 
 
-"CoreDescription" = "Core functionality for Jared with universal uses"
+"CoreDescription" = "Core functionality for Jared with universal uses";
 
 /* Response for /ping command */
 "hello"="bonjour";
@@ -22,24 +22,22 @@
 /* Thank you command */
 "ThanksJaredCommand"="Thank you Jared";
 
-"ThanksJaredResponse" = "Thank Jared"
+"ThanksJaredResponse" = "Thank Jared";
 
-
-
-"pingDescription" = "Check if the chat bot is available"
+"pingDescription" = "Check if the chat bot is available";
 
 
 /* Version */
-"versionDescription" = "Get what version Jared is running"
+"versionDescription" = "Get what version Jared is running";
 
-"versionResponse" = "I am version 3.0 beta of Jared, compiled on Swift 2.2!"
+"versionResponse" = "I am version 3.0 beta of Jared, compiled on Swift 2.2!";
 
 
 /* send */
-"sendSyntax" = "/send,[number of times],[send delay],[message to send]"
+"sendSyntax" = "/send,[number of times],[send delay],[message to send]";
 
 
-"sendDescription" = "Send a message repeatedly"
+"sendDescription" = "Send a message repeatedly";
 
 
 
