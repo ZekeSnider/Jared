@@ -1,6 +1,8 @@
-#Jared - A Chat Bot for iMessage<a name='Jared'/>
+<a name='Jared'/>
+#Jared - A Chat Bot for iMessage
 
-##Download Links<a name='Download'/>
+<a name='Download'/>
+##Download Links
 ###OS X
 Main Application: [1.0](/Builds/MainApp/1.0/JaredUI.zip)  
 Handler Script: [1.0](/Builds/Handler/1.0/Jared.scpt)
