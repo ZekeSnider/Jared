@@ -1,8 +1,8 @@
-#Jared  
+#Jared - A Chat Bot for iMessage<a name='Jared'/>
 
-##Download Links:
+##Download Links<a name='Download'/>
 ###OS X
-Main Application: [1.0](/Builds/MainApp/1.0/JaredUI.zip)
+Main Application: [1.0](/Builds/MainApp/1.0/JaredUI.zip)  
 Handler Script: [1.0](/Builds/Handler/1.0/Jared.scpt)
 
 ##What is Jared?
@@ -18,7 +18,7 @@ Jared must be run a machine running OS X with an active messages account logged 
 Once you have Jared setup you can type /help to get a list of commands. /help,[command name] will give you specific information. Use /reload to reload plugins.
 
 1. Download the Jared app and run it from the applications folder.  
-See download section at the top. 
+See [download section](##Download) at the top. 
 
 2. (Optional) Set API Keys
 ![API Entry](/Screenshots/Preferences.png)
@@ -26,7 +26,7 @@ Obtain [Twitter](https://apps.twitter.com) and [Youtube API](https://developers.
 
 3. Download the Jared script handler and set it in Messages.app
 ![Messages Preferences](/Screenshots/MessagesPreferences.png)
-Select AppleScript handler in Messages.app preferences, select "Open Script Folder", drag the [Jared script](/Jared.scpt) into that folder, then select it as the handler.
+Select AppleScript handler in Messages.app preferences, select "Open Script Folder", drag the Jared script handler into that folder, then select it as the handler.
 
 
 ##Plugins
@@ -34,9 +34,9 @@ Plugins are loaded dynamically from the /Users/Your_User/Library/Application Sup
 
 ###Plugin List
 * None yet!  
-If you developed any plugins, please contact me a link so I can add a link here! 
+If you developed any plugins, please contact me a link so I can add a link here! I will be working on a few extra modules of my own as well, and will add them here when they are complete.
 
 ###Development
-If you would like to develop your own plugins, you need to build a .bundle to be loaded by Jared. You must include the [JaredFramework.framework](/JaredFramework/JaredFramework.framework) in your project and define a public subclass of RoutingModule. This class must be set this class as the principle class in Info.plist. Info.plist must also contain a string for "JaredFrameworkVersion", the current version number is "J1.0.0".
+If you would like to develop your own plugins, you need to build a .bundle to be loaded by Jared. You must include the [JaredFramework.framework](/JaredFramework/JaredFramework.framework) in your project and define a public subclass of RoutingModule. The bundle must set this class as the principle class in Info.plist. Info.plist must also contain a string for "JaredFrameworkVersion", the current version number is "J1.0.0".
 
 Take a look at the [Sample project](/SampleModule) to see how the project should be configured. Also look at the modules in contained in the main project for examples of more complicated routings.  
