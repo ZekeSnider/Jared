@@ -26,15 +26,22 @@ class TwitterModule: RoutingModule {
     var routes: [Route] = []
     var description = "Twitter Integration"
     var accessToken: String?
-    let consumerKey = "xV2TXhB3w0GPxuSAm6pIuzpwy"
-    let consumerSecret = "0LxuGGcy2JugU8NjOkXDEvvCqRVwIrjM6WvmLQE7lcPFuMqdnk"
-    
-    
+    let defaults = NSUserDefaults.standardUserDefaults()
+    var consumerKey: String {
+        get {
+            return defaults.stringForKey("TwitterKey") ?? "None"
+        }
+    }
+    var consumerSecret: String {
+        get {
+            return defaults.stringForKey("TwitterSecret") ?? "None"
+        }
+    }
     
     let baseUrlString = "https://api.twitter.com/1.1/"
     let pageSize = 20
     
-    required init() {
+    required init() {        
         let twitterStatus = Route(name: "Twitter Tweet Integration", comparisons: [.ContainsURL: ["twitter.com"]], call: self.twitterStatusID, description: "Twitter integration to get detail of a tweet URLs")
         
         routes = [twitterStatus]

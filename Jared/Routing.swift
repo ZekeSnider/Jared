@@ -9,8 +9,6 @@
 import Foundation
 import JaredFramework
 
-
-
 struct MessageRouting {
     var FrameworkVersion:String = "J1.0.0"
     var modules:[RoutingModule] = []
@@ -29,7 +27,7 @@ struct MessageRouting {
         
         loadPlugins(pluginDir)
         
-        let internalModules: [RoutingModule] = [CoreModule(), RESTModule(), TwitterModule(), EpicModule()]
+        let internalModules: [RoutingModule] = [CoreModule(), RESTModule(), TwitterModule()]
         
         modules.appendContentsOf(internalModules)
     }

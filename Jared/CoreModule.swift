@@ -29,16 +29,10 @@ struct CoreModule: RoutingModule {
         let version = Route(name: "/version", comparisons: [.StartsWith: ["/version"]], call: self.getVersion, description: "versionDescription")
         
         let send = Route(name: "/send", comparisons: [.StartsWith: ["/send"]], call: self.sendRepeat, description: NSLocalizedString("sendDescription"),parameterSyntax: NSLocalizedString("sendSyntax"))
-        
-        let test = Route(name: "/test", comparisons: [.StartsWith: ["/test"]], call: self.hello, description: "A test command")
-        
 
-        routes = [ping, thankYou, version, send, test]
+        routes = [ping, thankYou, version, send]
     }
     
-    func hello(message:String, myRoom: Room) -> Void{
-        SendImage("/Users/Jared/Desktop/Video Message.mov", toRoom: myRoom)
-    }
     
     func pingCall(message:String, myRoom: Room) -> Void {
         SendText(NSLocalizedString("PongResponse"), toRoom: myRoom)

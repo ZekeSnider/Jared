@@ -29,7 +29,13 @@ extension NSURL
 
 struct RESTModule: RoutingModule {
     var routes: [Route] = []
-    var description = "Integration with various REST APIs. Currently: Youtube"
+    var description = "Integration with various REST APIs. Currently: Youtube, iTunes"
+    let defaults = NSUserDefaults.standardUserDefaults()
+    var key: String {
+        get {
+            return defaults.stringForKey("YoutubeSecret") ?? "None"
+        }
+    }
     
     init() {
         let youtube = Route(name: "Youtube Video Integration", comparisons: [.ContainsURL: ["youtu.be"]], call: self.youtubeCall, description: "Youtube integration to get details of youtube video url")
@@ -39,15 +45,9 @@ struct RESTModule: RoutingModule {
         routes = [youtube, Reddit, iTunes, iTunesShort]
     }
     
-    func apiTest() {
-        Alamofire.request(.GET, "https://www.googleapis.com/youtube/v3/videos", parameters: ["key": "AIzaSyCVvhTV-pnl4Ue6Y8-lZWIrhSsoYxPy-fM", "part": "snippet", "id": "eXhNtH8CrbA"]).responseJSON {response in
-            print(response.result.value)
-        }
-    }
-    
     func getVideo(videoID: String, toChat: Room) {
         print(videoID)
-        Alamofire.request(.GET, "https://www.googleapis.com/youtube/v3/videos", parameters: ["key": "AIzaSyCVvhTV-pnl4Ue6Y8-lZWIrhSsoYxPy-fM", "part": "snippet", "id": videoID]).responseString {response in
+        Alamofire.request(.GET, "https://www.googleapis.com/youtube/v3/videos", parameters: ["key": key, "part": "snippet", "id": videoID]).responseString {response in
             print(response.result.value!)
             self.sendVideoInfo(response.result.value!, toChat: toChat)
         }
@@ -164,7 +164,7 @@ struct RESTModule: RoutingModule {
     
     func iTunesShortCall(url:String, myRoom: Room) -> Void {
         NSURL(string: url)!.resolveWithCompletionHandler {
-            print(($0))  // prints https://itunes.apple.com/us/album/blackstar/id1059043043
+            print(($0))
             self.iTunesCall($0.absoluteString, myRoom: myRoom)
         }
     }

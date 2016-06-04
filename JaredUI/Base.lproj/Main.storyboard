@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10117"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -651,7 +651,7 @@
         <scene sceneID="R2V-B0-nI4">
             <objects>
                 <windowController id="B8D-0N-5wS" sceneMemberID="viewController">
-                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
+                    <window key="window" title="Preferences" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="480" height="270"/>
@@ -665,18 +665,105 @@
             </objects>
             <point key="canvasLocation" x="75" y="250"/>
         </scene>
-        <!--View Controller-->
+        <!--Preferences-->
         <scene sceneID="hIz-AP-VOD">
             <objects>
-                <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="JaredUI" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Preferences" id="XfG-lQ-9wD" customClass="ViewController" customModule="JaredUI" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="150"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vsI-U5-UIq">
+                                <rect key="frame" x="18" y="113" width="151" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Youtube API Key Secret:" id="6wN-G0-bLc">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YTU-KV-gNm">
+                                <rect key="frame" x="18" y="88" width="142" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Twitter Consumer Key:" id="Dx2-1B-dp2">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Hs0-Pg-VG4">
+                                <rect key="frame" x="18" y="63" width="159" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Twitter Consumer Secret:" id="ns4-xE-cyO">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eFa-Da-GZa">
+                                <rect key="frame" x="175" y="85" width="285" height="22"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="LrM-3M-vfR">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qv5-aT-M3G">
+                                <rect key="frame" x="175" y="60" width="285" height="22"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="dhK-ZY-N3Q">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SYb-bR-a5a">
+                                <rect key="frame" x="175" y="108" width="285" height="22"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="Ooa-oj-pxc">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="F1N-6I-2nB">
+                                <rect key="frame" x="397" y="13" width="69" height="32"/>
+                                <buttonCell key="cell" type="push" title="Set" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="mve-Mv-nDd">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="setButtonPressed:" target="XfG-lQ-9wD" id="1Fo-bE-zPE"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="qv5-aT-M3G" firstAttribute="leading" secondItem="Hs0-Pg-VG4" secondAttribute="trailing" id="4Lh-4P-fNG"/>
+                            <constraint firstItem="Hs0-Pg-VG4" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" id="8EF-Q9-VAN"/>
+                            <constraint firstItem="SYb-bR-a5a" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="20" id="9lI-NI-MFu"/>
+                            <constraint firstItem="vsI-U5-UIq" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" id="DbG-bz-MJp"/>
+                            <constraint firstItem="Hs0-Pg-VG4" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="70" id="JXa-Ma-Txw"/>
+                            <constraint firstItem="eFa-Da-GZa" firstAttribute="leading" secondItem="YTU-KV-gNm" secondAttribute="trailing" constant="17" id="Ne9-n3-uGW"/>
+                            <constraint firstItem="eFa-Da-GZa" firstAttribute="top" secondItem="SYb-bR-a5a" secondAttribute="bottom" constant="1" id="R4O-Xo-Hud"/>
+                            <constraint firstAttribute="trailing" secondItem="eFa-Da-GZa" secondAttribute="trailing" constant="20" id="TIO-ji-kRJ"/>
+                            <constraint firstItem="SYb-bR-a5a" firstAttribute="leading" secondItem="vsI-U5-UIq" secondAttribute="trailing" constant="8" id="VAR-oH-DST"/>
+                            <constraint firstAttribute="trailing" secondItem="qv5-aT-M3G" secondAttribute="trailing" constant="20" id="Vg1-iM-HW0"/>
+                            <constraint firstItem="qv5-aT-M3G" firstAttribute="leading" secondItem="Hs0-Pg-VG4" secondAttribute="trailing" id="XCC-c5-cLb"/>
+                            <constraint firstAttribute="bottom" secondItem="F1N-6I-2nB" secondAttribute="bottom" constant="20" id="cx5-9b-mxE"/>
+                            <constraint firstItem="qv5-aT-M3G" firstAttribute="top" secondItem="eFa-Da-GZa" secondAttribute="bottom" constant="3" id="d3X-uf-nd8"/>
+                            <constraint firstItem="F1N-6I-2nB" firstAttribute="leading" secondItem="qv5-aT-M3G" secondAttribute="trailing" constant="-57" id="frq-k6-joa"/>
+                            <constraint firstItem="YTU-KV-gNm" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" id="hC0-mC-Gh6"/>
+                            <constraint firstItem="vsI-U5-UIq" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="20" id="jAv-oy-teS"/>
+                            <constraint firstAttribute="trailing" secondItem="F1N-6I-2nB" secondAttribute="trailing" constant="20" id="lXa-WR-cdc"/>
+                            <constraint firstItem="qv5-aT-M3G" firstAttribute="top" secondItem="eFa-Da-GZa" secondAttribute="bottom" constant="3" id="sHs-nW-0Q9"/>
+                            <constraint firstAttribute="trailing" secondItem="SYb-bR-a5a" secondAttribute="trailing" constant="20" id="trH-pi-eFa"/>
+                            <constraint firstItem="YTU-KV-gNm" firstAttribute="top" secondItem="vsI-U5-UIq" secondAttribute="bottom" constant="8" id="uAE-Zc-xrj"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="TwitterKey" destination="eFa-Da-GZa" id="KZi-RN-UXx"/>
+                        <outlet property="TwitterSecret" destination="qv5-aT-M3G" id="rUO-7r-5LN"/>
+                        <outlet property="YoutubeSecret" destination="SYb-bR-a5a" id="CoH-tr-KsB"/>
+                    </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="655"/>
+            <point key="canvasLocation" x="75" y="595"/>
         </scene>
     </scenes>
 </document>

@@ -31,7 +31,6 @@ class MessageReceive: NSScriptCommand {
             backgroundThread(0.0, background: {appDelegate.Router.routeMessage(message!, fromBuddy: buddyName!, forRoom: Room(GUID: groupID!, buddyName: buddyName!))})
         }
         
-        
         return false
     }
     class func classString() -> String {

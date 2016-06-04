@@ -7,18 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7F0E931D1D02FC250096BABE /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0E931C1D02FC250096BABE /* Global.swift */; };
 		7F84B6221CC506790059A82B /* JaredFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F84B6211CC506790059A82B /* JaredFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7F84B6261CC506790059A82B /* JaredFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F84B61F1CC506790059A82B /* JaredFramework.framework */; };
 		7F84B6271CC506790059A82B /* JaredFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7F84B61F1CC506790059A82B /* JaredFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7F84B62B1CC5069C0059A82B /* amain.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39EC1751CB01F55002C3161 /* amain.swift */; };
 		7F84B62E1CC511B80059A82B /* CoreStrings.strings in Resources */ = {isa = PBXBuildFile; fileRef = B3BBA7CD1CB3259A00E1749C /* CoreStrings.strings */; };
-		7F9621641CBD301A0047644D /* Big_Buck_Bunny_Trailer.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 7F9621631CBD301A0047644D /* Big_Buck_Bunny_Trailer.m4v */; };
 		7FE220ED1CB3C8340081CE23 /* podfile in Resources */ = {isa = PBXBuildFile; fileRef = 7FE220EC1CB3C8340081CE23 /* podfile */; };
-		7FE3971E1CC0B13600A7C13A /* EpicModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE3971D1CC0B13600A7C13A /* EpicModule.swift */; };
 		7FEF4A521CB3CA020032A5CC /* RESTModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEF4A511CB3CA020032A5CC /* RESTModule.swift */; };
 		7FF077EB1CBCFFCB008E33CB /* SendImage.scpt in Resources */ = {isa = PBXBuildFile; fileRef = 7FF077EA1CBCFFCB008E33CB /* SendImage.scpt */; };
 		7FF077ED1CBD1A33008E33CB /* SendImageAndDelete.scpt in Resources */ = {isa = PBXBuildFile; fileRef = 7FF077EC1CBD1A33008E33CB /* SendImageAndDelete.scpt */; };
-		7FF077F51CBD22B5008E33CB /* Fedora.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7FF077F41CBD22B5008E33CB /* Fedora.jpg */; };
 		B332787A1CB2CB1300BBDD3A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33278791CB2CB1300BBDD3A /* AppDelegate.swift */; };
 		B332787C1CB2CB1300BBDD3A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B332787B1CB2CB1300BBDD3A /* ViewController.swift */; };
 		B332787E1CB2CB1300BBDD3A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B332787D1CB2CB1300BBDD3A /* Assets.xcassets */; };
@@ -59,16 +57,14 @@
 /* Begin PBXFileReference section */
 		19C9C2FBC44EE08B0C7851EA /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		61E9953E47FCCA8F17A7A007 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		7F0E931C1D02FC250096BABE /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		7F84B61F1CC506790059A82B /* JaredFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = JaredFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F84B6211CC506790059A82B /* JaredFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JaredFramework.h; sourceTree = "<group>"; };
 		7F84B6231CC506790059A82B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7F9621631CBD301A0047644D /* Big_Buck_Bunny_Trailer.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; name = Big_Buck_Bunny_Trailer.m4v; path = Modules/EpicModule/Big_Buck_Bunny_Trailer.m4v; sourceTree = "<group>"; };
 		7FE220EC1CB3C8340081CE23 /* podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = podfile; sourceTree = SOURCE_ROOT; };
-		7FE3971D1CC0B13600A7C13A /* EpicModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpicModule.swift; sourceTree = "<group>"; };
 		7FEF4A511CB3CA020032A5CC /* RESTModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RESTModule.swift; sourceTree = "<group>"; };
 		7FF077EA1CBCFFCB008E33CB /* SendImage.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = SendImage.scpt; sourceTree = "<group>"; };
 		7FF077EC1CBD1A33008E33CB /* SendImageAndDelete.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = SendImageAndDelete.scpt; sourceTree = "<group>"; };
-		7FF077F41CBD22B5008E33CB /* Fedora.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = Fedora.jpg; path = Modules/EpicModule/Fedora.jpg; sourceTree = "<group>"; };
 		940D363B410942855CF46EC4 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		B332784D1CB2C4D000BBDD3A /* MessageReceive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageReceive.swift; path = ../Jared/MessageReceive.swift; sourceTree = "<group>"; };
 		B33278511CB2C94700BBDD3A /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -127,15 +123,6 @@
 			path = JaredFramework;
 			sourceTree = "<group>";
 		};
-		7FF077F31CBD227B008E33CB /* EpicModule */ = {
-			isa = PBXGroup;
-			children = (
-				7F9621631CBD301A0047644D /* Big_Buck_Bunny_Trailer.m4v */,
-				7FF077F41CBD22B5008E33CB /* Fedora.jpg */,
-			);
-			name = EpicModule;
-			sourceTree = "<group>";
-		};
 		8C62C36413640EF4B69CD61C /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -186,8 +173,9 @@
 			children = (
 				7FF077EC1CBD1A33008E33CB /* SendImageAndDelete.scpt */,
 				7FF077EA1CBCFFCB008E33CB /* SendImage.scpt */,
-				B39A65DF1CC1FB1B003E26B0 /* Routing.swift */,
 				B39F2B381CB3BCA700C0D35C /* SendText.scpt */,
+				B39A65DF1CC1FB1B003E26B0 /* Routing.swift */,
+				7F0E931C1D02FC250096BABE /* Global.swift */,
 				B39EC17C1CB01FDD002C3161 /* Modules */,
 				7FE220EC1CB3C8340081CE23 /* podfile */,
 			);
@@ -197,8 +185,6 @@
 		B39EC17C1CB01FDD002C3161 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				7FE3971D1CC0B13600A7C13A /* EpicModule.swift */,
-				7FF077F31CBD227B008E33CB /* EpicModule */,
 				B379EB3A1CB8B4BF008E2A33 /* TwitterModule.swift */,
 				7FEF4A511CB3CA020032A5CC /* RESTModule.swift */,
 				B39EC17D1CB01FEF002C3161 /* CoreModule.swift */,
@@ -316,9 +302,7 @@
 			files = (
 				7F84B62E1CC511B80059A82B /* CoreStrings.strings in Resources */,
 				B39F2B391CB3BCA700C0D35C /* SendText.scpt in Resources */,
-				7F9621641CBD301A0047644D /* Big_Buck_Bunny_Trailer.m4v in Resources */,
 				B332787E1CB2CB1300BBDD3A /* Assets.xcassets in Resources */,
-				7FF077F51CBD22B5008E33CB /* Fedora.jpg in Resources */,
 				7FE220ED1CB3C8340081CE23 /* podfile in Resources */,
 				7FF077EB1CBCFFCB008E33CB /* SendImage.scpt in Resources */,
 				B33278811CB2CB1300BBDD3A /* Main.storyboard in Resources */,
@@ -392,12 +376,12 @@
 			files = (
 				B39A65E01CC1FB1B003E26B0 /* Routing.swift in Sources */,
 				7FEF4A521CB3CA020032A5CC /* RESTModule.swift in Sources */,
-				7FE3971E1CC0B13600A7C13A /* EpicModule.swift in Sources */,
 				B3BBA7D11CB3284A00E1749C /* CoreModule.swift in Sources */,
 				B3BBA7CA1CB2F69800E1749C /* MessageReceive.swift in Sources */,
 				B332787C1CB2CB1300BBDD3A /* ViewController.swift in Sources */,
 				B332787A1CB2CB1300BBDD3A /* AppDelegate.swift in Sources */,
 				B379EB3B1CB8B4BF008E2A33 /* TwitterModule.swift in Sources */,
+				7F0E931D1D02FC250096BABE /* Global.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

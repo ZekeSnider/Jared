@@ -46,15 +46,6 @@ public func SendImage(imagePath:String, toRoom: Room, blockThread: Bool) {
     }
 }
 
-public func SendImageAndDelete(imagePath:String, toRoom: Room) {
-    print("I want to send image \(imagePath)")
-    
-    let task = NSTask()
-    task.launchPath = "/usr/bin/osascript"
-    task.arguments = ["/Users/Jared/Desktop/new/Jared/Jared/SendImageAndDelete.scpt", imagePath, toRoom.GUID]
-    task.launch()
-}
-
 public enum Compare {
     case StartsWith
     case Contains
