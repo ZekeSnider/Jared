@@ -19,6 +19,7 @@
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="orderFrontStandardAboutPanel:" target="Ady-hI-5gd" id="Exp-CZ-Vem"/>
+                                                <segue destination="R3T-JT-J7M" kind="show" id="dKs-kd-woH"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="VOq-y0-SEH"/>
@@ -648,6 +649,62 @@
             <point key="canvasLocation" x="75.5" y="10"/>
         </scene>
         <!--Window Controller-->
+        <scene sceneID="aad-lo-kvI">
+            <objects>
+                <windowController id="02P-ba-Sor" sceneMemberID="viewController">
+                    <window key="window" title="About" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="qUO-tD-Pqh">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="163" y="199" width="480" height="270"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
+                    </window>
+                    <connections>
+                        <segue destination="R3T-JT-J7M" kind="relationship" relationship="window.shadowedContentViewController" id="c0r-kU-FHX"/>
+                    </connections>
+                </windowController>
+                <customObject id="hkv-MJ-1Qs" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="608" y="79"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="qnc-P6-Vnt">
+            <objects>
+                <viewController id="R3T-JT-J7M" sceneMemberID="viewController">
+                    <view key="view" id="OB9-LK-9RL">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Vm2-aU-iUG">
+                                <rect key="frame" x="18" y="233" width="79" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Jared V1.0.0" id="pGI-I2-iew">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xZ6-FT-uY7">
+                                <rect key="frame" x="20" y="127" width="440" height="98"/>
+                                <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="19b-d6-hWv">
+                                    <font key="font" metaFont="system"/>
+                                    <string key="title">Auto-update is not yet implemented so please check 
+https://github.com/zekesnider/Jared/github-release/releases 
+for updates.</string>
+                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="Vm2-aU-iUG" firstAttribute="top" secondItem="OB9-LK-9RL" secondAttribute="top" constant="20" id="U8Z-LR-rCm"/>
+                            <constraint firstItem="Vm2-aU-iUG" firstAttribute="leading" secondItem="OB9-LK-9RL" secondAttribute="leading" constant="20" id="sg4-tu-bCo"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <customObject id="pbS-Ak-ndy" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="608" y="595"/>
+        </scene>
+        <!--Window Controller-->
         <scene sceneID="R2V-B0-nI4">
             <objects>
                 <windowController id="B8D-0N-5wS" sceneMemberID="viewController">
@@ -810,7 +867,7 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textView importsGraphics="NO" baseWritingDirection="leftToRight" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="mTW-SE-Gg8">
-                                            <rect key="frame" x="0.0" y="0.0" width="438" height="546"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="438" height="812"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="textColor" red="0.14901960784313725" green="0.14901960784313725" blue="0.14901960784313725" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1370,7 +1427,7 @@ Cg
                                     <rect key="frame" x="-100" y="-100" width="87" height="18"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
-                                <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="0.0097832303472501405" horizontal="NO" id="Wu4-yI-7Y2">
+                                <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="Wu4-yI-7Y2">
                                     <rect key="frame" x="423" y="1" width="16" height="173"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
@@ -1398,7 +1455,7 @@ Cg
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textView importsGraphics="NO" baseWritingDirection="leftToRight" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="z0w-rn-hi5">
-                                            <rect key="frame" x="0.0" y="0.0" width="438" height="518"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="438" height="280"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="textColor" red="0.14901960784313725" green="0.14901960784313725" blue="0.14901960784313725" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1904,7 +1961,7 @@ Cg
                                     <rect key="frame" x="-100" y="-100" width="87" height="18"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
-                                <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="0.0045809581097908409" horizontal="NO" id="Rtm-Ug-Mdo">
+                                <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="Rtm-Ug-Mdo">
                                     <rect key="frame" x="423" y="1" width="16" height="158"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
@@ -1933,5 +1990,6 @@ Cg
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="dZx-Oo-2Es"/>
+        <segue reference="dKs-kd-woH"/>
     </inferredMetricsTieBreakers>
 </document>
