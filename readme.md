@@ -13,8 +13,13 @@ A powerful and easily extensibile iMessage bot. It makes it possible to add fanc
 
 Any pull requests and new GitHub issues are much appreciated! If you would like to develop a plugin for Jared, see the plugin section below. I'm always available on [Twitter](https://twitter.com/tngzeke) if you have any ideas/suggestions.
 
+##How it works
+Jared implements an apple script scripting interface which is called upon by the Messages.app script handler. This allows all handling of requests to be taken care of in a native app written in Swift (not applescript). It's also multithreaded so it can take care of multiple requests at once. There's a few other iMessage bots I've seen but as far as I know this is the first one that is written in Swift and implements its own AppleScript interface. The plugin modularity via .bundles is another great feature. I think the interface for routing is quite nice, take a look at the source and check it out. Any improvements by pull requests would be much appreciated.
+
+I've tried using private APIs such as MessagesKit to send/receive messages to no avail so far. If you have any leads on this front I'd love to hear about it.
+
 ##Installation
-Jared must be run a machine running OS X with an active messages account logged in. It has only been tests on 10.11 El Capitan. It may work in older OS X versions but I can't guarentee anything as there may have been changes to the Applescript scripting support. If you don't want Jared posting as you, it is recommended that you create a new Apple ID and user account on your mac, and run it in the background under that user. That way it's not using your main Apple ID.
+Jared must be run a machine running OS X with an active messages account logged in. It has only been tested on 10.11 El Capitan. It may work in older OS X versions but I can't guarentee anything as there may have been changes to the Applescript scripting support. If you don't want Jared posting as you, it is recommended that you create a new Apple ID and user account on your mac, and run it in the background under that user. That way it's not using your main Apple ID.  
 
 Once you have Jared setup you can type /help to get a list of commands. /help,[command name] will give you specific information. Use /reload to reload plugins.
 
