@@ -13,17 +13,17 @@ class ViewController: NSViewController {
     @IBOutlet weak var TwitterKey: NSTextField!
     @IBOutlet weak var TwitterSecret: NSTextField!
     
-    var defaults: NSUserDefaults!
+    var defaults: UserDefaults!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         
-        defaults = NSUserDefaults.standardUserDefaults()
+        defaults = UserDefaults.standard
         
-        YoutubeSecret.stringValue = defaults.stringForKey("YoutubeSecret") ?? "None"
-        TwitterKey.stringValue = defaults.stringForKey("TwitterKey") ?? "None"
-        TwitterSecret.stringValue = defaults.stringForKey("TwitterSecret") ?? "None"
+        YoutubeSecret.stringValue = defaults.string(forKey: "YoutubeSecret") ?? "None"
+        TwitterKey.stringValue = defaults.string(forKey: "TwitterKey") ?? "None"
+        TwitterSecret.stringValue = defaults.string(forKey: "TwitterSecret") ?? "None"
     }
     
     override func viewDidAppear() {
@@ -31,13 +31,13 @@ class ViewController: NSViewController {
         self.view.window!.title = "Preferences"
     }
     
-    @IBAction func setButtonPressed(sender: AnyObject) {
+    @IBAction func setButtonPressed(_ sender: AnyObject) {
         defaults.setValue(YoutubeSecret.stringValue, forKey: "YoutubeSecret")
         defaults.setValue(TwitterKey.stringValue, forKey: "TwitterKey")
         defaults.setValue(TwitterSecret.stringValue, forKey: "TwitterSecret")
     }
 
-    override var representedObject: AnyObject? {
+    override var representedObject: Any? {
         didSet {
         // Update the view, if already loaded.
         }

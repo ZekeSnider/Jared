@@ -10,7 +10,7 @@ import Foundation
 import Cocoa
 import JaredFramework
 
-public func NSLocalizedString(key: String) -> String {
+public func NSLocalizedString(_ key: String) -> String {
     return NSLocalizedString(key, tableName: "CoreStrings", comment: "")
 }
 
@@ -22,32 +22,32 @@ struct CoreModule: RoutingModule {
     let mystring = NSLocalizedString("hello", tableName: "CoreStrings", value: "", comment: "")
     
     init() {
-        let ping = Route(name:"/ping", comparisons: [.StartsWith: ["/ping"]], call: self.pingCall, description: NSLocalizedString("pingDescription"))
+        let ping = Route(name:"/ping", comparisons: [.startsWith: ["/ping"]], call: self.pingCall, description: NSLocalizedString("pingDescription"))
         
-        let thankYou = Route(name:"Thank You", comparisons: [.StartsWith: [NSLocalizedString("ThanksJaredCommand")]], call: self.thanksJared, description: NSLocalizedString("ThanksJaredResponse"))
+        let thankYou = Route(name:"Thank You", comparisons: [.startsWith: [NSLocalizedString("ThanksJaredCommand")]], call: self.thanksJared, description: NSLocalizedString("ThanksJaredResponse"))
         
-        let version = Route(name: "/version", comparisons: [.StartsWith: ["/version"]], call: self.getVersion, description: "versionDescription")
+        let version = Route(name: "/version", comparisons: [.startsWith: ["/version"]], call: self.getVersion, description: "versionDescription")
         
-        let send = Route(name: "/send", comparisons: [.StartsWith: ["/send"]], call: self.sendRepeat, description: NSLocalizedString("sendDescription"),parameterSyntax: NSLocalizedString("sendSyntax"))
+        let send = Route(name: "/send", comparisons: [.startsWith: ["/send"]], call: self.sendRepeat, description: NSLocalizedString("sendDescription"),parameterSyntax: NSLocalizedString("sendSyntax"))
 
         routes = [ping, thankYou, version, send]
     }
     
     
-    func pingCall(message:String, myRoom: Room) -> Void {
+    func pingCall(_ message:String, myRoom: Room) -> Void {
         SendText(NSLocalizedString("PongResponse"), toRoom: myRoom)
     }
     
-    func thanksJared(message:String, myRoom: Room) -> Void {
+    func thanksJared(_ message:String, myRoom: Room) -> Void {
         SendText(NSLocalizedString("WelcomeResponse"), toRoom: myRoom)
     }
     
-    func getVersion(message:String, myRoom: Room) -> Void {
+    func getVersion(_ message:String, myRoom: Room) -> Void {
         SendText(NSLocalizedString("versionResponse"), toRoom: myRoom)
     }
     
-    func sendRepeat(message:String, myRoom: Room) -> Void {
-        let parameters = message.componentsSeparatedByString(",")
+    func sendRepeat(_ message:String, myRoom: Room) -> Void {
+        let parameters = message.components(separatedBy: ",")
         if let repeatNum: Int = Int(parameters[1]), let delay = Int(parameters[2]) {
             print(parameters.count)
             var textToSend: String
@@ -61,7 +61,7 @@ struct CoreModule: RoutingModule {
             
             for _ in 1...repeatNum {
                 SendText(textToSend, toRoom: myRoom)
-                NSThread.sleepForTimeInterval(Double(delay))
+                Thread.sleep(forTimeInterval: Double(delay))
             }
         }
         

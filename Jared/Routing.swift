@@ -12,17 +12,17 @@ import JaredFramework
 struct MessageRouting {
     var FrameworkVersion:String = "J1.0.0"
     var modules:[RoutingModule] = []
-    var bundles:[NSBundle] = []
-    var supportDir: NSURL?
+    var bundles:[Bundle] = []
+    var supportDir: URL?
     
     init () {
-        let filemanager = NSFileManager.defaultManager()
-        let appsupport = filemanager.URLsForDirectory(.ApplicationSupportDirectory, inDomains: .UserDomainMask)[0]
-        let supportDir = appsupport.URLByAppendingPathComponent("Jared")
-        let pluginDir = supportDir.URLByAppendingPathComponent("Plugins")
+        let filemanager = FileManager.default
+        let appsupport = filemanager.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
+        let supportDir = appsupport.appendingPathComponent("Jared")
+        let pluginDir = supportDir.appendingPathComponent("Plugins")
         
-        try! filemanager.createDirectoryAtURL(supportDir, withIntermediateDirectories: true, attributes: nil)
-        try! filemanager.createDirectoryAtURL(pluginDir, withIntermediateDirectories: true, attributes: nil)
+        try! filemanager.createDirectory(at: supportDir, withIntermediateDirectories: true, attributes: nil)
+        try! filemanager.createDirectory(at: pluginDir, withIntermediateDirectories: true, attributes: nil)
         
         print(supportDir.absoluteString)
         
@@ -33,16 +33,16 @@ struct MessageRouting {
     mutating func addInternalModules() {
         let internalModules: [RoutingModule] = [CoreModule(), RESTModule(), TwitterModule()]
         
-        modules.appendContentsOf(internalModules)
+        modules.append(contentsOf: internalModules)
     }
     
     
-    mutating func loadPlugins(pluginDir: NSURL) {
+    mutating func loadPlugins(_ pluginDir: URL) {
         //Loop through all files in our plugin directory
-        let filemanager = NSFileManager.defaultManager()
-        let files = filemanager.enumeratorAtURL(pluginDir, includingPropertiesForKeys: [], options: [.SkipsHiddenFiles, .SkipsPackageDescendants], errorHandler: nil)
+        let filemanager = FileManager.default
+        let files = filemanager.enumerator(at: pluginDir, includingPropertiesForKeys: [], options: [.skipsHiddenFiles, .skipsPackageDescendants], errorHandler: nil)
         while let file = files?.nextObject() {
-            guard let currentURL = file as? NSURL
+            guard let currentURL = file as? URL
                 else {
                     continue
                 }
@@ -53,7 +53,7 @@ struct MessageRouting {
                     continue
                 }
             
-            guard let myBundle = NSBundle(URL: currentURL)
+            guard let myBundle = Bundle(url: currentURL)
                 else {
                     continue
                 }
@@ -63,7 +63,7 @@ struct MessageRouting {
         }
     }
     
-    mutating func loadBundle(myBundle: NSBundle) {
+    mutating func loadBundle(_ myBundle: Bundle) {
         //Check version of the framework that this plugin is using
         guard myBundle.infoDictionary?["JaredFrameworkVersion"] as? String == self.FrameworkVersion
             else {
@@ -88,9 +88,9 @@ struct MessageRouting {
     }
     
     mutating func reloadPlugins() {
-        let appsupport = NSFileManager.defaultManager().URLsForDirectory(.ApplicationSupportDirectory, inDomains: .UserDomainMask)[0]
-        let supportDir = appsupport.URLByAppendingPathComponent("Jared")
-        let pluginDir = supportDir.URLByAppendingPathComponent("Plugins")
+        let appsupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
+        let supportDir = appsupport.appendingPathComponent("Jared")
+        let pluginDir = supportDir.appendingPathComponent("Plugins")
         
         modules = []
         for bundle in bundles {
@@ -100,10 +100,10 @@ struct MessageRouting {
         addInternalModules()
     }
     
-    func sendSingleDocumentation(routeName: String, forRoom: Room) {
+    func sendSingleDocumentation(_ routeName: String, forRoom: Room) {
         for aModule in modules {
             for aRoute in aModule.routes {
-                if aRoute.name.lowercaseString == routeName.lowercaseString {
+                if aRoute.name.lowercased() == routeName.lowercased() {
                     var documentation = "Command: "
                     documentation += routeName
                     documentation += "\n===========\n"
@@ -127,8 +127,8 @@ struct MessageRouting {
         }
     }
     
-    func sendDocumentation(myMessage: String, forRoom: Room) {
-        let parsedMessage = myMessage.componentsSeparatedByString(",")
+    func sendDocumentation(_ myMessage: String, forRoom: Room) {
+        let parsedMessage = myMessage.components(separatedBy: ",")
         
         if parsedMessage.count > 1 {
             sendSingleDocumentation(parsedMessage[1], forRoom: forRoom)
@@ -137,7 +137,7 @@ struct MessageRouting {
         
         var documentation: String = ""
         for aModule in modules {
-            documentation += String(aModule.dynamicType)
+            documentation += String(describing: type(of: aModule))
             documentation += ": "
             documentation += aModule.description
             documentation += "\n==============\n"
@@ -156,14 +156,14 @@ struct MessageRouting {
         SendText(documentation, toRoom: forRoom)
     }
     
-    mutating func routeMessage(myMessage: String, fromBuddy: String, forRoom: Room) {
+    mutating func routeMessage(_ myMessage: String, fromBuddy: String, forRoom: Room) {
         
-        let detector = try! NSDataDetector(types: NSTextCheckingType.Link.rawValue)
-        let matches = detector.matchesInString(myMessage, options: [], range: NSMakeRange(0, myMessage.characters.count))
-        let myLowercaseMessage = myMessage.lowercaseString
+        let detector = try! NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
+        let matches = detector.matches(in: myMessage, options: [], range: NSMakeRange(0, myMessage.characters.count))
+        let myLowercaseMessage = myMessage.lowercased()
         
         
-        if myLowercaseMessage.containsString("/help") {
+        if myLowercaseMessage.contains("/help") {
             sendDocumentation(myMessage, forRoom: forRoom)
         }
         else if myLowercaseMessage == "/reload" {
@@ -175,11 +175,11 @@ struct MessageRouting {
                 for aRoute in aModule.routes {
                     for aComparison in aRoute.comparisons {
                         
-                        if aComparison.0 == .ContainsURL {
+                        if aComparison.0 == .containsURL {
                             for match in matches {
-                                let url = (myMessage as NSString).substringWithRange(match.range)
+                                let url = (myMessage as NSString).substring(with: match.range)
                                 for comparisonString in aComparison.1 {
-                                    if url.containsString(comparisonString) {
+                                    if url.contains(comparisonString) {
                                         aRoute.call(url, forRoom)
                                     }
                                 }
@@ -187,27 +187,27 @@ struct MessageRouting {
                         }
                             
                             
-                        else if aComparison.0 == .StartsWith {
+                        else if aComparison.0 == .startsWith {
                             for comparisonString in aComparison.1 {
-                                if myLowercaseMessage.hasPrefix(comparisonString.lowercaseString) {
+                                if myLowercaseMessage.hasPrefix(comparisonString.lowercased()) {
                                     aRoute.call(myMessage, forRoom)
                                     break RootLoop
                                 }
                             }
                         }
                             
-                        else if aComparison.0 == .Contains {
+                        else if aComparison.0 == .contains {
                             for comparisonString in aComparison.1 {
-                                if myLowercaseMessage.containsString(comparisonString.lowercaseString) {
+                                if myLowercaseMessage.contains(comparisonString.lowercased()) {
                                     aRoute.call(myMessage, forRoom)
                                     break RootLoop
                                 }
                             }
                         }
                             
-                        else if aComparison.0 == .Is {
+                        else if aComparison.0 == .is {
                             for comparisonString in aComparison.1 {
-                                if myLowercaseMessage == comparisonString.lowercaseString {
+                                if myLowercaseMessage == comparisonString.lowercased() {
                                     aRoute.call(myMessage, forRoom)
                                     break RootLoop
                                 }

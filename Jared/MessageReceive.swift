@@ -11,7 +11,7 @@ import Cocoa
 import JaredFramework
 
 class MessageReceive: NSScriptCommand {
-    override func performDefaultImplementation() -> AnyObject? {
+    override func performDefaultImplementation() -> Any? {
         let parms = self.evaluatedArguments
         
         var message: String?
@@ -27,7 +27,7 @@ class MessageReceive: NSScriptCommand {
         print(buddyName)
         print(groupID)
         
-        if let appDelegate = NSApplication.sharedApplication().delegate as? AppDelegate {
+        if let appDelegate = NSApplication.shared().delegate as? AppDelegate {
             backgroundThread(0.0, background: {appDelegate.Router.routeMessage(message!, fromBuddy: buddyName!, forRoom: Room(GUID: groupID!, buddyName: buddyName!))})
         }
         
@@ -38,12 +38,12 @@ class MessageReceive: NSScriptCommand {
     }
 }
 
-func backgroundThread(delay: Double = 0.0, background: (() -> Void)? = nil, completion: (() -> Void)? = nil) {
-    dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_USER_INITIATED.rawValue), 0)) {
+func backgroundThread(_ delay: Double = 0.0, background: (() -> Void)? = nil, completion: (() -> Void)? = nil) {
+    DispatchQueue.global(priority: .default).async {
         if(background != nil){ background!(); }
         
-        let popTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay * Double(NSEC_PER_SEC)))
-        dispatch_after(popTime, dispatch_get_main_queue()) {
+        let popTime = DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+        DispatchQueue.main.asyncAfter(deadline: popTime) {
             if(completion != nil){ completion!(); }
         }
     }
