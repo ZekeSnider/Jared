@@ -1,7 +1,9 @@
 <a name='Jared'/>
+
 # Jared - A Chat Bot for iMessage
 
 <a name='Download'/>
+
 ## Download Links  
 ### OS X  
 Please check out the latest [release](https://github.com/ZekeSnider/Jared/releases/latest) page an up to date download.
