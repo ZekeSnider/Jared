@@ -58,6 +58,8 @@ struct RESTModule: RoutingModule {
                 let VideoString = "\"\(videoTitle)\"\nuploaded by \(uploader)\non \(convertYoutubeDate(publishDate.stringValue))"
                 SendText(VideoString, toRoom: toChat)
                 
+                
+                /*
                 let localFileName = UUID().uuidString
                 
                 if let thumbnailURL = myVideo["thumbnails"]?["standard"]["url"].string {
@@ -76,8 +78,9 @@ struct RESTModule: RoutingModule {
                             
                             
                             print("Downloaded file to \(localPath)!")
-                    }*/
+                    }
                 }
+                */*/
             }
         }
     }

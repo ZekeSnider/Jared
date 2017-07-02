@@ -23,9 +23,9 @@ class MessageReceive: NSScriptCommand {
             groupID = args["GroupID"] as? String
         }
         
-        print(message)
-        print(buddyName)
-        print(groupID)
+        print(message ?? "No Message Provided")
+        print(buddyName ?? "No Buddy Name")
+        print(groupID ?? "No Group ID.")
         
         if let appDelegate = NSApplication.shared().delegate as? AppDelegate {
             backgroundThread(0.0, background: {appDelegate.Router.routeMessage(message!, fromBuddy: buddyName!, forRoom: Room(GUID: groupID!, buddyName: buddyName!))})
@@ -39,7 +39,7 @@ class MessageReceive: NSScriptCommand {
 }
 
 func backgroundThread(_ delay: Double = 0.0, background: (() -> Void)? = nil, completion: (() -> Void)? = nil) {
-    DispatchQueue.global(priority: .default).async {
+    DispatchQueue.global(qos: DispatchQoS.QoSClass.default).async {
         if(background != nil){ background!(); }
         
         let popTime = DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)

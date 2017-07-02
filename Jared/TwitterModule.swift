@@ -69,8 +69,8 @@ class TwitterModule: RoutingModule {
             completionBlock()
         }
         
-        let credentials = "\(consumerKey):\(consumerSecret)"
-        let headers = ["Authorization": "Basic \(credentials.getBase64())"]
+        //let credentials = "\(consumerKey):\(consumerSecret)"
+        //let headers = ["Authorization": "Basic \(credentials.getBase64())"]
         let params: [String : AnyObject] = ["grant_type": "client_credentials" as AnyObject]
         
         Alamofire.request("https://api.twitter.com/oauth2/token", method: .get, parameters: params, encoding: JSONEncoding.default)
@@ -96,7 +96,7 @@ class TwitterModule: RoutingModule {
             ]
             Alamofire.request(self.baseUrlString + "statuses/show.json", parameters: params, headers: headers)
                 .responseString { response in
-                    print(response.response)
+                    print(response.response ?? "no response")
                     
                     self.sendTweet(response.result.value!, toChat: sendToGroupID)
             }
@@ -117,7 +117,7 @@ class TwitterModule: RoutingModule {
             ]
             Alamofire.request(self.baseUrlString + "users/show.json", parameters: params, headers: headers)
                 .responseString { response in
-                    print(response.response)
+                    print(response.response ?? "no response")
                     
                     self.sendTwitterUser(response.result.value!, toChat: sendToGroupID)
             }
@@ -157,7 +157,7 @@ class TwitterModule: RoutingModule {
             ]
             Alamofire.request(self.baseUrlString + "statuses/user_timeline.json", parameters: params, headers: headers)
                 .responseJSON { response in
-                    print(response.response)
+                    print(response.response ?? "no response")
                     
                     if let JSON = response.result.value {
                         print(JSON)
