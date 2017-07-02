@@ -77,10 +77,7 @@ struct MessageRouting {
             }
         
         //Initialize it
-        guard let module: RoutingModule = principleClass.init()
-            else {
-                return
-            }
+        let module: RoutingModule = principleClass.init()
         bundles.append(myBundle)
         
         //Add it to our modules
