@@ -652,7 +652,7 @@
         <!--Window Controller-->
         <scene sceneID="aad-lo-kvI">
             <objects>
-                <windowController id="02P-ba-Sor" sceneMemberID="viewController">
+                <windowController storyboardIdentifier="AboutViewController" id="02P-ba-Sor" sceneMemberID="viewController">
                     <window key="window" title="About" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="qUO-tD-Pqh">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
@@ -709,7 +709,7 @@ for updates.</string>
         <!--Window Controller-->
         <scene sceneID="R2V-B0-nI4">
             <objects>
-                <windowController id="B8D-0N-5wS" sceneMemberID="viewController">
+                <windowController storyboardIdentifier="PreferencesPane" id="B8D-0N-5wS" sceneMemberID="viewController">
                     <window key="window" title="Preferences" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
@@ -727,7 +727,7 @@ for updates.</string>
         <!--Preferences-->
         <scene sceneID="hIz-AP-VOD">
             <objects>
-                <viewController title="Preferences" id="XfG-lQ-9wD" customClass="ViewController" customModule="JaredUI" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Preferences" storyboardIdentifier="APIKeyPanel" id="XfG-lQ-9wD" customClass="ViewController" customModule="JaredUI" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="m2S-Jp-Qdl">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="150"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -839,7 +839,7 @@ for updates.</string>
         <!--Window Controller-->
         <scene sceneID="ZZn-28-m0u">
             <objects>
-                <windowController id="IQi-b4-MNl" sceneMemberID="viewController">
+                <windowController storyboardIdentifier="LicenseParent" id="IQi-b4-MNl" sceneMemberID="viewController">
                     <window key="window" title="Licenses" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="McW-1Q-bL4">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
@@ -857,7 +857,7 @@ for updates.</string>
         <!--Licenses-->
         <scene sceneID="Qhg-ns-kLU">
             <objects>
-                <viewController title="Licenses" id="uaA-Ni-cXu" sceneMemberID="viewController">
+                <viewController title="Licenses" storyboardIdentifier="LicensePanel" id="uaA-Ni-cXu" sceneMemberID="viewController">
                     <view key="view" id="6vd-w9-RFV">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="423"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -869,7 +869,7 @@ for updates.</string>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textView importsGraphics="NO" baseWritingDirection="leftToRight" usesFontPanel="YES" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="mTW-SE-Gg8">
-                                            <rect key="frame" x="0.0" y="0.0" width="438" height="630"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="438" height="686"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="textColor" red="0.14901960784313725" green="0.14901960784313725" blue="0.14901960784313725" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
