@@ -13,8 +13,8 @@ import SwiftyJSON
 
 private extension String {
     func getBase64() -> String {
-        let credentialData = self.dataUsingEncoding(NSUTF8StringEncoding)!
-        return credentialData.base64EncodedStringWithOptions([])
+        let credentialData = self.data(using: String.Encoding.utf8)!
+        return credentialData.base64EncodedString(options: [])
     }
 }
 
@@ -26,16 +26,23 @@ class TwitterModule: RoutingModule {
     var routes: [Route] = []
     var description = "Twitter Integration"
     var accessToken: String?
-    let consumerKey = "xV2TXhB3w0GPxuSAm6pIuzpwy"
-    let consumerSecret = "0LxuGGcy2JugU8NjOkXDEvvCqRVwIrjM6WvmLQE7lcPFuMqdnk"
-    
-    
+    let defaults = UserDefaults.standard
+    var consumerKey: String {
+        get {
+            return defaults.string(forKey: "TwitterKey") ?? "None"
+        }
+    }
+    var consumerSecret: String {
+        get {
+            return defaults.string(forKey: "TwitterSecret") ?? "None"
+        }
+    }
     
     let baseUrlString = "https://api.twitter.com/1.1/"
     let pageSize = 20
     
-    required init() {
-        let twitterStatus = Route(name: "Twitter Tweet Integration", comparisons: [.ContainsURL: ["twitter.com"]], call: self.twitterStatusID, description: "Twitter integration to get detail of a tweet URLs")
+    required init() {        
+        let twitterStatus = Route(name: "Twitter Tweet Integration", comparisons: [.containsURL: ["twitter.com"]], call: self.twitterStatusID, description: "Twitter integration to get detail of a tweet URLs")
         
         routes = [twitterStatus]
         
@@ -43,39 +50,39 @@ class TwitterModule: RoutingModule {
     }
     
     
-    func twitterStatusID(message:String, myRoom: Room) -> Void {
-        if message.containsString("/status") {
-            let urlComp = message.componentsSeparatedByString("/status/")
+    func twitterStatusID(_ message:String, myRoom: Room) -> Void {
+        if message.contains("/status") {
+            let urlComp = message.components(separatedBy: "/status/")
             let tweetID = urlComp[1]
             getTweet(tweetID, sendToGroupID: myRoom.GUID)
         }
         else {
-            let urlComp = message.componentsSeparatedByString("/")
+            let urlComp = message.components(separatedBy: "/")
             let count = urlComp.count
             getTwitterUser(urlComp[count-1], sendToGroupID: myRoom.GUID)
         }
         
     }
     
-    func authenticate(completionBlock: Void -> ()) {
+    func authenticate(_ completionBlock: @escaping (Void) -> ()) {
         if accessToken != nil {
             completionBlock()
         }
         
-        let credentials = "\(consumerKey):\(consumerSecret)"
-        let headers = ["Authorization": "Basic \(credentials.getBase64())"]
-        let params: [String : AnyObject] = ["grant_type": "client_credentials"]
+        //let credentials = "\(consumerKey):\(consumerSecret)"
+        //let headers = ["Authorization": "Basic \(credentials.getBase64())"]
+        let params: [String : AnyObject] = ["grant_type": "client_credentials" as AnyObject]
         
-        Alamofire.request(.POST, "https://api.twitter.com/oauth2/token", headers: headers, parameters: params)
+        Alamofire.request("https://api.twitter.com/oauth2/token", method: .get, parameters: params, encoding: JSONEncoding.default)
             .responseJSON { response in
-                if let JSON = response.result.value {
+                if let JSON = response.result.value as? NSDictionary {
                     print(response)
-                    self.accessToken = JSON.objectForKey("access_token") as? String
+                    self.accessToken = JSON["access_token"] as? String
                     completionBlock()
                 }
         }
     }
-    func getTweet(fromID: String, sendToGroupID: String) {
+    func getTweet(_ fromID: String, sendToGroupID: String) {
         authenticate {
             guard let token = self.accessToken else {
                 // TODO: Show authentication error
@@ -84,12 +91,12 @@ class TwitterModule: RoutingModule {
             
             let headers = ["Authorization": "Bearer \(token)"]
             let params: [String : AnyObject] = [
-                "id" : fromID,
-                "include_entities": false
+                "id" : fromID as AnyObject,
+                "include_entities": false as AnyObject
             ]
-            Alamofire.request(.GET, self.baseUrlString + "statuses/show.json", headers: headers, parameters: params)
+            Alamofire.request(self.baseUrlString + "statuses/show.json", parameters: params, headers: headers)
                 .responseString { response in
-                    print(response.response)
+                    print(response.response ?? "no response")
                     
                     self.sendTweet(response.result.value!, toChat: sendToGroupID)
             }
@@ -97,7 +104,7 @@ class TwitterModule: RoutingModule {
         }
     }
     
-    func getTwitterUser(fromUser: String, sendToGroupID: String) {
+    func getTwitterUser(_ fromUser: String, sendToGroupID: String) {
         authenticate {
             guard let token = self.accessToken else {
                 // TODO: Show authentication error
@@ -106,11 +113,11 @@ class TwitterModule: RoutingModule {
             
             let headers = ["Authorization": "Bearer \(token)"]
             let params: [String : AnyObject] = [
-                "screen_name" : fromUser
+                "screen_name" : fromUser as AnyObject
             ]
-            Alamofire.request(.GET, self.baseUrlString + "users/show.json", headers: headers, parameters: params)
+            Alamofire.request(self.baseUrlString + "users/show.json", parameters: params, headers: headers)
                 .responseString { response in
-                    print(response.response)
+                    print(response.response ?? "no response")
                     
                     self.sendTwitterUser(response.result.value!, toChat: sendToGroupID)
             }
@@ -118,23 +125,23 @@ class TwitterModule: RoutingModule {
         }
     }
     
-    func sendTweet(tweetJSON: String, toChat: String) {
-        if let dataFromString = tweetJSON.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) {
+    func sendTweet(_ tweetJSON: String, toChat: String) {
+        if let dataFromString = tweetJSON.data(using: String.Encoding.utf8, allowLossyConversion: false) {
             let JSONParse = JSON(data: dataFromString)
-            let TweetString = "\"\(JSONParse["text"].stringValue)\" -\(JSONParse["user"]["name"].stringValue) \(JSONParse["created_at"])"
+            let TweetString = "\"\(JSONParse["text"].stringValue)\"\n-\(JSONParse["user"]["name"].stringValue)\n\(convertJSONDate(JSONParse["created_at"].stringValue))"
             SendText(TweetString, toRoom: Room(GUID: toChat))
         }
     }
     
-    func sendTwitterUser(tweetJSON: String, toChat: String) {
-        if let dataFromString = tweetJSON.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) {
+    func sendTwitterUser(_ tweetJSON: String, toChat: String) {
+        if let dataFromString = tweetJSON.data(using: String.Encoding.utf8, allowLossyConversion: false) {
             let JSONParse = JSON(data: dataFromString)
-            let TweetString = "\(JSONParse["name"].stringValue)\n\"\(JSONParse["description"].stringValue)\"\n\(JSONParse["statuses_count"]) Tweets\n\(JSONParse["followers_count"]) Followers\n\(JSONParse["friends_count"]) Following\nJoined Twitter on \(JSONParse["created_at"])\n"
+            let TweetString = "\(JSONParse["name"].stringValue)\n\"\(JSONParse["description"].stringValue)\"\n\(JSONParse["statuses_count"]) Tweets\n\(JSONParse["followers_count"]) Followers\n\(JSONParse["friends_count"]) Following\nJoined Twitter on \(convertJSONDate(JSONParse["created_at"].stringValue))\n"
             SendText(TweetString, toRoom: Room(GUID: toChat))
         }
     }
     
-    func getTimelineForScreenName(screenName: String) {
+    func getTimelineForScreenName(_ screenName: String) {
         
         authenticate {
             
@@ -145,12 +152,12 @@ class TwitterModule: RoutingModule {
             
             let headers = ["Authorization": "Bearer \(token)"]
             let params: [String : AnyObject] = [
-                "screen_name" : screenName,
-                "count": self.pageSize
+                "screen_name" : screenName as AnyObject,
+                "count": self.pageSize as AnyObject
             ]
-            Alamofire.request(.GET, self.baseUrlString + "statuses/user_timeline.json", headers: headers, parameters: params)
+            Alamofire.request(self.baseUrlString + "statuses/user_timeline.json", parameters: params, headers: headers)
                 .responseJSON { response in
-                    print(response.response)
+                    print(response.response ?? "no response")
                     
                     if let JSON = response.result.value {
                         print(JSON)

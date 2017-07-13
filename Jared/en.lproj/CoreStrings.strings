@@ -6,9 +6,38 @@
   Copyright © 2016 Zeke Snider. All rights reserved.
 */
 
-"hello" = "bonjour"
+
+"CoreDescription" = "Core functionality for Jared with universal uses";
 
 /* Response for /ping command */
-"Pong!" = "Pong!"
+"hello"="bonjour";
 
-/* Response for thanking jared command */
+/* Response for /ping command */
+"PongResponse"="Pong!";
+
+
+/* You're welcome string */
+"WelcomeResponse"="You're welcome.";
+
+/* Thank you command */
+"ThanksJaredCommand"="Thank you Jared";
+
+"ThanksJaredResponse" = "Thank Jared";
+
+"pingDescription" = "Check if the chat bot is available";
+
+
+/* Version */
+"versionDescription" = "Get what version Jared is running";
+
+"versionResponse" = "I am version 3.0 beta of Jared, compiled on Swift 2.2!";
+
+
+/* send */
+"sendSyntax" = "/send,[number of times],[send delay],[message to send]";
+
+
+"sendDescription" = "Send a message repeatedly";
+
+
+

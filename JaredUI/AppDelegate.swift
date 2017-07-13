@@ -13,14 +13,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     var Router = MessageRouting()
 
-    func applicationDidFinishLaunching(aNotification: NSNotification) {
+    func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
-        //myTwitter.getTweet("718262644579442695")
-        
         
     }
 
-    func applicationWillTerminate(aNotification: NSNotification) {
+    func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
     }
 

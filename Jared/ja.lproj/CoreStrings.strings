@@ -6,8 +6,13 @@
   Copyright © 2016 Zeke Snider. All rights reserved.
 */
 
-"hello" = "bonjour"
-
+"hello" = "bonjour";
 
 /* Response for /ping command */
-"Pong!" = "Pong!"
+"PongResponse" = "ポング!";
+
+/* You're welcome string */
+"WelcomeResponse" = "どういたしまして。";
+
+/* Thank you command */
+"ThanksJaredCommand"="ジェレッド、ありがとう";
