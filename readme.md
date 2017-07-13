@@ -34,6 +34,9 @@ Obtain [Twitter](https://apps.twitter.com) and [Youtube API](https://developers.
 ![Messages Preferences](/Screenshots/MessagesPreferences.png)
 Select AppleScript handler in Messages.app preferences, select "Open Script Folder", drag the Jared script handler into that folder, then select it as the handler.
 
+##Commands
+
+Type /help in a group chat with Jared to see a full list of commands. Type /help,"name of command here" to get detail on that specific command. 
 
 ##Plugins
 Plugins are loaded dynamically from the /Users/Your_User/Library/Application Support/Jared/Plugins folder. To install a module, drag it in there and then send "/reload" to Jared. 
