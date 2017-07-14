@@ -103,6 +103,7 @@ struct MessageRouting {
             return
         }
         
+        //Attempt to open the address book
         if let book = ABAddressBook.shared() {
             let emailSearchElement = ABPerson.searchElement(forProperty: kABEmailProperty, label: nil, key: nil, value: withHandle, comparison: ABSearchComparison(kABEqualCaseInsensitive.rawValue))
             let phoneSearchElement = ABPerson.searchElement(forProperty: kABPhoneProperty, label: nil, key: nil, value: withHandle, comparison: ABSearchComparison(kABEqualCaseInsensitive.rawValue))
@@ -126,7 +127,7 @@ struct MessageRouting {
                 ABRecordSetValue(newPerson, kABNoteProperty as CFString, "Created By Jared.app" as CFTypeRef)
                 book.add(newPerson)
                 book.save()
-                SendText("OMG my name is \(parsedMessage[1]) too! What a coincidence!!", toRoom: forRoom)
+                SendText("Ok, I'll call you \(parsedMessage[1]) from now on.", toRoom: forRoom)
                 
             }
             //The contact already exists, modify the value
@@ -135,8 +136,12 @@ struct MessageRouting {
                 ABRecordSetValue(myPerson, kABFirstNameProperty as CFString, parsedMessage[1] as CFTypeRef)
                 
                 book.save()
-                SendText("OMG my name is \(parsedMessage[1]) too! What a coincidence!!", toRoom: forRoom)
+                SendText("Ok, I'll call you \(parsedMessage[1]) from now on.", toRoom: forRoom)
             }
+        }
+        //If we do not have permission to access contacts
+        else {
+            SendText("Sorry, I do not have access to contacts.", toRoom: forRoom)
         }
     }
     
