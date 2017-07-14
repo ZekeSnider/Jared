@@ -11,7 +11,7 @@ import JaredFramework
 import AddressBook
 
 struct MessageRouting {
-    var FrameworkVersion:String = "J1.0.1"
+    var FrameworkVersion:String = "J1.0.0"
     var modules:[RoutingModule] = []
     var bundles:[Bundle] = []
     var supportDir: URL?
@@ -24,8 +24,6 @@ struct MessageRouting {
         
         try! filemanager.createDirectory(at: supportDir, withIntermediateDirectories: true, attributes: nil)
         try! filemanager.createDirectory(at: pluginDir, withIntermediateDirectories: true, attributes: nil)
-        
-        print(supportDir.absoluteString)
         
         loadPlugins(pluginDir)
         addInternalModules()
