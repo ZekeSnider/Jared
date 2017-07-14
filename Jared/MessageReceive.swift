@@ -17,10 +17,12 @@ class MessageReceive: NSScriptCommand {
         var message: String?
         var buddyName: String?
         var groupID: String?
+        var buddyHandle: String?
         if let args = parms {
             message = args["MessageContent"] as? String
             buddyName = args["BuddyName"] as? String
             groupID = args["GroupID"] as? String
+            buddyHandle = args["BuddyHandle"] as? String
         }
         
         print(message ?? "No Message Provided")
@@ -28,7 +30,9 @@ class MessageReceive: NSScriptCommand {
         print(groupID ?? "No Group ID.")
         
         if let appDelegate = NSApplication.shared().delegate as? AppDelegate {
-            backgroundThread(0.0, background: {appDelegate.Router.routeMessage(message!, fromBuddy: buddyName!, forRoom: Room(GUID: groupID!, buddyName: buddyName!))})
+            backgroundThread(0.0, background: {
+                appDelegate.Router.routeMessage(message!, fromBuddy: buddyName!, forRoom: Room(GUID: groupID!, buddyName: buddyName!), buddyHandle: buddyHandle ?? "")
+            })
         }
         
         return false

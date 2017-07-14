@@ -28,14 +28,20 @@ struct CoreModule: RoutingModule {
         
         let version = Route(name: "/version", comparisons: [.startsWith: ["/version"]], call: self.getVersion, description: "versionDescription")
         
+        let whoami = Route(name: "/whoami", comparisons: [.startsWith: ["/whoami"]], call: self.getWho, description: "Get your name")
+        
         let send = Route(name: "/send", comparisons: [.startsWith: ["/send"]], call: self.sendRepeat, description: NSLocalizedString("sendDescription"),parameterSyntax: NSLocalizedString("sendSyntax"))
 
-        routes = [ping, thankYou, version, send]
+        routes = [ping, thankYou, version, send, whoami]
     }
     
     
     func pingCall(_ message:String, myRoom: Room) -> Void {
         SendText(NSLocalizedString("PongResponse"), toRoom: myRoom)
+    }
+    
+    func getWho(_ message:String, myRoom: Room) -> Void {
+        SendText("Your name is \(myRoom.buddyName!).", toRoom: myRoom)
     }
     
     func thanksJared(_ message:String, myRoom: Room) -> Void {

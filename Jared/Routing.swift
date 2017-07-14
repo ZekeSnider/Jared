@@ -8,9 +8,10 @@
 
 import Foundation
 import JaredFramework
+import AddressBook
 
 struct MessageRouting {
-    var FrameworkVersion:String = "J1.0.0"
+    var FrameworkVersion:String = "J1.0.1"
     var modules:[RoutingModule] = []
     var bundles:[Bundle] = []
     var supportDir: URL?
@@ -97,6 +98,50 @@ struct MessageRouting {
         addInternalModules()
     }
     
+    mutating func changeName(_ myMessage: String, forRoom: Room, withHandle: String) {
+        let parsedMessage = myMessage.components(separatedBy: ",")
+        if (parsedMessage.count == 1) {
+            SendText("Wrong arguments.", toRoom: forRoom)
+            return
+        }
+        
+        if let book = ABAddressBook.shared() {
+            let emailSearchElement = ABPerson.searchElement(forProperty: kABEmailProperty, label: nil, key: nil, value: withHandle, comparison: ABSearchComparison(kABEqualCaseInsensitive.rawValue))
+            let phoneSearchElement = ABPerson.searchElement(forProperty: kABPhoneProperty, label: nil, key: nil, value: withHandle, comparison: ABSearchComparison(kABEqualCaseInsensitive.rawValue))
+            let bothSearchElement = ABSearchElement(forConjunction: ABSearchConjunction(kABSearchOr.rawValue), children: [emailSearchElement!, phoneSearchElement!])
+            let peopleFound = book.records(matching: bothSearchElement)
+            
+            //We need to create the contact
+            if (peopleFound?.count == 0) {
+                let newPerson = ABRecord();
+                
+                //If it contains an at, add the handle as email, otherwise add it as phone
+                if (withHandle.contains("@")) {
+                    ABRecordSetValue(newPerson, kABEmailHomeLabel as CFString, withHandle as CFTypeRef)
+                }
+                else {
+                    ABRecordSetValue(newPerson, kABPhoneiPhoneLabel as CFString, withHandle as CFTypeRef)
+                }
+                
+                //Set name and note, add it, then save.
+                ABRecordSetValue(newPerson, kABFirstNameProperty as CFString, parsedMessage[1] as CFTypeRef)
+                ABRecordSetValue(newPerson, kABNoteProperty as CFString, "Created By Jared.app" as CFTypeRef)
+                book.add(newPerson)
+                book.save()
+                SendText("OMG my name is \(parsedMessage[1]) too! What a coincidence!!", toRoom: forRoom)
+                
+            }
+            //The contact already exists, modify the value
+            else {
+                let myPerson = peopleFound?[0] as! ABRecord
+                ABRecordSetValue(myPerson, kABFirstNameProperty as CFString, parsedMessage[1] as CFTypeRef)
+                
+                book.save()
+                SendText("OMG my name is \(parsedMessage[1]) too! What a coincidence!!", toRoom: forRoom)
+            }
+        }
+    }
+    
     func sendSingleDocumentation(_ routeName: String, forRoom: Room) {
         for aModule in modules {
             for aRoute in aModule.routes {
@@ -153,7 +198,7 @@ struct MessageRouting {
         SendText(documentation, toRoom: forRoom)
     }
     
-    mutating func routeMessage(_ myMessage: String, fromBuddy: String, forRoom: Room) {
+    mutating func routeMessage(_ myMessage: String, fromBuddy: String, forRoom: Room, buddyHandle: String) {
         
         let detector = try! NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
         let matches = detector.matches(in: myMessage, options: [], range: NSMakeRange(0, myMessage.characters.count))
@@ -166,6 +211,9 @@ struct MessageRouting {
         else if myLowercaseMessage == "/reload" {
             reloadPlugins()
             SendText("Successfully reloaded plugins.", toRoom: forRoom)
+        }
+        else if myLowercaseMessage.contains("/name") {
+            changeName(myMessage, forRoom: forRoom, withHandle: buddyHandle)
         }
         else {
             RootLoop: for aModule in modules {
