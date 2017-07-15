@@ -13,4 +13,5 @@ end
 target "JaredUI" do
 	pod 'Alamofire', '~> 4.0'
 	pod ‘SwiftyJSON’
+	pod 'RealmSwift'
 end

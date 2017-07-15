@@ -70,17 +70,18 @@ struct MessageRouting {
             }
         
         //Cast the class to RoutingModule protocol
-        guard let principleClass = myBundle.principalClass as? RoutingModule.Type
-            else {
-                return
-            }
-        
-        //Initialize it
-        let module: RoutingModule = principleClass.init()
-        bundles.append(myBundle)
-        
-        //Add it to our modules
-        modules.append(module)
+        if let principleClass = myBundle.principalClass as? RoutingModule.Type
+        {
+            //Initialize it
+            let module: RoutingModule = principleClass.init()
+            bundles.append(myBundle)
+            
+            //Add it to our modules
+            modules.append(module)
+        }
+        else {
+            return
+        }
     }
     
     mutating func reloadPlugins() {
