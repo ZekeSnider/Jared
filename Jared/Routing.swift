@@ -16,6 +16,7 @@ struct MessageRouting {
     var bundles:[Bundle] = []
     var supportDir: URL?
     var disabled = false
+    var config: [String: [String:AnyObject]]?
     
     init () {
         let filemanager = FileManager.default
@@ -25,6 +26,16 @@ struct MessageRouting {
         
         try! filemanager.createDirectory(at: supportDir, withIntermediateDirectories: true, attributes: nil)
         try! filemanager.createDirectory(at: pluginDir, withIntermediateDirectories: true, attributes: nil)
+        
+        do {
+            let jsonData = try! NSData(contentsOfFile: supportDir.appendingPathComponent("config.json").path, options: .mappedIfSafe)
+            
+            if let jsonResult = try! JSONSerialization.jsonObject(with: jsonData as Data, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String:AnyObject]
+            {
+                config = jsonResult["routes"] as! [String : [String: AnyObject]]
+            }
+        }
+        
         
         loadPlugins(pluginDir)
         addInternalModules()
@@ -104,12 +115,22 @@ struct MessageRouting {
         addInternalModules()
     }
     
-    
+    func isRouteEnabled(routeName: String) -> Bool {
+        if (config?[routeName.lowercased()]?["disabled"] as? Bool == true) {
+            return false
+        } else {
+            return true
+        }
+    }
     
     func sendSingleDocumentation(_ routeName: String, forRoom: Room) {
         for aModule in modules {
             for aRoute in aModule.routes {
                 if aRoute.name.lowercased() == routeName.lowercased() {
+                    guard (isRouteEnabled(routeName: routeName)) else {
+                        return
+                    }
+                    
                     var documentation = "Command: "
                     documentation += routeName
                     documentation += "\n===========\n"
@@ -189,6 +210,9 @@ struct MessageRouting {
         else {
             RootLoop: for aModule in modules {
                 for aRoute in aModule.routes {
+                    guard (isRouteEnabled(routeName: aRoute.name)) else {
+                        break
+                    }
                     for aComparison in aRoute.comparisons {
                         
                         if aComparison.0 == .containsURL {
