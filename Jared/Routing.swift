@@ -15,6 +15,7 @@ struct MessageRouting {
     var modules:[RoutingModule] = []
     var bundles:[Bundle] = []
     var supportDir: URL?
+    var disabled = false
     
     init () {
         let filemanager = FileManager.default
@@ -162,11 +163,13 @@ struct MessageRouting {
     }
     
     mutating func routeMessage(_ myMessage: String, fromBuddy: String, forRoom: Room) {
-        
         let detector = try! NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
         let matches = detector.matches(in: myMessage, options: [], range: NSMakeRange(0, myMessage.characters.count))
         let myLowercaseMessage = myMessage.lowercased()
         
+        guard !disabled || myLowercaseMessage == "/enable" else {
+            return
+        }
         
         if myLowercaseMessage.contains("/help") {
             sendDocumentation(myMessage, forRoom: forRoom)
@@ -174,6 +177,14 @@ struct MessageRouting {
         else if myLowercaseMessage == "/reload" {
             reloadPlugins()
             SendText("Successfully reloaded plugins.", toRoom: forRoom)
+        }
+        else if myLowercaseMessage == "/enable" {
+            disabled = false
+            SendText("Jared has been re-enabled. To disable, type /disable", toRoom: forRoom)
+        }
+        else if myLowercaseMessage == "/disable" {
+            disabled = true
+            SendText("Jared has been disabled. Type /enable to re-enable.", toRoom: forRoom)
         }
         else {
             RootLoop: for aModule in modules {
