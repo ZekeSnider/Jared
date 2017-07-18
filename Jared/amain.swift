@@ -62,6 +62,12 @@ public protocol RoutingModule {
 public struct Room {
     public var GUID: String
     public var buddyName: String?
+    public var buddyHandle: String?
+    public init(GUID: String, buddyName: String, buddyHandle: String) {
+        self.GUID = GUID
+        self.buddyName = buddyName
+        self.buddyHandle = buddyHandle
+    }
     public init(GUID: String, buddyName: String) {
         self.GUID = GUID
         self.buddyName = buddyName

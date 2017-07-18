@@ -9,6 +9,7 @@
 import Foundation
 import Cocoa
 import JaredFramework
+import AddressBook
 
 public func NSLocalizedString(_ key: String) -> String {
     return NSLocalizedString(key, tableName: "CoreStrings", comment: "")
@@ -31,8 +32,10 @@ struct CoreModule: RoutingModule {
         let whoami = Route(name: "/whoami", comparisons: [.startsWith: ["/whoami"]], call: self.getWho, description: "Get your name")
         
         let send = Route(name: "/send", comparisons: [.startsWith: ["/send"]], call: self.sendRepeat, description: NSLocalizedString("sendDescription"),parameterSyntax: NSLocalizedString("sendSyntax"))
+        
+        let name = Route(name: "/name", comparisons: [.startsWith: ["/name"]], call: self.changeName, description: "Change what Jared calls you", parameterSyntax: "/name,[your preferred name]")
 
-        routes = [ping, thankYou, version, send, whoami]
+        routes = [ping, thankYou, version, send, whoami, name]
     }
     
     
@@ -71,5 +74,54 @@ struct CoreModule: RoutingModule {
             }
         }
         
+    }
+    
+    func changeName(_ myMessage: String, forRoom: Room) {
+        let parsedMessage = myMessage.components(separatedBy: ",")
+        if (parsedMessage.count == 1) {
+            SendText("Wrong arguments.", toRoom: forRoom)
+            return
+        }
+        
+        //Attempt to open the address book
+        if let book = ABAddressBook.shared() {
+            let emailSearchElement = ABPerson.searchElement(forProperty: kABEmailProperty, label: nil, key: nil, value: forRoom.buddyHandle, comparison: ABSearchComparison(kABEqualCaseInsensitive.rawValue))
+            let phoneSearchElement = ABPerson.searchElement(forProperty: kABPhoneProperty, label: nil, key: nil, value: forRoom.buddyHandle, comparison: ABSearchComparison(kABEqualCaseInsensitive.rawValue))
+            let bothSearchElement = ABSearchElement(forConjunction: ABSearchConjunction(kABSearchOr.rawValue), children: [emailSearchElement!, phoneSearchElement!])
+            let peopleFound = book.records(matching: bothSearchElement)
+            
+            //We need to create the contact
+            if (peopleFound?.count == 0) {
+                let newPerson = ABRecord();
+                
+                //If it contains an at, add the handle as email, otherwise add it as phone
+                if (forRoom.buddyHandle!.contains("@")) {
+                    ABRecordSetValue(newPerson, kABEmailHomeLabel as CFString, forRoom.buddyHandle as CFTypeRef)
+                }
+                else {
+                    ABRecordSetValue(newPerson, kABPhoneiPhoneLabel as CFString, forRoom.buddyHandle as CFTypeRef)
+                }
+                
+                //Set name and note, add it, then save.
+                ABRecordSetValue(newPerson, kABFirstNameProperty as CFString, parsedMessage[1] as CFTypeRef)
+                ABRecordSetValue(newPerson, kABNoteProperty as CFString, "Created By Jared.app" as CFTypeRef)
+                book.add(newPerson)
+                book.save()
+                SendText("Ok, I'll call you \(parsedMessage[1]) from now on.", toRoom: forRoom)
+                
+            }
+                //The contact already exists, modify the value
+            else {
+                let myPerson = peopleFound?[0] as! ABRecord
+                ABRecordSetValue(myPerson, kABFirstNameProperty as CFString, parsedMessage[1] as CFTypeRef)
+                
+                book.save()
+                SendText("Ok, I'll call you \(parsedMessage[1]) from now on.", toRoom: forRoom)
+            }
+        }
+            //If we do not have permission to access contacts
+        else {
+            SendText("Sorry, I do not have access to contacts.", toRoom: forRoom)
+        }
     }
 }

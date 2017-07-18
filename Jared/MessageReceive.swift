@@ -31,7 +31,7 @@ class MessageReceive: NSScriptCommand {
         
         if let appDelegate = NSApplication.shared().delegate as? AppDelegate {
             backgroundThread(0.0, background: {
-                appDelegate.Router.routeMessage(message!, fromBuddy: buddyName!, forRoom: Room(GUID: groupID!, buddyName: buddyName!), buddyHandle: buddyHandle ?? "")
+                appDelegate.Router.routeMessage(message!, fromBuddy: buddyName!, forRoom: Room(GUID: groupID!, buddyName: buddyName!, buddyHandle: buddyHandle ?? ""))
             })
         }
         
