@@ -10,6 +10,7 @@ import Foundation
 import Cocoa
 import JaredFramework
 import AddressBook
+import Contacts
 
 public func NSLocalizedString(_ key: String) -> String {
     return NSLocalizedString(key, tableName: "CoreStrings", comment: "")
@@ -82,6 +83,7 @@ struct CoreModule: RoutingModule {
             SendText("Wrong arguments.", toRoom: forRoom)
             return
         }
+        let store = CNContactStore()
         
         //Attempt to open the address book
         if let book = ABAddressBook.shared() {
@@ -92,21 +94,30 @@ struct CoreModule: RoutingModule {
             
             //We need to create the contact
             if (peopleFound?.count == 0) {
-                let newPerson = ABRecord();
+                // Creating a new contact
+                let newContact = CNMutableContact()
+                newContact.givenName = parsedMessage[1]
+                newContact.note = "Created By Jared.app"
                 
                 //If it contains an at, add the handle as email, otherwise add it as phone
                 if (forRoom.buddyHandle!.contains("@")) {
-                    ABRecordSetValue(newPerson, kABEmailHomeLabel as CFString, forRoom.buddyHandle as CFTypeRef)
+                    let homeEmail = CNLabeledValue(label: CNLabelHome, value: (forRoom.buddyHandle ?? "") as NSString)
+                    newContact.emailAddresses = [homeEmail]
                 }
                 else {
-                    ABRecordSetValue(newPerson, kABPhoneiPhoneLabel as CFString, forRoom.buddyHandle as CFTypeRef)
+                    let iPhonePhone = CNLabeledValue(label: "iPhone", value: CNPhoneNumber(stringValue:forRoom.buddyHandle ?? ""))
+                    newContact.phoneNumbers = [iPhonePhone]
+                }
+            
+                let saveRequest = CNSaveRequest()
+                saveRequest.add(newContact, toContainerWithIdentifier:nil)
+                do {
+                    try store.execute(saveRequest)
+                } catch {
+                    SendText("There was an error saving your contact..", toRoom: forRoom)
+                    return
                 }
                 
-                //Set name and note, add it, then save.
-                ABRecordSetValue(newPerson, kABFirstNameProperty as CFString, parsedMessage[1] as CFTypeRef)
-                ABRecordSetValue(newPerson, kABNoteProperty as CFString, "Created By Jared.app" as CFTypeRef)
-                book.add(newPerson)
-                book.save()
                 SendText("Ok, I'll call you \(parsedMessage[1]) from now on.", toRoom: forRoom)
                 
             }
