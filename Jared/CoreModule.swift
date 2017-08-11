@@ -58,21 +58,32 @@ struct CoreModule: RoutingModule {
     
     func sendRepeat(_ message:String, myRoom: Room) -> Void {
         let parameters = message.components(separatedBy: ",")
-        if let repeatNum: Int = Int(parameters[1]), let delay = Int(parameters[2]) {
-            print(parameters.count)
-            var textToSend: String
-            
-            if (parameters.count > 4) {
-                textToSend = "lol"
-            }
-            else {
-                textToSend = parameters[3]
-            }
-            
-            for _ in 1...repeatNum {
-                SendText(textToSend, toRoom: myRoom)
-                Thread.sleep(forTimeInterval: Double(delay))
-            }
+        
+        //Validating and parsing arguments
+        guard let repeatNum: Int = Int(parameters[1]) else {
+            SendText("Wrong argument. The first argument must be the number of message you wish to send", toRoom: myRoom)
+            return
+        }
+        
+        guard let delay = Int(parameters[2]) else {
+            SendText("Wrong argument. The second argument must be the delay of the messages you wish to send", toRoom: myRoom)
+            return
+        }
+        
+        guard var textToSend = parameters[safe: 3] else {
+            SendText("Wrong arguments. The third argument must be the message you wish to send.", toRoom: myRoom)
+            return
+        }
+        
+        //If there are commas in the message, take the whole message
+        if parameters.count > 3 {
+            textToSend = parameters[2...(parameters.count - 1)].joined(separator: ",")
+        }
+        
+        //Go through the repeat loop...
+        for _ in 1...repeatNum {
+            SendText(textToSend, toRoom: myRoom)
+            Thread.sleep(forTimeInterval: Double(delay))
         }
         
     }
