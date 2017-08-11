@@ -17,13 +17,15 @@ public func NSLocalizedString(_ key: String) -> String {
 }
 
 
-struct CoreModule: RoutingModule {
+class CoreModule: RoutingModule {
     var description: String = NSLocalizedString("CoreDescription")
     var routes: [Route] = []
+    let MAXIMUM_CONCURRENT_SENDS = 3
+    var currentSends: [String: Int] = [:]
     
     let mystring = NSLocalizedString("hello", tableName: "CoreStrings", value: "", comment: "")
     
-    init() {
+    required public init() {
         let ping = Route(name:"/ping", comparisons: [.startsWith: ["/ping"]], call: self.pingCall, description: NSLocalizedString("pingDescription"))
         
         let thankYou = Route(name:"Thank You", comparisons: [.startsWith: [NSLocalizedString("ThanksJaredCommand")]], call: self.thanksJared, description: NSLocalizedString("ThanksJaredResponse"))
@@ -56,6 +58,8 @@ struct CoreModule: RoutingModule {
         SendText(NSLocalizedString("versionResponse"), toRoom: myRoom)
     }
     
+    var guessMin: Int? = 0
+    
     func sendRepeat(_ message:String, myRoom: Room) -> Void {
         let parameters = message.components(separatedBy: ",")
         
@@ -75,6 +79,19 @@ struct CoreModule: RoutingModule {
             return
         }
         
+        guard myRoom.buddyHandle != nil else {
+            SendText("You must have a proper handle.", toRoom: myRoom)
+            return
+        }
+        
+        guard (currentSends[myRoom.buddyHandle!] ?? 0) < MAXIMUM_CONCURRENT_SENDS else {
+            SendText("You can only have \(MAXIMUM_CONCURRENT_SENDS) send operations going at once.", toRoom: myRoom)
+            return
+        }
+        
+        //Increment the concurrent send counter for this user
+        currentSends[myRoom.buddyHandle!] = currentSends[myRoom.buddyHandle!] ?? 0 + 1
+        
         //If there are commas in the message, take the whole message
         if parameters.count > 3 {
             textToSend = parameters[2...(parameters.count - 1)].joined(separator: ",")
@@ -85,6 +102,9 @@ struct CoreModule: RoutingModule {
             SendText(textToSend, toRoom: myRoom)
             Thread.sleep(forTimeInterval: Double(delay))
         }
+        
+        //Decrement the concurrent send counter for this user
+        currentSends[myRoom.buddyHandle!] = (currentSends[myRoom.buddyHandle!] ?? 0) - 1
         
     }
     
