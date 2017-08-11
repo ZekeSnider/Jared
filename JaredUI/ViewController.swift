@@ -17,8 +17,31 @@ class ViewController: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        let defaults = UserDefaults.standard
         
+        defaults.addObserver(self, forKeyPath: "JaredIsDisabled", options: .new, context: nil)
+        updateTouchBarButton()
+        
+        YoutubeSecret.stringValue = defaults.string(forKey: "YoutubeSecret") ?? "None"
+        TwitterKey.stringValue = defaults.string(forKey: "TwitterKey") ?? "None"
+        TwitterSecret.stringValue = defaults.string(forKey: "TwitterSecret") ?? "None"
+    }
+    
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if keyPath == "JaredIsDisabled" {
+            updateTouchBarButton()
+        }
+    }
+    deinit {
+        UserDefaults.standard.removeObserver(self, forKeyPath: "JaredIsDisabled")
+    }
+    
+    override func viewDidAppear() {
+        super.viewDidAppear()
+        self.view.window!.title = "Preferences"
+    }
+    
+    func updateTouchBarButton() {
         let defaults = UserDefaults.standard
         if (defaults.bool(forKey: "JaredIsDisabled")) {
             EnableDisableButton.title = "Disable"
@@ -26,16 +49,6 @@ class ViewController: NSViewController {
         else {
             EnableDisableButton.title = "Enable"
         }
-        
-        
-        YoutubeSecret.stringValue = defaults.string(forKey: "YoutubeSecret") ?? "None"
-        TwitterKey.stringValue = defaults.string(forKey: "TwitterKey") ?? "None"
-        TwitterSecret.stringValue = defaults.string(forKey: "TwitterSecret") ?? "None"
-    }
-    
-    override func viewDidAppear() {
-        super.viewDidAppear()
-        self.view.window!.title = "Preferences"
     }
     
     @IBOutlet weak var EnableDisableButton: NSButtonCell!
@@ -45,14 +58,13 @@ class ViewController: NSViewController {
         
         if (defaults.bool(forKey: "JaredIsDisabled")) {
             defaults.set(false, forKey: "JaredIsDisabled")
-            EnableDisableButton.title = "Enable"
         }
         else {
             defaults.set(true, forKey: "JaredIsDisabled")
-            EnableDisableButton.title = "Disable"
         }
         
-        print("hello world")
+        updateTouchBarButton()
+
     }
     @IBAction func setButtonPressed(_ sender: AnyObject) {
         defaults.setValue(YoutubeSecret.stringValue, forKey: "YoutubeSecret")
