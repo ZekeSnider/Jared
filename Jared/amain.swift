@@ -11,7 +11,13 @@ import Foundation
 public func SendText(_ message:String, toRoom: Room) {
     print("I want to send text \(message)")
     
+    //Don't send the message if Jared is currently disabled.
+//    guard !disabled else {
+//        return
+//    }
+    
     if let scriptPath = Bundle.main.url(forResource: "SendText", withExtension: "scpt")?.path {
+        
         let task = Process()
         task.launchPath = "/usr/bin/osascript"
         task.arguments = [scriptPath, message, toRoom.GUID]
