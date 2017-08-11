@@ -183,7 +183,9 @@ struct MessageRouting {
         let matches = detector.matches(in: myMessage, options: [], range: NSMakeRange(0, myMessage.characters.count))
         let myLowercaseMessage = myMessage.lowercased()
         
-        guard !disabled || myLowercaseMessage == "/enable" else {
+        let defaults = UserDefaults.standard
+        
+        guard !defaults.bool(forKey: "JaredIsDisabled") || myLowercaseMessage == "/enable" else {
             return
         }
         
@@ -195,11 +197,11 @@ struct MessageRouting {
             SendText("Successfully reloaded plugins.", toRoom: forRoom)
         }
         else if myLowercaseMessage == "/enable" {
-            disabled = false
+            defaults.set(false, forKey: "JaredIsDisabled")
             SendText("Jared has been re-enabled. To disable, type /disable", toRoom: forRoom)
         }
         else if myLowercaseMessage == "/disable" {
-            disabled = true
+            defaults.set(true, forKey: "JaredIsDisabled")
             SendText("Jared has been disabled. Type /enable to re-enable.", toRoom: forRoom)
         }
         else {

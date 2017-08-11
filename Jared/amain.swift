@@ -11,10 +11,12 @@ import Foundation
 public func SendText(_ message:String, toRoom: Room) {
     print("I want to send text \(message)")
     
+    let defaults = UserDefaults.standard
+    
     //Don't send the message if Jared is currently disabled.
-//    guard !disabled else {
-//        return
-//    }
+    guard !defaults.bool(forKey: "JaredIsDisabled") else {
+        return
+    }
     
     if let scriptPath = Bundle.main.url(forResource: "SendText", withExtension: "scpt")?.path {
         
@@ -28,6 +30,13 @@ public func SendText(_ message:String, toRoom: Room) {
 
 public func SendImage(_ imagePath:String, toRoom: Room) {
     print("I want to send image \(imagePath)")
+    
+    let defaults = UserDefaults.standard
+    
+    //Don't send the message if Jared is currently disabled.
+    guard !defaults.bool(forKey: "JaredIsDisabled") else {
+        return
+    }
     
     if let scriptPath = Bundle.main.url(forResource: "SendImage", withExtension: "scpt")?.path {
         let task = Process()
