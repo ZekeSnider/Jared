@@ -32,7 +32,7 @@ struct MessageRouting {
             
             if let jsonResult = try! JSONSerialization.jsonObject(with: jsonData as Data, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String:AnyObject]
             {
-                config = jsonResult["routes"] as! [String : [String: AnyObject]]
+                config = jsonResult["routes"] as? [String : [String: AnyObject]]
             }
         }
         
@@ -81,25 +81,20 @@ struct MessageRouting {
                 return
             }
         
-        do {
-            //Cast the class to RoutingModule protocol
-            if let principleClass = try myBundle.principalClass as? RoutingModule.Type
-            {
-                //Initialize it
-                let module: RoutingModule = principleClass.init()
-                bundles.append(myBundle)
-                
-                //Add it to our modules
-                modules.append(module)
-            }
-            else {
-                return
-            }
+        //Cast the class to RoutingModule protocol
+        if let principleClass = myBundle.principalClass as? RoutingModule.Type
+        {
+            //Initialize it
+            let module: RoutingModule = principleClass.init()
+            bundles.append(myBundle)
+            
+            //Add it to our modules
+            modules.append(module)
+            
         }
-        catch {
+        else {
             return
         }
-        
     }
     
     mutating func reloadPlugins() {
