@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaDFRPlugin" version="12062"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="12121"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+        <capability name="the Touch Bar" message="Use a version of macOS with Touch Bar support." minToolsVersion="8.1" minSystemVersion="10.12.1" requiredIntegratedClassName="NSTouchBar"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -714,7 +716,7 @@ for updates.</string>
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="480" height="270"/>
-                        <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="2048" height="1129"/>
                     </window>
                     <connections>
                         <segue destination="XfG-lQ-9wD" kind="relationship" relationship="window.shadowedContentViewController" id="cq2-FE-JQM"/>
@@ -722,7 +724,7 @@ for updates.</string>
                 </windowController>
                 <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="250"/>
+            <point key="canvasLocation" x="47" y="253"/>
         </scene>
         <!--Preferences-->
         <scene sceneID="hIz-AP-VOD">
@@ -826,7 +828,42 @@ for updates.</string>
                             <constraint firstItem="YTU-KV-gNm" firstAttribute="top" secondItem="vsI-U5-UIq" secondAttribute="bottom" constant="8" id="uAE-Zc-xrj"/>
                         </constraints>
                     </view>
+                    <touchBar key="touchBar" id="dwN-ab-4QG">
+                        <touchBarItems>
+                            <touchBarSpacerItem identifier="NSTouchBarItemIdentifierFlexibleSpace" id="iwM-Xg-yil"/>
+                            <touchBarItem id="KQH-6n-TyJ">
+                                <viewController key="viewController" id="M4J-Bf-Jpq">
+                                    <button key="view" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="trk-Nk-t1G">
+                                        <rect key="frame" x="0.0" y="0.0" width="72" height="30"/>
+                                        <buttonCell key="cell" type="push" title="Disable" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="7jf-Pm-a3s">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" usesAppearanceFont="YES"/>
+                                            <connections>
+                                                <action selector="EnableDisableAction:" target="XfG-lQ-9wD" id="WYY-SY-Q9C"/>
+                                            </connections>
+                                        </buttonCell>
+                                    </button>
+                                </viewController>
+                                <size key="designTimeSize" width="72" height="30"/>
+                            </touchBarItem>
+                            <touchBarItem id="amC-uF-2aV">
+                                <viewController key="viewController" id="XwG-AW-YxK">
+                                    <textField key="view" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hID-cO-Xdo">
+                                        <rect key="frame" x="0.0" y="0.0" width="27" height="24"/>
+                                        <textFieldCell key="cell" borderStyle="bezel" alignment="left" title=":^)" drawsBackground="YES" id="vcl-tK-3Tc">
+                                            <font key="font" usesAppearanceFont="YES"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                </viewController>
+                                <size key="designTimeSize" width="27" height="24"/>
+                            </touchBarItem>
+                            <touchBarSpacerItem identifier="NSTouchBarItemIdentifierFlexibleSpace" id="ohH-NB-vIm"/>
+                        </touchBarItems>
+                    </touchBar>
                     <connections>
+                        <outlet property="EnableDisableButton" destination="7jf-Pm-a3s" id="ejs-lO-jMn"/>
                         <outlet property="TwitterKey" destination="eFa-Da-GZa" id="KZi-RN-UXx"/>
                         <outlet property="TwitterSecret" destination="qv5-aT-M3G" id="rUO-7r-5LN"/>
                         <outlet property="YoutubeSecret" destination="SYb-bR-a5a" id="CoH-tr-KsB"/>
@@ -1987,7 +2024,7 @@ Cg
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="c0r-kU-FHX"/>
-        <segue reference="dZx-Oo-2Es"/>
+        <segue reference="SHi-Is-XQK"/>
+        <segue reference="dKs-kd-woH"/>
     </inferredMetricsTieBreakers>
 </document>

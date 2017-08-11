@@ -19,7 +19,14 @@ class ViewController: NSViewController {
         super.viewDidLoad()
 
         
-        defaults = UserDefaults.standard
+        let defaults = UserDefaults.standard
+        if (defaults.bool(forKey: "JaredIsDisabled")) {
+            EnableDisableButton.title = "Disable"
+        }
+        else {
+            EnableDisableButton.title = "Enable"
+        }
+        
         
         YoutubeSecret.stringValue = defaults.string(forKey: "YoutubeSecret") ?? "None"
         TwitterKey.stringValue = defaults.string(forKey: "TwitterKey") ?? "None"
@@ -31,6 +38,22 @@ class ViewController: NSViewController {
         self.view.window!.title = "Preferences"
     }
     
+    @IBOutlet weak var EnableDisableButton: NSButtonCell!
+    
+    @IBAction func EnableDisableAction(_ sender: Any) {
+        let defaults = UserDefaults.standard
+        
+        if (defaults.bool(forKey: "JaredIsDisabled")) {
+            defaults.set(false, forKey: "JaredIsDisabled")
+            EnableDisableButton.title = "Enable"
+        }
+        else {
+            defaults.set(true, forKey: "JaredIsDisabled")
+            EnableDisableButton.title = "Disable"
+        }
+        
+        print("hello world")
+    }
     @IBAction func setButtonPressed(_ sender: AnyObject) {
         defaults.setValue(YoutubeSecret.stringValue, forKey: "YoutubeSecret")
         defaults.setValue(TwitterKey.stringValue, forKey: "TwitterKey")
