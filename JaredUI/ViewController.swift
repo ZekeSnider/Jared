@@ -66,6 +66,13 @@ class ViewController: NSViewController {
         updateTouchBarButton()
 
     }
+    @IBAction func OpenPluginsButtonAction(_ sender: Any) {
+        let filemanager = FileManager.default
+        let appsupport = filemanager.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
+        let supportDir = appsupport.appendingPathComponent("Jared")
+        let pluginDir = supportDir.appendingPathComponent("Plugins")
+        NSWorkspace.shared().selectFile(nil, inFileViewerRootedAtPath: pluginDir.path)
+    }
     @IBAction func setButtonPressed(_ sender: AnyObject) {
         defaults.setValue(YoutubeSecret.stringValue, forKey: "YoutubeSecret")
         defaults.setValue(TwitterKey.stringValue, forKey: "TwitterKey")

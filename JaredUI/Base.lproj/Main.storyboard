@@ -846,6 +846,21 @@ for updates.</string>
                                 </viewController>
                                 <size key="designTimeSize" width="72" height="30"/>
                             </touchBarItem>
+                            <touchBarItem id="YiF-Jo-YcN">
+                                <viewController key="viewController" id="x2n-cv-Px8">
+                                    <button key="view" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pDw-Vd-BXF">
+                                        <rect key="frame" x="0.0" y="0.0" width="108" height="30"/>
+                                        <buttonCell key="cell" type="push" title="Open Plugins" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="dVq-61-Asu">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" usesAppearanceFont="YES"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="OpenPluginsButtonAction:" target="XfG-lQ-9wD" id="4RB-kq-UPe"/>
+                                        </connections>
+                                    </button>
+                                </viewController>
+                                <size key="designTimeSize" width="108" height="30"/>
+                            </touchBarItem>
                             <touchBarItem id="amC-uF-2aV">
                                 <viewController key="viewController" id="XwG-AW-YxK">
                                     <textField key="view" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hID-cO-Xdo">
@@ -906,7 +921,7 @@ for updates.</string>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textView importsGraphics="NO" baseWritingDirection="leftToRight" usesFontPanel="YES" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="mTW-SE-Gg8">
-                                            <rect key="frame" x="0.0" y="0.0" width="438" height="686"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="438" height="812"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="textColor" red="0.14901960784313725" green="0.14901960784313725" blue="0.14901960784313725" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1492,7 +1507,7 @@ Cg
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textView importsGraphics="NO" baseWritingDirection="leftToRight" usesFontPanel="YES" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="z0w-rn-hi5">
-                                            <rect key="frame" x="0.0" y="0.0" width="438" height="588"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="438" height="756"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="textColor" red="0.14901960784313725" green="0.14901960784313725" blue="0.14901960784313725" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
