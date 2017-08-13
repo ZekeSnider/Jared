@@ -44,10 +44,10 @@ class ViewController: NSViewController {
     func updateTouchBarButton() {
         let defaults = UserDefaults.standard
         if (defaults.bool(forKey: "JaredIsDisabled")) {
-            EnableDisableButton.title = "Disable"
+            EnableDisableButton.title = "Enable"
         }
         else {
-            EnableDisableButton.title = "Enable"
+            EnableDisableButton.title = "Disable"
         }
     }
     
@@ -72,6 +72,11 @@ class ViewController: NSViewController {
         let supportDir = appsupport.appendingPathComponent("Jared")
         let pluginDir = supportDir.appendingPathComponent("Plugins")
         NSWorkspace.shared().selectFile(nil, inFileViewerRootedAtPath: pluginDir.path)
+    }
+    @IBAction func ReloadButtonPressed(_ sender: Any) {
+        if let appDelegate = NSApplication.shared().delegate as? AppDelegate {
+            appDelegate.Router.reloadPlugins()
+        }
     }
     @IBAction func setButtonPressed(_ sender: AnyObject) {
         defaults.setValue(YoutubeSecret.stringValue, forKey: "YoutubeSecret")

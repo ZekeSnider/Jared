@@ -89,12 +89,17 @@ class CoreModule: RoutingModule {
             return
         }
         
+        if (currentSends[myRoom.buddyHandle!] == nil)
+        {
+            currentSends[myRoom.buddyHandle!] = 0
+        }
+        
         //Increment the concurrent send counter for this user
-        currentSends[myRoom.buddyHandle!] = currentSends[myRoom.buddyHandle!] ?? 0 + 1
+        currentSends[myRoom.buddyHandle!] = currentSends[myRoom.buddyHandle!]! + 1
         
         //If there are commas in the message, take the whole message
-        if parameters.count > 3 {
-            textToSend = parameters[2...(parameters.count - 1)].joined(separator: ",")
+        if parameters.count > 4 {
+            textToSend = parameters[3...(parameters.count - 1)].joined(separator: ",")
         }
         
         //Go through the repeat loop...

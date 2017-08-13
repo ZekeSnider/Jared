@@ -649,7 +649,7 @@
                 <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="JaredUI" customModuleProvider="target"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75.5" y="10"/>
+            <point key="canvasLocation" x="302" y="-1"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="aad-lo-kvI">
@@ -667,7 +667,7 @@
                 </windowController>
                 <customObject id="hkv-MJ-1Qs" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="608" y="79"/>
+            <point key="canvasLocation" x="813" y="176"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="qnc-P6-Vnt">
@@ -706,7 +706,7 @@ for updates.</string>
                 </viewController>
                 <customObject id="pbS-Ak-ndy" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="608" y="595"/>
+            <point key="canvasLocation" x="330" y="647"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="R2V-B0-nI4">
@@ -724,7 +724,7 @@ for updates.</string>
                 </windowController>
                 <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="47" y="253"/>
+            <point key="canvasLocation" x="-209" y="288"/>
         </scene>
         <!--Preferences-->
         <scene sceneID="hIz-AP-VOD">
@@ -861,6 +861,21 @@ for updates.</string>
                                 </viewController>
                                 <size key="designTimeSize" width="108" height="30"/>
                             </touchBarItem>
+                            <touchBarItem id="tC4-yt-Hc1">
+                                <viewController key="viewController" id="nll-GY-k7t">
+                                    <button key="view" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QBB-ar-F1A">
+                                        <rect key="frame" x="0.0" y="0.0" width="126" height="30"/>
+                                        <buttonCell key="cell" type="push" title="Reload Plugins" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="JKe-6e-7Jt">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" usesAppearanceFont="YES"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="ReloadButtonPressed:" target="XfG-lQ-9wD" id="xVA-OU-QoX"/>
+                                        </connections>
+                                    </button>
+                                </viewController>
+                                <size key="designTimeSize" width="126" height="30"/>
+                            </touchBarItem>
                             <touchBarItem id="amC-uF-2aV">
                                 <viewController key="viewController" id="XwG-AW-YxK">
                                     <textField key="view" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hID-cO-Xdo">
@@ -886,7 +901,7 @@ for updates.</string>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="595"/>
+            <point key="canvasLocation" x="-209" y="707"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="ZZn-28-m0u">
@@ -904,7 +919,7 @@ for updates.</string>
                 </windowController>
                 <customObject id="4Kv-Md-p4w" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-729" y="984"/>
+            <point key="canvasLocation" x="-1056" y="1260"/>
         </scene>
         <!--Licenses-->
         <scene sceneID="Qhg-ns-kLU">
@@ -2035,11 +2050,11 @@ Cg
                 </viewController>
                 <customObject id="rhl-t8-X9s" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="1060.5"/>
+            <point key="canvasLocation" x="-209" y="1250"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="SHi-Is-XQK"/>
         <segue reference="dKs-kd-woH"/>
+        <segue reference="dZx-Oo-2Es"/>
     </inferredMetricsTieBreakers>
 </document>

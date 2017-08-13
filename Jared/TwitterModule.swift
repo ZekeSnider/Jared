@@ -45,8 +45,6 @@ class TwitterModule: RoutingModule {
         let twitterStatus = Route(name: "Twitter Tweet Integration", comparisons: [.containsURL: ["twitter.com"]], call: self.twitterStatusID, description: "Twitter integration to get detail of a tweet URLs")
         
         routes = [twitterStatus]
-        
-        print("hi")
     }
     
     
