@@ -42,7 +42,7 @@ struct MessageRouting {
     }
     
     mutating func addInternalModules() {
-        let internalModules: [RoutingModule] = [CoreModule(), RESTModule(), TwitterModule()]
+        let internalModules: [RoutingModule] = [CoreModule(), RESTModule()]
         
         modules.append(contentsOf: internalModules)
     }
@@ -105,7 +105,7 @@ struct MessageRouting {
         modules = []
         
         for bundle in bundles {
-            bundles[0].unload()
+            bundle.unload()
         }
         
         bundles = []

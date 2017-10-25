@@ -71,10 +71,10 @@ class ViewController: NSViewController {
         let appsupport = filemanager.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
         let supportDir = appsupport.appendingPathComponent("Jared")
         let pluginDir = supportDir.appendingPathComponent("Plugins")
-        NSWorkspace.shared().selectFile(nil, inFileViewerRootedAtPath: pluginDir.path)
+        NSWorkspace.shared.selectFile(nil, inFileViewerRootedAtPath: pluginDir.path)
     }
     @IBAction func ReloadButtonPressed(_ sender: Any) {
-        if let appDelegate = NSApplication.shared().delegate as? AppDelegate {
+        if let appDelegate = NSApplication.shared.delegate as? AppDelegate {
             appDelegate.Router.reloadPlugins()
         }
     }

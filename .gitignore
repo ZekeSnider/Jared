@@ -24,6 +24,8 @@ DerivedData/
 *.perspectivev3
 !default.perspectivev3
 xcuserdata/
+*.xcuserstate
+.DS_STORE
 
 ## Other
 *.moved-aside

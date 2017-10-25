@@ -19,15 +19,15 @@ let intervalSeconds: [IntervalType: Double] =
 ]
 
 class SchedulePost: Object {
-    dynamic var sendIntervalNumber = 1
-    dynamic var sendIntervalType = IntervalType.Hour.rawValue
-    dynamic var text = ""
-    dynamic var handle = ""
-    dynamic var sendNumberTimes = 1
-    dynamic var chatID = ""
-    dynamic var startDate = Date()
-    dynamic var id = UUID().uuidString
-    dynamic var lastSendDate = Date()
+    @objc dynamic var sendIntervalNumber = 1
+    @objc dynamic var sendIntervalType = IntervalType.Hour.rawValue
+    @objc dynamic var text = ""
+    @objc dynamic var handle = ""
+    @objc dynamic var sendNumberTimes = 1
+    @objc dynamic var chatID = ""
+    @objc dynamic var startDate = Date()
+    @objc dynamic var id = UUID().uuidString
+    @objc dynamic var lastSendDate = Date()
     
     var sendIntervalTypeEnum: IntervalType {
         get {

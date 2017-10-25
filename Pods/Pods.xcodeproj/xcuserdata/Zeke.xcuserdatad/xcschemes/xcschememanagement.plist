@@ -8,86 +8,29 @@
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>4</integer>
 		</dict>
 		<key>Pods-JaredUI.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>5</integer>
 		</dict>
 		<key>Realm.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>7</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>RealmSwift.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>8</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>SwiftyJSON.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>6</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
-	<dict>
-		<key>3BCEA6C3DC6A14B6FE7DBE130459A074</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>4C90621B77CC86B4BBCB9A9B74071071</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>59403A61EE6FA7F6F6A22121E1C2B106</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>5A172CB2FAF787A328485C3F3C811168</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>725DE2958A2C3710AD770283E5CFB77E</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>79C040AFDDCE1BCBF6D8B5EB0B85887F</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>88E9EC28B8B46C3631E6B242B50F4442</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>8972D1B3785A7CF11C5D31FB702BCB0E</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>8E8AC012C2D6A3CF0D90C3B999ADE247</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>EA5783E1E72DAF034F5567D9F2721A2E</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-	</dict>
+	<dict/>
 </dict>
 </plist>
