@@ -11,6 +11,8 @@ import Cocoa
 import JaredFramework
 import AddressBook
 import Contacts
+import RealmSwift
+
 
 public func NSLocalizedString(_ key: String) -> String {
     return NSLocalizedString(key, tableName: "CoreStrings", comment: "")
@@ -22,10 +24,21 @@ class CoreModule: RoutingModule {
     var routes: [Route] = []
     let MAXIMUM_CONCURRENT_SENDS = 3
     var currentSends: [String: Int] = [:]
+    let scheduleCheckInterval = 30.0 * 60.0
     
     let mystring = NSLocalizedString("hello", tableName: "CoreStrings", value: "", comment: "")
     
     required public init() {
+        let appsupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0].appendingPathComponent("Jared").appendingPathComponent("CoreModule")
+        let realmLocation = appsupport.appendingPathComponent("database.realm")
+            
+        try! FileManager.default.createDirectory(at: appsupport, withIntermediateDirectories: true, attributes: nil)
+        
+        let config = Realm.Configuration(
+            fileURL: realmLocation.absoluteURL
+        )
+        Realm.Configuration.defaultConfiguration = config
+        
         let ping = Route(name:"/ping", comparisons: [.startsWith: ["/ping"]], call: self.pingCall, description: NSLocalizedString("pingDescription"))
         
         let thankYou = Route(name:"Thank You", comparisons: [.startsWith: [NSLocalizedString("ThanksJaredCommand")]], call: self.thanksJared, description: NSLocalizedString("ThanksJaredResponse"))
@@ -37,8 +50,15 @@ class CoreModule: RoutingModule {
         let send = Route(name: "/send", comparisons: [.startsWith: ["/send"]], call: self.sendRepeat, description: NSLocalizedString("sendDescription"),parameterSyntax: NSLocalizedString("sendSyntax"))
         
         let name = Route(name: "/name", comparisons: [.startsWith: ["/name"]], call: self.changeName, description: "Change what Jared calls you", parameterSyntax: "/name,[your preferred name]")
+        
+        let schedule = Route(name: "/schedule", comparisons: [.startsWith: ["/schedule"]], call: self.schedule, description: "Schedule messages", parameterSyntax: "/schedule")
 
-        routes = [ping, thankYou, version, send, whoami, name]
+        routes = [ping, thankYou, version, send, whoami, name, schedule]
+        
+        //Launch background thread that will check for scheduled messages to send
+        backgroundThread(0.0, background: {
+            self.scheduleThread()
+        })
     }
     
     
@@ -111,6 +131,163 @@ class CoreModule: RoutingModule {
         //Decrement the concurrent send counter for this user
         currentSends[myRoom.buddyHandle!] = (currentSends[myRoom.buddyHandle!] ?? 0) - 1
         
+    }
+    
+    func scheduleThread() {
+        //Get all scheduled posts
+        let realm  = try! Realm()
+        let posts = realm.objects(SchedulePost.self)
+        
+        
+        let nowDate = Date().timeIntervalSinceReferenceDate
+        let lowerIntervalBound = nowDate - scheduleCheckInterval
+        
+        //Loop over all posts
+        for post in posts {
+            //Number of send intervals since lower bound
+            let lowerTimeDiff = (lowerIntervalBound - post.startDate.timeIntervalSinceReferenceDate) / (intervalSeconds[post.sendIntervalTypeEnum]! * Double(post.sendIntervalNumber))
+            
+            //Number of send intervals since upper bound
+            let upperTimeDiff = (nowDate - post.startDate.timeIntervalSinceReferenceDate) / (intervalSeconds[post.sendIntervalTypeEnum]! * Double(post.sendIntervalNumber))
+            let roundedLower = floor(lowerTimeDiff)
+            let roundedHigher = ceil(upperTimeDiff)
+            
+            //Check to see if we are within the re-send period for this scheduled message
+            //values should converge on the number of send interval if we're supposed to send.
+            if (roundedHigher - roundedLower == Double(post.sendIntervalNumber)) {
+
+                //Check to make sure the last time we sent this scheduled message it was not within this send interval
+                if (nowDate - post.lastSendDate.timeIntervalSinceReferenceDate) > (Double(post.sendIntervalNumber) * intervalSeconds[post.sendIntervalTypeEnum]!) {
+                    //Send the message and write to the database with the new lastSendDate
+                    let sendRoom = Room(GUID: post.chatID, buddyName: "", buddyHandle: post.handle)
+                    SendText(post.text, toRoom: sendRoom)
+                    try! realm.write {
+                        post.lastSendDate = Date()
+                    }
+                }
+            }
+            //We've gone over when the last message for the schedule would have sent. We should delete it from the database
+            else if Int(roundedLower) > post.sendNumberTimes {
+                try! realm.write {
+                    realm.delete(post)
+                }
+                print("I should delete this one...")
+            }
+        }
+        
+        //Wait for next iteration...
+        Thread.sleep(forTimeInterval: Double(scheduleCheckInterval))
+        scheduleThread()
+    }
+    
+    func schedule(_ myMessage: String, forRoom: Room) {
+        // /schedule,add,1,week,5,full Message
+        // /schedule,delete,1
+        // /schedule,list
+        let parameters = myMessage.components(separatedBy: ",")
+        
+        guard forRoom.buddyHandle != nil else {
+            SendText("Buddy must have valid handle.", toRoom: forRoom)
+            return
+        }
+        guard parameters.count > 1 else {
+            SendText("More parameters required.", toRoom: forRoom)
+            return
+        }
+        
+        let realm  = try! Realm()
+        
+        switch parameters[1] {
+        case "add":
+            guard parameters.count > 5 else {
+                SendText("Incorrect number of parameters specified.", toRoom: forRoom)
+                return
+            }
+            
+            guard let sendIntervalNumber = Int(parameters[2]) else {
+                SendText("Send interval number must be an integer.", toRoom: forRoom)
+                return
+            }
+            
+            guard let sendIntervalType = IntervalType(rawValue: parameters[3]) else {
+                SendText("Send interval type must be a valid input (hour, day, week, month).", toRoom: forRoom)
+                return
+            }
+            
+            guard let sendTimes = Int(parameters[4]) else {
+                SendText("Send times must be an integer.", toRoom: forRoom)
+                return
+            }
+            
+            let sendMessage = parameters[5]
+            
+            let newPost = SchedulePost(value:
+                ["sendIntervalNumber" : sendIntervalNumber,
+                 "sendIntervalType": sendIntervalType.rawValue,
+                 "text": sendMessage,
+                 "handle": forRoom.buddyHandle!,
+                 "sendNumberTimes": sendTimes,
+                 "chatID": forRoom.GUID,
+                 "startDate": Date(),
+                ])
+            
+            let realm  = try! Realm()
+            try! realm.write {
+                realm.add(newPost)
+            }
+
+            SendText("Your post has been succesfully scheduled.", toRoom: forRoom)
+            break
+        case "delete":
+            guard parameters.count > 2 else {
+                SendText("The second parameter must be a valid id.", toRoom: forRoom)
+                return
+            }
+            
+            guard let deleteID = Int(parameters[2]) else {
+                SendText("The delete ID must be an integer.", toRoom: forRoom)
+                return
+            }
+            
+            guard deleteID > 0 else {
+                SendText("The delete ID must be an positive integer.", toRoom: forRoom)
+                return
+            }
+            
+            let schedulePost = realm.objects(SchedulePost.self).filter("handle == %@", forRoom.buddyHandle!)
+            
+            guard schedulePost.count >= deleteID  else {
+                SendText("The specified post ID is not valid.", toRoom: forRoom)
+                return
+            }
+            
+            guard schedulePost[deleteID - 1].handle == forRoom.buddyHandle else {
+                SendText("You do not have permission to delete this scheduled message.", toRoom: forRoom)
+                return
+            }
+            
+            try! realm.write {
+                realm.delete(schedulePost[deleteID - 1])
+            }
+            SendText("The specified scheduled post has been deleted.", toRoom: forRoom)
+            
+            break
+        case "list":
+            var scheduledPosts = realm.objects(SchedulePost.self).filter("handle == %@", forRoom.buddyHandle!)
+            scheduledPosts = scheduledPosts.sorted(byKeyPath: "startDate", ascending: false)
+            
+            var sendMessage = "\(forRoom.buddyName ?? "Hello"), you have \(scheduledPosts.count) posts scheduled."
+            var iterator = 1
+            for post in scheduledPosts {
+                sendMessage += "\n\(iterator): Send a message every \(post.sendIntervalNumber) \(post.sendIntervalType)(s) \(post.sendNumberTimes) time(s), starting on \(post.startDate.description(with: Locale.current))."
+                iterator += 1
+            }
+            SendText(sendMessage, toRoom: forRoom)
+            break
+        default:
+            SendText("Invalid schedule command type. Must be add, delete, or list", toRoom: forRoom)
+            break
+        }
     }
     
     func changeName(_ myMessage: String, forRoom: Room) {

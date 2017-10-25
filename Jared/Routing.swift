@@ -68,7 +68,7 @@ struct MessageRouting {
                 else {
                     continue
                 }
-            
+
             //Load it
             loadBundle(myBundle)
         }
@@ -103,9 +103,13 @@ struct MessageRouting {
         let pluginDir = supportDir.appendingPathComponent("Plugins")
         
         modules = []
+        
         for bundle in bundles {
-            bundle.unload()
+            bundles[0].unload()
         }
+        
+        bundles = []
+        
         loadPlugins(pluginDir)
         addInternalModules()
     }
