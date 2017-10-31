@@ -27,15 +27,20 @@ struct MessageRouting {
         try! filemanager.createDirectory(at: supportDir, withIntermediateDirectories: true, attributes: nil)
         try! filemanager.createDirectory(at: pluginDir, withIntermediateDirectories: true, attributes: nil)
         
+        let configPath = supportDir.appendingPathComponent("config.json")
         do {
-            let jsonData = try! NSData(contentsOfFile: supportDir.appendingPathComponent("config.json").path, options: .mappedIfSafe)
+            //Copy an empty config file if the conig file does not exist
+            if !filemanager.fileExists(atPath: configPath.path) {
+                try! filemanager.copyItem(at: (Bundle.main.resourceURL?.appendingPathComponent("config.json"))!, to: configPath)
+            }
             
+            //Read the JSON conig file
+            let jsonData = try! NSData(contentsOfFile: supportDir.appendingPathComponent("config.json").path, options: .mappedIfSafe)
             if let jsonResult = try! JSONSerialization.jsonObject(with: jsonData as Data, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String:AnyObject]
             {
                 config = jsonResult["routes"] as? [String : [String: AnyObject]]
             }
         }
-        
         
         loadPlugins(pluginDir)
         addInternalModules()

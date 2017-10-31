@@ -24,7 +24,7 @@
 		B332787E1CB2CB1300BBDD3A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B332787D1CB2CB1300BBDD3A /* Assets.xcassets */; };
 		B33278811CB2CB1300BBDD3A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B332787F1CB2CB1300BBDD3A /* Main.storyboard */; };
 		B33278891CB2D0C600BBDD3A /* Jared.sdef in Resources */ = {isa = PBXBuildFile; fileRef = B33278881CB2D0C600BBDD3A /* Jared.sdef */; };
-		B361EEBB1F1DE24C0041113C /* sample-config.json in Resources */ = {isa = PBXBuildFile; fileRef = B361EEBA1F1DE24C0041113C /* sample-config.json */; };
+		B361EEBB1F1DE24C0041113C /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = B361EEBA1F1DE24C0041113C /* config.json */; };
 		B36563EF1F3D68980064B114 /* TouchBarTextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36563EE1F3D68980064B114 /* TouchBarTextFieldExtension.swift */; };
 		B39A65E01CC1FB1B003E26B0 /* Routing.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39A65DF1CC1FB1B003E26B0 /* Routing.swift */; };
 		B39F2B391CB3BCA700C0D35C /* SendText.scpt in Resources */ = {isa = PBXBuildFile; fileRef = B39F2B381CB3BCA700C0D35C /* SendText.scpt */; };
@@ -77,7 +77,7 @@
 		B33278801CB2CB1300BBDD3A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B33278821CB2CB1300BBDD3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B33278881CB2D0C600BBDD3A /* Jared.sdef */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Jared.sdef; sourceTree = "<group>"; };
-		B361EEBA1F1DE24C0041113C /* sample-config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "sample-config.json"; sourceTree = "<group>"; };
+		B361EEBA1F1DE24C0041113C /* config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config.json; sourceTree = "<group>"; };
 		B36563EE1F3D68980064B114 /* TouchBarTextFieldExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchBarTextFieldExtension.swift; sourceTree = "<group>"; };
 		B39A65DF1CC1FB1B003E26B0 /* Routing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Routing.swift; sourceTree = "<group>"; };
 		B39EC1751CB01F55002C3161 /* amain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = amain.swift; path = ../Jared/amain.swift; sourceTree = "<group>"; };
@@ -181,7 +181,7 @@
 				7FF077EC1CBD1A33008E33CB /* SendImageAndDelete.scpt */,
 				7FF077EA1CBCFFCB008E33CB /* SendImage.scpt */,
 				B39F2B381CB3BCA700C0D35C /* SendText.scpt */,
-				B361EEBA1F1DE24C0041113C /* sample-config.json */,
+				B361EEBA1F1DE24C0041113C /* config.json */,
 				B39A65DF1CC1FB1B003E26B0 /* Routing.swift */,
 				7F0E931C1D02FC250096BABE /* Global.swift */,
 				B39EC17C1CB01FDD002C3161 /* Modules */,
@@ -315,7 +315,7 @@
 				B39F2B391CB3BCA700C0D35C /* SendText.scpt in Resources */,
 				B332787E1CB2CB1300BBDD3A /* Assets.xcassets in Resources */,
 				7FE220ED1CB3C8340081CE23 /* podfile in Resources */,
-				B361EEBB1F1DE24C0041113C /* sample-config.json in Resources */,
+				B361EEBB1F1DE24C0041113C /* config.json in Resources */,
 				7FF077EB1CBCFFCB008E33CB /* SendImage.scpt in Resources */,
 				B33278811CB2CB1300BBDD3A /* Main.storyboard in Resources */,
 				7FF077ED1CBD1A33008E33CB /* SendImageAndDelete.scpt in Resources */,
