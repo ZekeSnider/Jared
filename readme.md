@@ -5,7 +5,7 @@
 <a name='Download'/>
 
 ## Download Links  
-### OS X  
+### macOS
 Please check out the latest [release](https://github.com/ZekeSnider/Jared/releases/latest) page an up to date download.
 
 ## What is Jared?  
@@ -36,7 +36,7 @@ Obtain [Twitter](https://apps.twitter.com) and [Youtube API](https://developers.
 ![Messages Preferences](/Screenshots/MessagesPreferences.png)
 Select AppleScript handler in Messages.app preferences, select "Open Script Folder", drag the Jared script handler into that folder, then select it as the handler.
 
-##Commands
+## Commands
 
 Type /help in a group chat with Jared to see a full list of commands. Type /help,"name of command here" to get detail on that specific command. 
 
