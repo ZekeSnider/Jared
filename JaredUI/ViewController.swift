@@ -9,9 +9,6 @@
 import Cocoa
 
 class ViewController: NSViewController {
-    @IBOutlet weak var YoutubeSecret: NSTextField!
-    @IBOutlet weak var TwitterKey: NSTextField!
-    @IBOutlet weak var TwitterSecret: NSTextField!
     
     var defaults: UserDefaults!
     
@@ -21,10 +18,6 @@ class ViewController: NSViewController {
         
         defaults.addObserver(self, forKeyPath: "JaredIsDisabled", options: .new, context: nil)
         updateTouchBarButton()
-        
-        YoutubeSecret.stringValue = defaults.string(forKey: "YoutubeSecret") ?? "None"
-        TwitterKey.stringValue = defaults.string(forKey: "TwitterKey") ?? "None"
-        TwitterSecret.stringValue = defaults.string(forKey: "TwitterSecret") ?? "None"
     }
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
@@ -78,11 +71,7 @@ class ViewController: NSViewController {
             appDelegate.Router.reloadPlugins()
         }
     }
-    @IBAction func setButtonPressed(_ sender: AnyObject) {
-        defaults.setValue(YoutubeSecret.stringValue, forKey: "YoutubeSecret")
-        defaults.setValue(TwitterKey.stringValue, forKey: "TwitterKey")
-        defaults.setValue(TwitterSecret.stringValue, forKey: "TwitterSecret")
-    }
+
 
     override var representedObject: Any? {
         didSet {

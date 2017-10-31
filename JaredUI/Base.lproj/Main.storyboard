@@ -740,64 +740,6 @@ for updates.</string>
                         <rect key="frame" x="0.0" y="0.0" width="480" height="150"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vsI-U5-UIq">
-                                <rect key="frame" x="18" y="113" width="151" height="17"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Youtube API Key Secret:" id="6wN-G0-bLc">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YTU-KV-gNm">
-                                <rect key="frame" x="18" y="88" width="142" height="17"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Twitter Consumer Key:" id="Dx2-1B-dp2">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Hs0-Pg-VG4">
-                                <rect key="frame" x="18" y="63" width="159" height="17"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Twitter Consumer Secret:" id="ns4-xE-cyO">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eFa-Da-GZa">
-                                <rect key="frame" x="175" y="85" width="285" height="22"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="LrM-3M-vfR">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qv5-aT-M3G">
-                                <rect key="frame" x="175" y="60" width="285" height="22"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="dhK-ZY-N3Q">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="F1N-6I-2nB">
-                                <rect key="frame" x="397" y="13" width="69" height="32"/>
-                                <buttonCell key="cell" type="push" title="Set" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="mve-Mv-nDd">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="setButtonPressed:" target="XfG-lQ-9wD" id="1Fo-bE-zPE"/>
-                                </connections>
-                            </button>
-                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SYb-bR-a5a">
-                                <rect key="frame" x="175" y="108" width="285" height="22"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="Ooa-oj-pxc">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qSb-Pv-q99">
                                 <rect key="frame" x="14" y="13" width="94" height="32"/>
                                 <buttonCell key="cell" type="push" title="Licenses" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="fTp-dn-Ylx">
@@ -808,30 +750,32 @@ for updates.</string>
                                     <segue destination="uaA-Ni-cXu" kind="show" id="SHi-Is-XQK"/>
                                 </connections>
                             </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ndf-cS-v7Z">
+                                <rect key="frame" x="310" y="46" width="156" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="Open Plugin Folder" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Cg8-ZL-KVX">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="OpenPluginsButtonAction:" target="XfG-lQ-9wD" id="bvb-Pn-9Sh"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="i1d-II-CRR">
+                                <rect key="frame" x="14" y="46" width="130" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="Reload Plugins" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="R03-zL-JIN">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="ReloadButtonPressed:" target="XfG-lQ-9wD" id="Dnb-te-hQo"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="qSb-Pv-q99" secondAttribute="bottom" constant="20" id="16o-RW-MdM"/>
-                            <constraint firstItem="qv5-aT-M3G" firstAttribute="leading" secondItem="Hs0-Pg-VG4" secondAttribute="trailing" id="4Lh-4P-fNG"/>
-                            <constraint firstItem="Hs0-Pg-VG4" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" id="8EF-Q9-VAN"/>
-                            <constraint firstItem="SYb-bR-a5a" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="20" id="9lI-NI-MFu"/>
-                            <constraint firstItem="vsI-U5-UIq" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" id="DbG-bz-MJp"/>
-                            <constraint firstItem="Hs0-Pg-VG4" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="70" id="JXa-Ma-Txw"/>
-                            <constraint firstItem="eFa-Da-GZa" firstAttribute="leading" secondItem="YTU-KV-gNm" secondAttribute="trailing" constant="17" id="Ne9-n3-uGW"/>
-                            <constraint firstItem="eFa-Da-GZa" firstAttribute="top" secondItem="SYb-bR-a5a" secondAttribute="bottom" constant="1" id="R4O-Xo-Hud"/>
-                            <constraint firstAttribute="trailing" secondItem="eFa-Da-GZa" secondAttribute="trailing" constant="20" id="TIO-ji-kRJ"/>
-                            <constraint firstItem="SYb-bR-a5a" firstAttribute="leading" secondItem="vsI-U5-UIq" secondAttribute="trailing" constant="8" id="VAR-oH-DST"/>
-                            <constraint firstAttribute="trailing" secondItem="qv5-aT-M3G" secondAttribute="trailing" constant="20" id="Vg1-iM-HW0"/>
-                            <constraint firstItem="qv5-aT-M3G" firstAttribute="leading" secondItem="Hs0-Pg-VG4" secondAttribute="trailing" id="XCC-c5-cLb"/>
                             <constraint firstItem="qSb-Pv-q99" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" id="YI8-nA-Grg"/>
-                            <constraint firstAttribute="bottom" secondItem="F1N-6I-2nB" secondAttribute="bottom" constant="20" id="cx5-9b-mxE"/>
-                            <constraint firstItem="qv5-aT-M3G" firstAttribute="top" secondItem="eFa-Da-GZa" secondAttribute="bottom" constant="3" id="d3X-uf-nd8"/>
-                            <constraint firstItem="F1N-6I-2nB" firstAttribute="leading" secondItem="qv5-aT-M3G" secondAttribute="trailing" constant="-57" id="frq-k6-joa"/>
-                            <constraint firstItem="YTU-KV-gNm" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" id="hC0-mC-Gh6"/>
-                            <constraint firstItem="vsI-U5-UIq" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="20" id="jAv-oy-teS"/>
-                            <constraint firstAttribute="trailing" secondItem="F1N-6I-2nB" secondAttribute="trailing" constant="20" id="lXa-WR-cdc"/>
-                            <constraint firstItem="qv5-aT-M3G" firstAttribute="top" secondItem="eFa-Da-GZa" secondAttribute="bottom" constant="3" id="sHs-nW-0Q9"/>
-                            <constraint firstAttribute="trailing" secondItem="SYb-bR-a5a" secondAttribute="trailing" constant="20" id="trH-pi-eFa"/>
-                            <constraint firstItem="YTU-KV-gNm" firstAttribute="top" secondItem="vsI-U5-UIq" secondAttribute="bottom" constant="8" id="uAE-Zc-xrj"/>
                         </constraints>
                     </view>
                     <touchBar key="touchBar" id="dwN-ab-4QG">
@@ -839,8 +783,8 @@ for updates.</string>
                             <touchBarSpacerItem identifier="NSTouchBarItemIdentifierFlexibleSpace" id="iwM-Xg-yil"/>
                             <touchBarItem id="KQH-6n-TyJ">
                                 <viewController key="viewController" id="M4J-Bf-Jpq">
-                                    <button key="view" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="trk-Nk-t1G">
-                                        <rect key="frame" x="0.0" y="0.0" width="84" height="41"/>
+                                    <button key="view" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="trk-Nk-t1G">
+                                        <rect key="frame" x="0.0" y="0.0" width="72" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="push" title="Disable" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="7jf-Pm-a3s">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -856,7 +800,7 @@ for updates.</string>
                             <touchBarItem id="YiF-Jo-YcN">
                                 <viewController key="viewController" id="x2n-cv-Px8">
                                     <button key="view" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pDw-Vd-BXF">
-                                        <rect key="frame" x="0.0" y="0.0" width="108" height="41"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="108" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="push" title="Open Plugins" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="dVq-61-Asu">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -871,8 +815,8 @@ for updates.</string>
                             </touchBarItem>
                             <touchBarItem id="tC4-yt-Hc1">
                                 <viewController key="viewController" id="nll-GY-k7t">
-                                    <button key="view" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QBB-ar-F1A">
-                                        <rect key="frame" x="0.0" y="0.0" width="138" height="41"/>
+                                    <button key="view" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QBB-ar-F1A">
+                                        <rect key="frame" x="0.0" y="0.0" width="126" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="push" title="Reload Plugins" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="JKe-6e-7Jt">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -904,9 +848,6 @@ for updates.</string>
                     </touchBar>
                     <connections>
                         <outlet property="EnableDisableButton" destination="7jf-Pm-a3s" id="ejs-lO-jMn"/>
-                        <outlet property="TwitterKey" destination="eFa-Da-GZa" id="KZi-RN-UXx"/>
-                        <outlet property="TwitterSecret" destination="qv5-aT-M3G" id="rUO-7r-5LN"/>
-                        <outlet property="YoutubeSecret" destination="SYb-bR-a5a" id="CoH-tr-KsB"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -2067,7 +2008,7 @@ Cg
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="dZx-Oo-2Es"/>
+        <segue reference="SHi-Is-XQK"/>
         <segue reference="dKs-kd-woH"/>
     </inferredMetricsTieBreakers>
 </document>
