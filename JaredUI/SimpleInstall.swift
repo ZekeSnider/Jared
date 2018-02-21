@@ -31,9 +31,6 @@ struct SimpleInstall {
             dict.write(toFile: myPath, atomically: true )
         }*/
         
-        
-        
-        
     }
     
     func copyFile() {

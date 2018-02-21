@@ -18,17 +18,28 @@ public func SendText(_ message:String, toRoom: Room) {
         return
     }
     
-    if let scriptPath = Bundle.main.url(forResource: "SendText", withExtension: "scpt")?.path {
-        
+    var scriptPath: String?
+    var recipient: String?
+    
+    if (toRoom.GUID != nil) {
+        scriptPath = Bundle.main.url(forResource: "SendText", withExtension: "scpt")?.path
+        recipient = toRoom.GUID
+    }
+    else {
+        scriptPath = Bundle.main.url(forResource: "SendTextSingleBuddy", withExtension: "scpt")?.path
+        recipient = toRoom.buddyHandle
+    }
+    
+    if scriptPath != nil && recipient != nil {
         let task = Process()
         task.launchPath = "/usr/bin/osascript"
-        task.arguments = [scriptPath, message, toRoom.GUID]
+        task.arguments = [scriptPath!, message, recipient!]
         task.launch()
     }
     
 }
 
-public func SendImage(_ imagePath:String, toRoom: Room) {
+public func SendImage(_ imagePath:String, toRoom: Room, blockThread: Bool) {
     print("I want to send image \(imagePath)")
     
     let defaults = UserDefaults.standard
@@ -38,21 +49,22 @@ public func SendImage(_ imagePath:String, toRoom: Room) {
         return
     }
     
-    if let scriptPath = Bundle.main.url(forResource: "SendImage", withExtension: "scpt")?.path {
-        let task = Process()
-        task.launchPath = "/usr/bin/osascript"
-        task.arguments = [scriptPath, imagePath, toRoom.GUID]
-        task.launch()
-    }
-}
-
-public func SendImage(_ imagePath:String, toRoom: Room, blockThread: Bool) {
-    print("I want to send image \(imagePath)")
+    var scriptPath: String?
+    var recipient: String?
     
-    if let scriptPath = Bundle.main.url(forResource: "SendImage", withExtension: "scpt")?.path {
+    if (toRoom.GUID != nil) {
+        scriptPath = Bundle.main.url(forResource: "SendImage", withExtension: "scpt")?.path
+        recipient = toRoom.GUID
+    }
+    else {
+        scriptPath = Bundle.main.url(forResource: "SendImageSingleBuddy", withExtension: "scpt")?.path
+        recipient = toRoom.buddyHandle
+    }
+    
+    if scriptPath != nil && recipient != nil {
         let task = Process()
         task.launchPath = "/usr/bin/osascript"
-        task.arguments = [scriptPath, imagePath, toRoom.GUID]
+        task.arguments = [scriptPath!, imagePath, recipient!]
         task.launch()
         if blockThread {
             task.waitUntilExit()
@@ -75,20 +87,23 @@ public protocol RoutingModule {
 }
 
 public struct Room {
-    public var GUID: String
+    public var GUID: String?
     public var buddyName: String?
     public var buddyHandle: String?
-    public init(GUID: String, buddyName: String, buddyHandle: String) {
+    public init(GUID: String?, buddyName: String, buddyHandle: String) {
         self.GUID = GUID
         self.buddyName = buddyName
         self.buddyHandle = buddyHandle
+        setIsGroup()
     }
     public init(GUID: String, buddyName: String) {
         self.GUID = GUID
         self.buddyName = buddyName
+        setIsGroup()
     }
     public init(GUID:String) {
         self.GUID = GUID
+        setIsGroup()
     }
 }
 
