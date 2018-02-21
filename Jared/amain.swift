@@ -94,16 +94,13 @@ public struct Room {
         self.GUID = GUID
         self.buddyName = buddyName
         self.buddyHandle = buddyHandle
-        setIsGroup()
     }
     public init(GUID: String, buddyName: String) {
         self.GUID = GUID
         self.buddyName = buddyName
-        setIsGroup()
     }
     public init(GUID:String) {
         self.GUID = GUID
-        setIsGroup()
     }
 }
 

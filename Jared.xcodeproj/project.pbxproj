@@ -15,7 +15,6 @@
 		7F84B62E1CC511B80059A82B /* CoreStrings.strings in Resources */ = {isa = PBXBuildFile; fileRef = B3BBA7CD1CB3259A00E1749C /* CoreStrings.strings */; };
 		7FE220ED1CB3C8340081CE23 /* podfile in Resources */ = {isa = PBXBuildFile; fileRef = 7FE220EC1CB3C8340081CE23 /* podfile */; };
 		7FF077EB1CBCFFCB008E33CB /* SendImage.scpt in Resources */ = {isa = PBXBuildFile; fileRef = 7FF077EA1CBCFFCB008E33CB /* SendImage.scpt */; };
-		7FF077ED1CBD1A33008E33CB /* SendImageAndDelete.scpt in Resources */ = {isa = PBXBuildFile; fileRef = 7FF077EC1CBD1A33008E33CB /* SendImageAndDelete.scpt */; };
 		A8EDB6CA30877B4D8E9D00C7 /* Pods_JaredUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C31CB7445EAF3431D6AA3FD4 /* Pods_JaredUI.framework */; };
 		B316D1A61F3FFDF100AFF063 /* CoreModuleRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = B316D1A51F3FFDF100AFF063 /* CoreModuleRealm.swift */; };
 		B332787A1CB2CB1300BBDD3A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33278791CB2CB1300BBDD3A /* AppDelegate.swift */; };
@@ -69,7 +68,6 @@
 		7F84B6231CC506790059A82B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7FE220EC1CB3C8340081CE23 /* podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		7FF077EA1CBCFFCB008E33CB /* SendImage.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = SendImage.scpt; sourceTree = "<group>"; };
-		7FF077EC1CBD1A33008E33CB /* SendImageAndDelete.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = SendImageAndDelete.scpt; sourceTree = "<group>"; };
 		B316D1A51F3FFDF100AFF063 /* CoreModuleRealm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreModuleRealm.swift; sourceTree = "<group>"; };
 		B332784D1CB2C4D000BBDD3A /* MessageReceive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageReceive.swift; path = ../Jared/MessageReceive.swift; sourceTree = "<group>"; };
 		B33278511CB2C94700BBDD3A /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -187,7 +185,6 @@
 		B39EC1741CB01F55002C3161 /* Jared */ = {
 			isa = PBXGroup;
 			children = (
-				7FF077EC1CBD1A33008E33CB /* SendImageAndDelete.scpt */,
 				7FF077EA1CBCFFCB008E33CB /* SendImage.scpt */,
 				B37E82801FA85B170069E15D /* SendImageSingleBuddy.scpt */,
 				B39F2B381CB3BCA700C0D35C /* SendText.scpt */,
@@ -330,7 +327,6 @@
 				B361EEBB1F1DE24C0041113C /* config.json in Resources */,
 				7FF077EB1CBCFFCB008E33CB /* SendImage.scpt in Resources */,
 				B33278811CB2CB1300BBDD3A /* Main.storyboard in Resources */,
-				7FF077ED1CBD1A33008E33CB /* SendImageAndDelete.scpt in Resources */,
 				B33278891CB2D0C600BBDD3A /* Jared.sdef in Resources */,
 				B37E82821FA85B210069E15D /* SendTextSingleBuddy.scpt in Resources */,
 			);
