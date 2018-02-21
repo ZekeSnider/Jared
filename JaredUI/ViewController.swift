@@ -15,6 +15,8 @@ class ViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let defaults = UserDefaults.standard
+        self.view.window?.unbind(NSBindingName(rawValue: #keyPath(touchBar))) // unbind first
+        self.view.window?.bind(NSBindingName(rawValue: #keyPath(touchBar)), to: self, withKeyPath: #keyPath(touchBar), options: nil)
         
         defaults.addObserver(self, forKeyPath: "JaredIsDisabled", options: .new, context: nil)
         updateTouchBarButton()
@@ -38,12 +40,18 @@ class ViewController: NSViewController {
         let defaults = UserDefaults.standard
         if (defaults.bool(forKey: "JaredIsDisabled")) {
             EnableDisableButton.title = "Enable"
+            EnableDisableUIButton.title = "Enable"
+            JaredStatusLabel.stringValue = "Jared is currently disabled"
         }
         else {
             EnableDisableButton.title = "Disable"
+            EnableDisableUIButton.title = "Disable"
+            JaredStatusLabel.stringValue = "Jared is currently enabled"
         }
     }
     
+    @IBOutlet weak var JaredStatusLabel: NSTextField!
+    @IBOutlet weak var EnableDisableUIButton: NSButton!
     @IBOutlet weak var EnableDisableButton: NSButtonCell!
     
     @IBAction func EnableDisableAction(_ sender: Any) {
@@ -72,7 +80,11 @@ class ViewController: NSViewController {
         }
     }
 
-
+    @IBAction func Fastinstall(_ sender: Any) {
+        let myInstall = SimpleInstall()
+        myInstall.Install()
+    }
+    
     override var representedObject: Any? {
         didSet {
         // Update the view, if already loaded.

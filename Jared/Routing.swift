@@ -47,7 +47,7 @@ struct MessageRouting {
     }
     
     mutating func addInternalModules() {
-        let internalModules: [RoutingModule] = [CoreModule(), RESTModule()]
+        let internalModules: [RoutingModule] = [CoreModule()]
         
         modules.append(contentsOf: internalModules)
     }

@@ -40,7 +40,7 @@ using terms from application "Messages"
 			set myresult to item (errCount - 1) of errMsgParts
 		end try
 		tell application "JaredUI"
-			received with message theText from buddy getname with buddyHandle gethandle in group myresult
+			received with message theText from buddy getname with gethandle in group myresult
 		end tell
 	end chat room message received
 	
