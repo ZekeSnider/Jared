@@ -43,7 +43,7 @@ class CoreModule: RoutingModule {
         
         let thankYou = Route(name:"Thank You", comparisons: [.startsWith: [NSLocalizedString("ThanksJaredCommand")]], call: self.thanksJared, description: NSLocalizedString("ThanksJaredResponse"))
         
-        let version = Route(name: "/version", comparisons: [.startsWith: ["/version"]], call: self.getVersion, description: "versionDescription")
+        let version = Route(name: "/version", comparisons: [.startsWith: ["/version"]], call: self.getVersion, description: "Get the version of Jared running")
         
         let whoami = Route(name: "/whoami", comparisons: [.startsWith: ["/whoami"]], call: self.getWho, description: "Get your name")
         
@@ -51,7 +51,7 @@ class CoreModule: RoutingModule {
         
         let name = Route(name: "/name", comparisons: [.startsWith: ["/name"]], call: self.changeName, description: "Change what Jared calls you", parameterSyntax: "/name,[your preferred name]")
         
-        let schedule = Route(name: "/schedule", comparisons: [.startsWith: ["/schedule"]], call: self.schedule, description: "Schedule messages", parameterSyntax: "/schedule")
+        let schedule = Route(name: "/schedule", comparisons: [.startsWith: ["/schedule"]], call: self.schedule, description: "Schedule messages to be set on a certain interval", parameterSyntax: "/schedule")
 
         routes = [ping, thankYou, version, send, whoami, name, schedule]
         
