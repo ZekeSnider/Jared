@@ -227,7 +227,7 @@ class CoreModule: RoutingModule {
                  "text": sendMessage,
                  "handle": forRoom.buddyHandle!,
                  "sendNumberTimes": sendTimes,
-                 "chatID": forRoom.GUID,
+                 "chatID": forRoom.GUID ?? "",
                  "startDate": Date(),
                 ])
             

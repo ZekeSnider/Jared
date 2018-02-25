@@ -189,7 +189,7 @@ struct MessageRouting {
     
     mutating func routeMessage(_ myMessage: String, fromBuddy: String, forRoom: Room) {
         let detector = try! NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
-        let matches = detector.matches(in: myMessage, options: [], range: NSMakeRange(0, myMessage.characters.count))
+        let matches = detector.matches(in: myMessage, options: [], range: NSMakeRange(0, myMessage.count))
         let myLowercaseMessage = myMessage.lowercased()
         
         let defaults = UserDefaults.standard
