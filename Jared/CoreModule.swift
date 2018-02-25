@@ -13,11 +13,9 @@ import AddressBook
 import Contacts
 import RealmSwift
 
-
 public func NSLocalizedString(_ key: String) -> String {
     return NSLocalizedString(key, tableName: "CoreStrings", comment: "")
 }
-
 
 class CoreModule: RoutingModule {
     var description: String = NSLocalizedString("CoreDescription")
@@ -67,7 +65,12 @@ class CoreModule: RoutingModule {
     }
     
     func getWho(_ message:String, myRoom: Room) -> Void {
-        SendText("Your name is \(myRoom.buddyName!).", toRoom: myRoom)
+        if myRoom.buddyName != "" {
+            SendText("Your name is \(myRoom.buddyName!).", toRoom: myRoom)
+        }
+        else {
+            SendText("I don't know your name.", toRoom: myRoom)
+        }
     }
     
     func thanksJared(_ message:String, myRoom: Room) -> Void {
@@ -294,6 +297,11 @@ class CoreModule: RoutingModule {
         let parsedMessage = myMessage.components(separatedBy: ",")
         if (parsedMessage.count == 1) {
             SendText("Wrong arguments.", toRoom: forRoom)
+            return
+        }
+        
+        guard forRoom.buddyHandle != nil && forRoom.buddyHandle != "" else {
+            SendText("I can't set name for a buddy with no handle...", toRoom: forRoom)
             return
         }
         let store = CNContactStore()
