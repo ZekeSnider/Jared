@@ -1,1405 +1,678 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-	<key>archiveVersion</key>
-	<string>1</string>
-	<key>classes</key>
-	<dict/>
-	<key>objectVersion</key>
-	<string>46</string>
-	<key>objects</key>
-	<dict>
-		<key>19C9C2FBC44EE08B0C7851EA</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>wrapper.framework</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>path</key>
-			<string>Pods.framework</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
-		<key>36A7776B61089A66EA5C166B</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>name</key>
-			<string>Pods-JaredUI.release.xcconfig</string>
-			<key>path</key>
-			<string>Pods/Target Support Files/Pods-JaredUI/Pods-JaredUI.release.xcconfig</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>6A99635493B2364DED0280D9</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>B85E2F9206C873C167385410</string>
-				<string>36A7776B61089A66EA5C166B</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Pods</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>739CD530157F72CF2AD79314</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>19C9C2FBC44EE08B0C7851EA</string>
-				<string>C31CB7445EAF3431D6AA3FD4</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Frameworks</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>7D874CC6DD192CC67F87BEB5</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>[CP] Embed Pods Frameworks</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>"${SRCROOT}/Pods/Target Support Files/Pods-JaredUI/Pods-JaredUI-frameworks.sh"
-</string>
-			<key>showEnvVarsInLog</key>
-			<string>0</string>
-		</dict>
-		<key>7F0E931C1D02FC250096BABE</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>path</key>
-			<string>Global.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>7F0E931D1D02FC250096BABE</key>
-		<dict>
-			<key>fileRef</key>
-			<string>7F0E931C1D02FC250096BABE</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>7F84B61A1CC506790059A82B</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>7F84B62B1CC5069C0059A82B</string>
-			</array>
-			<key>isa</key>
-			<string>PBXSourcesBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>7F84B61B1CC506790059A82B</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXFrameworksBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>7F84B61C1CC506790059A82B</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>7F84B6221CC506790059A82B</string>
-			</array>
-			<key>isa</key>
-			<string>PBXHeadersBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>7F84B61D1CC506790059A82B</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXResourcesBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>7F84B61E1CC506790059A82B</key>
-		<dict>
-			<key>buildConfigurationList</key>
-			<string>7F84B6281CC506790059A82B</string>
-			<key>buildPhases</key>
-			<array>
-				<string>7F84B61A1CC506790059A82B</string>
-				<string>7F84B61B1CC506790059A82B</string>
-				<string>7F84B61C1CC506790059A82B</string>
-				<string>7F84B61D1CC506790059A82B</string>
-			</array>
-			<key>buildRules</key>
-			<array/>
-			<key>dependencies</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXNativeTarget</string>
-			<key>name</key>
-			<string>JaredFramework</string>
-			<key>productName</key>
-			<string>JaredFramework</string>
-			<key>productReference</key>
-			<string>7F84B61F1CC506790059A82B</string>
-			<key>productType</key>
-			<string>com.apple.product-type.framework</string>
-		</dict>
-		<key>7F84B61F1CC506790059A82B</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>wrapper.framework</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>path</key>
-			<string>JaredFramework.framework</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
-		<key>7F84B6201CC506790059A82B</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>7F84B6211CC506790059A82B</string>
-				<string>B39EC1751CB01F55002C3161</string>
-				<string>7F84B6231CC506790059A82B</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>path</key>
-			<string>JaredFramework</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>7F84B6211CC506790059A82B</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>JaredFramework.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>7F84B6221CC506790059A82B</key>
-		<dict>
-			<key>fileRef</key>
-			<string>7F84B6211CC506790059A82B</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict>
-				<key>ATTRIBUTES</key>
-				<array>
-					<string>Public</string>
-				</array>
-			</dict>
-		</dict>
-		<key>7F84B6231CC506790059A82B</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.plist.xml</string>
-			<key>path</key>
-			<string>Info.plist</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>7F84B6241CC506790059A82B</key>
-		<dict>
-			<key>containerPortal</key>
-			<string>B39EC16A1CB01F55002C3161</string>
-			<key>isa</key>
-			<string>PBXContainerItemProxy</string>
-			<key>proxyType</key>
-			<string>1</string>
-			<key>remoteGlobalIDString</key>
-			<string>7F84B61E1CC506790059A82B</string>
-			<key>remoteInfo</key>
-			<string>JaredFramework</string>
-		</dict>
-		<key>7F84B6251CC506790059A82B</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXTargetDependency</string>
-			<key>target</key>
-			<string>7F84B61E1CC506790059A82B</string>
-			<key>targetProxy</key>
-			<string>7F84B6241CC506790059A82B</string>
-		</dict>
-		<key>7F84B6261CC506790059A82B</key>
-		<dict>
-			<key>fileRef</key>
-			<string>7F84B61F1CC506790059A82B</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>7F84B6271CC506790059A82B</key>
-		<dict>
-			<key>fileRef</key>
-			<string>7F84B61F1CC506790059A82B</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict>
-				<key>ATTRIBUTES</key>
-				<array>
-					<string>CodeSignOnCopy</string>
-					<string>RemoveHeadersOnCopy</string>
-				</array>
-			</dict>
-		</dict>
-		<key>7F84B6281CC506790059A82B</key>
-		<dict>
-			<key>buildConfigurations</key>
-			<array>
-				<string>7F84B6291CC506790059A82B</string>
-				<string>7F84B62A1CC506790059A82B</string>
-			</array>
-			<key>defaultConfigurationIsVisible</key>
-			<string>0</string>
-			<key>defaultConfigurationName</key>
-			<string>Release</string>
-			<key>isa</key>
-			<string>XCConfigurationList</string>
-		</dict>
-		<key>7F84B6291CC506790059A82B</key>
-		<dict>
-			<key>buildSettings</key>
-			<dict>
-				<key>COMBINE_HIDPI_IMAGES</key>
-				<string>YES</string>
-				<key>CURRENT_PROJECT_VERSION</key>
-				<string>1</string>
-				<key>DEFINES_MODULE</key>
-				<string>YES</string>
-				<key>DYLIB_COMPATIBILITY_VERSION</key>
-				<string>1</string>
-				<key>DYLIB_CURRENT_VERSION</key>
-				<string>1</string>
-				<key>DYLIB_INSTALL_NAME_BASE</key>
-				<string>@rpath</string>
-				<key>FRAMEWORK_VERSION</key>
-				<string>A</string>
-				<key>INFOPLIST_FILE</key>
-				<string>JaredFramework/Info.plist</string>
-				<key>INSTALL_PATH</key>
-				<string>$(LOCAL_LIBRARY_DIR)/Frameworks</string>
-				<key>LD_RUNPATH_SEARCH_PATHS</key>
-				<string>$(inherited) @executable_path/../Frameworks @loader_path/Frameworks</string>
-				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
-				<string>com.jaredapp.JaredFramework</string>
-				<key>PRODUCT_NAME</key>
-				<string>$(TARGET_NAME)</string>
-				<key>SKIP_INSTALL</key>
-				<string>YES</string>
-				<key>SWIFT_VERSION</key>
-				<string>3.0</string>
-				<key>VERSIONING_SYSTEM</key>
-				<string>apple-generic</string>
-				<key>VERSION_INFO_PREFIX</key>
-				<string></string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Debug</string>
-		</dict>
-		<key>7F84B62A1CC506790059A82B</key>
-		<dict>
-			<key>buildSettings</key>
-			<dict>
-				<key>COMBINE_HIDPI_IMAGES</key>
-				<string>YES</string>
-				<key>CURRENT_PROJECT_VERSION</key>
-				<string>1</string>
-				<key>DEFINES_MODULE</key>
-				<string>YES</string>
-				<key>DYLIB_COMPATIBILITY_VERSION</key>
-				<string>1</string>
-				<key>DYLIB_CURRENT_VERSION</key>
-				<string>1</string>
-				<key>DYLIB_INSTALL_NAME_BASE</key>
-				<string>@rpath</string>
-				<key>FRAMEWORK_VERSION</key>
-				<string>A</string>
-				<key>INFOPLIST_FILE</key>
-				<string>JaredFramework/Info.plist</string>
-				<key>INSTALL_PATH</key>
-				<string>$(LOCAL_LIBRARY_DIR)/Frameworks</string>
-				<key>LD_RUNPATH_SEARCH_PATHS</key>
-				<string>$(inherited) @executable_path/../Frameworks @loader_path/Frameworks</string>
-				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
-				<string>com.jaredapp.JaredFramework</string>
-				<key>PRODUCT_NAME</key>
-				<string>$(TARGET_NAME)</string>
-				<key>SKIP_INSTALL</key>
-				<string>YES</string>
-				<key>SWIFT_VERSION</key>
-				<string>3.0</string>
-				<key>VERSIONING_SYSTEM</key>
-				<string>apple-generic</string>
-				<key>VERSION_INFO_PREFIX</key>
-				<string></string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Release</string>
-		</dict>
-		<key>7F84B62B1CC5069C0059A82B</key>
-		<dict>
-			<key>fileRef</key>
-			<string>B39EC1751CB01F55002C3161</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>7F84B62E1CC511B80059A82B</key>
-		<dict>
-			<key>fileRef</key>
-			<string>B3BBA7CD1CB3259A00E1749C</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>7FE220EC1CB3C8340081CE23</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text</string>
-			<key>path</key>
-			<string>podfile</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>7FE220ED1CB3C8340081CE23</key>
-		<dict>
-			<key>fileRef</key>
-			<string>7FE220EC1CB3C8340081CE23</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>7FEF4A511CB3CA020032A5CC</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>path</key>
-			<string>RESTModule.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>7FEF4A521CB3CA020032A5CC</key>
-		<dict>
-			<key>fileRef</key>
-			<string>7FEF4A511CB3CA020032A5CC</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>7FF077EA1CBCFFCB008E33CB</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>file</string>
-			<key>path</key>
-			<string>SendImage.scpt</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>7FF077EB1CBCFFCB008E33CB</key>
-		<dict>
-			<key>fileRef</key>
-			<string>7FF077EA1CBCFFCB008E33CB</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>7FF077EC1CBD1A33008E33CB</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>file</string>
-			<key>path</key>
-			<string>SendImageAndDelete.scpt</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>7FF077ED1CBD1A33008E33CB</key>
-		<dict>
-			<key>fileRef</key>
-			<string>7FF077EC1CBD1A33008E33CB</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>A8EDB6CA30877B4D8E9D00C7</key>
-		<dict>
-			<key>fileRef</key>
-			<string>C31CB7445EAF3431D6AA3FD4</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF01638400485C00E0947C76</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>[CP] Check Pods Manifest.lock</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>diff "${PODS_ROOT}/../Podfile.lock" "${PODS_ROOT}/Manifest.lock" &gt; /dev/null
-if [[ $? != 0 ]] ; then
-    cat &lt;&lt; EOM
-error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.
-EOM
-    exit 1
-fi
-</string>
-			<key>showEnvVarsInLog</key>
-			<string>0</string>
-		</dict>
-		<key>B332784D1CB2C4D000BBDD3A</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>name</key>
-			<string>MessageReceive.swift</string>
-			<key>path</key>
-			<string>../Jared/MessageReceive.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>B33278511CB2C94700BBDD3A</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>wrapper.framework</string>
-			<key>name</key>
-			<string>AppKit.framework</string>
-			<key>path</key>
-			<string>System/Library/Frameworks/AppKit.framework</string>
-			<key>sourceTree</key>
-			<string>SDKROOT</string>
-		</dict>
-		<key>B33278731CB2CB1300BBDD3A</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>B39A65E01CC1FB1B003E26B0</string>
-				<string>7FEF4A521CB3CA020032A5CC</string>
-				<string>B3BBA7D11CB3284A00E1749C</string>
-				<string>B3BBA7CA1CB2F69800E1749C</string>
-				<string>B332787C1CB2CB1300BBDD3A</string>
-				<string>B332787A1CB2CB1300BBDD3A</string>
-				<string>B379EB3B1CB8B4BF008E2A33</string>
-				<string>7F0E931D1D02FC250096BABE</string>
-			</array>
-			<key>isa</key>
-			<string>PBXSourcesBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>B33278741CB2CB1300BBDD3A</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>7F84B6261CC506790059A82B</string>
-				<string>A8EDB6CA30877B4D8E9D00C7</string>
-			</array>
-			<key>isa</key>
-			<string>PBXFrameworksBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>B33278751CB2CB1300BBDD3A</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>7F84B62E1CC511B80059A82B</string>
-				<string>B39F2B391CB3BCA700C0D35C</string>
-				<string>B332787E1CB2CB1300BBDD3A</string>
-				<string>7FE220ED1CB3C8340081CE23</string>
-				<string>7FF077EB1CBCFFCB008E33CB</string>
-				<string>B33278811CB2CB1300BBDD3A</string>
-				<string>7FF077ED1CBD1A33008E33CB</string>
-				<string>B33278891CB2D0C600BBDD3A</string>
-			</array>
-			<key>isa</key>
-			<string>PBXResourcesBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>B33278761CB2CB1300BBDD3A</key>
-		<dict>
-			<key>buildConfigurationList</key>
-			<string>B33278831CB2CB1300BBDD3A</string>
-			<key>buildPhases</key>
-			<array>
-				<string>AF01638400485C00E0947C76</string>
-				<string>B33278731CB2CB1300BBDD3A</string>
-				<string>B33278741CB2CB1300BBDD3A</string>
-				<string>B33278751CB2CB1300BBDD3A</string>
-				<string>B39A65DD1CC1F8BC003E26B0</string>
-				<string>7D874CC6DD192CC67F87BEB5</string>
-				<string>B65EBE7C4ECD972DBDA97E50</string>
-			</array>
-			<key>buildRules</key>
-			<array/>
-			<key>dependencies</key>
-			<array>
-				<string>7F84B6251CC506790059A82B</string>
-			</array>
-			<key>isa</key>
-			<string>PBXNativeTarget</string>
-			<key>name</key>
-			<string>JaredUI</string>
-			<key>productName</key>
-			<string>JaredUI</string>
-			<key>productReference</key>
-			<string>B33278771CB2CB1300BBDD3A</string>
-			<key>productType</key>
-			<string>com.apple.product-type.application</string>
-		</dict>
-		<key>B33278771CB2CB1300BBDD3A</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>wrapper.application</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>path</key>
-			<string>JaredUI.app</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
-		<key>B33278781CB2CB1300BBDD3A</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>B33278881CB2D0C600BBDD3A</string>
-				<string>B332784D1CB2C4D000BBDD3A</string>
-				<string>B33278791CB2CB1300BBDD3A</string>
-				<string>B332787B1CB2CB1300BBDD3A</string>
-				<string>B332787D1CB2CB1300BBDD3A</string>
-				<string>B332787F1CB2CB1300BBDD3A</string>
-				<string>B33278821CB2CB1300BBDD3A</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>path</key>
-			<string>JaredUI</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>B33278791CB2CB1300BBDD3A</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>path</key>
-			<string>AppDelegate.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>B332787A1CB2CB1300BBDD3A</key>
-		<dict>
-			<key>fileRef</key>
-			<string>B33278791CB2CB1300BBDD3A</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>B332787B1CB2CB1300BBDD3A</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>path</key>
-			<string>ViewController.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>B332787C1CB2CB1300BBDD3A</key>
-		<dict>
-			<key>fileRef</key>
-			<string>B332787B1CB2CB1300BBDD3A</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>B332787D1CB2CB1300BBDD3A</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>folder.assetcatalog</string>
-			<key>path</key>
-			<string>Assets.xcassets</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>B332787E1CB2CB1300BBDD3A</key>
-		<dict>
-			<key>fileRef</key>
-			<string>B332787D1CB2CB1300BBDD3A</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>B332787F1CB2CB1300BBDD3A</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>B33278801CB2CB1300BBDD3A</string>
-				<string>B3BBA7CF1CB327C200E1749C</string>
-			</array>
-			<key>isa</key>
-			<string>PBXVariantGroup</string>
-			<key>name</key>
-			<string>Main.storyboard</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>B33278801CB2CB1300BBDD3A</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>file.storyboard</string>
-			<key>name</key>
-			<string>Base</string>
-			<key>path</key>
-			<string>Base.lproj/Main.storyboard</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>B33278811CB2CB1300BBDD3A</key>
-		<dict>
-			<key>fileRef</key>
-			<string>B332787F1CB2CB1300BBDD3A</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>B33278821CB2CB1300BBDD3A</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.plist.xml</string>
-			<key>path</key>
-			<string>Info.plist</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>B33278831CB2CB1300BBDD3A</key>
-		<dict>
-			<key>buildConfigurations</key>
-			<array>
-				<string>B33278841CB2CB1300BBDD3A</string>
-				<string>B33278851CB2CB1300BBDD3A</string>
-			</array>
-			<key>defaultConfigurationIsVisible</key>
-			<string>0</string>
-			<key>defaultConfigurationName</key>
-			<string>Release</string>
-			<key>isa</key>
-			<string>XCConfigurationList</string>
-		</dict>
-		<key>B33278841CB2CB1300BBDD3A</key>
-		<dict>
-			<key>baseConfigurationReference</key>
-			<string>B85E2F9206C873C167385410</string>
-			<key>buildSettings</key>
-			<dict>
-				<key>ASSETCATALOG_COMPILER_APPICON_NAME</key>
-				<string>AppIcon</string>
-				<key>CODE_SIGN_IDENTITY</key>
-				<string>Developer ID Application</string>
-				<key>CODE_SIGN_IDENTITY[sdk=macosx*]</key>
-				<string>Mac Developer</string>
-				<key>COMBINE_HIDPI_IMAGES</key>
-				<string>YES</string>
-				<key>EMBEDDED_CONTENT_CONTAINS_SWIFT</key>
-				<string>YES</string>
-				<key>INFOPLIST_FILE</key>
-				<string>JaredUI/Info.plist</string>
-				<key>LD_RUNPATH_SEARCH_PATHS</key>
-				<string>$(inherited) @executable_path/../Frameworks</string>
-				<key>MACOSX_DEPLOYMENT_TARGET</key>
-				<string>10.11</string>
-				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
-				<string>com.jaredapp</string>
-				<key>PRODUCT_NAME</key>
-				<string>$(TARGET_NAME)</string>
-				<key>PROVISIONING_PROFILE</key>
-				<string></string>
-				<key>SWIFT_OBJC_INTERFACE_HEADER_NAME</key>
-				<string></string>
-				<key>SWIFT_VERSION</key>
-				<string>3.0</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Debug</string>
-		</dict>
-		<key>B33278851CB2CB1300BBDD3A</key>
-		<dict>
-			<key>baseConfigurationReference</key>
-			<string>36A7776B61089A66EA5C166B</string>
-			<key>buildSettings</key>
-			<dict>
-				<key>ASSETCATALOG_COMPILER_APPICON_NAME</key>
-				<string>AppIcon</string>
-				<key>CODE_SIGN_IDENTITY</key>
-				<string>Developer ID Application</string>
-				<key>CODE_SIGN_IDENTITY[sdk=macosx*]</key>
-				<string>Mac Developer</string>
-				<key>COMBINE_HIDPI_IMAGES</key>
-				<string>YES</string>
-				<key>EMBEDDED_CONTENT_CONTAINS_SWIFT</key>
-				<string>YES</string>
-				<key>INFOPLIST_FILE</key>
-				<string>JaredUI/Info.plist</string>
-				<key>LD_RUNPATH_SEARCH_PATHS</key>
-				<string>$(inherited) @executable_path/../Frameworks</string>
-				<key>MACOSX_DEPLOYMENT_TARGET</key>
-				<string>10.11</string>
-				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
-				<string>com.jaredapp</string>
-				<key>PRODUCT_NAME</key>
-				<string>$(TARGET_NAME)</string>
-				<key>PROVISIONING_PROFILE</key>
-				<string></string>
-				<key>SWIFT_OBJC_INTERFACE_HEADER_NAME</key>
-				<string></string>
-				<key>SWIFT_OPTIMIZATION_LEVEL</key>
-				<string>-Onone</string>
-				<key>SWIFT_VERSION</key>
-				<string>3.0</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Release</string>
-		</dict>
-		<key>B33278881CB2D0C600BBDD3A</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xml</string>
-			<key>path</key>
-			<string>Jared.sdef</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>B33278891CB2D0C600BBDD3A</key>
-		<dict>
-			<key>fileRef</key>
-			<string>B33278881CB2D0C600BBDD3A</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>B379EB3A1CB8B4BF008E2A33</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>path</key>
-			<string>TwitterModule.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>B379EB3B1CB8B4BF008E2A33</key>
-		<dict>
-			<key>fileRef</key>
-			<string>B379EB3A1CB8B4BF008E2A33</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>B39A65DD1CC1F8BC003E26B0</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>dstPath</key>
-			<string></string>
-			<key>dstSubfolderSpec</key>
-			<string>10</string>
-			<key>files</key>
-			<array>
-				<string>7F84B6271CC506790059A82B</string>
-			</array>
-			<key>isa</key>
-			<string>PBXCopyFilesBuildPhase</string>
-			<key>name</key>
-			<string>Embed Frameworks</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>B39A65DF1CC1FB1B003E26B0</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>path</key>
-			<string>Routing.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>B39A65E01CC1FB1B003E26B0</key>
-		<dict>
-			<key>fileRef</key>
-			<string>B39A65DF1CC1FB1B003E26B0</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>B39EC1691CB01F55002C3161</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>B33278511CB2C94700BBDD3A</string>
-				<string>B39EC1741CB01F55002C3161</string>
-				<string>B33278781CB2CB1300BBDD3A</string>
-				<string>7F84B6201CC506790059A82B</string>
-				<string>B39EC1731CB01F55002C3161</string>
-				<string>739CD530157F72CF2AD79314</string>
-				<string>6A99635493B2364DED0280D9</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>B39EC16A1CB01F55002C3161</key>
-		<dict>
-			<key>attributes</key>
-			<dict>
-				<key>KnownAssetTags</key>
-				<array>
-					<string>New</string>
-				</array>
-				<key>LastSwiftUpdateCheck</key>
-				<string>0730</string>
-				<key>LastUpgradeCheck</key>
-				<string>0730</string>
-				<key>ORGANIZATIONNAME</key>
-				<string>Zeke Snider</string>
-				<key>TargetAttributes</key>
-				<dict>
-					<key>7F84B61E1CC506790059A82B</key>
-					<dict>
-						<key>CreatedOnToolsVersion</key>
-						<string>7.3</string>
-						<key>LastSwiftMigration</key>
-						<string>0800</string>
-					</dict>
-					<key>B33278761CB2CB1300BBDD3A</key>
-					<dict>
-						<key>CreatedOnToolsVersion</key>
-						<string>7.3</string>
-						<key>DevelopmentTeam</key>
-						<string>C7LJ587XF3</string>
-						<key>LastSwiftMigration</key>
-						<string>0800</string>
-					</dict>
-				</dict>
-			</dict>
-			<key>buildConfigurationList</key>
-			<string>B39EC16D1CB01F55002C3161</string>
-			<key>compatibilityVersion</key>
-			<string>Xcode 3.2</string>
-			<key>developmentRegion</key>
-			<string>English</string>
-			<key>hasScannedForEncodings</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXProject</string>
-			<key>knownRegions</key>
-			<array>
-				<string>en</string>
-				<string>Base</string>
-				<string>ja</string>
-			</array>
-			<key>mainGroup</key>
-			<string>B39EC1691CB01F55002C3161</string>
-			<key>productRefGroup</key>
-			<string>B39EC1731CB01F55002C3161</string>
-			<key>projectDirPath</key>
-			<string></string>
-			<key>projectReferences</key>
-			<array/>
-			<key>projectRoot</key>
-			<string></string>
-			<key>targets</key>
-			<array>
-				<string>B33278761CB2CB1300BBDD3A</string>
-				<string>7F84B61E1CC506790059A82B</string>
-			</array>
-		</dict>
-		<key>B39EC16D1CB01F55002C3161</key>
-		<dict>
-			<key>buildConfigurations</key>
-			<array>
-				<string>B39EC1771CB01F55002C3161</string>
-				<string>B39EC1781CB01F55002C3161</string>
-			</array>
-			<key>defaultConfigurationIsVisible</key>
-			<string>0</string>
-			<key>defaultConfigurationName</key>
-			<string>Release</string>
-			<key>isa</key>
-			<string>XCConfigurationList</string>
-		</dict>
-		<key>B39EC1731CB01F55002C3161</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>B33278771CB2CB1300BBDD3A</string>
-				<string>7F84B61F1CC506790059A82B</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Products</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>B39EC1741CB01F55002C3161</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>7FF077EC1CBD1A33008E33CB</string>
-				<string>7FF077EA1CBCFFCB008E33CB</string>
-				<string>B39F2B381CB3BCA700C0D35C</string>
-				<string>B39A65DF1CC1FB1B003E26B0</string>
-				<string>7F0E931C1D02FC250096BABE</string>
-				<string>B39EC17C1CB01FDD002C3161</string>
-				<string>7FE220EC1CB3C8340081CE23</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>path</key>
-			<string>Jared</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>B39EC1751CB01F55002C3161</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>name</key>
-			<string>amain.swift</string>
-			<key>path</key>
-			<string>../Jared/amain.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>B39EC1771CB01F55002C3161</key>
-		<dict>
-			<key>buildSettings</key>
-			<dict>
-				<key>ALWAYS_SEARCH_USER_PATHS</key>
-				<string>NO</string>
-				<key>CLANG_ANALYZER_NONNULL</key>
-				<string>YES</string>
-				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
-				<string>gnu++0x</string>
-				<key>CLANG_CXX_LIBRARY</key>
-				<string>libc++</string>
-				<key>CLANG_ENABLE_MODULES</key>
-				<string>YES</string>
-				<key>CLANG_ENABLE_OBJC_ARC</key>
-				<string>YES</string>
-				<key>CLANG_WARN_BOOL_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_CONSTANT_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_DIRECT_OBJC_ISA_USAGE</key>
-				<string>YES_ERROR</string>
-				<key>CLANG_WARN_EMPTY_BODY</key>
-				<string>YES</string>
-				<key>CLANG_WARN_ENUM_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_INT_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_OBJC_ROOT_CLASS</key>
-				<string>YES_ERROR</string>
-				<key>CLANG_WARN_UNREACHABLE_CODE</key>
-				<string>YES</string>
-				<key>CLANG_WARN__DUPLICATE_METHOD_MATCH</key>
-				<string>YES</string>
-				<key>CODE_SIGN_IDENTITY</key>
-				<string>-</string>
-				<key>COPY_PHASE_STRIP</key>
-				<string>NO</string>
-				<key>DEBUG_INFORMATION_FORMAT</key>
-				<string>dwarf</string>
-				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
-				<string>YES</string>
-				<key>ENABLE_TESTABILITY</key>
-				<string>YES</string>
-				<key>GCC_C_LANGUAGE_STANDARD</key>
-				<string>gnu99</string>
-				<key>GCC_DYNAMIC_NO_PIC</key>
-				<string>NO</string>
-				<key>GCC_NO_COMMON_BLOCKS</key>
-				<string>YES</string>
-				<key>GCC_OPTIMIZATION_LEVEL</key>
-				<string>0</string>
-				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
-				<array>
-					<string>DEBUG=1</string>
-					<string>$(inherited)</string>
-				</array>
-				<key>GCC_WARN_64_TO_32_BIT_CONVERSION</key>
-				<string>YES</string>
-				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
-				<string>YES_ERROR</string>
-				<key>GCC_WARN_UNDECLARED_SELECTOR</key>
-				<string>YES</string>
-				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
-				<string>YES_AGGRESSIVE</string>
-				<key>GCC_WARN_UNUSED_FUNCTION</key>
-				<string>YES</string>
-				<key>GCC_WARN_UNUSED_VARIABLE</key>
-				<string>YES</string>
-				<key>MACOSX_DEPLOYMENT_TARGET</key>
-				<string>10.11</string>
-				<key>MTL_ENABLE_DEBUG_INFO</key>
-				<string>YES</string>
-				<key>ONLY_ACTIVE_ARCH</key>
-				<string>YES</string>
-				<key>SDKROOT</key>
-				<string>macosx</string>
-				<key>SWIFT_OPTIMIZATION_LEVEL</key>
-				<string>-Onone</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Debug</string>
-		</dict>
-		<key>B39EC1781CB01F55002C3161</key>
-		<dict>
-			<key>buildSettings</key>
-			<dict>
-				<key>ALWAYS_SEARCH_USER_PATHS</key>
-				<string>NO</string>
-				<key>CLANG_ANALYZER_NONNULL</key>
-				<string>YES</string>
-				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
-				<string>gnu++0x</string>
-				<key>CLANG_CXX_LIBRARY</key>
-				<string>libc++</string>
-				<key>CLANG_ENABLE_MODULES</key>
-				<string>YES</string>
-				<key>CLANG_ENABLE_OBJC_ARC</key>
-				<string>YES</string>
-				<key>CLANG_WARN_BOOL_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_CONSTANT_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_DIRECT_OBJC_ISA_USAGE</key>
-				<string>YES_ERROR</string>
-				<key>CLANG_WARN_EMPTY_BODY</key>
-				<string>YES</string>
-				<key>CLANG_WARN_ENUM_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_INT_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_OBJC_ROOT_CLASS</key>
-				<string>YES_ERROR</string>
-				<key>CLANG_WARN_UNREACHABLE_CODE</key>
-				<string>YES</string>
-				<key>CLANG_WARN__DUPLICATE_METHOD_MATCH</key>
-				<string>YES</string>
-				<key>CODE_SIGN_IDENTITY</key>
-				<string>-</string>
-				<key>COPY_PHASE_STRIP</key>
-				<string>NO</string>
-				<key>DEBUG_INFORMATION_FORMAT</key>
-				<string>dwarf-with-dsym</string>
-				<key>ENABLE_NS_ASSERTIONS</key>
-				<string>NO</string>
-				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
-				<string>YES</string>
-				<key>GCC_C_LANGUAGE_STANDARD</key>
-				<string>gnu99</string>
-				<key>GCC_NO_COMMON_BLOCKS</key>
-				<string>YES</string>
-				<key>GCC_WARN_64_TO_32_BIT_CONVERSION</key>
-				<string>YES</string>
-				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
-				<string>YES_ERROR</string>
-				<key>GCC_WARN_UNDECLARED_SELECTOR</key>
-				<string>YES</string>
-				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
-				<string>YES_AGGRESSIVE</string>
-				<key>GCC_WARN_UNUSED_FUNCTION</key>
-				<string>YES</string>
-				<key>GCC_WARN_UNUSED_VARIABLE</key>
-				<string>YES</string>
-				<key>MACOSX_DEPLOYMENT_TARGET</key>
-				<string>10.11</string>
-				<key>MTL_ENABLE_DEBUG_INFO</key>
-				<string>NO</string>
-				<key>SDKROOT</key>
-				<string>macosx</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Release</string>
-		</dict>
-		<key>B39EC17C1CB01FDD002C3161</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>B379EB3A1CB8B4BF008E2A33</string>
-				<string>7FEF4A511CB3CA020032A5CC</string>
-				<string>B39EC17D1CB01FEF002C3161</string>
-				<string>B3BBA7CD1CB3259A00E1749C</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Modules</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>B39EC17D1CB01FEF002C3161</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>path</key>
-			<string>CoreModule.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>B39F2B381CB3BCA700C0D35C</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>file</string>
-			<key>path</key>
-			<string>SendText.scpt</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>B39F2B391CB3BCA700C0D35C</key>
-		<dict>
-			<key>fileRef</key>
-			<string>B39F2B381CB3BCA700C0D35C</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>B3BBA7CA1CB2F69800E1749C</key>
-		<dict>
-			<key>fileRef</key>
-			<string>B332784D1CB2C4D000BBDD3A</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>B3BBA7CC1CB3259A00E1749C</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.plist.strings</string>
-			<key>name</key>
-			<string>en</string>
-			<key>path</key>
-			<string>en.lproj/CoreStrings.strings</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>B3BBA7CD1CB3259A00E1749C</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>B3BBA7CC1CB3259A00E1749C</string>
-				<string>B3BBA7D01CB327C200E1749C</string>
-			</array>
-			<key>isa</key>
-			<string>PBXVariantGroup</string>
-			<key>name</key>
-			<string>CoreStrings.strings</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>B3BBA7CF1CB327C200E1749C</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.plist.strings</string>
-			<key>name</key>
-			<string>ja</string>
-			<key>path</key>
-			<string>ja.lproj/Main.strings</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>B3BBA7D01CB327C200E1749C</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.plist.strings</string>
-			<key>name</key>
-			<string>ja</string>
-			<key>path</key>
-			<string>ja.lproj/CoreStrings.strings</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>B3BBA7D11CB3284A00E1749C</key>
-		<dict>
-			<key>fileRef</key>
-			<string>B39EC17D1CB01FEF002C3161</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>B65EBE7C4ECD972DBDA97E50</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>[CP] Copy Pods Resources</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>"${SRCROOT}/Pods/Target Support Files/Pods-JaredUI/Pods-JaredUI-resources.sh"
-</string>
-			<key>showEnvVarsInLog</key>
-			<string>0</string>
-		</dict>
-		<key>B85E2F9206C873C167385410</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>name</key>
-			<string>Pods-JaredUI.debug.xcconfig</string>
-			<key>path</key>
-			<string>Pods/Target Support Files/Pods-JaredUI/Pods-JaredUI.debug.xcconfig</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>C31CB7445EAF3431D6AA3FD4</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>wrapper.framework</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>path</key>
-			<string>Pods_JaredUI.framework</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
-	</dict>
-	<key>rootObject</key>
-	<string>B39EC16A1CB01F55002C3161</string>
-</dict>
-</plist>
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7F0E931D1D02FC250096BABE /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0E931C1D02FC250096BABE /* Global.swift */; };
+		7F84B6221CC506790059A82B /* JaredFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F84B6211CC506790059A82B /* JaredFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7F84B6261CC506790059A82B /* JaredFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F84B61F1CC506790059A82B /* JaredFramework.framework */; };
+		7F84B6271CC506790059A82B /* JaredFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7F84B61F1CC506790059A82B /* JaredFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7F84B62B1CC5069C0059A82B /* amain.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39EC1751CB01F55002C3161 /* amain.swift */; };
+		7F84B62E1CC511B80059A82B /* CoreStrings.strings in Resources */ = {isa = PBXBuildFile; fileRef = B3BBA7CD1CB3259A00E1749C /* CoreStrings.strings */; };
+		7FE220ED1CB3C8340081CE23 /* podfile in Resources */ = {isa = PBXBuildFile; fileRef = 7FE220EC1CB3C8340081CE23 /* podfile */; };
+		7FF077EB1CBCFFCB008E33CB /* SendImage.scpt in Resources */ = {isa = PBXBuildFile; fileRef = 7FF077EA1CBCFFCB008E33CB /* SendImage.scpt */; };
+		A8EDB6CA30877B4D8E9D00C7 /* Pods_JaredUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C31CB7445EAF3431D6AA3FD4 /* Pods_JaredUI.framework */; };
+		B316D1A61F3FFDF100AFF063 /* CoreModuleRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = B316D1A51F3FFDF100AFF063 /* CoreModuleRealm.swift */; };
+		B332787A1CB2CB1300BBDD3A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33278791CB2CB1300BBDD3A /* AppDelegate.swift */; };
+		B332787C1CB2CB1300BBDD3A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B332787B1CB2CB1300BBDD3A /* ViewController.swift */; };
+		B332787E1CB2CB1300BBDD3A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B332787D1CB2CB1300BBDD3A /* Assets.xcassets */; };
+		B33278811CB2CB1300BBDD3A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B332787F1CB2CB1300BBDD3A /* Main.storyboard */; };
+		B33278891CB2D0C600BBDD3A /* Jared.sdef in Resources */ = {isa = PBXBuildFile; fileRef = B33278881CB2D0C600BBDD3A /* Jared.sdef */; };
+		B34792161FC8A605001BD465 /* SimpleInstall.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34792151FC8A605001BD465 /* SimpleInstall.swift */; };
+		B34792181FC8A85F001BD465 /* Jared.applescript in Sources */ = {isa = PBXBuildFile; fileRef = B34792171FC8A85F001BD465 /* Jared.applescript */; };
+		B34792191FC8B03F001BD465 /* Jared.applescript in Resources */ = {isa = PBXBuildFile; fileRef = B34792171FC8A85F001BD465 /* Jared.applescript */; };
+		B361EEBB1F1DE24C0041113C /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = B361EEBA1F1DE24C0041113C /* config.json */; };
+		B36563EF1F3D68980064B114 /* TouchBarTextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36563EE1F3D68980064B114 /* TouchBarTextFieldExtension.swift */; };
+		B37E82821FA85B210069E15D /* SendTextSingleBuddy.scpt in Resources */ = {isa = PBXBuildFile; fileRef = B37E82811FA85B210069E15D /* SendTextSingleBuddy.scpt */; };
+		B37E82831FA85B270069E15D /* SendImageSingleBuddy.scpt in Resources */ = {isa = PBXBuildFile; fileRef = B37E82801FA85B170069E15D /* SendImageSingleBuddy.scpt */; };
+		B39A65E01CC1FB1B003E26B0 /* Routing.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39A65DF1CC1FB1B003E26B0 /* Routing.swift */; };
+		B39F2B391CB3BCA700C0D35C /* SendText.scpt in Resources */ = {isa = PBXBuildFile; fileRef = B39F2B381CB3BCA700C0D35C /* SendText.scpt */; };
+		B3BBA7CA1CB2F69800E1749C /* MessageReceive.swift in Sources */ = {isa = PBXBuildFile; fileRef = B332784D1CB2C4D000BBDD3A /* MessageReceive.swift */; };
+		B3BBA7D11CB3284A00E1749C /* CoreModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39EC17D1CB01FEF002C3161 /* CoreModule.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7F84B6241CC506790059A82B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B39EC16A1CB01F55002C3161 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7F84B61E1CC506790059A82B;
+			remoteInfo = JaredFramework;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B39A65DD1CC1F8BC003E26B0 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				7F84B6271CC506790059A82B /* JaredFramework.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		19C9C2FBC44EE08B0C7851EA /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		36A7776B61089A66EA5C166B /* Pods-JaredUI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JaredUI.release.xcconfig"; path = "Pods/Target Support Files/Pods-JaredUI/Pods-JaredUI.release.xcconfig"; sourceTree = "<group>"; };
+		7F0E931C1D02FC250096BABE /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
+		7F84B61F1CC506790059A82B /* JaredFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = JaredFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7F84B6211CC506790059A82B /* JaredFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JaredFramework.h; sourceTree = "<group>"; };
+		7F84B6231CC506790059A82B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7FE220EC1CB3C8340081CE23 /* podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		7FF077EA1CBCFFCB008E33CB /* SendImage.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = SendImage.scpt; sourceTree = "<group>"; };
+		B316D1A51F3FFDF100AFF063 /* CoreModuleRealm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreModuleRealm.swift; sourceTree = "<group>"; };
+		B332784D1CB2C4D000BBDD3A /* MessageReceive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageReceive.swift; path = ../Jared/MessageReceive.swift; sourceTree = "<group>"; };
+		B33278511CB2C94700BBDD3A /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		B33278771CB2CB1300BBDD3A /* JaredUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JaredUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B33278791CB2CB1300BBDD3A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		B332787B1CB2CB1300BBDD3A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		B332787D1CB2CB1300BBDD3A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B33278801CB2CB1300BBDD3A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		B33278821CB2CB1300BBDD3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B33278881CB2D0C600BBDD3A /* Jared.sdef */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Jared.sdef; sourceTree = "<group>"; };
+		B34792151FC8A605001BD465 /* SimpleInstall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleInstall.swift; sourceTree = "<group>"; };
+		B34792171FC8A85F001BD465 /* Jared.applescript */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.applescript; path = Jared.applescript; sourceTree = SOURCE_ROOT; };
+		B361EEBA1F1DE24C0041113C /* config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config.json; sourceTree = "<group>"; };
+		B36563EE1F3D68980064B114 /* TouchBarTextFieldExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchBarTextFieldExtension.swift; sourceTree = "<group>"; };
+		B37E82801FA85B170069E15D /* SendImageSingleBuddy.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = SendImageSingleBuddy.scpt; sourceTree = "<group>"; };
+		B37E82811FA85B210069E15D /* SendTextSingleBuddy.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = SendTextSingleBuddy.scpt; sourceTree = "<group>"; };
+		B39A65DF1CC1FB1B003E26B0 /* Routing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Routing.swift; sourceTree = "<group>"; };
+		B39EC1751CB01F55002C3161 /* amain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = amain.swift; path = ../Jared/amain.swift; sourceTree = "<group>"; };
+		B39EC17D1CB01FEF002C3161 /* CoreModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreModule.swift; sourceTree = "<group>"; };
+		B39F2B381CB3BCA700C0D35C /* SendText.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = SendText.scpt; sourceTree = "<group>"; };
+		B3BBA7CC1CB3259A00E1749C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/CoreStrings.strings; sourceTree = "<group>"; };
+		B3BBA7CF1CB327C200E1749C /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
+		B3BBA7D01CB327C200E1749C /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/CoreStrings.strings; sourceTree = "<group>"; };
+		B85E2F9206C873C167385410 /* Pods-JaredUI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JaredUI.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JaredUI/Pods-JaredUI.debug.xcconfig"; sourceTree = "<group>"; };
+		C31CB7445EAF3431D6AA3FD4 /* Pods_JaredUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_JaredUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7F84B61B1CC506790059A82B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B33278741CB2CB1300BBDD3A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7F84B6261CC506790059A82B /* JaredFramework.framework in Frameworks */,
+				A8EDB6CA30877B4D8E9D00C7 /* Pods_JaredUI.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		6A99635493B2364DED0280D9 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B85E2F9206C873C167385410 /* Pods-JaredUI.debug.xcconfig */,
+				36A7776B61089A66EA5C166B /* Pods-JaredUI.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		739CD530157F72CF2AD79314 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				19C9C2FBC44EE08B0C7851EA /* Pods.framework */,
+				C31CB7445EAF3431D6AA3FD4 /* Pods_JaredUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7F84B6201CC506790059A82B /* JaredFramework */ = {
+			isa = PBXGroup;
+			children = (
+				7F84B6211CC506790059A82B /* JaredFramework.h */,
+				B39EC1751CB01F55002C3161 /* amain.swift */,
+				7F84B6231CC506790059A82B /* Info.plist */,
+			);
+			path = JaredFramework;
+			sourceTree = "<group>";
+		};
+		B33278781CB2CB1300BBDD3A /* JaredUI */ = {
+			isa = PBXGroup;
+			children = (
+				B34792171FC8A85F001BD465 /* Jared.applescript */,
+				B33278881CB2D0C600BBDD3A /* Jared.sdef */,
+				B332784D1CB2C4D000BBDD3A /* MessageReceive.swift */,
+				B33278791CB2CB1300BBDD3A /* AppDelegate.swift */,
+				B36563EE1F3D68980064B114 /* TouchBarTextFieldExtension.swift */,
+				B332787B1CB2CB1300BBDD3A /* ViewController.swift */,
+				B332787D1CB2CB1300BBDD3A /* Assets.xcassets */,
+				B332787F1CB2CB1300BBDD3A /* Main.storyboard */,
+				B33278821CB2CB1300BBDD3A /* Info.plist */,
+				B34792151FC8A605001BD465 /* SimpleInstall.swift */,
+			);
+			path = JaredUI;
+			sourceTree = "<group>";
+		};
+		B39EC1691CB01F55002C3161 = {
+			isa = PBXGroup;
+			children = (
+				B33278511CB2C94700BBDD3A /* AppKit.framework */,
+				B39EC1741CB01F55002C3161 /* Jared */,
+				B33278781CB2CB1300BBDD3A /* JaredUI */,
+				7F84B6201CC506790059A82B /* JaredFramework */,
+				B39EC1731CB01F55002C3161 /* Products */,
+				739CD530157F72CF2AD79314 /* Frameworks */,
+				6A99635493B2364DED0280D9 /* Pods */,
+			);
+			sourceTree = "<group>";
+		};
+		B39EC1731CB01F55002C3161 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B33278771CB2CB1300BBDD3A /* JaredUI.app */,
+				7F84B61F1CC506790059A82B /* JaredFramework.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B39EC1741CB01F55002C3161 /* Jared */ = {
+			isa = PBXGroup;
+			children = (
+				7FF077EA1CBCFFCB008E33CB /* SendImage.scpt */,
+				B37E82801FA85B170069E15D /* SendImageSingleBuddy.scpt */,
+				B39F2B381CB3BCA700C0D35C /* SendText.scpt */,
+				B37E82811FA85B210069E15D /* SendTextSingleBuddy.scpt */,
+				B361EEBA1F1DE24C0041113C /* config.json */,
+				B39A65DF1CC1FB1B003E26B0 /* Routing.swift */,
+				7F0E931C1D02FC250096BABE /* Global.swift */,
+				B39EC17C1CB01FDD002C3161 /* Modules */,
+				7FE220EC1CB3C8340081CE23 /* podfile */,
+			);
+			path = Jared;
+			sourceTree = "<group>";
+		};
+		B39EC17C1CB01FDD002C3161 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				B316D1A51F3FFDF100AFF063 /* CoreModuleRealm.swift */,
+				B39EC17D1CB01FEF002C3161 /* CoreModule.swift */,
+				B3BBA7CD1CB3259A00E1749C /* CoreStrings.strings */,
+			);
+			name = Modules;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		7F84B61C1CC506790059A82B /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7F84B6221CC506790059A82B /* JaredFramework.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		7F84B61E1CC506790059A82B /* JaredFramework */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7F84B6281CC506790059A82B /* Build configuration list for PBXNativeTarget "JaredFramework" */;
+			buildPhases = (
+				7F84B61A1CC506790059A82B /* Sources */,
+				7F84B61B1CC506790059A82B /* Frameworks */,
+				7F84B61C1CC506790059A82B /* Headers */,
+				7F84B61D1CC506790059A82B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = JaredFramework;
+			productName = JaredFramework;
+			productReference = 7F84B61F1CC506790059A82B /* JaredFramework.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		B33278761CB2CB1300BBDD3A /* JaredUI */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B33278831CB2CB1300BBDD3A /* Build configuration list for PBXNativeTarget "JaredUI" */;
+			buildPhases = (
+				AF01638400485C00E0947C76 /* [CP] Check Pods Manifest.lock */,
+				B33278731CB2CB1300BBDD3A /* Sources */,
+				B33278741CB2CB1300BBDD3A /* Frameworks */,
+				B33278751CB2CB1300BBDD3A /* Resources */,
+				B39A65DD1CC1F8BC003E26B0 /* Embed Frameworks */,
+				7D874CC6DD192CC67F87BEB5 /* [CP] Embed Pods Frameworks */,
+				B65EBE7C4ECD972DBDA97E50 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7F84B6251CC506790059A82B /* PBXTargetDependency */,
+			);
+			name = JaredUI;
+			productName = JaredUI;
+			productReference = B33278771CB2CB1300BBDD3A /* JaredUI.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B39EC16A1CB01F55002C3161 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				KnownAssetTags = (
+					New,
+				);
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0900;
+				ORGANIZATIONNAME = "Zeke Snider";
+				TargetAttributes = {
+					7F84B61E1CC506790059A82B = {
+						CreatedOnToolsVersion = 7.3;
+						LastSwiftMigration = 0900;
+					};
+					B33278761CB2CB1300BBDD3A = {
+						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = C7LJ587XF3;
+						LastSwiftMigration = 0900;
+					};
+				};
+			};
+			buildConfigurationList = B39EC16D1CB01F55002C3161 /* Build configuration list for PBXProject "Jared" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+				ja,
+			);
+			mainGroup = B39EC1691CB01F55002C3161;
+			productRefGroup = B39EC1731CB01F55002C3161 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B33278761CB2CB1300BBDD3A /* JaredUI */,
+				7F84B61E1CC506790059A82B /* JaredFramework */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7F84B61D1CC506790059A82B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B33278751CB2CB1300BBDD3A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B34792191FC8B03F001BD465 /* Jared.applescript in Resources */,
+				7F84B62E1CC511B80059A82B /* CoreStrings.strings in Resources */,
+				B39F2B391CB3BCA700C0D35C /* SendText.scpt in Resources */,
+				B332787E1CB2CB1300BBDD3A /* Assets.xcassets in Resources */,
+				B37E82831FA85B270069E15D /* SendImageSingleBuddy.scpt in Resources */,
+				7FE220ED1CB3C8340081CE23 /* podfile in Resources */,
+				B361EEBB1F1DE24C0041113C /* config.json in Resources */,
+				7FF077EB1CBCFFCB008E33CB /* SendImage.scpt in Resources */,
+				B33278811CB2CB1300BBDD3A /* Main.storyboard in Resources */,
+				B33278891CB2D0C600BBDD3A /* Jared.sdef in Resources */,
+				B37E82821FA85B210069E15D /* SendTextSingleBuddy.scpt in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		7D874CC6DD192CC67F87BEB5 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-JaredUI/Pods-JaredUI-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
+				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JaredUI/Pods-JaredUI-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AF01638400485C00E0947C76 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-JaredUI-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B65EBE7C4ECD972DBDA97E50 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JaredUI/Pods-JaredUI-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7F84B61A1CC506790059A82B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7F84B62B1CC5069C0059A82B /* amain.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B33278731CB2CB1300BBDD3A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B39A65E01CC1FB1B003E26B0 /* Routing.swift in Sources */,
+				B3BBA7D11CB3284A00E1749C /* CoreModule.swift in Sources */,
+				B36563EF1F3D68980064B114 /* TouchBarTextFieldExtension.swift in Sources */,
+				B3BBA7CA1CB2F69800E1749C /* MessageReceive.swift in Sources */,
+				B34792161FC8A605001BD465 /* SimpleInstall.swift in Sources */,
+				B332787C1CB2CB1300BBDD3A /* ViewController.swift in Sources */,
+				B34792181FC8A85F001BD465 /* Jared.applescript in Sources */,
+				B332787A1CB2CB1300BBDD3A /* AppDelegate.swift in Sources */,
+				B316D1A61F3FFDF100AFF063 /* CoreModuleRealm.swift in Sources */,
+				7F0E931D1D02FC250096BABE /* Global.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7F84B6251CC506790059A82B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7F84B61E1CC506790059A82B /* JaredFramework */;
+			targetProxy = 7F84B6241CC506790059A82B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		B332787F1CB2CB1300BBDD3A /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B33278801CB2CB1300BBDD3A /* Base */,
+				B3BBA7CF1CB327C200E1749C /* ja */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		B3BBA7CD1CB3259A00E1749C /* CoreStrings.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B3BBA7CC1CB3259A00E1749C /* en */,
+				B3BBA7D01CB327C200E1749C /* ja */,
+			);
+			name = CoreStrings.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		7F84B6291CC506790059A82B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = JaredFramework/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.jaredapp.JaredFramework;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		7F84B62A1CC506790059A82B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = JaredFramework/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.jaredapp.JaredFramework;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		B33278841CB2CB1300BBDD3A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B85E2F9206C873C167385410 /* Pods-JaredUI.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = JaredUI/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jaredapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_INTERFACE_HEADER_NAME = "";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
+			};
+			name = Debug;
+		};
+		B33278851CB2CB1300BBDD3A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 36A7776B61089A66EA5C166B /* Pods-JaredUI.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = JaredUI/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jaredapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_INTERFACE_HEADER_NAME = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
+			};
+			name = Release;
+		};
+		B39EC1771CB01F55002C3161 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		B39EC1781CB01F55002C3161 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7F84B6281CC506790059A82B /* Build configuration list for PBXNativeTarget "JaredFramework" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7F84B6291CC506790059A82B /* Debug */,
+				7F84B62A1CC506790059A82B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B33278831CB2CB1300BBDD3A /* Build configuration list for PBXNativeTarget "JaredUI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B33278841CB2CB1300BBDD3A /* Debug */,
+				B33278851CB2CB1300BBDD3A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B39EC16D1CB01F55002C3161 /* Build configuration list for PBXProject "Jared" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B39EC1771CB01F55002C3161 /* Debug */,
+				B39EC1781CB01F55002C3161 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B39EC16A1CB01F55002C3161 /* Project object */;
+}

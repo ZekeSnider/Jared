@@ -31,6 +31,11 @@
                 <cocoa key="GroupID"/>
             </parameter>
             
+            <parameter name="with buddyHandle" code="NTlh" type="text" optional="yes"
+                description="buddy's handle">
+                <cocoa key="BuddyHandle"/>
+            </parameter>
+            
             <result type="boolean" description="The result of the invocation. True if it succeeds, False if it does not"/>
         </command>
     </suite>

@@ -1,0 +1,7 @@
+{
+	"routes": {
+		"/ping": {
+			"disabled": true
+		}
+	}
+}

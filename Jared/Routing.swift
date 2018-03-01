@@ -8,12 +8,15 @@
 
 import Foundation
 import JaredFramework
+import AddressBook
 
 struct MessageRouting {
     var FrameworkVersion:String = "J1.0.0"
     var modules:[RoutingModule] = []
     var bundles:[Bundle] = []
     var supportDir: URL?
+    var disabled = false
+    var config: [String: [String:AnyObject]]?
     
     init () {
         let filemanager = FileManager.default
@@ -24,14 +27,27 @@ struct MessageRouting {
         try! filemanager.createDirectory(at: supportDir, withIntermediateDirectories: true, attributes: nil)
         try! filemanager.createDirectory(at: pluginDir, withIntermediateDirectories: true, attributes: nil)
         
-        print(supportDir.absoluteString)
+        let configPath = supportDir.appendingPathComponent("config.json")
+        do {
+            //Copy an empty config file if the conig file does not exist
+            if !filemanager.fileExists(atPath: configPath.path) {
+                try! filemanager.copyItem(at: (Bundle.main.resourceURL?.appendingPathComponent("config.json"))!, to: configPath)
+            }
+            
+            //Read the JSON conig file
+            let jsonData = try! NSData(contentsOfFile: supportDir.appendingPathComponent("config.json").path, options: .mappedIfSafe)
+            if let jsonResult = try! JSONSerialization.jsonObject(with: jsonData as Data, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String:AnyObject]
+            {
+                config = jsonResult["routes"] as? [String : [String: AnyObject]]
+            }
+        }
         
         loadPlugins(pluginDir)
         addInternalModules()
     }
     
     mutating func addInternalModules() {
-        let internalModules: [RoutingModule] = [CoreModule(), RESTModule(), TwitterModule()]
+        let internalModules: [RoutingModule] = [CoreModule()]
         
         modules.append(contentsOf: internalModules)
     }
@@ -57,7 +73,7 @@ struct MessageRouting {
                 else {
                     continue
                 }
-            
+
             //Load it
             loadBundle(myBundle)
         }
@@ -71,17 +87,19 @@ struct MessageRouting {
             }
         
         //Cast the class to RoutingModule protocol
-        guard let principleClass = myBundle.principalClass as? RoutingModule.Type
-            else {
-                return
-            }
-        
-        //Initialize it
-        let module: RoutingModule = principleClass.init()
-        bundles.append(myBundle)
-        
-        //Add it to our modules
-        modules.append(module)
+        if let principleClass = myBundle.principalClass as? RoutingModule.Type
+        {
+            //Initialize it
+            let module: RoutingModule = principleClass.init()
+            bundles.append(myBundle)
+            
+            //Add it to our modules
+            modules.append(module)
+            
+        }
+        else {
+            return
+        }
     }
     
     mutating func reloadPlugins() {
@@ -90,17 +108,33 @@ struct MessageRouting {
         let pluginDir = supportDir.appendingPathComponent("Plugins")
         
         modules = []
+        
         for bundle in bundles {
             bundle.unload()
         }
+        
+        bundles = []
+        
         loadPlugins(pluginDir)
         addInternalModules()
+    }
+    
+    func isRouteEnabled(routeName: String) -> Bool {
+        if (config?[routeName.lowercased()]?["disabled"] as? Bool == true) {
+            return false
+        } else {
+            return true
+        }
     }
     
     func sendSingleDocumentation(_ routeName: String, forRoom: Room) {
         for aModule in modules {
             for aRoute in aModule.routes {
                 if aRoute.name.lowercased() == routeName.lowercased() {
+                    guard (isRouteEnabled(routeName: routeName)) else {
+                        return
+                    }
+                    
                     var documentation = "Command: "
                     documentation += routeName
                     documentation += "\n===========\n"
@@ -154,11 +188,15 @@ struct MessageRouting {
     }
     
     mutating func routeMessage(_ myMessage: String, fromBuddy: String, forRoom: Room) {
-        
         let detector = try! NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
-        let matches = detector.matches(in: myMessage, options: [], range: NSMakeRange(0, myMessage.characters.count))
+        let matches = detector.matches(in: myMessage, options: [], range: NSMakeRange(0, myMessage.count))
         let myLowercaseMessage = myMessage.lowercased()
         
+        let defaults = UserDefaults.standard
+        
+        guard !defaults.bool(forKey: "JaredIsDisabled") || myLowercaseMessage == "/enable" else {
+            return
+        }
         
         if myLowercaseMessage.contains("/help") {
             sendDocumentation(myMessage, forRoom: forRoom)
@@ -167,9 +205,20 @@ struct MessageRouting {
             reloadPlugins()
             SendText("Successfully reloaded plugins.", toRoom: forRoom)
         }
+        else if myLowercaseMessage == "/enable" {
+            defaults.set(false, forKey: "JaredIsDisabled")
+            SendText("Jared has been re-enabled. To disable, type /disable", toRoom: forRoom)
+        }
+        else if myLowercaseMessage == "/disable" {
+            defaults.set(true, forKey: "JaredIsDisabled")
+            SendText("Jared has been disabled. Type /enable to re-enable.", toRoom: forRoom)
+        }
         else {
             RootLoop: for aModule in modules {
                 for aRoute in aModule.routes {
+                    guard (isRouteEnabled(routeName: aRoute.name)) else {
+                        break
+                    }
                     for aComparison in aRoute.comparisons {
                         
                         if aComparison.0 == .containsURL {

@@ -2,6 +2,14 @@
 #
 # gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
 
+*.ss~
+*.ss#*
+.#*.ss
+
+*.scm~
+*.scm#*
+.#*.scm
+
 ## Build generated
 build/
 DerivedData/
@@ -16,6 +24,8 @@ DerivedData/
 *.perspectivev3
 !default.perspectivev3
 xcuserdata/
+*.xcuserstate
+.DS_STORE
 
 ## Other
 *.moved-aside

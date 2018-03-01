@@ -9,34 +9,86 @@
 import Cocoa
 
 class ViewController: NSViewController {
-    @IBOutlet weak var YoutubeSecret: NSTextField!
-    @IBOutlet weak var TwitterKey: NSTextField!
-    @IBOutlet weak var TwitterSecret: NSTextField!
     
     var defaults: UserDefaults!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        let defaults = UserDefaults.standard
         
-        defaults = UserDefaults.standard
-        
-        YoutubeSecret.stringValue = defaults.string(forKey: "YoutubeSecret") ?? "None"
-        TwitterKey.stringValue = defaults.string(forKey: "TwitterKey") ?? "None"
-        TwitterSecret.stringValue = defaults.string(forKey: "TwitterSecret") ?? "None"
+        defaults.addObserver(self, forKeyPath: "JaredIsDisabled", options: .new, context: nil)
+        updateTouchBarButton()
+    }
+    
+    deinit {
+        self.view.window?.unbind(NSBindingName(rawValue: #keyPath(touchBar)))
+        UserDefaults.standard.removeObserver(self, forKeyPath: "JaredIsDisabled")
     }
     
     override func viewDidAppear() {
         super.viewDidAppear()
         self.view.window!.title = "Preferences"
+        if #available(OSX 10.12.1, *) {
+            self.view.window?.unbind(NSBindingName(rawValue: #keyPath(touchBar))) // unbind first
+            self.view.window?.bind(NSBindingName(rawValue: #keyPath(touchBar)), to: self, withKeyPath: #keyPath(touchBar), options: nil)
+        }
     }
     
-    @IBAction func setButtonPressed(_ sender: AnyObject) {
-        defaults.setValue(YoutubeSecret.stringValue, forKey: "YoutubeSecret")
-        defaults.setValue(TwitterKey.stringValue, forKey: "TwitterKey")
-        defaults.setValue(TwitterSecret.stringValue, forKey: "TwitterSecret")
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if keyPath == "JaredIsDisabled" {
+            updateTouchBarButton()
+        }
+    }
+    
+    func updateTouchBarButton() {
+        let defaults = UserDefaults.standard
+        if (defaults.bool(forKey: "JaredIsDisabled")) {
+            EnableDisableButton.title = "Enable"
+            EnableDisableUIButton.title = "Enable"
+            JaredStatusLabel.stringValue = "Jared is currently disabled"
+        }
+        else {
+            EnableDisableButton.title = "Disable"
+            EnableDisableUIButton.title = "Disable"
+            JaredStatusLabel.stringValue = "Jared is currently enabled"
+        }
+    }
+    
+    @IBOutlet weak var JaredStatusLabel: NSTextField!
+    @IBOutlet weak var EnableDisableUIButton: NSButton!
+    @IBOutlet weak var EnableDisableButton: NSButtonCell!
+    
+    @IBAction func EnableDisableAction(_ sender: Any) {
+        let defaults = UserDefaults.standard
+        
+        if (defaults.bool(forKey: "JaredIsDisabled")) {
+            defaults.set(false, forKey: "JaredIsDisabled")
+        }
+        else {
+            defaults.set(true, forKey: "JaredIsDisabled")
+        }
+        
+        updateTouchBarButton()
+
+    }
+    @IBAction func OpenPluginsButtonAction(_ sender: Any) {
+        let filemanager = FileManager.default
+        let appsupport = filemanager.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
+        let supportDir = appsupport.appendingPathComponent("Jared")
+        let pluginDir = supportDir.appendingPathComponent("Plugins")
+        NSWorkspace.shared.selectFile(nil, inFileViewerRootedAtPath: pluginDir.path)
+    }
+    @IBAction func ReloadButtonPressed(_ sender: Any) {
+        if let appDelegate = NSApplication.shared.delegate as? AppDelegate {
+            appDelegate.Router.reloadPlugins()
+        }
     }
 
+    @IBAction func Fastinstall(_ sender: Any) {
+        let myInstall = SimpleInstall()
+        myInstall.Install()
+    }
+    
     override var representedObject: Any? {
         didSet {
         // Update the view, if already loaded.
