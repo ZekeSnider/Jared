@@ -37,14 +37,14 @@ Select AppleScript handler in Messages.app preferences, select "Open Script Fold
 Type /help in a group chat with Jared to see a full list of commands. Type /help,"name of command here" to get detail on that specific command. 
 
 ### Built in commands
-For reference, here is a list of the commands built in to Jared. 
+For reference, here is a list of the commands built in to Jared. Because functionality can be added with plugins, the built in functionality is kept light.
 
 + /ping: Check if the chat bot is available
 + /version: Get the version of Jared running
 + /send: Send a message repeatedly
-+ /whoami: Get your name
-+ /name: Change what Jared calls you
 + /schedule: Schedule messages
++ /name: Change what Jared calls you
++ /whoami: Get your name
 
 Note: the name related commands require access to your address book to function. You can disable this if you like. The contacts are used to set/retrieve names only. Nothing is sent to any server.
 

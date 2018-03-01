@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaDFRPlugin" version="13506"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaDFRPlugin" version="13752"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
         <capability name="the Touch Bar" message="Use a version of macOS with Touch Bar support." minToolsVersion="8.1" minSystemVersion="10.12.2" requiredIntegratedClassName="NSTouchBar"/>
     </dependencies>
@@ -194,7 +194,7 @@ for updates.</string>
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="480" height="270"/>
-                        <rect key="screenRect" x="0.0" y="0.0" width="2048" height="1129"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="1440" height="878"/>
                         <connections>
                             <outlet property="delegate" destination="B8D-0N-5wS" id="Aof-kT-3KK"/>
                         </connections>
@@ -205,7 +205,7 @@ for updates.</string>
                 </windowController>
                 <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-209" y="288"/>
+            <point key="canvasLocation" x="-216" y="286"/>
         </scene>
         <!--Preferences-->
         <scene sceneID="hIz-AP-VOD">
@@ -295,10 +295,10 @@ for updates.</string>
                                         <buttonCell key="cell" type="push" title="Disable" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="7jf-Pm-a3s">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" usesAppearanceFont="YES"/>
-                                            <connections>
-                                                <action selector="EnableDisableAction:" target="XfG-lQ-9wD" id="WYY-SY-Q9C"/>
-                                            </connections>
                                         </buttonCell>
+                                        <connections>
+                                            <action selector="EnableDisableAction:" target="XfG-lQ-9wD" id="CNF-kr-Dl6"/>
+                                        </connections>
                                     </button>
                                 </viewController>
                                 <size key="designTimeSize" width="72" height="30"/>
@@ -353,14 +353,14 @@ for updates.</string>
                         </touchBarItems>
                     </touchBar>
                     <connections>
-                        <outlet property="EnableDisableButton" destination="7jf-Pm-a3s" id="ejs-lO-jMn"/>
+                        <outlet property="EnableDisableButton" destination="7jf-Pm-a3s" id="k0G-Ec-SXe"/>
                         <outlet property="EnableDisableUIButton" destination="TGv-df-gfJ" id="nR1-v0-M6W"/>
                         <outlet property="JaredStatusLabel" destination="2V5-Ep-TtZ" id="I4v-2G-ubN"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-209" y="756"/>
+            <point key="canvasLocation" x="-216" y="683"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="ZZn-28-m0u">
@@ -1516,7 +1516,7 @@ Cg
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="dZx-Oo-2Es"/>
-        <segue reference="dKs-kd-woH"/>
+        <segue reference="SHi-Is-XQK"/>
+        <segue reference="c0r-kU-FHX"/>
     </inferredMetricsTieBreakers>
 </document>

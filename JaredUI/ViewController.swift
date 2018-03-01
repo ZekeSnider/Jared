@@ -15,25 +15,29 @@ class ViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let defaults = UserDefaults.standard
-        self.view.window?.unbind(NSBindingName(rawValue: #keyPath(touchBar))) // unbind first
-        self.view.window?.bind(NSBindingName(rawValue: #keyPath(touchBar)), to: self, withKeyPath: #keyPath(touchBar), options: nil)
         
         defaults.addObserver(self, forKeyPath: "JaredIsDisabled", options: .new, context: nil)
         updateTouchBarButton()
     }
     
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if keyPath == "JaredIsDisabled" {
-            updateTouchBarButton()
-        }
-    }
     deinit {
+        self.view.window?.unbind(NSBindingName(rawValue: #keyPath(touchBar)))
         UserDefaults.standard.removeObserver(self, forKeyPath: "JaredIsDisabled")
     }
     
     override func viewDidAppear() {
         super.viewDidAppear()
         self.view.window!.title = "Preferences"
+        if #available(OSX 10.12.1, *) {
+            self.view.window?.unbind(NSBindingName(rawValue: #keyPath(touchBar))) // unbind first
+            self.view.window?.bind(NSBindingName(rawValue: #keyPath(touchBar)), to: self, withKeyPath: #keyPath(touchBar), options: nil)
+        }
+    }
+    
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if keyPath == "JaredIsDisabled" {
+            updateTouchBarButton()
+        }
     }
     
     func updateTouchBarButton() {
