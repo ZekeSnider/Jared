@@ -270,7 +270,7 @@ for updates.</string>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YWP-Vc-fcP">
                                 <rect key="frame" x="328" y="13" width="138" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="push" title="One Click Install" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="yTT-zQ-g96">
+                                <buttonCell key="cell" type="push" title="One Click Install" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="yTT-zQ-g96">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -289,8 +289,8 @@ for updates.</string>
                             <touchBarSpacerItem identifier="NSTouchBarItemIdentifierFlexibleSpace" id="iwM-Xg-yil"/>
                             <touchBarItem id="KQH-6n-TyJ">
                                 <viewController key="viewController" id="M4J-Bf-Jpq">
-                                    <button key="view" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="trk-Nk-t1G">
-                                        <rect key="frame" x="0.0" y="0.0" width="72" height="30"/>
+                                    <button key="view" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="trk-Nk-t1G">
+                                        <rect key="frame" x="6" y="-4" width="72" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="push" title="Disable" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="7jf-Pm-a3s">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -321,8 +321,8 @@ for updates.</string>
                             </touchBarItem>
                             <touchBarItem id="tC4-yt-Hc1">
                                 <viewController key="viewController" id="nll-GY-k7t">
-                                    <button key="view" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QBB-ar-F1A">
-                                        <rect key="frame" x="0.0" y="0.0" width="126" height="30"/>
+                                    <button key="view" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QBB-ar-F1A">
+                                        <rect key="frame" x="6" y="-4" width="126" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="push" title="Reload Plugins" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="JKe-6e-7Jt">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
