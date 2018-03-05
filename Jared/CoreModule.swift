@@ -49,7 +49,7 @@ class CoreModule: RoutingModule {
         
         let name = Route(name: "/name", comparisons: [.startsWith: ["/name"]], call: self.changeName, description: "Change what Jared calls you", parameterSyntax: "/name,[your preferred name]")
         
-        let schedule = Route(name: "/schedule", comparisons: [.startsWith: ["/schedule"]], call: self.schedule, description: "Schedule messages to be set on a certain interval", parameterSyntax: "/schedule")
+        let schedule = Route(name: "/schedule", comparisons: [.startsWith: ["/schedule"]], call: self.schedule, description: NSLocalizedString("scheduleDescription"), parameterSyntax: "/schedule")
 
         routes = [ping, thankYou, version, send, whoami, name, schedule]
         
@@ -174,7 +174,6 @@ class CoreModule: RoutingModule {
                 try! realm.write {
                     realm.delete(post)
                 }
-                print("I should delete this one...")
             }
         }
         
