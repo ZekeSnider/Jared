@@ -24,6 +24,7 @@
 		B33278891CB2D0C600BBDD3A /* Jared.sdef in Resources */ = {isa = PBXBuildFile; fileRef = B33278881CB2D0C600BBDD3A /* Jared.sdef */; };
 		B34792161FC8A605001BD465 /* SimpleInstall.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34792151FC8A605001BD465 /* SimpleInstall.swift */; };
 		B34792191FC8B03F001BD465 /* Jared.applescript in Resources */ = {isa = PBXBuildFile; fileRef = B34792171FC8A85F001BD465 /* Jared.applescript */; };
+		B35CE7152196AD4E002F52A7 /* sqlitetest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35CE7142196AD4E002F52A7 /* sqlitetest.swift */; };
 		B361EEBB1F1DE24C0041113C /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = B361EEBA1F1DE24C0041113C /* config.json */; };
 		B36563EF1F3D68980064B114 /* TouchBarTextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36563EE1F3D68980064B114 /* TouchBarTextFieldExtension.swift */; };
 		B37E82821FA85B210069E15D /* SendTextSingleBuddy.scpt in Resources */ = {isa = PBXBuildFile; fileRef = B37E82811FA85B210069E15D /* SendTextSingleBuddy.scpt */; };
@@ -78,6 +79,7 @@
 		B33278881CB2D0C600BBDD3A /* Jared.sdef */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Jared.sdef; sourceTree = "<group>"; };
 		B34792151FC8A605001BD465 /* SimpleInstall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleInstall.swift; sourceTree = "<group>"; };
 		B34792171FC8A85F001BD465 /* Jared.applescript */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.applescript; path = Jared.applescript; sourceTree = SOURCE_ROOT; };
+		B35CE7142196AD4E002F52A7 /* sqlitetest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sqlitetest.swift; sourceTree = "<group>"; };
 		B361EEBA1F1DE24C0041113C /* config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config.json; sourceTree = "<group>"; };
 		B36563EE1F3D68980064B114 /* TouchBarTextFieldExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchBarTextFieldExtension.swift; sourceTree = "<group>"; };
 		B37E82801FA85B170069E15D /* SendImageSingleBuddy.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = SendImageSingleBuddy.scpt; sourceTree = "<group>"; };
@@ -189,6 +191,7 @@
 				B37E82811FA85B210069E15D /* SendTextSingleBuddy.scpt */,
 				B361EEBA1F1DE24C0041113C /* config.json */,
 				B39A65DF1CC1FB1B003E26B0 /* Routing.swift */,
+				B35CE7142196AD4E002F52A7 /* sqlitetest.swift */,
 				7F0E931C1D02FC250096BABE /* Global.swift */,
 				B39EC17C1CB01FDD002C3161 /* Modules */,
 				7FE220EC1CB3C8340081CE23 /* podfile */,
@@ -409,6 +412,7 @@
 				B36563EF1F3D68980064B114 /* TouchBarTextFieldExtension.swift in Sources */,
 				B3BBA7CA1CB2F69800E1749C /* MessageReceive.swift in Sources */,
 				B34792161FC8A605001BD465 /* SimpleInstall.swift in Sources */,
+				B35CE7152196AD4E002F52A7 /* sqlitetest.swift in Sources */,
 				B332787C1CB2CB1300BBDD3A /* ViewController.swift in Sources */,
 				B332787A1CB2CB1300BBDD3A /* AppDelegate.swift in Sources */,
 				B316D1A61F3FFDF100AFF063 /* CoreModuleRealm.swift in Sources */,

@@ -141,7 +141,6 @@ class CoreModule: RoutingModule {
         let realm  = try! Realm()
         let posts = realm.objects(SchedulePost.self)
         
-        
         let nowDate = Date().timeIntervalSinceReferenceDate
         let lowerIntervalBound = nowDate - scheduleCheckInterval
         
