@@ -283,7 +283,7 @@
 					B33278761CB2CB1300BBDD3A = {
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = C7LJ587XF3;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 1010;
 					};
 				};
 			};
@@ -514,8 +514,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -536,8 +535,7 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};

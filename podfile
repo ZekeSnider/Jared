@@ -11,7 +11,7 @@ post_install do |installer|
 end
 
 target "JaredUI" do
-	pod 'Alamofire', '~> 4.6'
+	pod 'Alamofire', '~> 4.7'
 	pod ‘SwiftyJSON’
 	pod 'RealmSwift'
 end
