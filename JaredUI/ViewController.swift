@@ -30,7 +30,7 @@ class ViewController: NSViewController {
     override func viewDidAppear() {
         super.viewDidAppear()
         let mytest = SqliteTest()
-        mytest.queryNewRecords()
+        mytest.start()
         self.view.window!.title = "Preferences"
         if #available(OSX 10.12.2, *) {
             self.view.window?.unbind(NSBindingName(rawValue: #keyPath(touchBar))) // unbind first

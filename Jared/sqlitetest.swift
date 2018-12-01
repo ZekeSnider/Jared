@@ -15,21 +15,24 @@ import SQLite3
 class SqliteTest {
     var db: OpaquePointer?
     var querySinceDate: String?
+    var shouldExitThread = false
+    var refreshSeconds = 5.0
     
     init() {
-        let fileURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-            .appendingPathComponent("chat.db")
+        let databaseLocation = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask)[0].appendingPathComponent("Messages").appendingPathComponent("chat.db")
         
-        if sqlite3_open(fileURL.path, &db) != SQLITE_OK {
+        if sqlite3_open(databaseLocation.path, &db) != SQLITE_OK {
             print("error opening database")
         }
         
         let formatter: DateFormatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH-mm-ss"
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         querySinceDate = formatter.string(from: Date())
     }
     
+    
     deinit {
+        shouldExitThread = true
         if sqlite3_close(db) != SQLITE_OK {
             print("error closing database")
         }
@@ -37,14 +40,32 @@ class SqliteTest {
         db = nil
     }
     
-    func queryNewRecords() -> Double {
+    func start() {
+        backgroundThread(0.0, background: {
+            self.backgroundAction()
+        })
+    }
+    
+    private func backgroundAction() {
+        let elapsed = queryNewRecords()
+        
+        guard (!shouldExitThread) else { return }
+        
+        if (elapsed < refreshSeconds) {
+            Thread.sleep(forTimeInterval: refreshSeconds - elapsed)
+        }
+        
+        backgroundAction()
+    }
+    
+    private func queryNewRecords() -> Double {
         let start = Date()
         
         let query = """
-            SELECT handle.id, message.text, datetime('now')
+            SELECT handle.id, message.text, datetime('now', 'localtime')
                 FROM message INNER JOIN handle
                 ON message.handle_id = handle.ROWID
-                WHERE is_from_me=0 AND
+                WHERE is_from_me=1 AND
                 datetime(message.date/1000000000 + strftime("%s", "2001-01-01") ,"unixepoch","localtime") >= datetime(?);
         """
         
@@ -55,7 +76,7 @@ class SqliteTest {
             print("error preparing select: \(errmsg)")
         }
         
-        if sqlite3_bind_text(statement, 1, querySinceDate ?? "2017-11-27 05:05:16", -1, SQLITE_TRANSIENT) != SQLITE_OK {
+        if sqlite3_bind_text(statement, 1, querySinceDate ?? "3000-11-27 05:05:16", -1, SQLITE_TRANSIENT) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
             print("failure binding foo: \(errmsg)")
         }
