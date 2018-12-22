@@ -18,16 +18,13 @@
 "ThanksJaredCommand"="Thank you Jared";
 "ThanksJaredResponse" = "Thank Jared";
 
-
 /* Ping command */
 "pingDescription" = "Check if the chat bot is available";
 "PongResponse"="Pong!";
 
-
 /* Version */
 "versionDescription" = "Get what version Jared is running";
 "versionResponse" = "I am version 3.1 of Jared, compiled on Swift 4.0.3!";
-
 
 /* send */
 "sendSyntax" = "/send,[number of times],[send delay],[message to send]";

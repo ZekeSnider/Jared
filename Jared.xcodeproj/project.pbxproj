@@ -148,6 +148,7 @@
 			children = (
 				B34792171FC8A85F001BD465 /* Jared.applescript */,
 				B33278881CB2D0C600BBDD3A /* Jared.sdef */,
+				B35CE7142196AD4E002F52A7 /* sqlitetest.swift */,
 				B332784D1CB2C4D000BBDD3A /* MessageReceive.swift */,
 				B33278791CB2CB1300BBDD3A /* AppDelegate.swift */,
 				B36563EE1F3D68980064B114 /* TouchBarTextFieldExtension.swift */,
@@ -191,7 +192,6 @@
 				B37E82811FA85B210069E15D /* SendTextSingleBuddy.scpt */,
 				B361EEBA1F1DE24C0041113C /* config.json */,
 				B39A65DF1CC1FB1B003E26B0 /* Routing.swift */,
-				B35CE7142196AD4E002F52A7 /* sqlitetest.swift */,
 				7F0E931C1D02FC250096BABE /* Global.swift */,
 				B39EC17C1CB01FDD002C3161 /* Modules */,
 				7FE220EC1CB3C8340081CE23 /* podfile */,
