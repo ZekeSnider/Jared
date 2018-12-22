@@ -9,18 +9,18 @@
 "CoreDescription" = "Core functionality for Jared with universal uses";
 
 /* Response for /ping command */
-"hello"="bonjour";
+"hello" = "bonjour";
 
 /* You're welcome string */
-"WelcomeResponse"="You're welcome.";
+"WelcomeResponse" = "You're welcome.";
 
 /* Thank you command */
-"ThanksJaredCommand"="Thank you Jared";
+"ThanksJaredCommand" = "Thank you Jared";
 "ThanksJaredResponse" = "Thank Jared";
 
 /* Ping command */
 "pingDescription" = "Check if the chat bot is available";
-"PongResponse"="Pong!";
+"PongResponse" = "Pong!";
 
 /* Version */
 "versionDescription" = "Get what version Jared is running";

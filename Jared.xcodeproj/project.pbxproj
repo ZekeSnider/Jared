@@ -23,7 +23,6 @@
 		B33278811CB2CB1300BBDD3A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B332787F1CB2CB1300BBDD3A /* Main.storyboard */; };
 		B33278891CB2D0C600BBDD3A /* Jared.sdef in Resources */ = {isa = PBXBuildFile; fileRef = B33278881CB2D0C600BBDD3A /* Jared.sdef */; };
 		B34792161FC8A605001BD465 /* SimpleInstall.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34792151FC8A605001BD465 /* SimpleInstall.swift */; };
-		B34792191FC8B03F001BD465 /* Jared.applescript in Resources */ = {isa = PBXBuildFile; fileRef = B34792171FC8A85F001BD465 /* Jared.applescript */; };
 		B35CE7152196AD4E002F52A7 /* sqlitetest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35CE7142196AD4E002F52A7 /* sqlitetest.swift */; };
 		B361EEBB1F1DE24C0041113C /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = B361EEBA1F1DE24C0041113C /* config.json */; };
 		B36563EF1F3D68980064B114 /* TouchBarTextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36563EE1F3D68980064B114 /* TouchBarTextFieldExtension.swift */; };
@@ -193,6 +192,7 @@
 				B361EEBA1F1DE24C0041113C /* config.json */,
 				B39A65DF1CC1FB1B003E26B0 /* Routing.swift */,
 				7F0E931C1D02FC250096BABE /* Global.swift */,
+				B3BBA7CD1CB3259A00E1749C /* CoreStrings.strings */,
 				B39EC17C1CB01FDD002C3161 /* Modules */,
 				7FE220EC1CB3C8340081CE23 /* podfile */,
 			);
@@ -204,7 +204,6 @@
 			children = (
 				B316D1A51F3FFDF100AFF063 /* CoreModuleRealm.swift */,
 				B39EC17D1CB01FEF002C3161 /* CoreModule.swift */,
-				B3BBA7CD1CB3259A00E1749C /* CoreStrings.strings */,
 			);
 			name = Modules;
 			sourceTree = "<group>";
@@ -319,7 +318,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B34792191FC8B03F001BD465 /* Jared.applescript in Resources */,
 				7F84B62E1CC511B80059A82B /* CoreStrings.strings in Resources */,
 				B39F2B391CB3BCA700C0D35C /* SendText.scpt in Resources */,
 				B332787E1CB2CB1300BBDD3A /* Assets.xcassets in Resources */,
@@ -342,17 +340,13 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-JaredUI/Pods-JaredUI-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
