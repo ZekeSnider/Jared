@@ -87,7 +87,7 @@ class SqliteTest {
         let start = Date()
         
         let query = """
-            SELECT handle.id, message.text, message.ROWID
+            SELECT handle.id, message.text, message.ROWID, cache_roomnames
                 FROM message INNER JOIN handle
                 ON message.handle_id = handle.ROWID
                 WHERE is_from_me=1 AND
@@ -122,12 +122,22 @@ class SqliteTest {
             }
             let rowID = String(cString: rowIDcString)
             
+            var roomName: String? = nil
+            if let roomNamecString = sqlite3_column_text(statement, 3) {
+                roomName = String(cString: roomNamecString)
+            }
+            
             querySinceID = rowID;
             
             print("id = \(id)")
             print("text = \(text)")
+            print("roomName = \(roomName ?? "none")")
             if let appDelegate = NSApplication.shared.delegate as? AppDelegate {
-                appDelegate.Router.routeMessage(text, fromBuddy: id, forRoom: Room(GUID: nil, buddyName: "", buddyHandle:  id))
+                if (roomName != nil) {
+                    appDelegate.Router.routeMessage(text, fromBuddy: id, forRoom: Room(GUID: roomName, buddyName: "", buddyHandle:  id))
+                } else {
+                    appDelegate.Router.routeMessage(text, fromBuddy: id, forRoom: Room(GUID: nil, buddyName: "", buddyHandle:  id))
+                }
             }
         }
         

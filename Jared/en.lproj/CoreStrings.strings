@@ -32,7 +32,4 @@
 
 
 /* schedule */
-"scheduleDescription" = "Schedule messages to be set on a certain interval"
-
-
-
+"scheduleDescription" = "Schedule messages to be set on a certain interval";
