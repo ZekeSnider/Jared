@@ -232,7 +232,6 @@ struct MessageRouting {
                             }
                         }
                             
-                            
                         else if aComparison.0 == .startsWith {
                             for comparisonString in aComparison.1 {
                                 if myLowercaseMessage.hasPrefix(comparisonString.lowercased()) {

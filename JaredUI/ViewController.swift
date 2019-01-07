@@ -30,7 +30,9 @@ class ViewController: NSViewController {
     override func viewDidAppear() {
         super.viewDidAppear()
         let mytest = SqliteTest()
-        mytest.start()
+        if (!mytest.authorizationError) {
+            mytest.start()
+        }
         self.view.window!.title = "Preferences"
         if #available(OSX 10.12.2, *) {
             self.view.window?.unbind(NSBindingName(rawValue: #keyPath(touchBar))) // unbind first
@@ -56,6 +58,16 @@ class ViewController: NSViewController {
             EnableDisableUIButton.title = "Disable"
             JaredStatusLabel.stringValue = "Jared is currently enabled"
         }
+    }
+    
+    func displayAccessError() {
+        print("hello access error LOL!")
+        let defaults = UserDefaults.standard
+        defaults.set(true, forKey: "JaredIsDisabled")
+        updateTouchBarButton()
+        
+        EnableDisableUIButton.isEnabled = false
+        EnableDisableButton.isEnabled = false
     }
     
     @IBOutlet weak var JaredStatusLabel: NSTextField!
@@ -86,11 +98,6 @@ class ViewController: NSViewController {
         if let appDelegate = NSApplication.shared.delegate as? AppDelegate {
             appDelegate.Router.reloadPlugins()
         }
-    }
-
-    @IBAction func Fastinstall(_ sender: Any) {
-        let myInstall = SimpleInstall()
-        myInstall.Install()
     }
     
     override var representedObject: Any? {

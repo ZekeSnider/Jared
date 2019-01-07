@@ -19,12 +19,17 @@ class SqliteTest {
     var querySinceID: String?
     var shouldExitThread = false
     var refreshSeconds = 5.0
+    var authorizationError = false
     
     init() {
         let databaseLocation = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask)[0].appendingPathComponent("Messages").appendingPathComponent("chat.db")
         
         if sqlite3_open(databaseLocation.path, &db) != SQLITE_OK {
-            print("error opening database")
+            NSLog("Error opening SQLite database. Likely Full disk access error.")
+            let viewController = NSApplication.shared.keyWindow!.contentViewController as! ViewController
+            viewController.displayAccessError()
+            authorizationError = true
+            return
         }
         
         querySinceID = getCurrentMaxRecordID()

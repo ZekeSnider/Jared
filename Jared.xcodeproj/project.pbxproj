@@ -22,7 +22,6 @@
 		B332787E1CB2CB1300BBDD3A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B332787D1CB2CB1300BBDD3A /* Assets.xcassets */; };
 		B33278811CB2CB1300BBDD3A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B332787F1CB2CB1300BBDD3A /* Main.storyboard */; };
 		B33278891CB2D0C600BBDD3A /* Jared.sdef in Resources */ = {isa = PBXBuildFile; fileRef = B33278881CB2D0C600BBDD3A /* Jared.sdef */; };
-		B34792161FC8A605001BD465 /* SimpleInstall.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34792151FC8A605001BD465 /* SimpleInstall.swift */; };
 		B35CE7152196AD4E002F52A7 /* sqlitetest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35CE7142196AD4E002F52A7 /* sqlitetest.swift */; };
 		B361EEBB1F1DE24C0041113C /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = B361EEBA1F1DE24C0041113C /* config.json */; };
 		B36563EF1F3D68980064B114 /* TouchBarTextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36563EE1F3D68980064B114 /* TouchBarTextFieldExtension.swift */; };
@@ -76,7 +75,6 @@
 		B33278801CB2CB1300BBDD3A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B33278821CB2CB1300BBDD3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B33278881CB2D0C600BBDD3A /* Jared.sdef */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Jared.sdef; sourceTree = "<group>"; };
-		B34792151FC8A605001BD465 /* SimpleInstall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleInstall.swift; sourceTree = "<group>"; };
 		B35CE7142196AD4E002F52A7 /* sqlitetest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sqlitetest.swift; sourceTree = "<group>"; };
 		B361EEBA1F1DE24C0041113C /* config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config.json; sourceTree = "<group>"; };
 		B36563EE1F3D68980064B114 /* TouchBarTextFieldExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchBarTextFieldExtension.swift; sourceTree = "<group>"; };
@@ -153,7 +151,6 @@
 				B332787D1CB2CB1300BBDD3A /* Assets.xcassets */,
 				B332787F1CB2CB1300BBDD3A /* Main.storyboard */,
 				B33278821CB2CB1300BBDD3A /* Info.plist */,
-				B34792151FC8A605001BD465 /* SimpleInstall.swift */,
 			);
 			path = JaredUI;
 			sourceTree = "<group>";
@@ -275,7 +272,7 @@
 				TargetAttributes = {
 					7F84B61E1CC506790059A82B = {
 						CreatedOnToolsVersion = 7.3;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 1010;
 					};
 					B33278761CB2CB1300BBDD3A = {
 						CreatedOnToolsVersion = 7.3;
@@ -403,7 +400,6 @@
 				B3BBA7D11CB3284A00E1749C /* CoreModule.swift in Sources */,
 				B36563EF1F3D68980064B114 /* TouchBarTextFieldExtension.swift in Sources */,
 				B3BBA7CA1CB2F69800E1749C /* MessageReceive.swift in Sources */,
-				B34792161FC8A605001BD465 /* SimpleInstall.swift in Sources */,
 				B35CE7152196AD4E002F52A7 /* sqlitetest.swift in Sources */,
 				B332787C1CB2CB1300BBDD3A /* ViewController.swift in Sources */,
 				B332787A1CB2CB1300BBDD3A /* AppDelegate.swift in Sources */,
@@ -460,8 +456,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.jaredapp.JaredFramework;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -483,8 +478,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.jaredapp.JaredFramework;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
