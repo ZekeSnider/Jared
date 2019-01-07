@@ -13,6 +13,7 @@ import Cocoa
 import JaredFramework
 import Foundation
 import SQLite3
+import Contacts
 class SqliteTest {
     var db: OpaquePointer?
     var querySinceID: String?
@@ -132,11 +133,32 @@ class SqliteTest {
             print("id = \(id)")
             print("text = \(text)")
             print("roomName = \(roomName ?? "none")")
+            
+            var buddyName = ""
+            if (CNContactStore.authorizationStatus(for: CNEntityType.contacts) == .authorized) {
+                let store = CNContactStore()
+                
+                let searchPredicate: NSPredicate
+                
+                if (!id.contains("@")) {
+                    searchPredicate = CNContact.predicateForContacts(matching: CNPhoneNumber(stringValue: id))
+                } else {
+                    searchPredicate = CNContact.predicateForContacts(matchingEmailAddress: id)
+                }
+                
+                let contacts = try! store.unifiedContacts(matching: searchPredicate, keysToFetch:[CNContactFamilyNameKey as CNKeyDescriptor, CNContactGivenNameKey as CNKeyDescriptor])
+                print(contacts.count)
+                
+                if (contacts.count == 1) {
+                    buddyName = contacts[0].givenName
+                }
+            }
+            
             if let appDelegate = NSApplication.shared.delegate as? AppDelegate {
                 if (roomName != nil) {
-                    appDelegate.Router.routeMessage(text, fromBuddy: id, forRoom: Room(GUID: roomName, buddyName: "", buddyHandle:  id))
+                    appDelegate.Router.routeMessage(text, fromBuddy: id, forRoom: Room(GUID: roomName, buddyName: buddyName, buddyHandle:  id))
                 } else {
-                    appDelegate.Router.routeMessage(text, fromBuddy: id, forRoom: Room(GUID: nil, buddyName: "", buddyHandle:  id))
+                    appDelegate.Router.routeMessage(text, fromBuddy: id, forRoom: Room(GUID: nil, buddyName: buddyName, buddyHandle:  id))
                 }
             }
         }

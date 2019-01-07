@@ -9,7 +9,6 @@
 import Foundation
 import Cocoa
 import JaredFramework
-import AddressBook
 import Contacts
 import RealmSwift
 
@@ -302,56 +301,63 @@ class CoreModule: RoutingModule {
             SendText("I can't set name for a buddy with no handle...", toRoom: forRoom)
             return
         }
+        
+        guard (CNContactStore.authorizationStatus(for: CNEntityType.contacts) == .authorized) else {
+            SendText("Sorry, I do not have access to contacts.", toRoom: forRoom)
+            return
+        }
         let store = CNContactStore()
         
-        //Attempt to open the address book
-        if let book = ABAddressBook.shared() {
-            let emailSearchElement = ABPerson.searchElement(forProperty: kABEmailProperty, label: nil, key: nil, value: forRoom.buddyHandle, comparison: ABSearchComparison(kABEqualCaseInsensitive.rawValue))
-            let phoneSearchElement = ABPerson.searchElement(forProperty: kABPhoneProperty, label: nil, key: nil, value: forRoom.buddyHandle, comparison: ABSearchComparison(kABEqualCaseInsensitive.rawValue))
-            let bothSearchElement = ABSearchElement(forConjunction: ABSearchConjunction(kABSearchOr.rawValue), children: [emailSearchElement!, phoneSearchElement!])
-            let peopleFound = book.records(matching: bothSearchElement)
-            
-            //We need to create the contact
-            if (peopleFound?.count == 0) {
-                // Creating a new contact
-                let newContact = CNMutableContact()
-                newContact.givenName = parsedMessage[1]
-                newContact.note = "Created By Jared.app"
-                
-                //If it contains an at, add the handle as email, otherwise add it as phone
-                if (forRoom.buddyHandle!.contains("@")) {
-                    let homeEmail = CNLabeledValue(label: CNLabelHome, value: (forRoom.buddyHandle ?? "") as NSString)
-                    newContact.emailAddresses = [homeEmail]
-                }
-                else {
-                    let iPhonePhone = CNLabeledValue(label: "iPhone", value: CNPhoneNumber(stringValue:forRoom.buddyHandle ?? ""))
-                    newContact.phoneNumbers = [iPhonePhone]
-                }
-            
-                let saveRequest = CNSaveRequest()
-                saveRequest.add(newContact, toContainerWithIdentifier:nil)
-                do {
-                    try store.execute(saveRequest)
-                } catch {
-                    SendText("There was an error saving your contact..", toRoom: forRoom)
-                    return
-                }
-                
-                SendText("Ok, I'll call you \(parsedMessage[1]) from now on.", toRoom: forRoom)
-                
-            }
-                //The contact already exists, modify the value
-            else {
-                let myPerson = peopleFound?[0] as! ABRecord
-                ABRecordSetValue(myPerson, kABFirstNameProperty as CFString, parsedMessage[1] as CFTypeRef)
-                
-                book.save()
-                SendText("Ok, I'll call you \(parsedMessage[1]) from now on.", toRoom: forRoom)
-            }
+        let searchPredicate: NSPredicate
+        if (!(forRoom.buddyHandle?.contains("@") ?? false)) {
+            searchPredicate = CNContact.predicateForContacts(matching: CNPhoneNumber(stringValue: forRoom.buddyHandle ?? ""))
+        } else {
+            searchPredicate = CNContact.predicateForContacts(matchingEmailAddress: forRoom.buddyHandle ?? "")
         }
-            //If we do not have permission to access contacts
+        
+        let peopleFound = try! store.unifiedContacts(matching: searchPredicate, keysToFetch:[CNContactFamilyNameKey as CNKeyDescriptor, CNContactGivenNameKey as CNKeyDescriptor])
+        
+            
+        //We need to create the contact
+        if (peopleFound.count == 0) {
+            // Creating a new contact
+            let newContact = CNMutableContact()
+            newContact.givenName = parsedMessage[1]
+            newContact.note = "Created By Jared.app"
+            
+            //If it contains an at, add the handle as email, otherwise add it as phone
+            if (forRoom.buddyHandle!.contains("@")) {
+                let homeEmail = CNLabeledValue(label: CNLabelHome, value: (forRoom.buddyHandle ?? "") as NSString)
+                newContact.emailAddresses = [homeEmail]
+            }
+            else {
+                let iPhonePhone = CNLabeledValue(label: "iPhone", value: CNPhoneNumber(stringValue:forRoom.buddyHandle ?? ""))
+                newContact.phoneNumbers = [iPhonePhone]
+            }
+        
+            let saveRequest = CNSaveRequest()
+            saveRequest.add(newContact, toContainerWithIdentifier:nil)
+            do {
+                try store.execute(saveRequest)
+            } catch {
+                SendText("There was an error saving your contact..", toRoom: forRoom)
+                return
+            }
+            
+            SendText("Ok, I'll call you \(parsedMessage[1]) from now on.", toRoom: forRoom)
+            
+        }
+        //The contact already exists, modify the value
         else {
-            SendText("Sorry, I do not have access to contacts.", toRoom: forRoom)
+            
+            let mutableContact = peopleFound[0].mutableCopy() as! CNMutableContact
+            mutableContact.givenName = parsedMessage[1]
+            
+            let saveRequest = CNSaveRequest()
+            saveRequest.update(mutableContact)
+            try! store.execute(saveRequest)
+            
+            SendText("Ok, I'll call you \(parsedMessage[1]) from now on.", toRoom: forRoom)
         }
     }
 }

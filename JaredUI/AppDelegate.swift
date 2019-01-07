@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import Contacts
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
@@ -14,8 +15,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var Router = MessageRouting()
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        // Insert code here to initialize your application
-        
+        // If this is the first run of the application, request access
+        // to contacts to pull sender info
+        if(CNContactStore.authorizationStatus(for: CNEntityType.contacts) == .notDetermined) {
+            CNContactStore().requestAccess(for: CNEntityType.contacts, completionHandler:  { (access, accessError) -> Void in
+                print(accessError)
+            })
+        }
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
