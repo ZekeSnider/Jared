@@ -193,6 +193,7 @@ struct MessageRouting {
     }
     
     mutating private func notifyWebhooks(message: Message) {
+        let webhookBody = MessageRouting.createWebhookBody(message)
         // loop over all webhooks, if the list is null, do nothing.
         for webhookBase in webhooks ?? [] {
             guard let url = URL(string: webhookBase) else {
@@ -201,15 +202,15 @@ struct MessageRouting {
             
             var request = URLRequest(url: url)
             request.httpMethod = "POST"
+            request.httpBody = webhookBody
             
             urlSession?.dataTask(with: request)
         }
     }
     
-//    static private func createWebhookBody(message: Message) {
-//        let jsonData = try JSONEncoder().encode(message)
-//        let jsonString = String(data: jsonData, encoding: .utf8)!
-//    }
+    static private func createWebhookBody(_ message: Message) -> Data {
+        return try! JSONEncoder().encode(message)
+    }
     
     mutating func route(message myMessage: Message) {
         // Currently don't process any images

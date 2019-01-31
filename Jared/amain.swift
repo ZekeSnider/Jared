@@ -120,8 +120,36 @@ public struct Message: Encodable {
     public var sender: SenderEntity
     public var recipient: RecipientEntity
     
-    enum CodingKeys : String,CodingKey{
+    enum CodingKeys : String, CodingKey{
         case date
+        case body
+        case sender
+        case recipient
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        if let textBody = body as? TextBody {
+            try container.encode(textBody, forKey: .body)
+        } else if let imageBody = body as? ImageBody {
+            try container.encode(imageBody, forKey: .body)
+        }
+        
+        if let person = sender as? Person {
+            try container.encode(person, forKey: .sender)
+        }
+        
+        if let person = recipient as? Person {
+            try container.encode(person, forKey: .recipient)
+        } else if let group = recipient as? Group {
+            try container.encode(group, forKey: .recipient)
+        }
+        
+//        try container.encode(longitude, forKey: .longitude)
+//
+//        var additionalInfo = container.nestedContainer(keyedBy: AdditionalInfoKeys.self, forKey: .additionalInfo)
+//        try additionalInfo.encode(elevation, forKey: .elevation)
     }
     
     public init (body: MessageBody, date: Date, sender: SenderEntity, recipient: RecipientEntity) {
