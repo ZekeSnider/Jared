@@ -14,7 +14,7 @@ import JaredFramework
 import Foundation
 import SQLite3
 import Contacts
-class SqliteTest {
+class DatabaseHandler {
     var db: OpaquePointer?
     var querySinceID: String?
     var shouldExitThread = false
@@ -46,9 +46,8 @@ class SqliteTest {
     }
     
     func start() {
-        backgroundThread(0.0, background: {
-            self.backgroundAction()
-        })
+        let dispatchQueue = DispatchQueue(label: "Jared Background Thread", qos: .background)
+        dispatchQueue.async(execute: self.backgroundAction)
     }
     
     private func backgroundAction() {
@@ -93,11 +92,10 @@ class SqliteTest {
         let start = Date()
         
         let query = """
-            SELECT handle.id, message.text, message.ROWID, cache_roomnames
+            SELECT handle.id, message.text, message.ROWID, cache_roomnames, is_from_me, destination_caller_id
                 FROM message INNER JOIN handle
                 ON message.handle_id = handle.ROWID
-                WHERE is_from_me=1 AND
-                message.ROWID > ?
+                WHERE = message.ROWID > ?
         """
         
         var statement: OpaquePointer?
@@ -133,13 +131,20 @@ class SqliteTest {
                 roomName = String(cString: roomNamecString)
             }
             
+            let isFromMe = sqlite3_column_int(statement, 4) == 1
+
+            guard let destinationCString = sqlite3_column_text(statement, 5) else {
+                break
+            }
+            let destination = String(cString: destinationCString)
+            
             querySinceID = rowID;
             
             print("id = \(id)")
             print("text = \(text)")
             print("roomName = \(roomName ?? "none")")
             
-            var buddyName = ""
+            var buddyName: String?
             if (CNContactStore.authorizationStatus(for: CNEntityType.contacts) == .authorized) {
                 let store = CNContactStore()
                 
@@ -160,11 +165,21 @@ class SqliteTest {
             }
             
             if let appDelegate = NSApplication.shared.delegate as? AppDelegate {
-                if (roomName != nil) {
-                    appDelegate.Router.routeMessage(text, fromBuddy: id, forRoom: Room(GUID: roomName, buddyName: buddyName, buddyHandle:  id))
+                
+                let sender: Person
+                let recipient: RecipientEntity
+                
+                if (isFromMe) {
+                    sender = Person(givenName: buddyName, handle: id, isMe: true, inGroup: nil)
+                    recipient = Person(givenName: "me", handle: destination, isMe: false, inGroup: nil)
                 } else {
-                    appDelegate.Router.routeMessage(text, fromBuddy: id, forRoom: Room(GUID: nil, buddyName: buddyName, buddyHandle:  id))
+                    sender = Person(givenName: buddyName, handle: id, isMe: false, inGroup: nil)
+                    recipient = Person(givenName: "me", handle: destination, isMe: true, inGroup: nil)
                 }
+                
+                let message = Message(body: TextBody(text), date: Date(), sender: sender, recipient: recipient)
+                
+                appDelegate.Router.route(message: message)
             }
         }
         

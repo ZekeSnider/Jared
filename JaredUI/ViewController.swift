@@ -29,9 +29,9 @@ class ViewController: NSViewController {
     
     override func viewDidAppear() {
         super.viewDidAppear()
-        let mytest = SqliteTest()
-        if (!mytest.authorizationError) {
-            mytest.start()
+        let dbHandler = DatabaseHandler()
+        if (!dbHandler.authorizationError) {
+            dbHandler.start()
         }
 
         if #available(OSX 10.12.2, *) {
@@ -77,14 +77,6 @@ class ViewController: NSViewController {
             NSWorkspace.shared.open(URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles")!)
         }
         
-        
-        
-//        let res = alert.runModal()
-//        var customView: NSView
-//        Bundle.main.loadNibNamed("CustomView", owner: self, topLevelObjects: customView)
-        
-        
-        print("hello access error LOL!")
         let defaults = UserDefaults.standard
         defaults.set(true, forKey: "JaredIsDisabled")
         updateTouchBarButton()
@@ -109,8 +101,8 @@ class ViewController: NSViewController {
         }
         
         updateTouchBarButton()
-
     }
+    
     @IBAction func OpenPluginsButtonAction(_ sender: Any) {
         let filemanager = FileManager.default
         let appsupport = filemanager.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]

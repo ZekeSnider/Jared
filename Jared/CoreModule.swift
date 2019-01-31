@@ -53,71 +53,63 @@ class CoreModule: RoutingModule {
         routes = [ping, thankYou, version, send, whoami, name, schedule]
         
         //Launch background thread that will check for scheduled messages to send
-        backgroundThread(0.0, background: {
-            self.scheduleThread()
-        })
+        let dispatchQueue = DispatchQueue(label: "Message Scheduling Background Thread", qos: .background)
+        dispatchQueue.async(execute: self.scheduleThread)
     }
     
     
-    func pingCall(_ message:String, myRoom: Room) -> Void {
-        SendText(NSLocalizedString("PongResponse"), toRoom: myRoom)
+    func pingCall(incoming: Message) -> Void {
+        Send(NSLocalizedString("PongResponse"), to: incoming.RespondTo())
     }
     
-    func getWho(_ message:String, myRoom: Room) -> Void {
-        if myRoom.buddyName != "" {
-            SendText("Your name is \(myRoom.buddyName!).", toRoom: myRoom)
+    func getWho(message: Message) -> Void {
+        if message.sender.givenName != nil {
+            Send("Your name is \(message.sender.givenName!).", to: message.RespondTo())
         }
         else {
-            SendText("I don't know your name.", toRoom: myRoom)
+            Send("I don't know your name.", to: message.RespondTo())
         }
     }
     
-    func thanksJared(_ message:String, myRoom: Room) -> Void {
-        SendText(NSLocalizedString("WelcomeResponse"), toRoom: myRoom)
+    func thanksJared(message: Message) -> Void {
+        Send(NSLocalizedString("WelcomeResponse"), to: message.RespondTo())
     }
     
-    func getVersion(_ message:String, myRoom: Room) -> Void {
-        SendText(NSLocalizedString("versionResponse"), toRoom: myRoom)
+    func getVersion(message: Message) -> Void {
+        Send(NSLocalizedString("versionResponse"), to: message.RespondTo())
     }
     
     var guessMin: Int? = 0
     
-    func sendRepeat(_ message:String, myRoom: Room) -> Void {
-        let parameters = message.components(separatedBy: ",")
+    func sendRepeat(message: Message) -> Void {
+        guard let parameters = message.getTextParameters() else {
+            return Send("Inappropriate input type.", to: message.RespondTo())
+        }
         
         //Validating and parsing arguments
         guard let repeatNum: Int = Int(parameters[1]) else {
-            SendText("Wrong argument. The first argument must be the number of message you wish to send", toRoom: myRoom)
-            return
+            return Send("Wrong argument. The first argument must be the number of message you wish to send", to: message.RespondTo())
         }
         
         guard let delay = Int(parameters[2]) else {
-            SendText("Wrong argument. The second argument must be the delay of the messages you wish to send", toRoom: myRoom)
-            return
+            return Send("Wrong argument. The second argument must be the delay of the messages you wish to send", to: message.RespondTo())
         }
         
         guard var textToSend = parameters[safe: 3] else {
-            SendText("Wrong arguments. The third argument must be the message you wish to send.", toRoom: myRoom)
-            return
+            return Send("Wrong arguments. The third argument must be the message you wish to send.", to: message.RespondTo())
         }
         
-        guard myRoom.buddyHandle != nil else {
-            SendText("You must have a proper handle.", toRoom: myRoom)
-            return
+        guard (currentSends[message.sender.handle] ?? 0) < MAXIMUM_CONCURRENT_SENDS else {
+            return Send("You can only have \(MAXIMUM_CONCURRENT_SENDS) send operations going at once.", to: message.RespondTo())
         }
         
-        guard (currentSends[myRoom.buddyHandle!] ?? 0) < MAXIMUM_CONCURRENT_SENDS else {
-            SendText("You can only have \(MAXIMUM_CONCURRENT_SENDS) send operations going at once.", toRoom: myRoom)
-            return
-        }
-        
-        if (currentSends[myRoom.buddyHandle!] == nil)
+        if (currentSends[message.sender.handle] == nil)
         {
-            currentSends[myRoom.buddyHandle!] = 0
+            currentSends[message.sender.handle] = 0
         }
         
         //Increment the concurrent send counter for this user
-        currentSends[myRoom.buddyHandle!] = currentSends[myRoom.buddyHandle!]! + 1
+        currentSends[message.sender.handle] = currentSends[message.sender.handle]! + 1
         
         //If there are commas in the message, take the whole message
         if parameters.count > 4 {
@@ -126,12 +118,12 @@ class CoreModule: RoutingModule {
         
         //Go through the repeat loop...
         for _ in 1...repeatNum {
-            SendText(textToSend, toRoom: myRoom)
+            Send(textToSend, to: message.RespondTo())
             Thread.sleep(forTimeInterval: Double(delay))
         }
         
         //Decrement the concurrent send counter for this user
-        currentSends[myRoom.buddyHandle!] = (currentSends[myRoom.buddyHandle!] ?? 0) - 1
+        currentSends[message.sender.handle] = (currentSends[message.sender.handle] ?? 0) - 1
         
     }
     
@@ -160,11 +152,11 @@ class CoreModule: RoutingModule {
                 //Check to make sure the last time we sent this scheduled message it was not within this send interval
                 if (nowDate - post.lastSendDate.timeIntervalSinceReferenceDate) > (Double(post.sendIntervalNumber) * intervalSeconds[post.sendIntervalTypeEnum]!) {
                     //Send the message and write to the database with the new lastSendDate
-                    let sendRoom = Room(GUID: post.chatID, buddyName: "", buddyHandle: post.handle)
-                    SendText(post.text, toRoom: sendRoom)
-                    try! realm.write {
-                        post.lastSendDate = Date()
-                    }
+//                    let sendRoom = Room(GUID: post.chatID, buddyName: "", buddyHandle: post.handle)
+//                    Send(post.text, toRoom: sendRoom)
+//                    try! realm.write {
+//                        post.lastSendDate = Date()
+//                    }
                 }
             }
             //We've gone over when the last message for the schedule would have sent. We should delete it from the database
@@ -180,19 +172,16 @@ class CoreModule: RoutingModule {
         scheduleThread()
     }
     
-    func schedule(_ myMessage: String, forRoom: Room) {
+    func schedule(message: Message) {
         // /schedule,add,1,week,5,full Message
         // /schedule,delete,1
         // /schedule,list
-        let parameters = myMessage.components(separatedBy: ",")
-        
-        guard forRoom.buddyHandle != nil else {
-            SendText("Buddy must have valid handle.", toRoom: forRoom)
-            return
+        guard let parameters = message.getTextBody()?.components(separatedBy: ",") else {
+            return Send("Inappropriate input type", to:message.RespondTo())
         }
+        
         guard parameters.count > 1 else {
-            SendText("More parameters required.", toRoom: forRoom)
-            return
+            return Send("More parameters required.", to: message.RespondTo())
         }
         
         let realm  = try! Realm()
@@ -200,23 +189,19 @@ class CoreModule: RoutingModule {
         switch parameters[1] {
         case "add":
             guard parameters.count > 5 else {
-                SendText("Incorrect number of parameters specified.", toRoom: forRoom)
-                return
+                return Send("Incorrect number of parameters specified.", to: message.RespondTo())
             }
             
             guard let sendIntervalNumber = Int(parameters[2]) else {
-                SendText("Send interval number must be an integer.", toRoom: forRoom)
-                return
+                return Send("Send interval number must be an integer.", to: message.RespondTo())
             }
             
             guard let sendIntervalType = IntervalType(rawValue: parameters[3]) else {
-                SendText("Send interval type must be a valid input (hour, day, week, month).", toRoom: forRoom)
-                return
+                return Send("Send interval type must be a valid input (hour, day, week, month).", to: message.RespondTo())
             }
             
             guard let sendTimes = Int(parameters[4]) else {
-                SendText("Send times must be an integer.", toRoom: forRoom)
-                return
+                return Send("Send times must be an integer.", to: message.RespondTo())
             }
             
             let sendMessage = parameters[5]
@@ -225,9 +210,9 @@ class CoreModule: RoutingModule {
                 ["sendIntervalNumber" : sendIntervalNumber,
                  "sendIntervalType": sendIntervalType.rawValue,
                  "text": sendMessage,
-                 "handle": forRoom.buddyHandle!,
+                 "handle": message.sender.handle,
                  "sendNumberTimes": sendTimes,
-                 "chatID": forRoom.GUID ?? "",
+                 "handle": message.sender.handle,
                  "startDate": Date(),
                 ])
             
@@ -236,83 +221,77 @@ class CoreModule: RoutingModule {
                 realm.add(newPost)
             }
 
-            SendText("Your post has been succesfully scheduled.", toRoom: forRoom)
+            Send("Your post has been succesfully scheduled.", to: message.RespondTo())
             break
         case "delete":
             guard parameters.count > 2 else {
-                SendText("The second parameter must be a valid id.", toRoom: forRoom)
-                return
+                return Send("The second parameter must be a valid id.", to: message.RespondTo())
             }
             
             guard let deleteID = Int(parameters[2]) else {
-                SendText("The delete ID must be an integer.", toRoom: forRoom)
-                return
+                return Send("The delete ID must be an integer.", to: message.RespondTo())
             }
             
             guard deleteID > 0 else {
-                SendText("The delete ID must be an positive integer.", toRoom: forRoom)
-                return
+                return Send("The delete ID must be an positive integer.", to: message.RespondTo())
             }
             
-            let schedulePost = realm.objects(SchedulePost.self).filter("handle == %@", forRoom.buddyHandle!)
+            let schedulePost = realm.objects(SchedulePost.self).filter("handle == %@", message.sender.handle)
             
             guard schedulePost.count >= deleteID  else {
-                SendText("The specified post ID is not valid.", toRoom: forRoom)
+                Send("The specified post ID is not valid.", to: message.RespondTo())
                 return
             }
             
-            guard schedulePost[deleteID - 1].handle == forRoom.buddyHandle else {
-                SendText("You do not have permission to delete this scheduled message.", toRoom: forRoom)
+            guard schedulePost[deleteID - 1].handle == message.sender.handle else {
+                Send("You do not have permission to delete this scheduled message.", to: message.RespondTo())
                 return
             }
             
             try! realm.write {
                 realm.delete(schedulePost[deleteID - 1])
             }
-            SendText("The specified scheduled post has been deleted.", toRoom: forRoom)
+            Send("The specified scheduled post has been deleted.", to: message.RespondTo())
             
             break
         case "list":
-            var scheduledPosts = realm.objects(SchedulePost.self).filter("handle == %@", forRoom.buddyHandle!)
+            var scheduledPosts = realm.objects(SchedulePost.self).filter("handle == %@", message.sender.handle)
             scheduledPosts = scheduledPosts.sorted(byKeyPath: "startDate", ascending: false)
             
-            var sendMessage = "\(forRoom.buddyName ?? "Hello"), you have \(scheduledPosts.count) posts scheduled."
+            var sendMessage = "\(message.sender.givenName ?? "Hello"), you have \(scheduledPosts.count) posts scheduled."
             var iterator = 1
             for post in scheduledPosts {
                 sendMessage += "\n\(iterator): Send a message every \(post.sendIntervalNumber) \(post.sendIntervalType)(s) \(post.sendNumberTimes) time(s), starting on \(post.startDate.description(with: Locale.current))."
                 iterator += 1
             }
-            SendText(sendMessage, toRoom: forRoom)
+            Send(sendMessage, to: message.RespondTo())
             break
         default:
-            SendText("Invalid schedule command type. Must be add, delete, or list", toRoom: forRoom)
+            Send("Invalid schedule command type. Must be add, delete, or list", to: message.RespondTo())
             break
         }
     }
     
-    func changeName(_ myMessage: String, forRoom: Room) {
-        let parsedMessage = myMessage.components(separatedBy: ",")
-        if (parsedMessage.count == 1) {
-            SendText("Wrong arguments.", toRoom: forRoom)
-            return
+    func changeName(message: Message) {
+        guard let parsedMessage = message.getTextParameters() else {
+            return Send("Inappropriate input type", to:message.RespondTo())
         }
         
-        guard forRoom.buddyHandle != nil && forRoom.buddyHandle != "" else {
-            SendText("I can't set name for a buddy with no handle...", toRoom: forRoom)
-            return
+        if (parsedMessage.count == 1) {
+            return Send("Wrong arguments.", to: message.RespondTo())
         }
+        
         
         guard (CNContactStore.authorizationStatus(for: CNEntityType.contacts) == .authorized) else {
-            SendText("Sorry, I do not have access to contacts.", toRoom: forRoom)
-            return
+            return Send("Sorry, I do not have access to contacts.", to: message.RespondTo())
         }
         let store = CNContactStore()
         
         let searchPredicate: NSPredicate
-        if (!(forRoom.buddyHandle?.contains("@") ?? false)) {
-            searchPredicate = CNContact.predicateForContacts(matching: CNPhoneNumber(stringValue: forRoom.buddyHandle ?? ""))
+        if (!(message.sender.handle.contains("@"))) {
+            searchPredicate = CNContact.predicateForContacts(matching: CNPhoneNumber(stringValue: message.sender.handle ?? ""))
         } else {
-            searchPredicate = CNContact.predicateForContacts(matchingEmailAddress: forRoom.buddyHandle ?? "")
+            searchPredicate = CNContact.predicateForContacts(matchingEmailAddress: message.sender.handle ?? "")
         }
         
         let peopleFound = try! store.unifiedContacts(matching: searchPredicate, keysToFetch:[CNContactFamilyNameKey as CNKeyDescriptor, CNContactGivenNameKey as CNKeyDescriptor])
@@ -326,12 +305,12 @@ class CoreModule: RoutingModule {
             newContact.note = "Created By Jared.app"
             
             //If it contains an at, add the handle as email, otherwise add it as phone
-            if (forRoom.buddyHandle!.contains("@")) {
-                let homeEmail = CNLabeledValue(label: CNLabelHome, value: (forRoom.buddyHandle ?? "") as NSString)
+            if (message.sender.handle.contains("@")) {
+                let homeEmail = CNLabeledValue(label: CNLabelHome, value: (message.sender.handle) as NSString)
                 newContact.emailAddresses = [homeEmail]
             }
             else {
-                let iPhonePhone = CNLabeledValue(label: "iPhone", value: CNPhoneNumber(stringValue:forRoom.buddyHandle ?? ""))
+                let iPhonePhone = CNLabeledValue(label: "iPhone", value: CNPhoneNumber(stringValue:message.sender.handle))
                 newContact.phoneNumbers = [iPhonePhone]
             }
         
@@ -340,16 +319,13 @@ class CoreModule: RoutingModule {
             do {
                 try store.execute(saveRequest)
             } catch {
-                SendText("There was an error saving your contact..", toRoom: forRoom)
-                return
+               return Send("There was an error saving your contact..", to: message.RespondTo())
             }
             
-            SendText("Ok, I'll call you \(parsedMessage[1]) from now on.", toRoom: forRoom)
-            
+            Send("Ok, I'll call you \(parsedMessage[1]) from now on.", to: message.RespondTo())
         }
         //The contact already exists, modify the value
         else {
-            
             let mutableContact = peopleFound[0].mutableCopy() as! CNMutableContact
             mutableContact.givenName = parsedMessage[1]
             
@@ -357,7 +333,7 @@ class CoreModule: RoutingModule {
             saveRequest.update(mutableContact)
             try! store.execute(saveRequest)
             
-            SendText("Ok, I'll call you \(parsedMessage[1]) from now on.", toRoom: forRoom)
+            Send("Ok, I'll call you \(parsedMessage[1]) from now on.", to: message.RespondTo())
         }
     }
 }
