@@ -239,13 +239,11 @@ class CoreModule: RoutingModule {
             let schedulePost = realm.objects(SchedulePost.self).filter("handle == %@", message.sender.handle)
             
             guard schedulePost.count >= deleteID  else {
-                Send("The specified post ID is not valid.", to: message.RespondTo())
-                return
+                return Send("The specified post ID is not valid.", to: message.RespondTo())
             }
             
             guard schedulePost[deleteID - 1].handle == message.sender.handle else {
-                Send("You do not have permission to delete this scheduled message.", to: message.RespondTo())
-                return
+                return Send("You do not have permission to delete this scheduled message.", to: message.RespondTo())
             }
             
             try! realm.write {
@@ -289,9 +287,9 @@ class CoreModule: RoutingModule {
         
         let searchPredicate: NSPredicate
         if (!(message.sender.handle.contains("@"))) {
-            searchPredicate = CNContact.predicateForContacts(matching: CNPhoneNumber(stringValue: message.sender.handle ?? ""))
+            searchPredicate = CNContact.predicateForContacts(matching: CNPhoneNumber(stringValue: message.sender.handle ))
         } else {
-            searchPredicate = CNContact.predicateForContacts(matchingEmailAddress: message.sender.handle ?? "")
+            searchPredicate = CNContact.predicateForContacts(matchingEmailAddress: message.sender.handle )
         }
         
         let peopleFound = try! store.unifiedContacts(matching: searchPredicate, keysToFetch:[CNContactFamilyNameKey as CNKeyDescriptor, CNContactGivenNameKey as CNKeyDescriptor])

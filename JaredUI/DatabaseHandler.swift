@@ -92,10 +92,10 @@ class DatabaseHandler {
         let start = Date()
         
         let query = """
-            SELECT handle.id, message.text, message.ROWID, cache_roomnames, is_from_me, destination_caller_id
+            SELECT handle.id, message.text, message.ROWID, message.cache_roomnames, message.is_from_me, message.destination_caller_id
                 FROM message INNER JOIN handle
                 ON message.handle_id = handle.ROWID
-                WHERE = message.ROWID > ?
+                WHERE message.ROWID > ?
         """
         
         var statement: OpaquePointer?
