@@ -203,8 +203,9 @@ struct MessageRouting {
             var request = URLRequest(url: url)
             request.httpMethod = "POST"
             request.httpBody = webhookBody
+            request.addValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
             
-            urlSession?.dataTask(with: request)
+            urlSession?.dataTask(with: request).resume()
         }
     }
     
@@ -213,6 +214,7 @@ struct MessageRouting {
     }
     
     mutating func route(message myMessage: Message) {
+        notifyWebhooks(message: myMessage)
         // Currently don't process any images
         guard let messageText = myMessage.body as? TextBody else {
             return
