@@ -88,6 +88,42 @@ class DatabaseHandler {
         return id ?? "10000000000000"
     }
     
+    private func retrieveGroupInfo(chatID: String) -> [Person] {
+        let query = """
+            SELECT handle.id
+                FROM chat_handle_join INNER JOIN handle ON chat_handle_join.handle_id = handle.ROWID
+                INNER JOIN chat ON chat_handle_join.chat_id = chat.ROWID
+                WHERE chat_handle_join.chat_id = ?
+        """
+        
+        var statement: OpaquePointer?
+        
+        if sqlite3_prepare_v2(db, query, -1, &statement, nil) != SQLITE_OK {
+            let errmsg = String(cString: sqlite3_errmsg(db)!)
+            print("error preparing select: \(errmsg)")
+        }
+        
+        if sqlite3_bind_text(statement, 1, chatID, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+            let errmsg = String(cString: sqlite3_errmsg(db)!)
+            print("failure binding foo: \(errmsg)")
+        }
+        
+        var People = [Person]()
+        
+        while sqlite3_step(statement) == SQLITE_ROW {
+            
+            guard let idcString = sqlite3_column_text(statement, 0) else {
+                break
+            }
+            let handle = String(cString: idcString)
+            let contact = retreiveContact(handle: handle)
+            
+            People.append(Person(givenName: contact?.givenName, handle: handle, isMe: false, inGroup: nil))
+        }
+        
+        return People
+    }
+    
     private func queryNewRecords() -> Double {
         let start = Date()
         
@@ -144,28 +180,9 @@ class DatabaseHandler {
             print("text = \(text)")
             print("roomName = \(roomName ?? "none")")
             
-            var buddyName: String?
-            if (CNContactStore.authorizationStatus(for: CNEntityType.contacts) == .authorized) {
-                let store = CNContactStore()
-                
-                let searchPredicate: NSPredicate
-                
-                if (!id.contains("@")) {
-                    searchPredicate = CNContact.predicateForContacts(matching: CNPhoneNumber(stringValue: id))
-                } else {
-                    searchPredicate = CNContact.predicateForContacts(matchingEmailAddress: id)
-                }
-                
-                let contacts = try! store.unifiedContacts(matching: searchPredicate, keysToFetch:[CNContactFamilyNameKey as CNKeyDescriptor, CNContactGivenNameKey as CNKeyDescriptor])
-                print(contacts.count)
-                
-                if (contacts.count == 1) {
-                    buddyName = contacts[0].givenName
-                }
-            }
+            let buddyName = retreiveContact(handle: id)?.givenName
             
             if let appDelegate = NSApplication.shared.delegate as? AppDelegate {
-                
                 let sender: Person
                 let recipient: RecipientEntity
                 
@@ -192,4 +209,28 @@ class DatabaseHandler {
         
         return NSDate().timeIntervalSince(start)
     }
+    
+    private func retreiveContact(handle: String) -> CNContact? {
+        if (CNContactStore.authorizationStatus(for: CNEntityType.contacts) == .authorized) {
+            let store = CNContactStore()
+            
+            let searchPredicate: NSPredicate
+            
+            if (!handle.contains("@")) {
+                searchPredicate = CNContact.predicateForContacts(matching: CNPhoneNumber(stringValue: handle))
+            } else {
+                searchPredicate = CNContact.predicateForContacts(matchingEmailAddress: handle)
+            }
+            
+            let contacts = try! store.unifiedContacts(matching: searchPredicate, keysToFetch:[CNContactFamilyNameKey as CNKeyDescriptor, CNContactGivenNameKey as CNKeyDescriptor])
+            print(contacts.count)
+            
+            if (contacts.count == 1) {
+                return contacts[0]
+            }
+        }
+        
+        return nil
+    }
 }
+

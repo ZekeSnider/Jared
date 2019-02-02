@@ -297,5 +297,3 @@ struct MessageRouting {
         }
     }
 }
-
-
