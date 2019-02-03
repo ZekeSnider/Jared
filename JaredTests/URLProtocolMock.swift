@@ -45,6 +45,7 @@ class URLProtocolMock: URLProtocol {
         // if we have a valid URL…
         if let url = request.url {
             if let data = URLProtocolMock.testURLs[url] {
+//                let stringl = String(data: Data(reading: request.httpBodyStream!), encoding: .utf8)
                 if (data == Data(reading: request.httpBodyStream!)) {
                     URLProtocolMock.matchedDataURLs.append(url)
                 }

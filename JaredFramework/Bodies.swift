@@ -20,4 +20,8 @@ public struct TextBody: MessageBody, Codable {
 
 public struct ImageBody: MessageBody, Codable {
     public var ImagePath: String
+    
+    public init(_ path: String) {
+        ImagePath = path
+    }
 }

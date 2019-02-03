@@ -16,7 +16,7 @@ public protocol SenderEntity: Codable {
     var givenName: String? {get set}
 }
 
-public struct Person: SenderEntity, RecipientEntity, Codable {
+public struct Person: SenderEntity, RecipientEntity, Codable, Equatable {
     public var givenName: String?
     public var handle: String
     public var isMe: Bool = false
@@ -28,9 +28,15 @@ public struct Person: SenderEntity, RecipientEntity, Codable {
         self.isMe = isMe
         self.inGroup = inGroup
     }
+    
+    public static func == (lhs: Person, rhs: Person) -> Bool {
+        return lhs.givenName == rhs.givenName &&
+            lhs.handle == rhs.handle &&
+            lhs.isMe == rhs.isMe
+    }
 }
 
-public struct Group: RecipientEntity, Codable {
+public struct Group: RecipientEntity, Codable, Equatable {
     public var name: String?
     public var handle: String
     public var participants: [Person]
@@ -39,5 +45,11 @@ public struct Group: RecipientEntity, Codable {
         self.name = name
         self.handle = handle
         self.participants = participants
+    }
+    
+    public static func == (lhs: Group, rhs: Group) -> Bool {
+        return lhs.name == rhs.name &&
+            lhs.handle == rhs.handle &&
+            lhs.participants == rhs.participants
     }
 }

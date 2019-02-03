@@ -39,6 +39,15 @@ public struct Message: Encodable {
         } else if let group = recipient as? Group {
             try container.encode(group, forKey: .recipient)
         }
+        
+        if let notOptionalDate = date {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
+            formatter.timeZone = TimeZone(secondsFromGMT: 0)
+            formatter.locale = Locale(identifier: "en_US_POSIX")
+            
+            try container.encode(formatter.string(from: notOptionalDate), forKey: .date)
+        }
     }
     
     public init (body: MessageBody, date: Date, sender: SenderEntity, recipient: RecipientEntity) {

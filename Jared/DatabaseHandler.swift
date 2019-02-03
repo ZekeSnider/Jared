@@ -142,7 +142,8 @@ class DatabaseHandler {
         let start = Date()
         
         let query = """
-            SELECT handle.id, message.text, message.ROWID, message.cache_roomnames, message.is_from_me, message.destination_caller_id
+            SELECT handle.id, message.text, message.ROWID, message.cache_roomnames, message.is_from_me, message.destination_caller_id,
+                message.date/1000000000 + strftime("%s", "2001-01-01")
                 FROM message INNER JOIN handle
                 ON message.handle_id = handle.ROWID
                 WHERE message.ROWID > ?
@@ -167,6 +168,7 @@ class DatabaseHandler {
             let roomName = unwrapStringColumn(at: 3)
             let isFromMe = sqlite3_column_int(statement, 4) == 1
             let destinationOptional = unwrapStringColumn(at: 5)
+            let epochDate = TimeInterval(sqlite3_column_int64(statement, 6))
             
             querySinceID = rowID;
             
@@ -191,7 +193,7 @@ class DatabaseHandler {
                     recipient = group ?? Person(givenName: myName, handle: destination, isMe: true, inGroup: nil)
                 }
                 
-                let message = Message(body: TextBody(text), date: Date(), sender: sender, recipient: recipient)
+                let message = Message(body: TextBody(text), date: Date(timeIntervalSince1970: epochDate), sender: sender, recipient: recipient)
                 appDelegate.Router.route(message: message)
             }
         }
