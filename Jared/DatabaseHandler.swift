@@ -124,7 +124,7 @@ class DatabaseHandler {
             let handle = String(cString: idcString)
             let contact = ContactHelper.RetreiveContact(handle: handle)
             
-            People.append(Person(givenName: contact?.givenName, handle: handle, isMe: false, inGroup: nil))
+            People.append(Person(givenName: contact?.givenName, handle: handle, isMe: false))
         }
         
         return Group(name: "", handle: handle, participants: People)
@@ -186,11 +186,11 @@ class DatabaseHandler {
                 let group = retrieveGroupInfo(chatID: roomName)
                 
                 if (isFromMe) {
-                    sender = Person(givenName: myName, handle: destination, isMe: true, inGroup: nil)
-                    recipient = group ?? Person(givenName: buddyName, handle: senderHandle, isMe: false, inGroup: nil)
+                    sender = Person(givenName: myName, handle: destination, isMe: true)
+                    recipient = group ?? Person(givenName: buddyName, handle: senderHandle, isMe: false)
                 } else {
-                    sender = Person(givenName: buddyName, handle: senderHandle, isMe: false, inGroup: nil)
-                    recipient = group ?? Person(givenName: myName, handle: destination, isMe: true, inGroup: nil)
+                    sender = Person(givenName: buddyName, handle: senderHandle, isMe: false)
+                    recipient = group ?? Person(givenName: myName, handle: destination, isMe: true)
                 }
                 
                 let message = Message(body: TextBody(text), date: Date(timeIntervalSince1970: epochDate), sender: sender, recipient: recipient)

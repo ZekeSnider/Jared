@@ -57,23 +57,6 @@ public struct Message: Encodable {
         self.date = date
     }
     
-    // Easily flip a message around to respond to it
-    init (message: Message, newBody: MessageBody, me: Person) {
-        body = newBody
-        
-        let person = message.sender as! Person
-        
-        // If the person sent in a group,
-        // we should respond to the group.
-        if let group = person.inGroup {
-            recipient = group
-        } else {
-            recipient = person
-        }
-        
-        sender = me
-    }
-    
     public func RespondTo() -> RecipientEntity {
         if let senderPerson = sender as? Person {
             if (senderPerson.isMe) {
@@ -92,7 +75,7 @@ public struct Message: Encodable {
         }
         
         NSLog("Couldn't coerce respond to entity properly.")
-        return Person(givenName: nil, handle: "", isMe: false, inGroup: nil)
+        return Person(givenName: nil, handle: "", isMe: false)
     }
     
     public func getTextBody() -> String? {

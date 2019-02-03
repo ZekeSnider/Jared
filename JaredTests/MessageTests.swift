@@ -15,9 +15,9 @@ import JaredFramework
 class MessageTests: XCTestCase {
     let textBody = TextBody("Hey Jared")
     
-    let jaredPerson = Person(givenName: "jared", handle: "jared@email.com", isMe: false, inGroup: nil)
-    let mePerson = Person(givenName: "zeke", handle: "zeke@email.com", isMe: true, inGroup: nil)
-    let swiftPerson = Person(givenName: "taylor", handle: "taylor@swift.org", isMe: false, inGroup: nil)
+    let jaredPerson = Person(givenName: "jared", handle: "jared@email.com", isMe: false)
+    let mePerson = Person(givenName: "zeke", handle: "zeke@email.com", isMe: true)
+    let swiftPerson = Person(givenName: "taylor", handle: "taylor@swift.org", isMe: false)
     
     var sampleGroup: Group!
     

@@ -20,13 +20,11 @@ public struct Person: SenderEntity, RecipientEntity, Codable, Equatable {
     public var givenName: String?
     public var handle: String
     public var isMe: Bool = false
-    public var inGroup: Group?
     
-    public init(givenName: String?, handle: String, isMe: Bool, inGroup: Group?) {
+    public init(givenName: String?, handle: String, isMe: Bool) {
         self.givenName = givenName
         self.handle = handle
         self.isMe = isMe
-        self.inGroup = inGroup
     }
     
     public static func == (lhs: Person, rhs: Person) -> Bool {

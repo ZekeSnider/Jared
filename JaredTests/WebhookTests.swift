@@ -13,7 +13,7 @@ class WebhookTests: XCTestCase {
     let WEBHOOK_TEST_URL = "https://github.com/zekesnider/jaredwebhook"
     let WEBHOOK_TEST_URL_TWO = "https://twitter.com/zekesnider/jaredwebhook"
     let MESSAGE_SERIALIZED = "{\"body\":{\"message\":\"hello there jared\"},\"recipient\":{\"handle\":\"jared@email.com\",\"givenName\":\"jared\",\"isMe\":false},\"sender\":{\"handle\":\"zeke@email.com\",\"givenName\":\"zeke\",\"isMe\":true},\"date\":\"2017-05-17T22:57:21.000Z\"}"
-    let SAMPLE_MESSAGE = Message(body: TextBody("hello there jared"), date: Date(timeIntervalSince1970: TimeInterval(1495061841)), sender: Person(givenName: "zeke", handle: "zeke@email.com", isMe: true, inGroup: nil), recipient: Person(givenName: "jared", handle: "jared@email.com", isMe: false, inGroup: nil))
+    let SAMPLE_MESSAGE = Message(body: TextBody("hello there jared"), date: Date(timeIntervalSince1970: TimeInterval(1495061841)), sender: Person(givenName: "zeke", handle: "zeke@email.com", isMe: true), recipient: Person(givenName: "jared", handle: "jared@email.com", isMe: false))
     
     var config: URLSessionConfiguration!
     
