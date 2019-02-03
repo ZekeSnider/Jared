@@ -112,6 +112,12 @@ public struct Group: RecipientEntity, Codable {
     public var name: String?
     public var handle: String
     public var participants: [Person]
+    
+    public init(name: String?, handle: String, participants: [Person]) {
+        self.name = name
+        self.handle = handle
+        self.participants = participants
+    }
 }
 
 public struct Message: Encodable {
@@ -145,11 +151,6 @@ public struct Message: Encodable {
         } else if let group = recipient as? Group {
             try container.encode(group, forKey: .recipient)
         }
-        
-//        try container.encode(longitude, forKey: .longitude)
-//
-//        var additionalInfo = container.nestedContainer(keyedBy: AdditionalInfoKeys.self, forKey: .additionalInfo)
-//        try additionalInfo.encode(elevation, forKey: .elevation)
     }
     
     public init (body: MessageBody, date: Date, sender: SenderEntity, recipient: RecipientEntity) {
@@ -177,14 +178,24 @@ public struct Message: Encodable {
     }
     
     public func RespondTo() -> RecipientEntity {
-        if let person = recipient as? Person {
-            return person
-        } else if let group = recipient as? Group {
-            return group
-        } else {
-            NSLog("Couldn't coerce respond to entity properly.")
-            return Person(givenName: nil, handle: "", isMe: false, inGroup: nil)
+        if let senderPerson = sender as? Person {
+            if (senderPerson.isMe) {
+                if let person = recipient as? Person {
+                    return person
+                } else if let group = recipient as? Group {
+                    return group
+                }
+            } else {
+                if let group = recipient as? Group {
+                    return group
+                } else {
+                    return senderPerson
+                }
+            }
         }
+        
+        NSLog("Couldn't coerce respond to entity properly.")
+        return Person(givenName: nil, handle: "", isMe: false, inGroup: nil)
     }
     
     public func getTextBody() -> String? {

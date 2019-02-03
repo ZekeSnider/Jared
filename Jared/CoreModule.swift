@@ -49,8 +49,10 @@ class CoreModule: RoutingModule {
         let name = Route(name: "/name", comparisons: [.startsWith: ["/name"]], call: self.changeName, description: "Change what Jared calls you", parameterSyntax: "/name,[your preferred name]")
         
         let schedule = Route(name: "/schedule", comparisons: [.startsWith: ["/schedule"]], call: self.schedule, description: NSLocalizedString("scheduleDescription"), parameterSyntax: "/schedule")
+        
+        let barf = Route(name: "/barf", comparisons: [.startsWith: ["/barf"]], call: self.barf, description: NSLocalizedString("barfDescription"))
 
-        routes = [ping, thankYou, version, send, whoami, name, schedule]
+        routes = [ping, thankYou, version, send, whoami, name, schedule, barf]
         
         //Launch background thread that will check for scheduled messages to send
         let dispatchQueue = DispatchQueue(label: "Message Scheduling Background Thread", qos: .background)
@@ -60,6 +62,10 @@ class CoreModule: RoutingModule {
     
     func pingCall(incoming: Message) -> Void {
         Send(NSLocalizedString("PongResponse"), to: incoming.RespondTo())
+    }
+    
+    func barf(incoming: Message) -> Void {
+        Send(String(data: try! JSONEncoder().encode(incoming), encoding: .utf8) ?? "nil", to: incoming.RespondTo())
     }
     
     func getWho(message: Message) -> Void {

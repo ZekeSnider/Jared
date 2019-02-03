@@ -18,14 +18,14 @@ struct MessageRouting {
     var disabled = false
     var routeConfig: [String: [String:AnyObject]]?
     var webhooks: [String]?
-    var urlSession: URLSession?
+    var webHookManager: WebHookManager?
     
     init () {
         let filemanager = FileManager.default
         let appsupport = filemanager.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
         let supportDir = appsupport.appendingPathComponent("Jared")
         let pluginDir = supportDir.appendingPathComponent("Plugins")
-        urlSession = URLSession(configuration: URLSessionConfiguration.ephemeral)
+        var webhooks: [String]?
         
         try! filemanager.createDirectory(at: supportDir, withIntermediateDirectories: true, attributes: nil)
         try! filemanager.createDirectory(at: pluginDir, withIntermediateDirectories: true, attributes: nil)
@@ -46,6 +46,8 @@ struct MessageRouting {
             }
         }
         
+        webHookManager = WebHookManager(webhooks: webhooks ?? [])
+        
         loadPlugins(pluginDir)
         addInternalModules()
     }
@@ -55,7 +57,6 @@ struct MessageRouting {
         
         modules.append(contentsOf: internalModules)
     }
-    
     
     mutating func loadPlugins(_ pluginDir: URL) {
         //Loop through all files in our plugin directory
@@ -192,29 +193,9 @@ struct MessageRouting {
         Send(documentation, to: recipient)
     }
     
-    mutating private func notifyWebhooks(message: Message) {
-        let webhookBody = MessageRouting.createWebhookBody(message)
-        // loop over all webhooks, if the list is null, do nothing.
-        for webhookBase in webhooks ?? [] {
-            guard let url = URL(string: webhookBase) else {
-                break
-            }
-            
-            var request = URLRequest(url: url)
-            request.httpMethod = "POST"
-            request.httpBody = webhookBody
-            request.addValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
-            
-            urlSession?.dataTask(with: request).resume()
-        }
-    }
-    
-    static private func createWebhookBody(_ message: Message) -> Data {
-        return try! JSONEncoder().encode(message)
-    }
-    
     mutating func route(message myMessage: Message) {
-        notifyWebhooks(message: myMessage)
+        webHookManager?.notify(message: myMessage)
+        
         // Currently don't process any images
         guard let messageText = myMessage.body as? TextBody else {
             return

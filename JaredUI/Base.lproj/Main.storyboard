@@ -18,7 +18,7 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Jared" systemMenu="apple" id="uQy-DD-JDr">
                                     <items>
-                                        <menuItem title="About JaredUI" id="5kV-Vb-QxS">
+                                        <menuItem title="About Jared" id="5kV-Vb-QxS">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="orderFrontStandardAboutPanel:" target="Ady-hI-5gd" id="Exp-CZ-Vem"/>
@@ -127,7 +127,7 @@
                         <outlet property="delegate" destination="Voe-Tx-rLC" id="PrD-fu-P6m"/>
                     </connections>
                 </application>
-                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="JaredUI" customModuleProvider="target"/>
+                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Jared" customModuleProvider="target"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="16" y="67"/>
@@ -158,7 +158,7 @@
         <!--About View Controller-->
         <scene sceneID="qnc-P6-Vnt">
             <objects>
-                <viewController id="R3T-JT-J7M" customClass="AboutViewController" customModule="JaredUI" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="R3T-JT-J7M" customClass="AboutViewController" customModule="Jared" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="OB9-LK-9RL">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="149"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -239,7 +239,7 @@ All rights reserved.</string>
         <!--Jared-->
         <scene sceneID="hIz-AP-VOD">
             <objects>
-                <viewController title="Jared" storyboardIdentifier="APIKeyPanel" id="XfG-lQ-9wD" customClass="ViewController" customModule="JaredUI" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Jared" storyboardIdentifier="APIKeyPanel" id="XfG-lQ-9wD" customClass="ViewController" customModule="Jared" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="m2S-Jp-Qdl">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="150"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

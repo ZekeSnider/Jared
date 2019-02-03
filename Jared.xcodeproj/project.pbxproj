@@ -21,6 +21,8 @@
 		B332787C1CB2CB1300BBDD3A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B332787B1CB2CB1300BBDD3A /* ViewController.swift */; };
 		B332787E1CB2CB1300BBDD3A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B332787D1CB2CB1300BBDD3A /* Assets.xcassets */; };
 		B33278811CB2CB1300BBDD3A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B332787F1CB2CB1300BBDD3A /* Main.storyboard */; };
+		B3327DC42206607B009DD882 /* ContactHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3327DC32206607B009DD882 /* ContactHelper.swift */; };
+		B3327DC622066427009DD882 /* WebHookManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3327DC522066427009DD882 /* WebHookManager.swift */; };
 		B35CE7152196AD4E002F52A7 /* DatabaseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35CE7142196AD4E002F52A7 /* DatabaseHandler.swift */; };
 		B361EEBB1F1DE24C0041113C /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = B361EEBA1F1DE24C0041113C /* config.json */; };
 		B36563EF1F3D68980064B114 /* TouchBarTextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36563EE1F3D68980064B114 /* TouchBarTextFieldExtension.swift */; };
@@ -66,12 +68,14 @@
 		7FF077EA1CBCFFCB008E33CB /* SendImage.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = SendImage.scpt; sourceTree = "<group>"; };
 		B316D1A51F3FFDF100AFF063 /* CoreModuleRealm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreModuleRealm.swift; sourceTree = "<group>"; };
 		B33278511CB2C94700BBDD3A /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
-		B33278771CB2CB1300BBDD3A /* JaredUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JaredUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B33278771CB2CB1300BBDD3A /* Jared.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Jared.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B33278791CB2CB1300BBDD3A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B332787B1CB2CB1300BBDD3A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		B332787D1CB2CB1300BBDD3A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B33278801CB2CB1300BBDD3A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B33278821CB2CB1300BBDD3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B3327DC32206607B009DD882 /* ContactHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactHelper.swift; sourceTree = "<group>"; };
+		B3327DC522066427009DD882 /* WebHookManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebHookManager.swift; sourceTree = "<group>"; };
 		B35CE7142196AD4E002F52A7 /* DatabaseHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseHandler.swift; sourceTree = "<group>"; };
 		B361EEBA1F1DE24C0041113C /* config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config.json; sourceTree = "<group>"; };
 		B36563EE1F3D68980064B114 /* TouchBarTextFieldExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchBarTextFieldExtension.swift; sourceTree = "<group>"; };
@@ -140,13 +144,12 @@
 		B33278781CB2CB1300BBDD3A /* JaredUI */ = {
 			isa = PBXGroup;
 			children = (
-				B35CE7142196AD4E002F52A7 /* DatabaseHandler.swift */,
 				B33278791CB2CB1300BBDD3A /* AppDelegate.swift */,
+				B375A65821EB14470073F09F /* AboutViewController.swift */,
 				B36563EE1F3D68980064B114 /* TouchBarTextFieldExtension.swift */,
 				B332787B1CB2CB1300BBDD3A /* ViewController.swift */,
 				B332787D1CB2CB1300BBDD3A /* Assets.xcassets */,
 				B332787F1CB2CB1300BBDD3A /* Main.storyboard */,
-				B375A65821EB14470073F09F /* AboutViewController.swift */,
 				B33278821CB2CB1300BBDD3A /* Info.plist */,
 			);
 			path = JaredUI;
@@ -168,7 +171,7 @@
 		B39EC1731CB01F55002C3161 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B33278771CB2CB1300BBDD3A /* JaredUI.app */,
+				B33278771CB2CB1300BBDD3A /* Jared.app */,
 				7F84B61F1CC506790059A82B /* JaredFramework.framework */,
 			);
 			name = Products;
@@ -183,6 +186,9 @@
 				B37E82811FA85B210069E15D /* SendTextSingleBuddy.scpt */,
 				B361EEBA1F1DE24C0041113C /* config.json */,
 				B39A65DF1CC1FB1B003E26B0 /* Routing.swift */,
+				B3327DC522066427009DD882 /* WebHookManager.swift */,
+				B3327DC32206607B009DD882 /* ContactHelper.swift */,
+				B35CE7142196AD4E002F52A7 /* DatabaseHandler.swift */,
 				7F0E931C1D02FC250096BABE /* Global.swift */,
 				B3BBA7CD1CB3259A00E1749C /* CoreStrings.strings */,
 				B39EC17C1CB01FDD002C3161 /* Modules */,
@@ -232,9 +238,9 @@
 			productReference = 7F84B61F1CC506790059A82B /* JaredFramework.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		B33278761CB2CB1300BBDD3A /* JaredUI */ = {
+		B33278761CB2CB1300BBDD3A /* Jared */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B33278831CB2CB1300BBDD3A /* Build configuration list for PBXNativeTarget "JaredUI" */;
+			buildConfigurationList = B33278831CB2CB1300BBDD3A /* Build configuration list for PBXNativeTarget "Jared" */;
 			buildPhases = (
 				AF01638400485C00E0947C76 /* [CP] Check Pods Manifest.lock */,
 				B33278731CB2CB1300BBDD3A /* Sources */,
@@ -250,9 +256,9 @@
 			dependencies = (
 				7F84B6251CC506790059A82B /* PBXTargetDependency */,
 			);
-			name = JaredUI;
+			name = Jared;
 			productName = JaredUI;
-			productReference = B33278771CB2CB1300BBDD3A /* JaredUI.app */;
+			productReference = B33278771CB2CB1300BBDD3A /* Jared.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -293,7 +299,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				B33278761CB2CB1300BBDD3A /* JaredUI */,
+				B33278761CB2CB1300BBDD3A /* Jared */,
 				7F84B61E1CC506790059A82B /* JaredFramework */,
 			);
 		};
@@ -414,7 +420,9 @@
 				B3BBA7D11CB3284A00E1749C /* CoreModule.swift in Sources */,
 				B36563EF1F3D68980064B114 /* TouchBarTextFieldExtension.swift in Sources */,
 				B35CE7152196AD4E002F52A7 /* DatabaseHandler.swift in Sources */,
+				B3327DC42206607B009DD882 /* ContactHelper.swift in Sources */,
 				B332787C1CB2CB1300BBDD3A /* ViewController.swift in Sources */,
+				B3327DC622066427009DD882 /* WebHookManager.swift in Sources */,
 				B332787A1CB2CB1300BBDD3A /* AppDelegate.swift in Sources */,
 				B316D1A61F3FFDF100AFF063 /* CoreModuleRealm.swift in Sources */,
 				B375A65921EB14470073F09F /* AboutViewController.swift in Sources */,
@@ -656,7 +664,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B33278831CB2CB1300BBDD3A /* Build configuration list for PBXNativeTarget "JaredUI" */ = {
+		B33278831CB2CB1300BBDD3A /* Build configuration list for PBXNativeTarget "Jared" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B33278841CB2CB1300BBDD3A /* Debug */,

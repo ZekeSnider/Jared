@@ -14,12 +14,14 @@ import JaredFramework
 import Foundation
 import SQLite3
 import Contacts
+
 class DatabaseHandler {
     var db: OpaquePointer?
     var querySinceID: String?
     var shouldExitThread = false
     var refreshSeconds = 5.0
     var authorizationError = false
+    var statement: OpaquePointer? = nil
     
     init() {
         let databaseLocation = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask)[0].appendingPathComponent("Messages").appendingPathComponent("chat.db")
@@ -88,7 +90,11 @@ class DatabaseHandler {
         return id ?? "10000000000000"
     }
     
-    private func retrieveGroupInfo(chatID: String) -> [Person] {
+    private func retrieveGroupInfo(chatID: String?) -> Group? {
+        guard let handle = chatID else {
+            return nil
+        }
+        
         let query = """
             SELECT handle.id
                 FROM chat_handle_join INNER JOIN handle ON chat_handle_join.handle_id = handle.ROWID
@@ -116,12 +122,20 @@ class DatabaseHandler {
                 break
             }
             let handle = String(cString: idcString)
-            let contact = retreiveContact(handle: handle)
+            let contact = ContactHelper.RetreiveContact(handle: handle)
             
             People.append(Person(givenName: contact?.givenName, handle: handle, isMe: false, inGroup: nil))
         }
         
-        return People
+        return Group(name: "", handle: handle, participants: People)
+    }
+    
+    private func unwrapStringColumn(at column: Int32) -> String? {
+        if let cString = sqlite3_column_text(statement, column) {
+            return String(cString: cString)
+        } else {
+            return nil
+        }
     }
     
     private func queryNewRecords() -> Double {
@@ -134,7 +148,7 @@ class DatabaseHandler {
                 WHERE message.ROWID > ?
         """
         
-        var statement: OpaquePointer?
+        defer { statement = nil }
         
         if sqlite3_prepare_v2(db, query, -1, &statement, nil) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
@@ -147,55 +161,37 @@ class DatabaseHandler {
         }
         
         while sqlite3_step(statement) == SQLITE_ROW {
-            guard let idcString = sqlite3_column_text(statement, 0) else {
-                break
-            }
-            let id = String(cString: idcString)
-            
-            guard let textcString = sqlite3_column_text(statement, 1) else {
-                break
-            }
-            let text = String(cString: textcString)
-            
-            guard let rowIDcString = sqlite3_column_text(statement, 2) else {
-                break
-            }
-            let rowID = String(cString: rowIDcString)
-            
-            var roomName: String? = nil
-            if let roomNamecString = sqlite3_column_text(statement, 3) {
-                roomName = String(cString: roomNamecString)
-            }
-            
+            let senderHandleOptional = unwrapStringColumn(at: 0)
+            let textOptional = unwrapStringColumn(at: 1)
+            let rowID = unwrapStringColumn(at: 2)
+            let roomName = unwrapStringColumn(at: 3)
             let isFromMe = sqlite3_column_int(statement, 4) == 1
-
-            guard let destinationCString = sqlite3_column_text(statement, 5) else {
-                break
-            }
-            let destination = String(cString: destinationCString)
+            let destinationOptional = unwrapStringColumn(at: 5)
             
             querySinceID = rowID;
             
-            print("id = \(id)")
-            print("text = \(text)")
-            print("roomName = \(roomName ?? "none")")
+            guard let senderHandle = senderHandleOptional, let text = textOptional, let destination = destinationOptional else {
+                break
+            }
             
-            let buddyName = retreiveContact(handle: id)?.givenName
+            let buddyName = ContactHelper.RetreiveContact(handle: senderHandle)?.givenName
+            let myName = ContactHelper.RetreiveContact(handle: destination)?.givenName
             
             if let appDelegate = NSApplication.shared.delegate as? AppDelegate {
                 let sender: Person
                 let recipient: RecipientEntity
                 
+                let group = retrieveGroupInfo(chatID: roomName)
+                
                 if (isFromMe) {
-                    sender = Person(givenName: buddyName, handle: id, isMe: true, inGroup: nil)
-                    recipient = Person(givenName: "me", handle: destination, isMe: false, inGroup: nil)
+                    sender = Person(givenName: myName, handle: destination, isMe: true, inGroup: nil)
+                    recipient = group ?? Person(givenName: buddyName, handle: senderHandle, isMe: false, inGroup: nil)
                 } else {
-                    sender = Person(givenName: buddyName, handle: id, isMe: false, inGroup: nil)
-                    recipient = Person(givenName: "me", handle: destination, isMe: true, inGroup: nil)
+                    sender = Person(givenName: buddyName, handle: senderHandle, isMe: false, inGroup: nil)
+                    recipient = group ?? Person(givenName: myName, handle: destination, isMe: true, inGroup: nil)
                 }
                 
                 let message = Message(body: TextBody(text), date: Date(), sender: sender, recipient: recipient)
-                
                 appDelegate.Router.route(message: message)
             }
         }
@@ -205,32 +201,7 @@ class DatabaseHandler {
             print("error finalizing prepared statement: \(errmsg)")
         }
         
-        statement = nil
-        
         return NSDate().timeIntervalSince(start)
-    }
-    
-    private func retreiveContact(handle: String) -> CNContact? {
-        if (CNContactStore.authorizationStatus(for: CNEntityType.contacts) == .authorized) {
-            let store = CNContactStore()
-            
-            let searchPredicate: NSPredicate
-            
-            if (!handle.contains("@")) {
-                searchPredicate = CNContact.predicateForContacts(matching: CNPhoneNumber(stringValue: handle))
-            } else {
-                searchPredicate = CNContact.predicateForContacts(matchingEmailAddress: handle)
-            }
-            
-            let contacts = try! store.unifiedContacts(matching: searchPredicate, keysToFetch:[CNContactFamilyNameKey as CNKeyDescriptor, CNContactGivenNameKey as CNKeyDescriptor])
-            print(contacts.count)
-            
-            if (contacts.count == 1) {
-                return contacts[0]
-            }
-        }
-        
-        return nil
     }
 }
 
