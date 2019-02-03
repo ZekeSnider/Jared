@@ -4,15 +4,10 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>JaredFramework.xcscheme</key>
+		<key>JaredFramework.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>1</integer>
-		</dict>
-		<key>JaredTests.xcscheme_^#shared#^_</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>5</integer>
 		</dict>
 		<key>JaredUI.xcscheme_^#shared#^_</key>
 		<dict>

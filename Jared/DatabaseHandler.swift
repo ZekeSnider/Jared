@@ -28,8 +28,9 @@ class DatabaseHandler {
         
         if sqlite3_open(databaseLocation.path, &db) != SQLITE_OK {
             NSLog("Error opening SQLite database. Likely Full disk access error.")
-            let viewController = NSApplication.shared.keyWindow!.contentViewController as! ViewController
-            viewController.displayAccessError()
+            if let viewController = NSApplication.shared.keyWindow?.contentViewController as? ViewController {
+                viewController.displayAccessError()
+            }
             authorizationError = true
             return
         }

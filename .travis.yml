@@ -1,9 +1,9 @@
 os: osx
 osx_image: xcode10.1
-language: swift
-xcode_workspace: Jared.xcworkspace
-xcode_scheme: JaredTests
-xcode_destination: platform=macOS
+language: objective-c
 branches:
   only:
     - master
+
+script:
+  xcodebuild -workspace Jared.xcworkspace -scheme JaredUI test ONLY_ACTIVE_ARCH=NO CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
