@@ -8,7 +8,6 @@
 
 import Foundation
 import JaredFramework
-import AddressBook
 
 struct MessageRouting {
     var FrameworkVersion:String = "J1.0.0"

@@ -1,0 +1,9 @@
+os: osx
+osx_image: xcode10.1
+language: swift
+xcode_workspace: Jared.xcworkspace
+xcode_scheme: JaredTests
+xcode_destination: platform=macOS
+branches:
+  only:
+    - master

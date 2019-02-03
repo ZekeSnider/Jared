@@ -56,5 +56,4 @@ class WebhookTests: XCTestCase {
         
         XCTAssert(URLProtocolMock.matchedDataURLs.count == 2, "Webhooks were requested after configuration change")
     }
-
 }
