@@ -157,12 +157,14 @@ class CoreModule: RoutingModule {
 
                 //Check to make sure the last time we sent this scheduled message it was not within this send interval
                 if (nowDate - post.lastSendDate.timeIntervalSinceReferenceDate) > (Double(post.sendIntervalNumber) * intervalSeconds[post.sendIntervalTypeEnum]!) {
+                    
+                    //TODO: make this work with Person entity
                     //Send the message and write to the database with the new lastSendDate
-//                    let sendRoom = Room(GUID: post.chatID, buddyName: "", buddyHandle: post.handle)
-//                    Jared.Send(post.text, toRoom: sendRoom)
-//                    try! realm.write {
-//                        post.lastSendDate = Date()
-//                    }
+                    let sendRoom = Group(name: nil, handle: post.handle, participants: [])
+                    Jared.Send(post.text, to: sendRoom)
+                    try! realm.write {
+                        post.lastSendDate = Date()
+                    }
                 }
             }
             //We've gone over when the last message for the schedule would have sent. We should delete it from the database
@@ -216,9 +218,8 @@ class CoreModule: RoutingModule {
                 ["sendIntervalNumber" : sendIntervalNumber,
                  "sendIntervalType": sendIntervalType.rawValue,
                  "text": sendMessage,
-                 "handle": message.sender.handle,
+                 "handle": message.RespondTo().handle,
                  "sendNumberTimes": sendTimes,
-                 "handle": message.sender.handle,
                  "startDate": Date(),
                 ])
             
