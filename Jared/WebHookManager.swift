@@ -13,9 +13,9 @@ class WebHookManager {
     var urlSession: URLSession?
     var webhooks: [String]?
     
-    public init(webhooks: [String]?) {
+    public init(webhooks: [String]?, session: URLSessionConfiguration = URLSessionConfiguration.ephemeral) {
         self.webhooks = webhooks
-        urlSession = URLSession(configuration: URLSessionConfiguration.ephemeral)
+        urlSession = URLSession(configuration: session)
     }
     
     public func notify(message: Message) {
