@@ -84,6 +84,7 @@ struct MessageRouting {
     
     mutating func loadBundle(_ myBundle: Bundle) {
         //Check version of the framework that this plugin is using
+        //TODO: Add better version comparison (2.1.0 should be compatible with 2.0.0)
         guard myBundle.infoDictionary?["JaredFrameworkVersion"] as? String == self.FrameworkVersion else {
             return
         }
