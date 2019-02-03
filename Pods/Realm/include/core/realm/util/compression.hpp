@@ -28,6 +28,8 @@
 #include <stddef.h>
 #include <memory>
 
+#include <realm/binary_data.hpp>
+
 namespace realm {
 namespace util {
 namespace compression {
@@ -115,7 +117,7 @@ private:
 
 /// compress_bound() calculates an upper bound on the size of the compressed
 /// data. The caller can use this function to allocate memory buffer calling
-/// compress(). \a uncompressed_buf is the buffer with uncompresed data. The
+/// compress(). \a uncompressed_buf is the buffer with uncompressed data. The
 /// size of the uncompressed data is \a uncompressed_size. \a compression_level
 /// is described under compress(). \a bound is set to the upper bound at
 /// return. The returned error code is of category compression::error_category.
@@ -142,6 +144,13 @@ std::error_code compress(const char* uncompressed_buf, size_t uncompressed_size,
 /// compression::error_category.
 std::error_code decompress(const char* compressed_buf, size_t compressed_size,
                            char* decompressed_buf, size_t decompressed_size);
+
+
+size_t allocate_and_compress(CompressMemoryArena& compress_memory_arena,
+                             BinaryData uncompressed_buf,
+                             std::vector<char>& compressed_buf);
+
+
 
 } // namespace compression
 } // namespace util

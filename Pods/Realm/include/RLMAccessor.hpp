@@ -46,27 +46,29 @@ public:
     id box(realm::Object&&);
     id box(realm::RowExpr);
 
-    id box(realm::BinaryData v) { return RLMBinaryDataToNSData(v); }
     id box(bool v) { return @(v); }
     id box(double v) { return @(v); }
     id box(float v) { return @(v); }
     id box(long long v) { return @(v); }
-    id box(realm::StringData v) { return RLMStringDataToNSString(v); }
-    id box(realm::Timestamp v) { return RLMTimestampToNSDate(v); }
+    id box(realm::StringData v) { return RLMStringDataToNSString(v) ?: NSNull.null; }
+    id box(realm::BinaryData v) { return RLMBinaryDataToNSData(v) ?: NSNull.null; }
+    id box(realm::Timestamp v) { return RLMTimestampToNSDate(v) ?: NSNull.null; }
     id box(realm::Mixed v) { return RLMMixedToObjc(v); }
 
-    id box(realm::util::Optional<bool> v) { return v ? @(*v) : nil; }
-    id box(realm::util::Optional<double> v) { return v ? @(*v) : nil; }
-    id box(realm::util::Optional<float> v) { return v ? @(*v) : nil; }
-    id box(realm::util::Optional<int64_t> v) { return v ? @(*v) : nil; }
+    id box(realm::util::Optional<bool> v) { return v ? @(*v) : NSNull.null; }
+    id box(realm::util::Optional<double> v) { return v ? @(*v) : NSNull.null; }
+    id box(realm::util::Optional<float> v) { return v ? @(*v) : NSNull.null; }
+    id box(realm::util::Optional<int64_t> v) { return v ? @(*v) : NSNull.null; }
 
     void will_change(realm::Row const&, realm::Property const&);
     void will_change(realm::Object& obj, realm::Property const& prop) { will_change(obj.row(), prop); }
     void did_change();
 
-    RLMOptionalId value_for_property(id dict, std::string const&, size_t prop_index);
+    RLMOptionalId value_for_property(id dict, realm::Property const&, size_t prop_index);
     RLMOptionalId default_value_for_property(realm::ObjectSchema const&,
-                                             std::string const& prop);
+                                             realm::Property const& prop);
+
+    bool is_same_list(realm::List const& list, id v) const noexcept;
 
     template<typename Func>
     void enumerate_list(__unsafe_unretained const id v, Func&& func) {
@@ -76,7 +78,7 @@ public:
     }
 
     template<typename T>
-    T unbox(id v, bool create = false, bool update = false);
+    T unbox(id v, bool create = false, bool update = false, bool = false, size_t = 0);
 
     bool is_null(id v) { return v == NSNull.null; }
     id null_value() { return NSNull.null; }
@@ -105,11 +107,6 @@ private:
     // Cached default values dictionary to avoid having to call the class method
     // for every property
     NSDictionary *_defaultValues;
-
-    // A temporary hack to preserve the existing behavior for
-    // https://github.com/realm/realm-cocoa/issues/4926
-    // FIXME: remove in 3.0
-    bool _nilHack = false;
 
     RLMObservationInfo *_observationInfo = nullptr;
     NSString *_kvoPropertyName = nil;

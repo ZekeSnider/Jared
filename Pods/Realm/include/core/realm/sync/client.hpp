@@ -20,7 +20,8 @@
 #ifndef REALM_SYNC_CLIENT_HPP
 #define REALM_SYNC_CLIENT_HPP
 
-#include <stdint.h>
+#include <cstddef>
+#include <cstdint>
 #include <memory>
 #include <utility>
 #include <functional>
@@ -29,11 +30,25 @@
 
 #include <realm/util/logger.hpp>
 #include <realm/util/network.hpp>
-#include <realm/impl/continuous_transactions_history.hpp>
+#include <realm/impl/cont_transact_hist.hpp>
+#include <realm/sync/protocol.hpp>
 #include <realm/sync/history.hpp>
 
 namespace realm {
 namespace sync {
+
+/// Supported protocols:
+///
+///      Protocol    URL scheme     Default port
+///     -----------------------------------------------------------------------------------
+///      realm       "realm:"       7800 (80 if Client::Config::enable_default_port_hack)
+///      realm_ssl   "realms:"      7801 (443 if Client::Config::enable_default_port_hack)
+///
+enum class Protocol {
+    realm,
+    realm_ssl
+};
+
 
 class Client {
 public:
@@ -46,23 +61,69 @@ public:
         /// amount of time (i.e., a server hammering protection mechanism).
         normal,
 
-        /// Delay reconnect attempts indefinitely. For testing purposes only.
+        /// For testing purposes only.
         ///
-        /// A reconnect attempt can be manually scheduled by calling
-        /// cancel_reconnect_delay(). In particular, when a connection breaks,
-        /// or when an attempt at establishing the connection fails, the error
-        /// handler is called. If one calls cancel_reconnect_delay() from that
-        /// invocation of the error handler, the effect is to allow another
-        /// reconnect attempt to occur.
-        never,
-
-        /// Never delay reconnect attempts. Perform them immediately. For
-        /// testing purposes only.
-        immediate
+        /// Never reconnect automatically after the connection is closed due to
+        /// an error. Allow immediate reconnect if the connection was closed
+        /// voluntarily (e.g., due to sessions being abandoned).
+        ///
+        /// In this mode, Client::cancel_reconnect_delay() and
+        /// Session::cancel_reconnect_delay() can still be used to trigger
+        /// another reconnection attempt (with no delay) after an error has
+        /// caused the connection to be closed.
+        testing
     };
+
+    using port_type = util::network::Endpoint::port_type;
+    using RoundtripTimeHandler = void(milliseconds_type roundtrip_time);
+
+    // FIXME: The default values for `connect_timeout`, `ping_keepalive_period`,
+    // and `pong_keepalive_timeout` ought to be much lower (2 minutes, 1 minute,
+    // and 2 minutes) than they are. Their current values are due to the fact
+    // that the server is single threaded, and that some operations take more
+    // than 5 minutes to complete.
+    static constexpr milliseconds_type default_connect_timeout        = 600000; // 10 minutes
+    static constexpr milliseconds_type default_connection_linger_time =  30000; // 30 seconds
+    static constexpr milliseconds_type default_ping_keepalive_period  = 600000; // 10 minutes
+    static constexpr milliseconds_type default_pong_keepalive_timeout = 600000; // 10 minutes
+    static constexpr milliseconds_type default_fast_reconnect_limit   =  60000; // 1 minute
 
     struct Config {
         Config() {}
+
+        /// An optional custom platform description to be sent to server as part
+        /// of a user agent description (HTTP `User-Agent` header).
+        ///
+        /// If left empty, the platform description will be whatever is returned
+        /// by util::get_platform_info().
+        std::string user_agent_platform_info;
+
+        /// Optional information about the application to be added to the user
+        /// agent description as sent to the server. The intention is that the
+        /// application describes itself using the following (rough) syntax:
+        ///
+        ///     <application info>  ::=  (<space> <layer>)*
+        ///     <layer>             ::=  <name> "/" <version> [<space> <details>]
+        ///     <name>              ::=  (<alnum>)+
+        ///     <version>           ::=  <digit> (<alnum> | "." | "-" | "_")*
+        ///     <details>           ::=  <parentherized>
+        ///     <parentherized>     ::=  "(" (<nonpar> | <parentherized>)* ")"
+        ///
+        /// Where `<space>` is a single space character, `<digit>` is a decimal
+        /// digit, `<alnum>` is any alphanumeric character, and `<nonpar>` is
+        /// any character other than `(` and `)`.
+        ///
+        /// When multiple levels are present, the innermost layer (the one that
+        /// is closest to this API) should appear first.
+        ///
+        /// Example:
+        ///
+        ///     RealmJS/2.13.0 RealmStudio/2.9.0
+        ///
+        /// Note: The user agent description is not intended for machine
+        /// interpretation, but should still follow the specified syntax such
+        /// that it remains easily interpretable by human beings.
+        std::string user_agent_application_info;
 
         /// The maximum number of Realm files that will be kept open
         /// concurrently by this client. The client keeps a cache of open Realm
@@ -73,7 +134,8 @@ public:
         /// specified, the client will use an instance of util::StderrLogger
         /// with the log level threshold set to util::Logger::Level::info. The
         /// client does not require a thread-safe logger, and it guarantees that
-        /// all logging happens on behalf of the thread that executes run().
+        /// all logging happens either on behalf of the constructor or on behalf
+        /// of the invocation of run().
         util::Logger* logger = nullptr;
 
         /// Use ports 80 and 443 by default instead of 7800 and 7801
@@ -87,9 +149,9 @@ public:
         /// Create a separate connection for each session. For testing purposes
         /// only.
         ///
-        // FIXME: This setting is ignored for now, due to limitations in the
-        // load balancer.
-        bool one_connection_per_session = false;
+        /// FIXME: This setting needs to be true for now, due to limitations in
+        /// the load balancer.
+        bool one_connection_per_session = true;
 
         /// Do not access the local file system. Sessions will act as if
         /// initiated on behalf of an empty (or nonexisting) local Realm
@@ -104,14 +166,97 @@ public:
         /// \sa make_client_history(), TrivialChangesetCooker.
         std::shared_ptr<ClientHistory::ChangesetCooker> changeset_cooker;
 
-        /// The number of ms between periodic keep-alive pings.
-        uint_fast64_t ping_keepalive_period_ms = 600000;
+        /// The maximum number of milliseconds to allow for a connection to
+        /// become fully established. This includes the time to resolve the
+        /// network address, the TCP connect operation, the SSL handshake, and
+        /// the WebSocket handshake.
+        milliseconds_type connect_timeout = default_connect_timeout;
 
-        /// The number of ms to wait for keep-alive pongs.
-        uint_fast64_t pong_keepalive_timeout_ms = 300000;
+        /// The number of milliseconds to keep a connection open after all
+        /// sessions have been abandoned (or suspended by errors).
+        ///
+        /// The purpose of this linger time is to avoid close/reopen cycles
+        /// during short periods of time where there are no sessions interested
+        /// in using the connection.
+        ///
+        /// If the connection gets closed due to an error before the linger time
+        /// expires, the connection will be kept closed until there are sessions
+        /// willing to use it again.
+        milliseconds_type connection_linger_time = default_connection_linger_time;
 
-        /// The number of ms to wait for urgent pongs.
-        uint_fast64_t pong_urgent_timeout_ms = 5000;
+        /// The client will send PING messages periodically to allow the server
+        /// to detect dead connections (heartbeat). This parameter specifies the
+        /// time, in milliseconds, between these PING messages. When scheduling
+        /// the next PING message, the client will deduct a small random amount
+        /// from the specified value to help spread the load on the server from
+        /// many clients.
+        milliseconds_type ping_keepalive_period = default_ping_keepalive_period;
+
+        /// Whenever the server receives a PING message, it is supposed to
+        /// respond with a PONG messsage to allow the client to detect dead
+        /// connections (heartbeat). This parameter specifies the time, in
+        /// milliseconds, that the client will wait for the PONG response
+        /// message before it assumes that the connection is dead, and
+        /// terminates it.
+        milliseconds_type pong_keepalive_timeout = default_pong_keepalive_timeout;
+
+        /// The maximum amount of time, in milliseconds, since the loss of a
+        /// prior connection, for a new connection to be considered a *fast
+        /// reconnect*.
+        ///
+        /// In general, when a client establishes a connection to the server,
+        /// the uploading process remains suspended until the initial
+        /// downloading process completes (as if by invocation of
+        /// Session::async_wait_for_download_completion()). However, to avoid
+        /// unnecessary latency in change propagation during ongoing
+        /// application-level activity, if the new connection is established
+        /// less than a certain amount of time (`fast_reconnect_limit`) since
+        /// the client was previously connected to the server, then the
+        /// uploading process will be activated immediately.
+        ///
+        /// For now, the purpose of the general delaying of the activation of
+        /// the uploading process, is to increase the chance of multiple initial
+        /// transactions on the client-side, to be uploaded to, and processed by
+        /// the server as a single unit. In the longer run, the intention is
+        /// that the client should upload transformed (from reciprocal history),
+        /// rather than original changesets when applicable to reduce the need
+        /// for changeset to be transformed on both sides. The delaying of the
+        /// upload process will increase the number of cases where this is
+        /// possible.
+        ///
+        /// FIXME: Currently, the time between connections is not tracked across
+        /// sessions, so if the application closes its session, and opens a new
+        /// one immediately afterwards, the activation of the upload process
+        /// will be delayed unconditionally.
+        milliseconds_type fast_reconnect_limit = default_fast_reconnect_limit;
+
+        /// Set to true to completely disable delaying of the upload process. In
+        /// this mode, the upload process will be activated immediately, and the
+        /// value of `fast_reconnect_limit` is ignored.
+        ///
+        /// For testing purposes only.
+        bool disable_upload_activation_delay = false;
+
+        /// If enable_upload_log_compaction is true, every changeset will be
+        /// compacted before it is uploaded to the server. Compaction will
+        /// reduce the size of a changeset if the same field is set multiple
+        /// times or if newly created objects are deleted within the same
+        /// transaction. Log compaction increeses CPU usage and memory
+        /// consumption.
+        bool enable_upload_log_compaction = true;
+
+        /// Set the `TCP_NODELAY` option on all TCP/IP sockets. This disables
+        /// the Nagle algorithm. Disabling it, can in some cases be used to
+        /// decrease latencies, but possibly at the expense of scalability. Be
+        /// sure to research the subject before you enable this option.
+        bool tcp_no_delay = false;
+
+        /// The specified function will be called whenever a PONG message is
+        /// received on any connection. The round-trip time in milliseconds will
+        /// be pased to the function. The specified function will always be
+        /// called by the client's event loop thread, i.e., the thread that
+        /// calls `Client::run()`. This feature is mainly for testing purposes.
+        std::function<RoundtripTimeHandler> roundtrip_time_handler;
     };
 
     /// \throw util::EventLoop::Implementation::NotAvailable if no event loop
@@ -135,26 +280,55 @@ public:
     ///
     /// This corresponds to calling Session::cancel_reconnect_delay() on all
     /// bound sessions, but will also cancel reconnect delays applying to
-     // servers for which there are currently no bound sessions.
+    /// servers for which there are currently no bound sessions.
+    ///
+    /// Thread-safe.
     void cancel_reconnect_delay();
+
+    /// \brief Wait for session termination to complete.
+    ///
+    /// Wait for termination of all sessions whose termination was initiated
+    /// prior this call (the completion condition), or until the client's event
+    /// loop thread exits from Client::run(), whichever happens
+    /// first. Termination of a session can be initiated implicitly (e.g., via
+    /// destruction of the session object), or explicitly by Session::detach().
+    ///
+    /// Note: After session termination (when this function returns true) no
+    /// session specific callback function can be called or continue to execute,
+    /// and the client is guaranteed to no longer have a Realm file open on
+    /// behalf of the terminated session.
+    ///
+    /// CAUTION: If run() returns while a wait operation is in progress, this
+    /// waiting function will return immediately, even if the completion
+    /// condition is not yet satisfied. The completion condition is guaranteed
+    /// to be satisfied only when these functions return true. If it returns
+    /// false, session specific callback functions may still be executing or get
+    /// called, and the associated Realm files may still not have been closed.
+    ///
+    /// If a new wait operation is initiated while another wait operation is in
+    /// progress by another thread, the waiting period of fist operation may, or
+    /// may not get extended. The application must not assume either.
+    ///
+    /// Note: Session termination does not imply that the client has received an
+    /// UNBOUND message from the server (see the protocol specification). This
+    /// may happen later.
+    ///
+    /// \return True only if the completion condition was satisfied. False if
+    /// the client's event loop thread exited from Client::run() in which case
+    /// the completion condition may, or may not have been satisfied.
+    ///
+    /// Note: These functions are fully thread-safe. That is, they may be called
+    /// by any thread, and by multiple threads concurrently.
+    bool wait_for_session_terminations_or_client_stopped();
+
+    /// Returns false if the specified URL is invalid.
+    bool decompose_server_url(const std::string& url, Protocol& protocol, std::string& address,
+                              port_type& port, std::string& path) const;
 
 private:
     class Impl;
     std::unique_ptr<Impl> m_impl;
     friend class Session;
-};
-
-
-/// Supported protocols:
-///
-///      Protocol    URL scheme     Default port
-///     -----------------------------------------------------------------------------------
-///      realm       "realm:"       7800 (80 if Client::Config::enable_default_port_hack)
-///      realm_ssl   "realms:"      7801 (443 if Client::Config::enable_default_port_hack)
-///
-enum class Protocol {
-    realm,
-    realm_ssl
 };
 
 
@@ -178,26 +352,46 @@ class BadServerUrl; // Exception
 /// execution of bind() starts, i.e., before bind() returns.
 ///
 /// At most one session is allowed to exist for a particular local Realm file
-/// (file system inode) at any point in time. Multiple objects may coexists, as
-/// long as bind() has been called on at most one of them. Additionally, two
-/// sessions are allowed to exist at different times, and with no overlap in
-/// time, as long as they are associated with the same client object, or with
-/// two different client objects that do not overlap in time. This means, in
-/// particular, that it is an error to create two nonoverlapping sessions for
-/// the same local Realm file, it they are associated with two different client
-/// objects that overlap in time. It is the responsibility of the application to
-/// ensure that these rules are adhered to. The consequences of a violation are
-/// unspecified.
+/// (file system inode) at any point in time. Multiple session objects may
+/// coexists for a single file, as long as bind() has been called on at most one
+/// of them. Additionally, two bound session objects for the same file are
+/// allowed to exist at different times, if they have no overlap in time (in
+/// their bound state), as long as they are associated with the same client
+/// object, or with two different client objects that do not overlap in
+/// time. This means, in particular, that it is an error to create two bound
+/// session objects for the same local Realm file, it they are associated with
+/// two different client objects that overlap in time, even if the session
+/// objects do not overlap in time (in their bound state). It is the
+/// responsibility of the application to ensure that these rules are adhered
+/// to. The consequences of a violation are unspecified.
 ///
 /// Thread-safety: It is safe for multiple threads to construct, use (with some
 /// exceptions), and destroy session objects concurrently, regardless of whether
 /// those session objects are associated with the same, or with different Client
 /// objects. Please note that some of the public member functions are fully
 /// thread-safe, while others are not.
+///
+/// Callback semantics: All session specific callback functions will be executed
+/// by the event loop thread, i.e., the thread that calls Client::run(). No
+/// callback function will be called before Session::bind() is called. Callback
+/// functions that are specified prior to calling bind() (e.g., any passed to
+/// set_progress_handler()) may start to execute before bind() returns, as long
+/// as some thread is executing Client::run(). Likewise, completion handlers,
+/// such as those passed to async_wait_for_sync_completion() may start to
+/// execute before the submitting function returns. All session specific
+/// callback functions (including completion handlers) are guaranteed to no
+/// longer be executing when session termination completes, and they are
+/// guaranteed to not be called after session termination completes. Termination
+/// is an event that completes asynchronously with respect to the application,
+/// but is initiated by calling detach(), or implicitely by destroying a session
+/// object. After having initiated one or more session terminations, the
+/// application can wait for those terminations to complete by calling
+/// Client::wait_for_session_terminations_or_client_stopped(). Since callback
+/// functinos are always executed by the event loop thread, they are also
+/// guaranteed to not be executing after Client::run() has returned.
 class Session {
 public:
     using port_type = util::network::Endpoint::port_type;
-    using version_type = _impl::History::version_type;
     using SyncTransactCallback = void(VersionID old_version, VersionID new_version);
     using ProgressHandler = void(std::uint_fast64_t downloaded_bytes,
                                  std::uint_fast64_t downloadable_bytes,
@@ -206,10 +400,154 @@ public:
                                  std::uint_fast64_t progress_version,
                                  std::uint_fast64_t snapshot_version);
     using WaitOperCompletionHandler = std::function<void(std::error_code)>;
+    using SSLVerifyCallback = bool(const std::string& server_address,
+                                   port_type server_port,
+                                   const char* pem_data,
+                                   size_t pem_size,
+                                   int preverify_ok,
+                                   int depth);
 
     class Config {
     public:
         Config() {}
+
+        /// server_address is the fully qualified host name, or IP address of
+        /// the server.
+        std::string server_address = "localhost";
+
+        /// server_port is the port at which the server listens. If server_port
+        /// is zero, the default port for the specified protocol is used. See \ref
+        /// Protocol for information on default ports.
+        port_type server_port = 0;
+
+        /// server_path is  the virtual path by which the server identifies the
+        /// Realm. This path must always be an absolute path, and must therefore
+        /// always contain a leading slash (`/`). Further more, each segment of the
+        /// virtual path must consist of one or more characters that are either
+        /// alpha-numeric or in (`_`, `-`, `.`), and each segment is not allowed to
+        /// equal `.` or `..`, and must not end with `.realm`, `.realm.lock`, or
+        /// `.realm.management`. These rules are necessary because the server
+        /// currently reserves the right to use the specified path as part of the
+        /// file system path of a Realm file. It is expected that these rules will
+        /// be significantly relaxed in the future by completely decoupling the
+        /// virtual paths from actual file system paths.
+        std::string server_path = "/";
+
+        /// The protocol used for communicating with the server. See \ref Protocol.
+        Protocol protocol = Protocol::realm;
+
+        /// url_prefix is a prefix that is prepended to the server_path
+        /// in the HTTP GET request that initiates a sync connection. The value
+        /// specified here must match with the server's expectation. Changing
+        /// the value of url_prefix should be matched with a corresponding
+        /// change of the server side proxy.
+        std::string url_prefix = "/realm-sync";
+
+        /// authorization_header_name is the name of the HTTP header containing
+        /// the Realm access token. The value of the HTTP header is
+        /// "Realm-Access-Token version=1 token=....".
+        /// authorization_header_name does not participate in session
+        /// multiplexing partitioning.
+        std::string authorization_header_name = "Authorization";
+
+        /// custom_http_headers is a map of custom HTTP headers. The keys of the map
+        /// are HTTP header names, and the values are the corresponding HTTP
+        /// header values.
+        /// If "Authorization" is used as a custom header name,
+        /// authorization_header_name must be set to anther value.
+        std::map<std::string, std::string> custom_http_headers;
+
+        /// Sessions can be multiplexed over the same TCP/SSL connection.
+        /// Sessions might share connection if they have identical server_address,
+        /// server_port, and protocol. multiplex_ident is a parameter that allows
+        /// finer control over session multiplexing. If two sessions have distinct
+        /// multiplex_ident, they will never share connection. The typical use of
+        /// multilex_ident is to give sessions with incompatible SSL requirements
+        /// distinct multiplex_idents.
+        /// multiplex_ident can be any string and the value has no meaning except
+        /// for partitioning the sessions.
+        std::string multiplex_ident;
+
+        /// verify_servers_ssl_certificate controls whether the server
+        /// certificate is verified for SSL connections. It should generally be
+        /// true in production.
+        bool verify_servers_ssl_certificate = true;
+
+        /// ssl_trust_certificate_path is the path of a trust/anchor
+        /// certificate used by the client to verify the server certificate.
+        /// ssl_trust_certificate_path is only used if the protocol is ssl and
+        /// verify_servers_ssl_certificate is true.
+        ///
+        /// A server certificate is verified by first checking that the
+        /// certificate has a valid signature chain back to a trust/anchor
+        /// certificate, and secondly checking that the server_address matches
+        /// a host name contained in the certificate. The host name of the
+        /// certificate is stored in either Common Name or the Alternative
+        /// Subject Name (DNS section).
+        ///
+        /// If ssl_trust_certificate_path is None (default), ssl_verify_callback
+        /// (see below) is used if set, and the default device trust/anchor
+        /// store is used otherwise.
+        Optional<std::string> ssl_trust_certificate_path;
+
+        /// If Client::Config::ssl_verify_callback is set, that function is called
+        /// to verify the certificate, unless verify_servers_ssl_certificate is
+        /// false.
+
+        /// ssl_verify_callback is used to implement custom SSL certificate
+        /// verification. it is only used if the protocol is SSL,
+        /// verify_servers_ssl_certificate is true and ssl_trust_certificate_path
+        /// is None.
+        ///
+        /// The signature of ssl_verify_callback is
+        ///
+        /// bool(const std::string& server_address,
+        ///      port_type server_port,
+        ///      const char* pem_data,
+        ///      size_t pem_size,
+        ///      int preverify_ok,
+        ///      int depth);
+        ///
+        /// server address and server_port is the address and port of the server
+        /// that a SSL connection is being established to. They are identical to
+        /// the server_address and server_port set in this config file and are
+        /// passed for convenience.
+        /// pem_data is the certificate of length pem_size in
+        /// the PEM format. preverify_ok is OpenSSL's preverification of the
+        /// certificate. preverify_ok is either 0, or 1. If preverify_ok is 1,
+        /// OpenSSL has accepted the certificate and it will generally be safe
+        /// to trust that certificate. depth represents the position of the
+        /// certificate in the certificate chain sent by the server. depth = 0
+        /// represents the actual server certificate that should contain the
+        /// host name(server address) of the server. The highest depth is the
+        /// root certificate.
+        /// The callback function will receive the certificates starting from
+        /// the root certificate and moving down the chain until it reaches the
+        /// server's own certificate with a host name. The depth of the last
+        /// certificate is 0. The depth of the first certificate is chain
+        /// length - 1.
+        ///
+        /// The return value of the callback function decides whether the
+        /// client accepts the certificate. If the return value is false, the
+        /// processing of the certificate chain is interrupted and the SSL
+        /// connection is rejected. If the return value is true, the verification
+        /// process continues. If the callback function returns true for all
+        /// presented certificates including the depth == 0 certificate, the
+        /// SSL connection is accepted.
+        ///
+        /// A recommended way of using the callback function is to return true
+        /// if preverify_ok = 1 and depth > 0,
+        /// always check the host name if depth = 0,
+        /// and use an independent verification step if preverify_ok = 0.
+        ///
+        /// Another possible way of using the callback is to collect all the
+        /// certificates until depth = 0, and present the entire chain for
+        /// independent verification.
+        std::function<SSLVerifyCallback> ssl_verify_callback;
+
+        /// signed_user_token is a cryptographically signed token describing the
+        /// identity and access rights of the current user.
+        std::string signed_user_token;
 
         /// If not null, overrides whatever is specified by
         /// Client::Config::changeset_cooker.
@@ -221,11 +559,8 @@ public:
         /// CAUTION: ChangesetCooker::cook_changeset() of the specified cooker
         /// may get called before the call to bind() returns, and it may get
         /// called (or continue to execute) after the session object is
-        /// destroyed. The application must specify an object for which that
-        /// function can safely be called, and continue to execute from the
-        /// point in time where bind() starts executing, and up until the point
-        /// in time where the last invocation of `client.run()` returns. Here,
-        /// `client` refers to the associated Client object.
+        /// destroyed. Please see "Callback semantics" section under Client for
+        /// more on this.
         ///
         /// \sa make_client_history(), TrivialChangesetCooker.
         std::shared_ptr<ClientHistory::ChangesetCooker> changeset_cooker;
@@ -244,9 +579,41 @@ public:
     /// file.
     Session(Client&, std::string realm_path, Config = {});
 
+    /// This leaves the right-hand side session object detached. See "Thread
+    /// safety" section under detach().
     Session(Session&&) noexcept;
 
+    /// Create a detached session object (see detach()).
+    Session() noexcept;
+
+    /// Implies detachment. See "Thread safety" section under detach().
     ~Session() noexcept;
+
+    /// Detach the object on the left-hand side, then "steal" the session from
+    /// the object on the right-hand side, if there is one. This leaves the
+    /// object on the right-hand side detached. See "Thread safety" section
+    /// under detach().
+    Session& operator=(Session&&) noexcept;
+
+    /// Detach this sesion object from the client object (Client). If the
+    /// session object is already detached, this function has no effect
+    /// (idempotency).
+    ///
+    /// Detachment initiates session termination, which is an event that takes
+    /// place shortly therafter in the context of the client's event loop
+    /// thread.
+    ///
+    /// A detached session object may be destroyed, move-assigned to, and moved
+    /// from. Apart from that, it is an error to call any function other than
+    /// detach() on a detached session object.
+    ///
+    /// Thread safety: Detachment is not a thread-safe operation. This means
+    /// that detach() may not be executed by two threads concurrently, and may
+    /// not execute concurrently with object destruction. Additionally,
+    /// detachment must not execute concurrently with a moving operation
+    /// involving the session object on the left or right-hand side. See move
+    /// constructor and assigment operator.
+    void detach() noexcept;
 
     /// \brief Set a function to be called when the local Realm has changed due
     /// to integration of a downloaded changeset.
@@ -268,13 +635,10 @@ public:
     /// it is called while another thread is executing any member function on
     /// the same Session object.
     ///
-    /// CAUTION: The specified callback function may be called before the call
-    /// to bind() returns, and it may be called (or continue to execute) after
-    /// the session object is destroyed. The application must pass a handler
-    /// that can be safely called, and can safely continue to execute from the
-    /// point in time where bind() starts executing, and up until the point in
-    /// time where the last invocation of `client.run()` returns. Here, `client`
-    /// refers to the associated Client object.
+    /// CAUTION: The specified callback function may get called before the call
+    /// to bind() returns, and it may get called (or continue to execute) after
+    /// the session object is destroyed. Please see "Callback semantics" section
+    /// under Session for more on this.
     void set_sync_transact_callback(std::function<SyncTransactCallback>);
 
     /// \brief Set a handler to monitor the state of download and upload
@@ -339,59 +703,71 @@ public:
     /// unless the session is interrupted before a message from the server has
     /// been received.
     ///
-    /// The handler is called on the event loop thread.
-    /// The handler is called after or during set_progress_handler(),
-    /// after bind(), after each DOWNLOAD message, and after each local
-    /// transaction (nonsync_transact_notify).
+    /// The handler is called on the event loop thread.The handler after bind(),
+    /// after each DOWNLOAD message, and after each local transaction
+    /// (nonsync_transact_notify).
     ///
     /// set_progress_handler() is not thread safe and it must be called before
     /// bind() is called. Subsequent calls to set_progress_handler() overwrite
     /// the previous calls. Typically, this function is called once per session.
     ///
-    /// The progress handler is also posted to the event loop during the
-    /// execution of set_progress_handler().
-    ///
-    /// CAUTION: The specified callback function may be called before the call
-    /// to set_progress_handler() returns, and it may be called
-    /// (or continue to execute) after the session object is destroyed.
-    /// The application must pass a handler that can be safely called, and can
-    /// execute from the point in time where set_progress_handler() is called,
-    /// and up until the point in time where the last invocation of
-    /// `client.run()` returns. Here, `client` refers to the associated
-    /// Client object.
+    /// CAUTION: The specified callback function may get called before the call
+    /// to bind() returns, and it may get called (or continue to execute) after
+    /// the session object is destroyed. Please see "Callback semantics" section
+    /// under Session for more on this.
     void set_progress_handler(std::function<ProgressHandler>);
 
-    /// \brief Signature of an error handler.
-    ///
-    /// \param ec The error code. For the list of errors reported by the server,
-    /// see \ref ProtocolError (or `protocol.md`). For the list of errors
-    /// corresponding with protocol violation that are detected by the client,
-    /// see Client::Error.
-    ///
-    /// \param is_fatal The error is of a kind that is likely to persist, and
-    /// cause all future reconnect attempts to fail. The client may choose to
-    /// try to reconnect again later, but if so, the waiting period will be
-    /// substantial.
-    ///
-    /// \param detailed_message The message associated with the error. It is
-    /// usually equal to `ec.message()`, but may also be a more specific message
-    /// (one that provides extra context). The purpose of this message is mostly
-    /// to aid debugging. For non-debugging purposes, `ec.message()` should
-    /// generally be considered sufficient.
-    ///
-    /// \sa set_error_handler().
-    using ErrorHandler = void(std::error_code ec, bool is_fatal,
-                              const std::string& detailed_message);
+    enum class ConnectionState { disconnected, connecting, connected };
 
-    /// \brief Set the error handler for this session.
+    /// \brief Information about an error causing a session to be temporarily
+    /// disconnected from the server.
     ///
-    /// Sets a function to be called when an error causes a connection
-    /// initiation attempt to fail, or an established connection to be broken.
+    /// In general, the connection will be automatically reestablished
+    /// later. Whether this happens quickly, generally depends on \ref
+    /// is_fatal. If \ref is_fatal is true, it means that the error is deemed to
+    /// be of a kind that is likely to persist, and cause all future reconnect
+    /// attempts to fail. In that case, if another attempt is made at
+    /// reconnecting, the delay will be substantial (at least an hour).
     ///
-    /// When a connection is established on behalf of multiple sessions, a
-    /// connection-level error will be reported to all those sessions. A
-    /// session-level error, on the other hand, will only be reported to the
-    /// affected session.
+    /// \ref error_code specifies the error that caused the connection to be
+    /// closed. For the list of errors reported by the server, see \ref
+    /// ProtocolError (or `protocol.md`). For the list of errors corresponding
+    /// to protocol violations that are detected by the client, see
+    /// Client::Error. The error may also be a system level error, or an error
+    /// from one of the potential intermediate protocol layers (SSL or
+    /// WebSocket).
+    ///
+    /// \ref detailed_message is the most detailed message available to describe
+    /// the error. It is generally equal to `error_code.message()`, but may also
+    /// be a more specific message (one that provides extra context). The
+    /// purpose of this message is mostly to aid in debugging. For non-debugging
+    /// purposes, `error_code.message()` should generally be considered
+    /// sufficient.
+    ///
+    /// \sa set_connection_state_change_listener().
+    struct ErrorInfo {
+        std::error_code error_code;
+        bool is_fatal;
+        const std::string& detailed_message;
+    };
+
+    using ConnectionStateChangeListener = void(ConnectionState, const ErrorInfo*);
+
+    /// \brief Install a connection state change listener.
+    ///
+    /// Sets a function to be called whenever the state of the underlying
+    /// network connection changes between "disconnected", "connecting", and
+    /// "connected". The initial state is always "disconnected". The next state
+    /// after "disconnected" is always "connecting". The next state after
+    /// "connecting" is either "connected" or "disconnected". The next state
+    /// after "connected" is always "disconnected". A switch to the
+    /// "disconnected" state only happens when an error occurs.
+    ///
+    /// Whenever the installed function is called, an ErrorInfo object is passed
+    /// when, and only when the passed state is ConnectionState::disconnected.
+    ///
+    /// When multiple sessions share a single connection, the state changes will
+    /// be reported for each session in turn.
     ///
     /// The callback function will always be called by the thread that executes
     /// the event loop (Client::run()), but not until bind() is called. If the
@@ -406,14 +782,17 @@ public:
     /// it is called while another thread is executing any member function on
     /// the same Session object.
     ///
-    /// CAUTION: The specified callback function may be called before the call
-    /// to bind() returns, and it may be called (or continue to execute) after
-    /// the session object is destroyed. The application must pass a handler
-    /// that can be safely called, and can safely continue to execute from the
-    /// point in time where bind() starts executing, and up until the point in
-    /// time where the last invocation of `client.run()` returns. Here, `client`
-    /// refers to the associated Client object.
+    /// CAUTION: The specified callback function may get called before the call
+    /// to bind() returns, and it may get called (or continue to execute) after
+    /// the session object is destroyed. Please see "Callback semantics" section
+    /// under Session for more on this.
+    void set_connection_state_change_listener(std::function<ConnectionStateChangeListener>);
+
+    //@{
+    /// Deprecated! Use set_connection_state_change_listener() instead.
+    using ErrorHandler = void(std::error_code, bool is_fatal, const std::string& detailed_message);
     void set_error_handler(std::function<ErrorHandler>);
+    //@}
 
     /// @{ \brief Bind this session to the specified server side Realm.
     ///
@@ -434,81 +813,55 @@ public:
     /// it is called while another thread is executing any member function on
     /// the same Session object.
     ///
-    /// \param server_url For example "realm://sync.realm.io/test". See \a
-    /// server_address, \a server_path, and \a server_port for information about
-    /// the individual components of the URL. See \ref Protocol for the list of
-    /// available URL schemes and the associated default ports. The 2-argument
-    /// version has exactly the same affect as the 5-argument version.
+    /// bind() binds this session to the specified server side Realm using the
+    /// parameters specified in the Session::Config object.
     ///
-    /// \param server_address The fully qualified host name, or IP address of
-    /// the server.
+    /// The two other forms of bind() are convenience functions.
+    /// void bind(std::string server_address, std::string server_path,
+    ///           std::string signed_user_token, port_type server_port = 0,
+    ///           Protocol protocol = Protocol::realm);
+    /// replaces the corresponding parameters from the Session::Config object
+    /// before the session is bound.
+    /// void bind(std::string server_url, std::string signed_user_token) parses
+    /// the \param server_url and replaces the parameters in the Session::Config object
+    /// before the session is bound.
     ///
-    /// \param server_path The virtual path by which the server identifies the
-    /// Realm. This path must always be an absolute path, and must therefore
-    /// always contain a leading slash (`/`). Further more, each segment of the
-    /// virtual path must consist of one or more characters that are either
-    /// alpha-numeric or in (`_`, `-`, `.`), and each segment is not allowed to
-    /// equal `.` or `..`, and must not end with `.realm`, `.realm.lock`, or
-    /// `.realm.management`. These rules are necessary because the server
-    /// currently reserves the right to use the specified path as part of the
-    /// file system path of a Realm file. It is expected that these rules will
-    /// be significantly relaxed in the future by completely decoupling the
-    /// virtual paths from actual file system paths.
-    ///
-    /// \param signed_user_token A cryptographically signed token describing the
-    /// identity and access rights of the current user. See \ref Protocol.
-    ///
-    /// \param server_port If zero, use the default port for the specified
-    /// protocol. See \ref Protocol for information on default ports.
-    ///
-    /// \param verify_servers_ssl_certificate controls whether the server
-    /// certificate is verified for SSL connections. It should generally be true
-    /// in production. The default value of verify_servers_ssl_certificate is
-    /// true.
-    ///
-    /// A server certificate is verified by first checking that the
-    /// certificate has a valid signature chain back to a trust/anchor certificate,
-    /// and secondly checking that the host name of the Realm URL matches
-    /// a host name contained in the certificate.
-    /// The host name of the certificate is stored in either Common Name or
-    /// the Alternative Subject Name (DNS section).
-    ///
-    /// From the point of view of OpenSSL, setting verify_servers_ssl_certificate
-    /// to false means calling `SSL_set_verify()` with `SSL_VERIFY_NONE`.
-    /// Setting verify_servers_ssl_certificate to true means calling `SSL_set_verify()`
-    /// with `SSL_VERIFY_PEER`, and setting the host name using the function
-    /// X509_VERIFY_PARAM_set1_host() (OpenSSL version 1.0.2 or newer).
-    /// For other platforms, an equivalent procedure is followed.
-    ///
-    /// \param ssl_trust_certificate_path is the path of a trust/anchor
-    /// certificate used by the client to verify the server certificate.
-    /// If ssl_trust_certificate_path is None (default), the default device
-    /// trust/anchor store is used.
-    ///
-    /// \param protocol See \ref Protocol.
+    /// \param server_url For example "realm://sync.realm.io/test". See
+    /// server_address, server_path, and server_port in Session::Config for information
+    /// about the individual components of the URL. See \ref Protocol for the list of
+    /// available URL schemes and the associated default ports.
     ///
     /// \throw BadServerUrl if the specified server URL is malformed.
-    void bind(std::string server_url, std::string signed_user_token,
-            bool verify_servers_ssl_certificate = true,
-            util::Optional<std::string> ssl_trust_certificate_path = util::none);
+    void bind();
+    void bind(std::string server_url, std::string signed_user_token);
     void bind(std::string server_address, std::string server_path,
-            std::string signed_user_token, port_type server_port = 0,
-            Protocol protocol = Protocol::realm,
-            bool verify_servers_ssl_certificate = true,
-            util::Optional<std::string> ssl_trust_certificate_path = util::none);
+              std::string signed_user_token, port_type server_port = 0,
+              Protocol protocol = Protocol::realm);
     /// @}
 
-    /// \brief Refresh the user token associated with this session.
+    /// \brief Refresh the access token associated with this session.
     ///
     /// This causes the REFRESH protocol message to be sent to the server. See
-    /// \ref Protocol.
+    /// \ref Protocol. It is an error to pass a token with a different user
+    /// identity than the token used to initiate the session.
     ///
-    /// In an on-going session a client may expect its access token to expire at
-    /// a certain time and schedule acquisition of a fresh access token (using a
-    /// refresh token or by other means) in due time to provide a better user
-    /// experience. Without refreshing the token, the client will be notified
-    /// that the session is terminated due to insufficient privileges and must
-    /// reacquire a fresh token, which is a potentially disruptive process.
+    /// In an on-going session the application may expect the access token to
+    /// expire at a certain time and schedule acquisition of a fresh access
+    /// token (using a refresh token or by other means) in due time to provide a
+    /// better user experience, and seamless connectivity to the server.
+    ///
+    /// If the application does not proactively refresh an expiring token, the
+    /// session will eventually be disconnected. The application can detect this
+    /// by monitoring the connection state
+    /// (set_connection_state_change_listener()), and check whether the error
+    /// code is `ProtocolError::token_expired`. Such a session can then be
+    /// revived by calling refresh() with a newly acquired access token.
+    ///
+    /// Due to protocol techicalities, a race condition exists that can cause a
+    /// session to become, and remain disconnected after a new access token has
+    /// been passed to refresh(). The application can work around this race
+    /// condition by detecting the `ProtocolError::token_expired` error, and
+    /// always initiate a token renewal in this case.
     ///
     /// It is an error to call this function before calling `Client::bind()`.
     ///
@@ -521,7 +874,7 @@ public:
     /// \brief Inform the synchronization agent about changes of local origin.
     ///
     /// This function must be called by the application after a transaction
-    /// performed on its behlaf, that is, after a transaction that is not
+    /// performed on its behalf, that is, after a transaction that is not
     /// performed to integrate a changeset that was downloaded from the server.
     ///
     /// It is an error to call this function before bind() has been called, and
@@ -548,8 +901,8 @@ public:
     /// i.e., prior to the invocation of async_wait_for_upload_completion() or
     /// async_wait_for_sync_completion(). Unannounced changesets may get picked
     /// up, but there is no guarantee that they will be, however, if a certain
-    /// changeset is announced, then all previous changesets are implicitely
-    /// announced. Also all preexisting changesets are implicitely announced
+    /// changeset is announced, then all previous changesets are implicitly
+    /// announced. Also all preexisting changesets are implicitly announced
     /// when the session is initiated.
     ///
     /// Download is considered complete when all non-empty changesets of remote
@@ -562,11 +915,12 @@ public:
     /// async_wait_for_sync_completion() therefore requires a full client <->
     /// server round-trip.
     ///
-    /// If a new wait operation is initiated while other wait operations are in
-    /// progress, the waiting period of operations in progress may, or may not
-    /// get extended. The client must not assume either. The client may assume,
-    /// however, that async_wait_for_upload_completion() will not affect the
-    /// waiting period of async_wait_for_download_completion(), and vice versa.
+    /// If a new wait operation is initiated while another wait operation is in
+    /// progress by another thread, the waiting period of first operation may,
+    /// or may not get extended. The application must not assume either. The
+    /// application may assume, however, that async_wait_for_upload_completion()
+    /// will not affect the waiting period of
+    /// async_wait_for_download_completion(), and vice versa.
     ///
     /// It is an error to call these functions before bind() has been called,
     /// and has returned.
@@ -586,15 +940,10 @@ public:
     /// loop thread is running, all completion handlers will be called
     /// regardless of whether the operations get canceled or not.
     ///
-    /// CAUTION: The specified completion handlers may be called before the
-    /// initiation function returns (e.g. before
-    /// async_wait_for_upload_completion() returns), and it may be called (or
-    /// continue to execute) after the session object is destroyed. The
-    /// application must pass a handler that can be safely called, and can
-    /// safely continue to execute from the point in time where the initiating
-    /// function starts executing, and up until the point in time where the last
-    /// invocation of `clint.run()` returns. Here, `client` refers to the
-    /// associated Client object.
+    /// CAUTION: The specified completion handlers may get called before the
+    /// call to the waiting function returns, and it may get called (or continue
+    /// to execute) after the session object is destroyed. Please see "Callback
+    /// semantics" section under Session for more on this.
     ///
     /// Note: These functions are fully thread-safe. That is, they may be called
     /// by any thread, and by multiple threads concurrently.
@@ -609,15 +958,25 @@ public:
     /// async_wait_for_upload_completion() and
     /// async_wait_for_download_completion() respectively. This means that they
     /// block the caller until the completion condition is satisfied, or the
-    /// client event loop is stopped (Client::stop()).
+    /// client's event loop thread exits from Client::run(), whichever happens
+    /// first.
     ///
     /// It is an error to call these functions before bind() has been called,
     /// and has returned.
     ///
+    /// CAUTION: If Client::run() returns while a wait operation is in progress,
+    /// these waiting functions return immediately, even if the completion
+    /// condition is not yet satisfied. The completion condition is guaranteed
+    /// to be satisfied only when these functions return true.
+    ///
+    /// \return True only if the completion condition was satisfied. False if
+    /// the client's event loop thread exited from Client::run() in which case
+    /// the completion condition may, or may not have been satisfied.
+    ///
     /// Note: These functions are fully thread-safe. That is, they may be called
     /// by any thread, and by multiple threads concurrently.
-    void wait_for_upload_complete_or_client_stopped();
-    void wait_for_download_complete_or_client_stopped();
+    bool wait_for_upload_complete_or_client_stopped();
+    bool wait_for_download_complete_or_client_stopped();
     /// @}
 
     /// \brief Cancel the current or next reconnect delay for the server
@@ -643,10 +1002,14 @@ public:
     /// thread, and by multiple threads concurrently.
     void cancel_reconnect_delay();
 
+    /// \brief Change address of server for this session.
+    void override_server(std::string address, port_type);
+
 private:
     class Impl;
-    Impl* m_impl;
+    Impl* m_impl = nullptr;
 
+    void abandon() noexcept;
     void async_wait_for(bool upload_completion, bool download_completion,
                         WaitOperCompletionHandler);
 };
@@ -656,7 +1019,8 @@ private:
 ///
 /// These errors will terminate the network connection (disconnect all sessions
 /// associated with the affected connection), and the error will be reported to
-/// the application via the error handlers of the affected sessions.
+/// the application via the connection state change listeners of the affected
+/// sessions.
 enum class Client::Error {
     connection_closed           = 100, ///< Connection closed (no error)
     unknown_message             = 101, ///< Unknown type of input message
@@ -664,7 +1028,7 @@ enum class Client::Error {
     limits_exceeded             = 103, ///< Limits exceeded in input message
     bad_session_ident           = 104, ///< Bad session identifier in input message
     bad_message_order           = 105, ///< Bad input message order
-    bad_file_ident_pair         = 106, ///< Bad file identifier pair (ALLOC)
+    bad_client_file_ident       = 106, ///< Bad client file identifier (IDENT)
     bad_progress                = 107, ///< Bad progress information (DOWNLOAD)
     bad_changeset_header_syntax = 108, ///< Bad syntax in changeset header (DOWNLOAD)
     bad_changeset_size          = 109, ///< Bad changeset size in changeset header (DOWNLOAD)
@@ -675,6 +1039,12 @@ enum class Client::Error {
     bad_error_code              = 114, ///< Bad error code (ERROR),
     bad_compression             = 115, ///< Bad compression (DOWNLOAD)
     bad_client_version          = 116, ///< Bad last integrated client version in changeset header (DOWNLOAD)
+    ssl_server_cert_rejected    = 117, ///< SSL server certificate rejected
+    pong_timeout                = 118, ///< Timeout on reception of PONG respone message
+    bad_client_file_ident_salt  = 119, ///< Bad client file identifier salt (IDENT)
+    bad_file_ident              = 120, ///< Bad file identifier (ALLOC)
+    connect_timeout             = 121, ///< Sync connection was not fully established in time
+    bad_timestamp               = 122, ///< Bad timestamp (PONG)
 };
 
 const std::error_category& client_error_category() noexcept;
@@ -706,6 +1076,53 @@ public:
         return "Bad server URL";
     }
 };
+
+inline Session::Session(Session&& sess) noexcept:
+    m_impl{sess.m_impl}
+{
+    sess.m_impl = nullptr;
+}
+
+inline Session::Session() noexcept
+{
+}
+
+inline Session::~Session() noexcept
+{
+    if (m_impl)
+        abandon();
+}
+
+inline Session& Session::operator=(Session&& sess) noexcept
+{
+    if (m_impl)
+        abandon();
+    m_impl = sess.m_impl;
+    sess.m_impl = nullptr;
+    return *this;
+}
+
+inline void Session::detach() noexcept
+{
+    if (m_impl)
+        abandon();
+    m_impl = nullptr;
+}
+
+inline void Session::set_error_handler(std::function<ErrorHandler> handler)
+{
+    auto handler_2 = [handler=std::move(handler)](ConnectionState state,
+                                                  const ErrorInfo* error_info) {
+        if (state != ConnectionState::disconnected)
+            return;
+        REALM_ASSERT(error_info);
+        std::error_code ec = error_info->error_code;
+        bool is_fatal = error_info->is_fatal;
+        const std::string& detailed_message = error_info->detailed_message;
+        handler(ec, is_fatal, detailed_message); // Throws
+    };
+    set_connection_state_change_listener(std::move(handler_2)); // Throws
+}
 
 inline void Session::async_wait_for_sync_completion(WaitOperCompletionHandler handler)
 {

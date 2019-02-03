@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/ZekeSnider/Jared.svg?branch=master)](https://travis-ci.org/ZekeSnider/Jared.svg?branch=master)
+
 <a name='Jared'/>
 
 # Jared - A Chat Bot for iMessage

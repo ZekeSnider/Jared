@@ -19,12 +19,27 @@
 import Foundation
 import Realm
 
+#if BUILDING_REALM_SWIFT_TESTS
+import RealmSwift
+#endif
+
 // MARK: Internal Helpers
 
 // Swift 3.1 provides fixits for some of our uses of unsafeBitCast
 // to use unsafeDowncast instead, but the bitcast is required.
 internal func noWarnUnsafeBitCast<T, U>(_ x: T, to type: U.Type) -> U {
     return unsafeBitCast(x, to: type)
+}
+
+/// Given a list of `Any`-typed varargs, unwrap any optionals and
+/// replace them with the underlying value or NSNull.
+internal func unwrapOptionals(in varargs: [Any]) -> [Any] {
+    return varargs.map { arg in
+        if let someArg = arg as Any? {
+            return someArg
+        }
+        return NSNull()
+    }
 }
 
 internal func notFoundToNil(index: UInt) -> Int? {
@@ -51,6 +66,13 @@ internal func gsub(pattern: String, template: String, string: String, error: NSE
                                            withTemplate: template)
 }
 
+internal func cast<U, V>(_ value: U, to: V.Type) -> V {
+    if let v = value as? V {
+        return v
+    }
+    return unsafeBitCast(value, to: to)
+}
+
 extension Object {
     // Must *only* be used to call Realm Objective-C APIs that are exposed on `RLMObject`
     // but actually operate on `RLMObjectBase`. Do not expose cast value to user.
@@ -61,9 +83,19 @@ extension Object {
 
 // MARK: CustomObjectiveCBridgeable
 
+fileprivate extension SyncSubscription {
+    fileprivate convenience init(_ rlmSubscription: Any) {
+        self.init(RLMCastToSyncSubscription(rlmSubscription as AnyObject))
+    }
+}
+
 internal func dynamicBridgeCast<T>(fromObjectiveC x: Any) -> T {
-    if let BridgeableType = T.self as? CustomObjectiveCBridgeable.Type {
-        return BridgeableType.bridging(objCValue: x) as! T
+    if T.self == DynamicObject.self {
+        return unsafeBitCast(x as AnyObject, to: T.self)
+    } else if let bridgeableType = T.self as? CustomObjectiveCBridgeable.Type {
+        return bridgeableType.bridging(objCValue: x) as! T
+    } else if T.self == SyncSubscription<Object>.self {
+        return SyncSubscription<Object>(x) as! T
     } else {
         return x as! T
     }
@@ -136,7 +168,7 @@ extension Optional: CustomObjectiveCBridgeable {
     }
     var objCValue: Any {
         if let value = self {
-            return value
+            return dynamicBridgeCast(fromSwift: value)
         } else {
             return NSNull()
         }

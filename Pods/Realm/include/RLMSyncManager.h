@@ -76,22 +76,20 @@ typedef void(^RLMSyncErrorReportingBlock)(NSError *, RLMSyncSession * _Nullable)
 @property (nullable, nonatomic, copy) RLMSyncErrorReportingBlock errorHandler;
 
 /**
- A reverse-DNS string uniquely identifying this application. In most cases this is automatically set by the SDK, and
- does not have to be explicitly configured.
+ A reverse-DNS string uniquely identifying this application. In most cases this
+ is automatically set by the SDK, and does not have to be explicitly configured.
  */
 @property (nonatomic, copy) NSString *appID;
 
 /**
- Whether SSL certificate validation should be disabled.
- 
- Once this value is set (either way), it will be used as the default value for SSL
- validation when initializing new sync configuration values. A given configuration's
- SSL validation setting can still be overriden from the global default by setting it
- explicitly.
+ A string identifying this application which is included in the User-Agent
+ header of sync connections. By default, this will be the application's bundle
+ identifier.
 
- @warning NEVER disable certificate validation for clients and servers in production.
+ This property must be set prior to opening a synchronized Realm for the first
+ time. Any modifications made after opening a Realm will be ignored.
  */
-@property (nonatomic) BOOL disableSSLValidation __deprecated_msg("Set `enableSSLValidation` on individual configurations instead.");
+@property (nonatomic, copy) NSString *userAgent;
 
 /**
  The logging threshold which newly opened synced Realms will use. Defaults to
@@ -103,6 +101,42 @@ typedef void(^RLMSyncErrorReportingBlock)(NSError *, RLMSyncSession * _Nullable)
           opening any synced Realm will do nothing.
  */
 @property (nonatomic) RLMSyncLogLevel logLevel;
+
+/**
+ The name of the HTTP header to send authorization data in when making requests to a Realm Object Server which has
+ been configured to expect a custom authorization header.
+ */
+@property (nullable, nonatomic, copy) NSString *authorizationHeaderName;
+
+/**
+ Extra HTTP headers to append to every request to a Realm Object Server.
+ */
+@property (nullable, nonatomic, copy) NSDictionary<NSString *, NSString *> *customRequestHeaders;
+
+/**
+ A map of hostname to file URL for pinned certificates to use for HTTPS requests.
+
+ When initiating a HTTPS connection to a server, if this dictionary contains an
+ entry for the server's hostname, only the certificates stored in the file (or
+ any certificates signed by it, if the file contains a CA cert) will be accepted
+ when initiating a connection to a server. This prevents certain certain kinds
+ of man-in-the-middle (MITM) attacks, and can also be used to trust a self-signed
+ certificate which would otherwise be untrusted.
+
+ On macOS, the certificate files may be in any of the formats supported by
+ SecItemImport(), including PEM and .cer (see SecExternalFormat for a complete
+ list of possible formats). On iOS and other platforms, only DER .cer files are
+ supported.
+
+ For example, to pin example.com to a .cer file included in your bundle:
+
+ <pre>
+ RLMSyncManager.sharedManager.pinnedCertificatePaths = @{
+    @"example.com": [NSBundle.mainBundle pathForResource:@"example.com" ofType:@"cer"]
+ };
+ </pre>
+ */
+@property (nullable, nonatomic, copy) NSDictionary<NSString *, NSURL *> *pinnedCertificatePaths;
 
 /// The sole instance of the singleton.
 + (instancetype)sharedManager NS_REFINED_FOR_SWIFT;

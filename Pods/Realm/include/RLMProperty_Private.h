@@ -24,7 +24,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-BOOL RLMPropertyTypeIsNullable(RLMPropertyType propertyType);
 BOOL RLMPropertyTypeIsComputed(RLMPropertyType propertyType);
 FOUNDATION_EXTERN void RLMValidateSwiftPropertyName(NSString *name);
 
@@ -49,8 +48,6 @@ static inline NSString *RLMTypeToString(RLMPropertyType type) {
             return @"any";
         case RLMPropertyTypeObject:
             return @"object";
-        case RLMPropertyTypeArray:
-            return @"array";
         case RLMPropertyTypeLinkingObjects:
             return @"linking objects";
     }
@@ -76,8 +73,7 @@ static inline NSString *RLMTypeToString(RLMPropertyType type) {
                                  instance:(RLMObjectBase *)objectInstance;
 
 - (instancetype)initSwiftListPropertyWithName:(NSString *)name
-                                         ivar:(Ivar)ivar
-                              objectClassName:(nullable NSString *)objectClassName;
+                                     instance:(id)object;
 
 - (instancetype)initSwiftOptionalPropertyWithName:(NSString *)name
                                           indexed:(BOOL)indexed
@@ -97,6 +93,7 @@ static inline NSString *RLMTypeToString(RLMPropertyType type) {
 @property (nonatomic, copy, nullable) NSString *objectClassName;
 
 // private properties
+@property (nonatomic, readwrite) NSString *columnName;
 @property (nonatomic, assign) NSUInteger index;
 @property (nonatomic, assign) BOOL isPrimary;
 @property (nonatomic, assign) Ivar swiftIvar;
@@ -116,11 +113,11 @@ static inline NSString *RLMTypeToString(RLMPropertyType type) {
  This method is useful only in specialized circumstances, for example, in conjunction with
  +[RLMObjectSchema initWithClassName:objectClass:properties:]. If you are simply building an
  app on Realm, it is not recommened to use this method.
- 
+
  Initialize an RLMProperty
- 
+
  @warning This method is useful only in specialized circumstances.
- 
+
  @param name            The property name.
  @param type            The property type.
  @param objectClassName The object type used for Object and Array types.

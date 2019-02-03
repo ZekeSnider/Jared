@@ -21,7 +21,7 @@
 
 #include "object_accessor.hpp"
 
-#include "util/any.hpp"
+#include <realm/util/any.hpp>
 
 namespace realm {
 using AnyDict = std::map<std::string, util::Any>;
@@ -38,7 +38,7 @@ public:
     // (i.e. prop.type will always be Object or Array).
     CppContext(CppContext& c, Property const& prop)
     : realm(c.realm)
-    , object_schema(&*realm->schema().find(prop.object_type))
+    , object_schema(prop.type == PropertyType::Object ? &*realm->schema().find(prop.object_type) : c.object_schema)
     { }
 
     CppContext() = default;
@@ -55,11 +55,11 @@ public:
     // property and its index within the ObjectScehma's persisted_properties
     // array.
     util::Optional<util::Any> value_for_property(util::Any& dict,
-                                                 std::string const& prop_name,
+                                                 const Property& prop,
                                                  size_t /* property_index */) const
     {
         auto const& v = any_cast<AnyDict&>(dict);
-        auto it = v.find(prop_name);
+        auto it = v.find(prop.name);
         return it == v.end() ? util::none : util::make_optional(it->second);
     }
 
@@ -70,7 +70,7 @@ public:
     // This implementation does not support default values; see the default
     // value tests for an example of one which does.
     util::Optional<util::Any>
-    default_value_for_property(ObjectSchema const&, std::string const&) const
+    default_value_for_property(ObjectSchema const&, Property const&) const
     {
         return util::none;
     }
@@ -80,6 +80,14 @@ public:
     void enumerate_list(util::Any& value, Func&& fn) {
         for (auto&& v : any_cast<AnyVector&>(value))
             fn(v);
+    }
+
+    // Determine if `value` boxes the same List as `list`
+    bool is_same_list(List const& list, util::Any const& value)
+    {
+        if (auto list2 = any_cast<List>(&value))
+            return list == *list2;
+        return false;
     }
 
     // Convert from core types to the boxed type
@@ -93,6 +101,10 @@ public:
     util::Any box(double v) const { return v; }
     util::Any box(float v) const { return v; }
     util::Any box(int64_t v) const { return v; }
+    util::Any box(util::Optional<bool> v) const { return v; }
+    util::Any box(util::Optional<double> v) const { return v; }
+    util::Any box(util::Optional<float> v) const { return v; }
+    util::Any box(util::Optional<int64_t> v) const { return v; }
     util::Any box(RowExpr) const;
 
     // Any properties are only supported by the Cocoa binding to enable reading
@@ -110,8 +122,12 @@ public:
     // true then `unbox()` should create a new object in the context's Realm
     // using the provided value. If `update` is true then upsert semantics
     // should be used for this.
+    // If `update_only_diff` is true, only properties that are different from
+    // already existing properties should be updated. If `create` and `update_only_diff`
+    // is true, `current_row` may hold a reference to the object that should
+    // be compared against.
     template<typename T>
-    T unbox(util::Any& v, bool /*create*/= false, bool /*update*/= false) const { return any_cast<T>(v); }
+    T unbox(util::Any& v, bool /*create*/= false, bool /*update*/= false, bool /*update_only_diff*/ = false, size_t /*current_row*/ = realm::npos) const { return any_cast<T>(v); }
 
     bool is_null(util::Any const& v) const noexcept { return !v.has_value(); }
     util::Any null_value() const noexcept { return {}; }
@@ -143,7 +159,7 @@ inline util::Any CppContext::box(RowExpr row) const
 }
 
 template<>
-inline StringData CppContext::unbox(util::Any& v, bool, bool) const
+inline StringData CppContext::unbox(util::Any& v, bool, bool, bool, size_t) const
 {
     if (!v.has_value())
         return StringData();
@@ -152,7 +168,7 @@ inline StringData CppContext::unbox(util::Any& v, bool, bool) const
 }
 
 template<>
-inline BinaryData CppContext::unbox(util::Any& v, bool, bool) const
+inline BinaryData CppContext::unbox(util::Any& v, bool, bool, bool, size_t) const
 {
     if (!v.has_value())
         return BinaryData();
@@ -161,7 +177,7 @@ inline BinaryData CppContext::unbox(util::Any& v, bool, bool) const
 }
 
 template<>
-inline RowExpr CppContext::unbox(util::Any& v, bool create, bool update) const
+inline RowExpr CppContext::unbox(util::Any& v, bool create, bool update, bool update_only_diff, size_t current_row) const
 {
     if (auto object = any_cast<Object>(&v))
         return object->row();
@@ -171,35 +187,35 @@ inline RowExpr CppContext::unbox(util::Any& v, bool create, bool update) const
         return RowExpr();
 
     REALM_ASSERT(object_schema);
-    return Object::create(const_cast<CppContext&>(*this), realm, *object_schema, v, update).row();
+    return Object::create(const_cast<CppContext&>(*this), realm, *object_schema, v, update, update_only_diff, current_row).row();
 }
 
 template<>
-inline util::Optional<bool> CppContext::unbox(util::Any& v, bool, bool) const
+inline util::Optional<bool> CppContext::unbox(util::Any& v, bool, bool, bool, size_t) const
 {
     return v.has_value() ? util::make_optional(unbox<bool>(v)) : util::none;
 }
 
 template<>
-inline util::Optional<int64_t> CppContext::unbox(util::Any& v, bool, bool) const
+inline util::Optional<int64_t> CppContext::unbox(util::Any& v, bool, bool, bool, size_t) const
 {
     return v.has_value() ? util::make_optional(unbox<int64_t>(v)) : util::none;
 }
 
 template<>
-inline util::Optional<double> CppContext::unbox(util::Any& v, bool, bool) const
+inline util::Optional<double> CppContext::unbox(util::Any& v, bool, bool, bool, size_t) const
 {
     return v.has_value() ? util::make_optional(unbox<double>(v)) : util::none;
 }
 
 template<>
-inline util::Optional<float> CppContext::unbox(util::Any& v, bool, bool) const
+inline util::Optional<float> CppContext::unbox(util::Any& v, bool, bool, bool, size_t) const
 {
     return v.has_value() ? util::make_optional(unbox<float>(v)) : util::none;
 }
 
 template<>
-inline Mixed CppContext::unbox(util::Any&, bool, bool) const
+inline Mixed CppContext::unbox(util::Any&, bool, bool, bool, size_t) const
 {
     throw std::logic_error("'Any' type is unsupported");
 }

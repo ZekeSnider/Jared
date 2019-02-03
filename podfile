@@ -10,6 +10,6 @@ post_install do |installer|
   end
 end
 
-target "JaredUI" do
+target "Jared" do
 	pod 'RealmSwift'
 end

@@ -20,45 +20,52 @@
 
 #import "RLMSyncUtil_Private.h"
 
-/**
- An enum describing all possible endpoints on the Realm Object Server.
- */
-typedef NS_ENUM(NSUInteger, RLMServerEndpoint) {
-    RLMServerEndpointAuth,
-    RLMServerEndpointLogout,
-    RLMServerEndpointAddCredentials,
-    RLMServerEndpointRemoveCredentials,
-    RLMServerEndpointChangePassword,
-};
+NS_ASSUME_NONNULL_BEGIN
+
+@interface RLMNetworkRequestOptions : NSObject
+@property (nonatomic, copy, nullable) NSString *authorizationHeaderName;
+@property (nonatomic, copy, nullable) NSDictionary<NSString *, NSString *> *customHeaders;
+@property (nullable, nonatomic, copy) NSDictionary<NSString *, NSURL *> *pinnedCertificatePaths;
+@end
+
+/// An abstract class representing a server endpoint.
+@interface RLMSyncServerEndpoint : NSObject RLM_SYNC_UNINITIALIZABLE
++ (instancetype)endpoint;
+
++ (void)sendRequestToServer:(NSURL *)serverURL
+                       JSON:(NSDictionary *)jsonDictionary
+                    options:(nullable RLMNetworkRequestOptions *)options
+                 completion:(void (^)(NSError *))completionBlock;
+@end
+
+/// The authentication endpoint.
+@interface RLMSyncAuthEndpoint : RLMSyncServerEndpoint RLM_SYNC_UNINITIALIZABLE
+@end
+
+/// The password change endpoint.
+@interface RLMSyncChangePasswordEndpoint : RLMSyncServerEndpoint RLM_SYNC_UNINITIALIZABLE
+@end
+
+@interface RLMSyncUpdateAccountEndpoint : RLMSyncServerEndpoint RLM_SYNC_UNINITIALIZABLE
+@end
+
+/// The get user info endpoint.
+@interface RLMSyncGetUserInfoEndpoint : RLMSyncServerEndpoint RLM_SYNC_UNINITIALIZABLE
+@end
 
 /**
  A simple Realm Object Server network client that wraps `NSURLSession`.
  */
 @interface RLMNetworkClient : NSObject
 
-NS_ASSUME_NONNULL_BEGIN
+// Set the timeout in seconds for requests which do not take an explicit timeout.
++ (void)setDefaultTimeout:(NSTimeInterval)timeout;
 
-+ (void)postRequestToEndpoint:(RLMServerEndpoint)endpoint
-                       server:(NSURL *)serverURL
-                         JSON:(NSDictionary *)jsonDictionary
-                   completion:(RLMSyncCompletionBlock)completionBlock;
-
-+ (void)postRequestToEndpoint:(RLMServerEndpoint)endpoint
++ (void)sendRequestToEndpoint:(RLMSyncServerEndpoint *)endpoint
                        server:(NSURL *)serverURL
                          JSON:(NSDictionary *)jsonDictionary
                       timeout:(NSTimeInterval)timeout
-                   completion:(RLMSyncCompletionBlock)completionBlock;
-
-/**
- Send some JSON data using the specified HTTP method (e.g. 'POST', 'PUT', etc.) to the authentication server,
- and asynchronously call a completion block with a JSON response and/or error.
- */
-
-+ (void)sendRequestToEndpoint:(RLMServerEndpoint)endpoint
-                   httpMethod:(NSString *)httpMethod
-                       server:(NSURL *)serverURL
-                         JSON:(NSDictionary *)jsonDictionary
-                      timeout:(NSTimeInterval)timeout
+                      options:(nullable RLMNetworkRequestOptions *)options
                    completion:(RLMSyncCompletionBlock)completionBlock;
 
 NS_ASSUME_NONNULL_END
