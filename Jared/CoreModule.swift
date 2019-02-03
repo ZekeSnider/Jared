@@ -61,52 +61,52 @@ class CoreModule: RoutingModule {
     
     
     func pingCall(incoming: Message) -> Void {
-        Send(NSLocalizedString("PongResponse"), to: incoming.RespondTo())
+        Jared.Send(NSLocalizedString("PongResponse"), to: incoming.RespondTo())
     }
     
     func barf(incoming: Message) -> Void {
-        Send(String(data: try! JSONEncoder().encode(incoming), encoding: .utf8) ?? "nil", to: incoming.RespondTo())
+        Jared.Send(String(data: try! JSONEncoder().encode(incoming), encoding: .utf8) ?? "nil", to: incoming.RespondTo())
     }
     
     func getWho(message: Message) -> Void {
         if message.sender.givenName != nil {
-            Send("Your name is \(message.sender.givenName!).", to: message.RespondTo())
+            Jared.Send("Your name is \(message.sender.givenName!).", to: message.RespondTo())
         }
         else {
-            Send("I don't know your name.", to: message.RespondTo())
+            Jared.Send("I don't know your name.", to: message.RespondTo())
         }
     }
     
     func thanksJared(message: Message) -> Void {
-        Send(NSLocalizedString("WelcomeResponse"), to: message.RespondTo())
+        Jared.Send(NSLocalizedString("WelcomeResponse"), to: message.RespondTo())
     }
     
     func getVersion(message: Message) -> Void {
-        Send(NSLocalizedString("versionResponse"), to: message.RespondTo())
+        Jared.Send(NSLocalizedString("versionResponse"), to: message.RespondTo())
     }
     
     var guessMin: Int? = 0
     
     func sendRepeat(message: Message) -> Void {
         guard let parameters = message.getTextParameters() else {
-            return Send("Inappropriate input type.", to: message.RespondTo())
+            return Jared.Send("Inappropriate input type.", to: message.RespondTo())
         }
         
         //Validating and parsing arguments
         guard let repeatNum: Int = Int(parameters[1]) else {
-            return Send("Wrong argument. The first argument must be the number of message you wish to send", to: message.RespondTo())
+            return Jared.Send("Wrong argument. The first argument must be the number of message you wish to send", to: message.RespondTo())
         }
         
         guard let delay = Int(parameters[2]) else {
-            return Send("Wrong argument. The second argument must be the delay of the messages you wish to send", to: message.RespondTo())
+            return Jared.Send("Wrong argument. The second argument must be the delay of the messages you wish to send", to: message.RespondTo())
         }
         
         guard var textToSend = parameters[safe: 3] else {
-            return Send("Wrong arguments. The third argument must be the message you wish to send.", to: message.RespondTo())
+            return Jared.Send("Wrong arguments. The third argument must be the message you wish to send.", to: message.RespondTo())
         }
         
         guard (currentSends[message.sender.handle] ?? 0) < MAXIMUM_CONCURRENT_SENDS else {
-            return Send("You can only have \(MAXIMUM_CONCURRENT_SENDS) send operations going at once.", to: message.RespondTo())
+            return Jared.Send("You can only have \(MAXIMUM_CONCURRENT_SENDS) send operations going at once.", to: message.RespondTo())
         }
         
         if (currentSends[message.sender.handle] == nil)
@@ -124,7 +124,7 @@ class CoreModule: RoutingModule {
         
         //Go through the repeat loop...
         for _ in 1...repeatNum {
-            Send(textToSend, to: message.RespondTo())
+            Jared.Send(textToSend, to: message.RespondTo())
             Thread.sleep(forTimeInterval: Double(delay))
         }
         
@@ -159,7 +159,7 @@ class CoreModule: RoutingModule {
                 if (nowDate - post.lastSendDate.timeIntervalSinceReferenceDate) > (Double(post.sendIntervalNumber) * intervalSeconds[post.sendIntervalTypeEnum]!) {
                     //Send the message and write to the database with the new lastSendDate
 //                    let sendRoom = Room(GUID: post.chatID, buddyName: "", buddyHandle: post.handle)
-//                    Send(post.text, toRoom: sendRoom)
+//                    Jared.Send(post.text, toRoom: sendRoom)
 //                    try! realm.write {
 //                        post.lastSendDate = Date()
 //                    }
@@ -183,11 +183,11 @@ class CoreModule: RoutingModule {
         // /schedule,delete,1
         // /schedule,list
         guard let parameters = message.getTextBody()?.components(separatedBy: ",") else {
-            return Send("Inappropriate input type", to:message.RespondTo())
+            return Jared.Send("Inappropriate input type", to:message.RespondTo())
         }
         
         guard parameters.count > 1 else {
-            return Send("More parameters required.", to: message.RespondTo())
+            return Jared.Send("More parameters required.", to: message.RespondTo())
         }
         
         let realm  = try! Realm()
@@ -195,19 +195,19 @@ class CoreModule: RoutingModule {
         switch parameters[1] {
         case "add":
             guard parameters.count > 5 else {
-                return Send("Incorrect number of parameters specified.", to: message.RespondTo())
+                return Jared.Send("Incorrect number of parameters specified.", to: message.RespondTo())
             }
             
             guard let sendIntervalNumber = Int(parameters[2]) else {
-                return Send("Send interval number must be an integer.", to: message.RespondTo())
+                return Jared.Send("Send interval number must be an integer.", to: message.RespondTo())
             }
             
             guard let sendIntervalType = IntervalType(rawValue: parameters[3]) else {
-                return Send("Send interval type must be a valid input (hour, day, week, month).", to: message.RespondTo())
+                return Jared.Send("Send interval type must be a valid input (hour, day, week, month).", to: message.RespondTo())
             }
             
             guard let sendTimes = Int(parameters[4]) else {
-                return Send("Send times must be an integer.", to: message.RespondTo())
+                return Jared.Send("Send times must be an integer.", to: message.RespondTo())
             }
             
             let sendMessage = parameters[5]
@@ -227,35 +227,35 @@ class CoreModule: RoutingModule {
                 realm.add(newPost)
             }
 
-            Send("Your post has been succesfully scheduled.", to: message.RespondTo())
+            Jared.Send("Your post has been succesfully scheduled.", to: message.RespondTo())
             break
         case "delete":
             guard parameters.count > 2 else {
-                return Send("The second parameter must be a valid id.", to: message.RespondTo())
+                return Jared.Send("The second parameter must be a valid id.", to: message.RespondTo())
             }
             
             guard let deleteID = Int(parameters[2]) else {
-                return Send("The delete ID must be an integer.", to: message.RespondTo())
+                return Jared.Send("The delete ID must be an integer.", to: message.RespondTo())
             }
             
             guard deleteID > 0 else {
-                return Send("The delete ID must be an positive integer.", to: message.RespondTo())
+                return Jared.Send("The delete ID must be an positive integer.", to: message.RespondTo())
             }
             
             let schedulePost = realm.objects(SchedulePost.self).filter("handle == %@", message.sender.handle)
             
             guard schedulePost.count >= deleteID  else {
-                return Send("The specified post ID is not valid.", to: message.RespondTo())
+                return Jared.Send("The specified post ID is not valid.", to: message.RespondTo())
             }
             
             guard schedulePost[deleteID - 1].handle == message.sender.handle else {
-                return Send("You do not have permission to delete this scheduled message.", to: message.RespondTo())
+                return Jared.Send("You do not have permission to delete this scheduled message.", to: message.RespondTo())
             }
             
             try! realm.write {
                 realm.delete(schedulePost[deleteID - 1])
             }
-            Send("The specified scheduled post has been deleted.", to: message.RespondTo())
+            Jared.Send("The specified scheduled post has been deleted.", to: message.RespondTo())
             
             break
         case "list":
@@ -268,26 +268,26 @@ class CoreModule: RoutingModule {
                 sendMessage += "\n\(iterator): Send a message every \(post.sendIntervalNumber) \(post.sendIntervalType)(s) \(post.sendNumberTimes) time(s), starting on \(post.startDate.description(with: Locale.current))."
                 iterator += 1
             }
-            Send(sendMessage, to: message.RespondTo())
+            Jared.Send(sendMessage, to: message.RespondTo())
             break
         default:
-            Send("Invalid schedule command type. Must be add, delete, or list", to: message.RespondTo())
+            Jared.Send("Invalid schedule command type. Must be add, delete, or list", to: message.RespondTo())
             break
         }
     }
     
     func changeName(message: Message) {
         guard let parsedMessage = message.getTextParameters() else {
-            return Send("Inappropriate input type", to:message.RespondTo())
+            return Jared.Send("Inappropriate input type", to:message.RespondTo())
         }
         
         if (parsedMessage.count == 1) {
-            return Send("Wrong arguments.", to: message.RespondTo())
+            return Jared.Send("Wrong arguments.", to: message.RespondTo())
         }
         
         
         guard (CNContactStore.authorizationStatus(for: CNEntityType.contacts) == .authorized) else {
-            return Send("Sorry, I do not have access to contacts.", to: message.RespondTo())
+            return Jared.Send("Sorry, I do not have access to contacts.", to: message.RespondTo())
         }
         let store = CNContactStore()
         
@@ -323,10 +323,10 @@ class CoreModule: RoutingModule {
             do {
                 try store.execute(saveRequest)
             } catch {
-               return Send("There was an error saving your contact..", to: message.RespondTo())
+               return Jared.Send("There was an error saving your contact..", to: message.RespondTo())
             }
             
-            Send("Ok, I'll call you \(parsedMessage[1]) from now on.", to: message.RespondTo())
+            Jared.Send("Ok, I'll call you \(parsedMessage[1]) from now on.", to: message.RespondTo())
         }
         //The contact already exists, modify the value
         else {
@@ -337,7 +337,7 @@ class CoreModule: RoutingModule {
             saveRequest.update(mutableContact)
             try! store.execute(saveRequest)
             
-            Send("Ok, I'll call you \(parsedMessage[1]) from now on.", to: message.RespondTo())
+            Jared.Send("Ok, I'll call you \(parsedMessage[1]) from now on.", to: message.RespondTo())
         }
     }
 }

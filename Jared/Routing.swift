@@ -36,7 +36,7 @@ struct MessageRouting {
                 try! filemanager.copyItem(at: (Bundle.main.resourceURL?.appendingPathComponent("config.json"))!, to: configPath)
             }
             
-            //Read the JSON conig file
+            //Read the JSON config file
             let jsonData = try! NSData(contentsOfFile: supportDir.appendingPathComponent("config.json").path, options: .mappedIfSafe)
             if let jsonResult = try! JSONSerialization.jsonObject(with: jsonData as Data, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String:AnyObject]
             {
@@ -61,49 +61,44 @@ struct MessageRouting {
         //Loop through all files in our plugin directory
         let filemanager = FileManager.default
         let files = filemanager.enumerator(at: pluginDir, includingPropertiesForKeys: [], options: [.skipsHiddenFiles, .skipsPackageDescendants], errorHandler: nil)
-        while let file = files?.nextObject() {
-            guard let currentURL = file as? URL
-                else {
-                    continue
-                }
-            
-            //Only unpackage bundles
-            guard currentURL.pathExtension == "bundle"
-                else {
-                    continue
-                }
-            
-            guard let myBundle = Bundle(url: currentURL)
-                else {
-                    continue
-                }
-
-            //Load it
-            loadBundle(myBundle)
+        
+        while let file = files?.nextObject() as? URL {
+            if let bundle = validateBundle(file) {
+                loadBundle(bundle)
+            }
         }
+    }
+    
+    private mutating func validateBundle(_ file: URL) -> Bundle? {
+        //Only unpackage bundles
+        guard file.pathExtension == "bundle" else {
+            return nil
+        }
+        
+        guard let myBundle = Bundle(url: file) else {
+            return nil
+        }
+        
+        return myBundle
     }
     
     mutating func loadBundle(_ myBundle: Bundle) {
         //Check version of the framework that this plugin is using
-        guard myBundle.infoDictionary?["JaredFrameworkVersion"] as? String == self.FrameworkVersion
-            else {
-                return
-            }
-        
-        //Cast the class to RoutingModule protocol
-        if let principleClass = myBundle.principalClass as? RoutingModule.Type
-        {
-            //Initialize it
-            let module: RoutingModule = principleClass.init()
-            bundles.append(myBundle)
-            
-            //Add it to our modules
-            modules.append(module)
-            
-        }
-        else {
+        guard myBundle.infoDictionary?["JaredFrameworkVersion"] as? String == self.FrameworkVersion else {
             return
         }
+        
+        //Cast the class to RoutingModule protocol
+        guard let principleClass = myBundle.principalClass as? RoutingModule.Type else {
+            return
+        }
+        
+        //Initialize it
+        let module: RoutingModule = principleClass.init()
+        bundles.append(myBundle)
+        
+        //Add it to our modules
+        modules.append(module)
     }
     
     mutating func reloadPlugins() {
@@ -157,7 +152,7 @@ struct MessageRouting {
                         documentation += "The developer of this route did not provide parameter documentation."
                     }
                     
-                    Send(documentation, to: recipient)
+                    Jared.Send(documentation, to: recipient)
                 }
             }
         }
@@ -189,7 +184,7 @@ struct MessageRouting {
             }
             documentation += "\n"
         }
-        Send(documentation, to: recipient)
+        Jared.Send(documentation, to: recipient)
     }
     
     mutating func route(message myMessage: Message) {
@@ -215,15 +210,15 @@ struct MessageRouting {
         }
         else if myLowercaseMessage == "/reload" {
             reloadPlugins()
-            Send("Successfully reloaded plugins.", to: myMessage.sender as! RecipientEntity)
+            Jared.Send("Successfully reloaded plugins.", to: myMessage.sender as! RecipientEntity)
         }
         else if myLowercaseMessage == "/enable" {
             defaults.set(false, forKey: "JaredIsDisabled")
-            Send("Jared has been re-enabled. To disable, type /disable", to: myMessage.sender as! RecipientEntity)
+            Jared.Send("Jared has been re-enabled. To disable, type /disable", to: myMessage.sender as! RecipientEntity)
         }
         else if myLowercaseMessage == "/disable" {
             defaults.set(true, forKey: "JaredIsDisabled")
-            Send("Jared has been disabled. Type /enable to re-enable.", to: myMessage.sender as! RecipientEntity)
+            Jared.Send("Jared has been disabled. Type /enable to re-enable.", to: myMessage.sender as! RecipientEntity)
         }
         else {
             RootLoop: for aModule in modules {

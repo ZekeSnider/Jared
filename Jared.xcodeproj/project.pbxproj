@@ -12,7 +12,7 @@
 		7F84B6221CC506790059A82B /* JaredFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F84B6211CC506790059A82B /* JaredFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7F84B6261CC506790059A82B /* JaredFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F84B61F1CC506790059A82B /* JaredFramework.framework */; };
 		7F84B6271CC506790059A82B /* JaredFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7F84B61F1CC506790059A82B /* JaredFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		7F84B62B1CC5069C0059A82B /* amain.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39EC1751CB01F55002C3161 /* amain.swift */; };
+		7F84B62B1CC5069C0059A82B /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39EC1751CB01F55002C3161 /* Message.swift */; };
 		7F84B62E1CC511B80059A82B /* CoreStrings.strings in Resources */ = {isa = PBXBuildFile; fileRef = B3BBA7CD1CB3259A00E1749C /* CoreStrings.strings */; };
 		7FE220ED1CB3C8340081CE23 /* podfile in Resources */ = {isa = PBXBuildFile; fileRef = 7FE220EC1CB3C8340081CE23 /* podfile */; };
 		7FF077EB1CBCFFCB008E33CB /* SendImage.scpt in Resources */ = {isa = PBXBuildFile; fileRef = 7FF077EA1CBCFFCB008E33CB /* SendImage.scpt */; };
@@ -35,6 +35,10 @@
 		B3BBA7D11CB3284A00E1749C /* CoreModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39EC17D1CB01FEF002C3161 /* CoreModule.swift */; };
 		B3EF1DA02206849000953DE7 /* WebHookManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3327DC522066427009DD882 /* WebHookManager.swift */; };
 		B3EF1DA4220687DD00953DE7 /* URLProtocolMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3EF1DA3220687DD00953DE7 /* URLProtocolMock.swift */; };
+		B3EF1DA62206DFEA00953DE7 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3EF1DA52206DFEA00953DE7 /* Route.swift */; };
+		B3EF1DAA2206E09B00953DE7 /* Jared.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3EF1DA92206E09B00953DE7 /* Jared.swift */; };
+		B3EF1DAC2206E17900953DE7 /* Entities.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3EF1DAB2206E17900953DE7 /* Entities.swift */; };
+		B3EF1DAE2206E19100953DE7 /* Bodies.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3EF1DAD2206E19100953DE7 /* Bodies.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,13 +111,17 @@
 		B37E82801FA85B170069E15D /* SendImageSingleBuddy.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = SendImageSingleBuddy.scpt; sourceTree = "<group>"; };
 		B37E82811FA85B210069E15D /* SendTextSingleBuddy.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = SendTextSingleBuddy.scpt; sourceTree = "<group>"; };
 		B39A65DF1CC1FB1B003E26B0 /* Routing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Routing.swift; sourceTree = "<group>"; };
-		B39EC1751CB01F55002C3161 /* amain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = amain.swift; path = ../Jared/amain.swift; sourceTree = "<group>"; };
+		B39EC1751CB01F55002C3161 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Message.swift; path = ../Jared/Message.swift; sourceTree = "<group>"; };
 		B39EC17D1CB01FEF002C3161 /* CoreModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreModule.swift; sourceTree = "<group>"; };
 		B39F2B381CB3BCA700C0D35C /* SendText.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = SendText.scpt; sourceTree = "<group>"; };
 		B3BBA7CC1CB3259A00E1749C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/CoreStrings.strings; sourceTree = "<group>"; };
 		B3BBA7CF1CB327C200E1749C /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
 		B3BBA7D01CB327C200E1749C /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/CoreStrings.strings; sourceTree = "<group>"; };
 		B3EF1DA3220687DD00953DE7 /* URLProtocolMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLProtocolMock.swift; sourceTree = "<group>"; };
+		B3EF1DA52206DFEA00953DE7 /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
+		B3EF1DA92206E09B00953DE7 /* Jared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Jared.swift; sourceTree = "<group>"; };
+		B3EF1DAB2206E17900953DE7 /* Entities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entities.swift; sourceTree = "<group>"; };
+		B3EF1DAD2206E19100953DE7 /* Bodies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bodies.swift; sourceTree = "<group>"; };
 		B85E2F9206C873C167385410 /* Pods-JaredUI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JaredUI.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JaredUI/Pods-JaredUI.debug.xcconfig"; sourceTree = "<group>"; };
 		C31CB7445EAF3431D6AA3FD4 /* Pods_JaredUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_JaredUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -171,7 +179,11 @@
 			isa = PBXGroup;
 			children = (
 				7F84B6211CC506790059A82B /* JaredFramework.h */,
-				B39EC1751CB01F55002C3161 /* amain.swift */,
+				B39EC1751CB01F55002C3161 /* Message.swift */,
+				B3EF1DAD2206E19100953DE7 /* Bodies.swift */,
+				B3EF1DAB2206E17900953DE7 /* Entities.swift */,
+				B3EF1DA92206E09B00953DE7 /* Jared.swift */,
+				B3EF1DA52206DFEA00953DE7 /* Route.swift */,
 				7F84B6231CC506790059A82B /* Info.plist */,
 			);
 			path = JaredFramework;
@@ -498,7 +510,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7F84B62B1CC5069C0059A82B /* amain.swift in Sources */,
+				B3EF1DAC2206E17900953DE7 /* Entities.swift in Sources */,
+				B3EF1DAE2206E19100953DE7 /* Bodies.swift in Sources */,
+				B3EF1DAA2206E09B00953DE7 /* Jared.swift in Sources */,
+				7F84B62B1CC5069C0059A82B /* Message.swift in Sources */,
+				B3EF1DA62206DFEA00953DE7 /* Route.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
