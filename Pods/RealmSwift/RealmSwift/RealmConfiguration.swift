@@ -20,6 +20,14 @@ import Foundation
 import Realm
 import Realm.Private
 
+#if !swift(>=4.1)
+fileprivate extension Sequence {
+    func compactMap<T>(_ fn: (Self.Iterator.Element) throws -> T?) rethrows -> [T] {
+        return try flatMap(fn)
+    }
+}
+#endif
+
 extension Realm {
     /**
      A `Configuration` instance describes the different options used to create an instance of a Realm.
@@ -195,7 +203,7 @@ extension Realm {
                 self.customSchema = newValue.map { RLMSchema(objectClasses: $0) }
             }
             get {
-                return self.customSchema.map { $0.objectSchema.map { $0.objectClass as! Object.Type } }
+                return self.customSchema.map { $0.objectSchema.compactMap { $0.objectClass as? Object.Type } }
             }
         }
 
@@ -223,8 +231,12 @@ extension Realm {
             configuration.schemaVersion = self.schemaVersion
             configuration.migrationBlock = self.migrationBlock.map { accessorMigrationBlock($0) }
             configuration.deleteRealmIfMigrationNeeded = self.deleteRealmIfMigrationNeeded
-            configuration.shouldCompactOnLaunch = self.shouldCompactOnLaunch.map(ObjectiveCSupport.convert)
-            configuration.customSchema = self.customSchema
+            if let shouldCompactOnLaunch = self.shouldCompactOnLaunch {
+                configuration.shouldCompactOnLaunch = ObjectiveCSupport.convert(object: shouldCompactOnLaunch)
+            } else {
+                configuration.shouldCompactOnLaunch = nil
+            }
+            configuration.setCustomSchemaWithoutCopying(self.customSchema)
             configuration.disableFormatUpgrade = self.disableFormatUpgrade
             return configuration
         }

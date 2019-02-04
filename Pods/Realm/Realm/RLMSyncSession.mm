@@ -18,12 +18,20 @@
 
 #import "RLMSyncSession_Private.hpp"
 
+#import "RLMRealm_Private.hpp"
 #import "RLMSyncConfiguration_Private.hpp"
 #import "RLMSyncUser_Private.hpp"
 #import "RLMSyncUtil_Private.hpp"
 #import "sync/sync_session.hpp"
 
 using namespace realm;
+
+@interface RLMSyncErrorActionToken () {
+@public
+    std::string _originalPath;
+    BOOL _isValid;
+}
+@end
 
 @interface RLMProgressNotificationToken() {
     uint64_t _token;
@@ -38,7 +46,7 @@ using namespace realm;
     // `-[RLMRealm commitWriteTransactionWithoutNotifying:]`.
 }
 
-- (void)stop {
+- (void)invalidate {
     if (auto session = _session.lock()) {
         session->unregister_progress_notifier(_token);
         _session.reset();
@@ -50,7 +58,7 @@ using namespace realm;
     if (_token != 0) {
         NSLog(@"RLMProgressNotificationToken released without unregistering a notification. "
               @"You must hold on to the RLMProgressNotificationToken and call "
-              @"-[RLMProgressNotificationToken stop] when you no longer wish to receive "
+              @"-[RLMProgressNotificationToken invalidate] when you no longer wish to receive "
               @"progress update notifications.");
     }
 }
@@ -72,6 +80,7 @@ using namespace realm;
 
 @interface RLMSyncSession ()
 @property (class, nonatomic, readonly) dispatch_queue_t notificationsQueue;
+@property (atomic, readwrite) RLMSyncConnectionState connectionState;
 @end
 
 @implementation RLMSyncSession
@@ -85,9 +94,23 @@ using namespace realm;
     return queue;
 }
 
-- (instancetype)initWithSyncSession:(std::shared_ptr<SyncSession>)session {
+static RLMSyncConnectionState convertConnectionState(SyncSession::ConnectionState state) {
+    switch (state) {
+        case SyncSession::ConnectionState::Disconnected: return RLMSyncConnectionStateDisconnected;
+        case SyncSession::ConnectionState::Connecting:   return RLMSyncConnectionStateConnecting;
+        case SyncSession::ConnectionState::Connected:    return RLMSyncConnectionStateConnected;
+    }
+}
+
+- (instancetype)initWithSyncSession:(std::shared_ptr<SyncSession> const&)session {
     if (self = [super init]) {
         _session = session;
+        _connectionState = convertConnectionState(session->connection_state());
+        // No need to save the token as RLMSyncSession always outlives the
+        // underlying SyncSession
+        session->register_connection_change_callback([=](auto, auto newState) {
+            self.connectionState = convertConnectionState(newState);
+        });
         return self;
     }
     return nil;
@@ -95,9 +118,7 @@ using namespace realm;
 
 - (RLMSyncConfiguration *)configuration {
     if (auto session = _session.lock()) {
-        if (session->state() != SyncSession::PublicState::Error) {
-            return [[RLMSyncConfiguration alloc] initWithRawConfig:session->config()];
-        }
+        return [[RLMSyncConfiguration alloc] initWithRawConfig:session->config()];
     }
     return nil;
 }
@@ -113,9 +134,7 @@ using namespace realm;
 
 - (RLMSyncUser *)parentUser {
     if (auto session = _session.lock()) {
-        if (session->state() != SyncSession::PublicState::Error) {
-            return [[RLMSyncUser alloc] initWithSyncUser:session->user()];
-        }
+        return [[RLMSyncUser alloc] initWithSyncUser:session->user()];
     }
     return nil;
 }
@@ -125,18 +144,25 @@ using namespace realm;
         if (session->state() == SyncSession::PublicState::Inactive) {
             return RLMSyncSessionStateInactive;
         }
-        if (session->state() != SyncSession::PublicState::Error) {
-            return RLMSyncSessionStateActive;
-        }
+        return RLMSyncSessionStateActive;
     }
     return RLMSyncSessionStateInvalid;
 }
 
+- (void)suspend {
+    if (auto session = _session.lock()) {
+        session->log_out();
+    }
+}
+
+- (void)resume {
+    if (auto session = _session.lock()) {
+        session->revive_if_needed();
+    }
+}
+
 - (BOOL)waitForUploadCompletionOnQueue:(dispatch_queue_t)queue callback:(void(^)(NSError *))callback {
     if (auto session = _session.lock()) {
-        if (session->state() == SyncSession::PublicState::Error) {
-            return NO;
-        }
         queue = queue ?: dispatch_get_main_queue();
         session->wait_for_upload_completion([=](std::error_code err) {
             NSError *error = (err == std::error_code{}) ? nil : make_sync_error(err);
@@ -151,9 +177,6 @@ using namespace realm;
 
 - (BOOL)waitForDownloadCompletionOnQueue:(dispatch_queue_t)queue callback:(void(^)(NSError *))callback {
     if (auto session = _session.lock()) {
-        if (session->state() == SyncSession::PublicState::Error) {
-            return NO;
-        }
         queue = queue ?: dispatch_get_main_queue();
         session->wait_for_download_completion([=](std::error_code err) {
             NSError *error = (err == std::error_code{}) ? nil : make_sync_error(err);
@@ -167,23 +190,54 @@ using namespace realm;
 }
 
 - (RLMProgressNotificationToken *)addProgressNotificationForDirection:(RLMSyncProgressDirection)direction
-                                                                 mode:(RLMSyncProgress)mode
+                                                                 mode:(RLMSyncProgressMode)mode
                                                                 block:(RLMProgressNotificationBlock)block {
     if (auto session = _session.lock()) {
-        if (session->state() == SyncSession::PublicState::Error) {
-            return nil;
-        }
         dispatch_queue_t queue = RLMSyncSession.notificationsQueue;
         auto notifier_direction = (direction == RLMSyncProgressDirectionUpload
                                    ? SyncSession::NotifierType::upload
                                    : SyncSession::NotifierType::download);
-        bool is_streaming = (mode == RLMSyncProgressReportIndefinitely);
+        bool is_streaming = (mode == RLMSyncProgressModeReportIndefinitely);
         uint64_t token = session->register_progress_notifier([=](uint64_t transferred, uint64_t transferrable) {
             dispatch_async(queue, ^{
                 block((NSUInteger)transferred, (NSUInteger)transferrable);
             });
         }, notifier_direction, is_streaming);
         return [[RLMProgressNotificationToken alloc] initWithTokenValue:token session:std::move(session)];
+    }
+    return nil;
+}
+
++ (void)immediatelyHandleError:(RLMSyncErrorActionToken *)token {
+    if (!token->_isValid) {
+        return;
+    }
+    token->_isValid = NO;
+    SyncManager::shared().immediately_run_file_actions(std::move(token->_originalPath));
+}
+
++ (nullable RLMSyncSession *)sessionForRealm:(RLMRealm *)realm {
+    auto& config = realm->_realm->config().sync_config;
+    if (!config) {
+        return nil;
+    }
+    if (auto session = config->user->session_for_on_disk_path(realm->_realm->config().path)) {
+        return [[RLMSyncSession alloc] initWithSyncSession:session];
+    }
+    return nil;
+}
+
+@end
+
+// MARK: - Error action token
+
+@implementation RLMSyncErrorActionToken
+
+- (instancetype)initWithOriginalPath:(std::string)originalPath {
+    if (self = [super init]) {
+        _isValid = YES;
+        _originalPath = std::move(originalPath);
+        return self;
     }
     return nil;
 }

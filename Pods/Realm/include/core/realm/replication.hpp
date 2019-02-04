@@ -29,7 +29,7 @@
 #include <realm/util/safe_int_ops.hpp>
 #include <realm/util/buffer.hpp>
 #include <realm/util/string_buffer.hpp>
-#include <realm/impl/continuous_transactions_history.hpp>
+#include <realm/impl/cont_transact_hist.hpp>
 #include <realm/impl/transact_log.hpp>
 
 namespace realm {
@@ -59,7 +59,7 @@ public:
     class Interrupted; // Exception
     class SimpleIndexTranslator;
 
-    virtual std::string get_database_path() = 0;
+    virtual std::string get_database_path() const = 0;
 
     /// Called during construction of the associated SharedGroup object.
     ///
@@ -394,6 +394,7 @@ public:
     {
     }
 
+    std::string get_database_path() const override;
 protected:
     typedef Replication::version_type version_type;
 
@@ -408,7 +409,6 @@ protected:
 
     BinaryData get_uncommitted_changes() const noexcept;
 
-    std::string get_database_path() override;
     void initialize(SharedGroup&) override;
     void do_initiate_transact(version_type, bool) override;
     version_type do_prepare_commit(version_type orig_version) override;

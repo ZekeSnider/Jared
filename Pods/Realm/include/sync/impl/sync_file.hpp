@@ -21,6 +21,10 @@
 
 #include <string>
 
+#include "sync/sync_user.hpp"
+
+#include <realm/util/optional.hpp>
+
 namespace realm {
 
 namespace util {
@@ -52,9 +56,6 @@ std::string create_timestamped_template(const std::string& prefix, int wildcard_
 /// Returns the path of the file.
 std::string reserve_unique_file_name(const std::string& path, const std::string& template_string);
 
-/// Remove a directory, including non-empty directories.
-void remove_nonempty_dir(const std::string& path);
-
 } // util
 
 class SyncFileManager {
@@ -62,16 +63,21 @@ public:
     SyncFileManager(std::string base_path) : m_base_path(std::move(base_path)) { }
 
     /// Return the user directory for a given user, creating it if it does not already exist.
-    std::string user_directory(const std::string& user_identity) const;
+    std::string user_directory(const std::string& local_identity) const;
 
     /// Remove the user directory for a given user.
-    void remove_user_directory(const std::string& user_identity) const;       // throws
+    void remove_user_directory(const std::string& local_identity) const;       // throws
+
+    /// Rename a user directory. Returns true if a directory at `old_name` existed
+    /// and was successfully renamed to `new_name`. Returns false if no directory
+    /// exists at `old_name`.
+    bool try_rename_user_directory(const std::string& old_name, const std::string& new_name) const;
 
     /// Return the path for a given Realm, creating the user directory if it does not already exist.
-    std::string path(const std::string& user_identity, const std::string& raw_realm_path) const;
+    std::string path(const std::string&, const std::string&) const;
 
     /// Remove the Realm at a given path for a given user. Returns `true` if the remove operation fully succeeds.
-    bool remove_realm(const std::string& user_identity, const std::string& raw_realm_path) const;
+    bool remove_realm(const std::string& local_identity, const std::string& raw_realm_path) const;
 
     /// Remove the Realm whose primary Realm file is located at `absolute_path`. Returns `true` if the remove
     /// operation fully succeeds.

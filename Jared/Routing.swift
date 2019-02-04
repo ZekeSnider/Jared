@@ -8,21 +8,23 @@
 
 import Foundation
 import JaredFramework
-import AddressBook
 
 struct MessageRouting {
-    var FrameworkVersion:String = "J1.0.0"
+    var FrameworkVersion: String = "J2.0.0"
     var modules:[RoutingModule] = []
     var bundles:[Bundle] = []
     var supportDir: URL?
     var disabled = false
-    var config: [String: [String:AnyObject]]?
+    var routeConfig: [String: [String:AnyObject]]?
+    var webhooks: [String]?
+    var webHookManager: WebHookManager?
     
     init () {
         let filemanager = FileManager.default
         let appsupport = filemanager.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
         let supportDir = appsupport.appendingPathComponent("Jared")
         let pluginDir = supportDir.appendingPathComponent("Plugins")
+        var webhooks: [String]?
         
         try! filemanager.createDirectory(at: supportDir, withIntermediateDirectories: true, attributes: nil)
         try! filemanager.createDirectory(at: pluginDir, withIntermediateDirectories: true, attributes: nil)
@@ -34,13 +36,16 @@ struct MessageRouting {
                 try! filemanager.copyItem(at: (Bundle.main.resourceURL?.appendingPathComponent("config.json"))!, to: configPath)
             }
             
-            //Read the JSON conig file
+            //Read the JSON config file
             let jsonData = try! NSData(contentsOfFile: supportDir.appendingPathComponent("config.json").path, options: .mappedIfSafe)
             if let jsonResult = try! JSONSerialization.jsonObject(with: jsonData as Data, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String:AnyObject]
             {
-                config = jsonResult["routes"] as? [String : [String: AnyObject]]
+                routeConfig = jsonResult["routes"] as? [String : [String: AnyObject]]
+                webhooks = jsonResult["webhooks"] as? [String]
             }
         }
+        
+        webHookManager = WebHookManager(webhooks: webhooks ?? [])
         
         loadPlugins(pluginDir)
         addInternalModules()
@@ -52,54 +57,49 @@ struct MessageRouting {
         modules.append(contentsOf: internalModules)
     }
     
-    
     mutating func loadPlugins(_ pluginDir: URL) {
         //Loop through all files in our plugin directory
         let filemanager = FileManager.default
         let files = filemanager.enumerator(at: pluginDir, includingPropertiesForKeys: [], options: [.skipsHiddenFiles, .skipsPackageDescendants], errorHandler: nil)
-        while let file = files?.nextObject() {
-            guard let currentURL = file as? URL
-                else {
-                    continue
-                }
-            
-            //Only unpackage bundles
-            guard currentURL.pathExtension == "bundle"
-                else {
-                    continue
-                }
-            
-            guard let myBundle = Bundle(url: currentURL)
-                else {
-                    continue
-                }
-
-            //Load it
-            loadBundle(myBundle)
+        
+        while let file = files?.nextObject() as? URL {
+            if let bundle = validateBundle(file) {
+                loadBundle(bundle)
+            }
         }
+    }
+    
+    private mutating func validateBundle(_ file: URL) -> Bundle? {
+        //Only unpackage bundles
+        guard file.pathExtension == "bundle" else {
+            return nil
+        }
+        
+        guard let myBundle = Bundle(url: file) else {
+            return nil
+        }
+        
+        return myBundle
     }
     
     mutating func loadBundle(_ myBundle: Bundle) {
         //Check version of the framework that this plugin is using
-        guard myBundle.infoDictionary?["JaredFrameworkVersion"] as? String == self.FrameworkVersion
-            else {
-                return
-            }
-        
-        //Cast the class to RoutingModule protocol
-        if let principleClass = myBundle.principalClass as? RoutingModule.Type
-        {
-            //Initialize it
-            let module: RoutingModule = principleClass.init()
-            bundles.append(myBundle)
-            
-            //Add it to our modules
-            modules.append(module)
-            
-        }
-        else {
+        //TODO: Add better version comparison (2.1.0 should be compatible with 2.0.0)
+        guard myBundle.infoDictionary?["JaredFrameworkVersion"] as? String == self.FrameworkVersion else {
             return
         }
+        
+        //Cast the class to RoutingModule protocol
+        guard let principleClass = myBundle.principalClass as? RoutingModule.Type else {
+            return
+        }
+        
+        //Initialize it
+        let module: RoutingModule = principleClass.init()
+        bundles.append(myBundle)
+        
+        //Add it to our modules
+        modules.append(module)
     }
     
     mutating func reloadPlugins() {
@@ -120,14 +120,14 @@ struct MessageRouting {
     }
     
     func isRouteEnabled(routeName: String) -> Bool {
-        if (config?[routeName.lowercased()]?["disabled"] as? Bool == true) {
+        if (routeConfig?[routeName.lowercased()]?["disabled"] as? Bool == true) {
             return false
         } else {
             return true
         }
     }
     
-    func sendSingleDocumentation(_ routeName: String, forRoom: Room) {
+    func sendSingleDocumentation(_ routeName: String, to recipient: RecipientEntity) {
         for aModule in modules {
             for aRoute in aModule.routes {
                 if aRoute.name.lowercased() == routeName.lowercased() {
@@ -152,17 +152,18 @@ struct MessageRouting {
                     else {
                         documentation += "The developer of this route did not provide parameter documentation."
                     }
-                    SendText(documentation, toRoom: forRoom)
+                    
+                    Jared.Send(documentation, to: recipient)
                 }
             }
         }
     }
     
-    func sendDocumentation(_ myMessage: String, forRoom: Room) {
+    func sendDocumentation(_ myMessage: String, to recipient: RecipientEntity) {
         let parsedMessage = myMessage.components(separatedBy: ",")
         
         if parsedMessage.count > 1 {
-            sendSingleDocumentation(parsedMessage[1], forRoom: forRoom)
+            sendSingleDocumentation(parsedMessage[1], to: recipient)
             return
         }
         
@@ -184,13 +185,20 @@ struct MessageRouting {
             }
             documentation += "\n"
         }
-        SendText(documentation, toRoom: forRoom)
+        Jared.Send(documentation, to: recipient)
     }
     
-    mutating func routeMessage(_ myMessage: String, fromBuddy: String, forRoom: Room) {
+    mutating func route(message myMessage: Message) {
+        webHookManager?.notify(message: myMessage)
+        
+        // Currently don't process any images
+        guard let messageText = myMessage.body as? TextBody else {
+            return
+        }
+        
         let detector = try! NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
-        let matches = detector.matches(in: myMessage, options: [], range: NSMakeRange(0, myMessage.count))
-        let myLowercaseMessage = myMessage.lowercased()
+        let matches = detector.matches(in: messageText.message, options: [], range: NSMakeRange(0, messageText.message.count))
+        let myLowercaseMessage = messageText.message.lowercased()
         
         let defaults = UserDefaults.standard
         
@@ -199,19 +207,19 @@ struct MessageRouting {
         }
         
         if myLowercaseMessage.contains("/help") {
-            sendDocumentation(myMessage, forRoom: forRoom)
+            sendDocumentation(messageText.message, to: myMessage.sender as! RecipientEntity)
         }
         else if myLowercaseMessage == "/reload" {
             reloadPlugins()
-            SendText("Successfully reloaded plugins.", toRoom: forRoom)
+            Jared.Send("Successfully reloaded plugins.", to: myMessage.sender as! RecipientEntity)
         }
         else if myLowercaseMessage == "/enable" {
             defaults.set(false, forKey: "JaredIsDisabled")
-            SendText("Jared has been re-enabled. To disable, type /disable", toRoom: forRoom)
+            Jared.Send("Jared has been re-enabled. To disable, type /disable", to: myMessage.sender as! RecipientEntity)
         }
         else if myLowercaseMessage == "/disable" {
             defaults.set(true, forKey: "JaredIsDisabled")
-            SendText("Jared has been disabled. Type /enable to re-enable.", toRoom: forRoom)
+            Jared.Send("Jared has been disabled. Type /enable to re-enable.", to: myMessage.sender as! RecipientEntity)
         }
         else {
             RootLoop: for aModule in modules {
@@ -223,20 +231,20 @@ struct MessageRouting {
                         
                         if aComparison.0 == .containsURL {
                             for match in matches {
-                                let url = (myMessage as NSString).substring(with: match.range)
+                                let url = (messageText.message as NSString).substring(with: match.range)
                                 for comparisonString in aComparison.1 {
                                     if url.contains(comparisonString) {
-                                        aRoute.call(url, forRoom)
+                                        let urlMessage = Message(body: TextBody(url), date: myMessage.date ?? Date(), sender: myMessage.sender, recipient: myMessage.recipient)
+                                        aRoute.call(urlMessage)
                                     }
                                 }
                             }
                         }
                             
-                            
                         else if aComparison.0 == .startsWith {
                             for comparisonString in aComparison.1 {
                                 if myLowercaseMessage.hasPrefix(comparisonString.lowercased()) {
-                                    aRoute.call(myMessage, forRoom)
+                                    aRoute.call(myMessage)
                                     break RootLoop
                                 }
                             }
@@ -245,7 +253,7 @@ struct MessageRouting {
                         else if aComparison.0 == .contains {
                             for comparisonString in aComparison.1 {
                                 if myLowercaseMessage.contains(comparisonString.lowercased()) {
-                                    aRoute.call(myMessage, forRoom)
+                                    aRoute.call(myMessage)
                                     break RootLoop
                                 }
                             }
@@ -254,7 +262,7 @@ struct MessageRouting {
                         else if aComparison.0 == .is {
                             for comparisonString in aComparison.1 {
                                 if myLowercaseMessage == comparisonString.lowercased() {
-                                    aRoute.call(myMessage, forRoom)
+                                    aRoute.call(myMessage)
                                     break RootLoop
                                 }
                             }
@@ -265,5 +273,3 @@ struct MessageRouting {
         }
     }
 }
-
-

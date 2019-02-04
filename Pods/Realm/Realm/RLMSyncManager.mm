@@ -29,6 +29,10 @@
 #import "sync/sync_manager.hpp"
 #import "sync/sync_session.hpp"
 
+#if !defined(REALM_COCOA_VERSION)
+#import "RLMVersion.h"
+#endif
+
 using namespace realm;
 using Level = realm::util::Logger::Level;
 
@@ -82,20 +86,21 @@ struct CocoaSyncLoggerFactory : public realm::SyncLoggerFactory {
 
 @interface RLMSyncManager ()
 - (instancetype)initWithCustomRootDirectory:(nullable NSURL *)rootDirectory NS_DESIGNATED_INITIALIZER;
-
-@property (nonatomic, nullable, strong) NSNumber *globalSSLValidationDisabled;
 @end
 
 @implementation RLMSyncManager
 
-@synthesize globalSSLValidationDisabled = _globalSSLValidationDisabled;
-
 static RLMSyncManager *s_sharedManager = nil;
-static dispatch_once_t s_onceToken;
 
 + (instancetype)sharedManager {
-    dispatch_once(&s_onceToken, ^{
-        s_sharedManager = [[RLMSyncManager alloc] initWithCustomRootDirectory:nil];
+    static std::once_flag flag;
+    std::call_once(flag, [] {
+        try {
+            s_sharedManager = [[RLMSyncManager alloc] initWithCustomRootDirectory:nil];
+        }
+        catch (std::exception const& e) {
+            @throw RLMException(e);
+        }
     });
     return s_sharedManager;
 }
@@ -109,7 +114,13 @@ static dispatch_once_t s_onceToken;
         bool should_encrypt = !getenv("REALM_DISABLE_METADATA_ENCRYPTION") && !RLMIsRunningInPlayground();
         auto mode = should_encrypt ? SyncManager::MetadataMode::Encryption : SyncManager::MetadataMode::NoEncryption;
         rootDirectory = rootDirectory ?: [NSURL fileURLWithPath:RLMDefaultDirectoryForBundleIdentifier(nil)];
-        SyncManager::shared().configure_file_system(rootDirectory.path.UTF8String, mode, none, true);
+        @autoreleasepool {
+            bool isSwift = !!NSClassFromString(@"RealmSwiftObjectUtil");
+            auto userAgent = [[NSMutableString alloc] initWithFormat:@"Realm%@/%@",
+                              isSwift ? @"Swift" : @"ObjectiveC", REALM_COCOA_VERSION];
+            SyncManager::shared().configure(rootDirectory.path.UTF8String, mode, RLMStringDataWithNSString(userAgent), none, true);
+            SyncManager::shared().set_user_agent(RLMStringDataWithNSString(self.appID));
+        }
         return self;
     }
     return nil;
@@ -122,24 +133,9 @@ static dispatch_once_t s_onceToken;
     return _appID;
 }
 
-- (NSNumber *)globalSSLValidationDisabled {
-    @synchronized (self) {
-        return _globalSSLValidationDisabled;
-    }
-}
-
-- (void)setGlobalSSLValidationDisabled:(NSNumber *)globalSSLValidationDisabled {
-    @synchronized (self) {
-        _globalSSLValidationDisabled = globalSSLValidationDisabled;
-    }
-}
-
-- (void)setDisableSSLValidation:(BOOL)disableSSLValidation {
-    self.globalSSLValidationDisabled = @(disableSSLValidation);
-}
-
-- (BOOL)disableSSLValidation {
-    return [self.globalSSLValidationDisabled boolValue];
+- (void)setUserAgent:(NSString *)userAgent {
+    SyncManager::shared().set_user_agent(RLMStringDataWithNSString(userAgent));
+    _userAgent = userAgent;
 }
 
 #pragma mark - Passthrough properties
@@ -171,15 +167,23 @@ static dispatch_once_t s_onceToken;
     NSError *error = nil;
     BOOL shouldMakeError = YES;
     NSDictionary *custom = nil;
+    // Note that certain types of errors are 'interactive'; users have several options
+    // as to how to proceed after the error is reported.
     switch (errorClass) {
         case RLMSyncSystemErrorKindClientReset: {
-            // Users can respond to "client reset" errors to a
-            // greater degree than possible for most other errors.
-            std::string original_path = [userInfo[@(realm::SyncError::c_original_file_path_key)] UTF8String];
-            custom = @{kRLMSyncPathOfRealmBackupCopyKey: userInfo[@(realm::SyncError::c_recovery_file_path_key)],
-                       kRLMSyncInitiateClientResetBlockKey: ^{
-                           SyncManager::shared().immediately_run_file_actions(original_path);
-                       }};
+            std::string path = [userInfo[@(realm::SyncError::c_original_file_path_key)] UTF8String];
+            custom = @{kRLMSyncPathOfRealmBackupCopyKey:
+                           userInfo[@(realm::SyncError::c_recovery_file_path_key)],
+                       kRLMSyncErrorActionTokenKey:
+                           [[RLMSyncErrorActionToken alloc] initWithOriginalPath:std::move(path)]
+                       };;
+            break;
+        }
+        case RLMSyncSystemErrorKindPermissionDenied: {
+            std::string path = [userInfo[@(realm::SyncError::c_original_file_path_key)] UTF8String];
+            custom = @{kRLMSyncErrorActionTokenKey:
+                           [[RLMSyncErrorActionToken alloc] initWithOriginalPath:std::move(path)]
+                       };
             break;
         }
         case RLMSyncSystemErrorKindUser:
@@ -211,6 +215,14 @@ static dispatch_once_t s_onceToken;
 
 + (void)resetForTesting {
     SyncManager::shared().reset_for_testing();
+}
+
+- (RLMNetworkRequestOptions *)networkRequestOptions {
+    RLMNetworkRequestOptions *options = [[RLMNetworkRequestOptions alloc] init];
+    options.authorizationHeaderName = self.authorizationHeaderName;
+    options.customHeaders = self.customRequestHeaders;
+    options.pinnedCertificatePaths = self.pinnedCertificatePaths;
+    return options;
 }
 
 @end

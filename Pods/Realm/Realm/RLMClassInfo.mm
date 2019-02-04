@@ -79,7 +79,7 @@ RLMClassInfo &RLMClassInfo::linkTargetType(size_t propertyIndex) {
 }
 
 RLMClassInfo &RLMClassInfo::linkTargetType(realm::Property const& property) {
-    REALM_ASSERT(property.type == PropertyType::Object || property.type == PropertyType::Array);
+    REALM_ASSERT(property.type == PropertyType::Object);
     return linkTargetType(&property - &objectSchema->persisted_properties[0]);
 }
 
@@ -102,7 +102,8 @@ RLMClassInfo& RLMSchemaInfo::operator[](NSString *name) {
 RLMSchemaInfo::RLMSchemaInfo(RLMRealm *realm) {
     RLMSchema *rlmSchema = realm.schema;
     realm::Schema const& schema = realm->_realm->schema();
-    REALM_ASSERT(rlmSchema.objectSchema.count == schema.size());
+    // rlmSchema can be larger due to multiple classes backed by one table
+    REALM_ASSERT(rlmSchema.objectSchema.count >= schema.size());
 
     m_objects.reserve(schema.size());
     for (RLMObjectSchema *rlmObjectSchema in rlmSchema.objectSchema) {

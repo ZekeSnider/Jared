@@ -21,14 +21,20 @@ class ViewController: NSViewController {
     }
     
     deinit {
-        self.view.window?.unbind(NSBindingName(rawValue: #keyPath(touchBar)))
+        if #available(OSX 10.12.2, *) {
+            self.view.window?.unbind(NSBindingName(rawValue: #keyPath(touchBar)))
+        }
         UserDefaults.standard.removeObserver(self, forKeyPath: "JaredIsDisabled")
     }
     
     override func viewDidAppear() {
         super.viewDidAppear()
-        self.view.window!.title = "Preferences"
-        if #available(OSX 10.12.1, *) {
+        let dbHandler = DatabaseHandler()
+        if (!dbHandler.authorizationError) {
+            dbHandler.start()
+        }
+
+        if #available(OSX 10.12.2, *) {
             self.view.window?.unbind(NSBindingName(rawValue: #keyPath(touchBar))) // unbind first
             self.view.window?.bind(NSBindingName(rawValue: #keyPath(touchBar)), to: self, withKeyPath: #keyPath(touchBar), options: nil)
         }
@@ -46,17 +52,43 @@ class ViewController: NSViewController {
             EnableDisableButton.title = "Enable"
             EnableDisableUIButton.title = "Enable"
             JaredStatusLabel.stringValue = "Jared is currently disabled"
+            statusImage.image = NSImage(named: NSImage.statusUnavailableName)
         }
         else {
             EnableDisableButton.title = "Disable"
             EnableDisableUIButton.title = "Disable"
             JaredStatusLabel.stringValue = "Jared is currently enabled"
+            statusImage.image = NSImage(named: NSImage.statusAvailableName)
         }
+    }
+    
+    func displayAccessError() {
+        let alert: NSAlert = NSAlert()
+        alert.messageText = "Permission Error"
+        alert.informativeText = "Jared requires \"full disk access\" to access the Messages database. This is an OS level restriction and can be enabled in System Preferences."
+        alert.alertStyle = NSAlert.Style.warning
+        alert.addButton(withTitle: "Open System Preferences")
+        alert.addButton(withTitle: "Cancel")
+        alert.icon = NSImage(named: NSImage.cautionName)
+        
+        let res = alert.runModal()
+        
+        if(res == NSApplication.ModalResponse.alertFirstButtonReturn) {
+            NSWorkspace.shared.open(URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles")!)
+        }
+        
+        let defaults = UserDefaults.standard
+        defaults.set(true, forKey: "JaredIsDisabled")
+        updateTouchBarButton()
+        
+        EnableDisableUIButton.isEnabled = false
+        EnableDisableButton.isEnabled = false
     }
     
     @IBOutlet weak var JaredStatusLabel: NSTextField!
     @IBOutlet weak var EnableDisableUIButton: NSButton!
     @IBOutlet weak var EnableDisableButton: NSButtonCell!
+    @IBOutlet weak var statusImage: NSImageView!
     
     @IBAction func EnableDisableAction(_ sender: Any) {
         let defaults = UserDefaults.standard
@@ -69,8 +101,8 @@ class ViewController: NSViewController {
         }
         
         updateTouchBarButton()
-
     }
+    
     @IBAction func OpenPluginsButtonAction(_ sender: Any) {
         let filemanager = FileManager.default
         let appsupport = filemanager.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
@@ -83,18 +115,10 @@ class ViewController: NSViewController {
             appDelegate.Router.reloadPlugins()
         }
     }
-
-    @IBAction func Fastinstall(_ sender: Any) {
-        let myInstall = SimpleInstall()
-        myInstall.Install()
-    }
     
     override var representedObject: Any? {
         didSet {
         // Update the view, if already loaded.
         }
     }
-
-
 }
-

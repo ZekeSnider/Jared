@@ -1,4 +1,6 @@
 {
 	"routes": {
-	}
+	},
+    "webhooks": [
+    ]
 }

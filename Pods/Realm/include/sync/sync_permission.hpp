@@ -28,6 +28,20 @@ class Permissions;
 class SyncUser;
 class Object;
 
+namespace util {
+    class Any;
+}
+
+// A permission encapsulates a single access level.
+// Each level includes all the capabilities of the level
+// above it (for example, 'write' implies 'read').
+enum class AccessLevel {
+    None,
+    Read,
+    Write,
+    Admin,
+};
+
 // Permission object used to represent a user permission.
 // Permission objects can be passed into or returned by various permissions
 // APIs. They are immutable objects.
@@ -35,15 +49,6 @@ struct Permission {
     // The path of the Realm to which this permission pertains.
     std::string path;
 
-    // A permission encapsulates a single access level.
-    // Each level includes all the capabilities of the level
-    // above it (for example, 'write' implies 'read').
-    enum class AccessLevel {
-        None,
-        Read,
-        Write,
-        Admin,
-    };
     AccessLevel access;
 
     // Return the string description of an `AccessLevel`.
@@ -88,53 +93,18 @@ struct Permission {
     Condition condition;
 
     Timestamp updated_at;
+
+    /// Create a Permission value from an `Object`.
+    Permission(Object&);
+
+    /// Create a Permission value from raw values.
+    Permission(std::string path, AccessLevel, Condition, Timestamp updated_at=Timestamp());
 };
 
-class PermissionResults {
-public:
-    // The number of permissions represented by this PermissionResults.
-    size_t size()
-    {
-        return m_results.size();
-    }
-
-    // Get the permission value at the given index.
-    // Throws an `OutOfBoundsIndexException` if the index is invalid.
-    Permission get(size_t index);
-
-    // Create an async query from this Results.
-    // The query will be run on a background thread and delivered to the callback,
-    // and then rerun after each commit (if needed) and redelivered if it changed
-    NotificationToken async(std::function<void(std::exception_ptr)> target)
-    {
-        return m_results.async(std::move(target));
-    }
-
-    // Create a new instance by further filtering this instance.
-    PermissionResults filter(Query&& q) const
-    {
-        return PermissionResults(m_results.filter(std::move(q)));
-    }
-
-    // Create a new instance by sorting this instance.
-    PermissionResults sort(SortDescriptor&& s) const
-    {
-        return PermissionResults(m_results.sort(std::move(s)));
-    }
-
-    // Get the results.
-    Results& results()
-    {
-        return m_results;
-    }
-
-    // Don't use this constructor directly. Publicly exposed so `make_unique` can see it.
-    PermissionResults(Results&& results)
-    : m_results(results)
-    { }
-
-protected:
-    Results m_results;
+struct PermissionOffer {
+    std::string path;
+    AccessLevel access;
+    Timestamp expiration;
 };
 
 class Permissions {
@@ -143,13 +113,17 @@ public:
     // SyncConfig and associated callbacks, as well as the path and other parameters.
     using ConfigMaker = std::function<Realm::Config(std::shared_ptr<SyncUser>, std::string url)>;
 
-    // Callback used to asynchronously vend a `PermissionResults` object.
-    using PermissionResultsCallback = std::function<void(std::unique_ptr<PermissionResults>, std::exception_ptr)>;
+    // Callback used to asynchronously vend permissions results.
+    using PermissionResultsCallback = std::function<void(Results, std::exception_ptr)>;
 
-    // Asynchronously retrieve the permissions for the provided user.
+    // Callback used to asynchronously vend permission offer or response URL.
+    using PermissionOfferCallback = std::function<void(util::Optional<std::string>, std::exception_ptr)>;
+
+    // Asynchronously retrieve a `Results` containing the permissions for the provided user.
     static void get_permissions(std::shared_ptr<SyncUser>, PermissionResultsCallback, const ConfigMaker&);
 
     // Callback used to monitor success or errors when changing permissions
+    // or accepting a permission offer.
     // `exception_ptr` is null_ptr on success
     using PermissionChangeCallback = std::function<void(std::exception_ptr)>;
 
@@ -159,15 +133,42 @@ public:
     // Delete a permission as the provided user.
     static void delete_permission(std::shared_ptr<SyncUser>, Permission, PermissionChangeCallback, const ConfigMaker&);
 
+    // Create a permission offer. The callback will be passed the token, if successful.
+    static void make_offer(std::shared_ptr<SyncUser>, PermissionOffer, PermissionOfferCallback, const ConfigMaker&);
+
+    // Accept a permission offer based on the token value within the offer.
+    static void accept_offer(std::shared_ptr<SyncUser>, const std::string&, PermissionOfferCallback, const ConfigMaker&);
+
+    using AsyncOperationHandler = std::function<void(Object*, std::exception_ptr)>;
+
 private:
     static SharedRealm management_realm(std::shared_ptr<SyncUser>, const ConfigMaker&);
     static SharedRealm permission_realm(std::shared_ptr<SyncUser>, const ConfigMaker&);
+
+    /**
+     Perform an asynchronous operation that involves writing an object to the
+     user's management Realm, and then waiting for the operation to succeed or
+     fail.
+
+     The object in question must have at least `id`, `createdAt`, and `updatedAt`,
+     properties to be set as part of the request, and it must report its success
+     or failure by setting its `statusCode` and `statusMessage` properties.
+
+     The callback is invoked upon success or failure, and will be called with
+     exactly one of its two arguments not set to null. The object can be used to
+     extract additional data to be returned to the caller.
+     */
+    static void perform_async_operation(const std::string& object_type,
+                                        std::shared_ptr<SyncUser>,
+                                        AsyncOperationHandler,
+                                        std::map<std::string, util::Any>,
+                                        const ConfigMaker&);
 };
 
-struct PermissionChangeException : std::runtime_error {
+struct PermissionActionException : std::runtime_error {
     long long code;
 
-    PermissionChangeException(std::string message, long long code)
+    PermissionActionException(std::string message, long long code)
     : std::runtime_error(std::move(message))
     , code(code)
     { }

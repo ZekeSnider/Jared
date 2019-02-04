@@ -21,6 +21,7 @@
 
 #include "impl/collection_change_builder.hpp"
 
+#include <realm/util/assert.hpp>
 #include <realm/version_id.hpp>
 
 #include <array>
@@ -53,6 +54,7 @@ struct TransactionChangeInfo {
     std::vector<std::vector<size_t>> column_indices;
     std::vector<size_t> table_indices;
     bool track_all;
+    bool schema_changed;
 };
 
 class DeepChangeChecker {
@@ -89,7 +91,7 @@ private:
         size_t col;
         bool depth_exceeded;
     };
-    std::array<Path, 16> m_current_path;
+    std::array<Path, 4> m_current_path;
 
     bool check_row(Table const& table, size_t row_ndx, size_t depth = 0);
     bool check_outgoing_links(size_t table_ndx, Table const& table,
@@ -116,13 +118,13 @@ public:
     // Add a callback to be called each time the collection changes
     // This can only be called from the target collection's thread
     // Returns a token which can be passed to remove_callback()
-    size_t add_callback(CollectionChangeCallback callback);
+    uint64_t add_callback(CollectionChangeCallback callback);
     // Remove a previously added token. The token is no longer valid after
     // calling this function and must not be used again. This function can be
     // called from any thread.
-    void remove_callback(size_t token);
+    void remove_callback(uint64_t token);
 
-    void suppress_next_notification(size_t token);
+    void suppress_next_notification(uint64_t token);
 
     // ------------------------------------------------------------------------
     // API for RealmCoordinator to manage running things and calling callbacks
@@ -191,6 +193,7 @@ protected:
     void add_changes(CollectionChangeBuilder change);
     void set_table(Table const& table);
     std::unique_lock<std::mutex> lock_target();
+    SharedGroup& source_shared_group();
 
     std::function<bool (size_t)> get_modification_checker(TransactionChangeInfo const&, Table const&);
 
@@ -215,7 +218,7 @@ private:
         CollectionChangeCallback fn;
         CollectionChangeBuilder accumulated_changes;
         CollectionChangeSet changes_to_deliver;
-        size_t token;
+        uint64_t token;
         bool initial_delivered;
         bool skip_next;
     };
@@ -234,11 +237,18 @@ private:
     // Iteration variable for looping over callbacks
     // remove_callback() updates this when needed
     size_t m_callback_index = -1;
+    // The number of callbacks which were present when the notifier was packaged
+    // for delivery which are still present.
+    // Updated by packaged_for_delivery and removd_callback(), and used in
+    // for_each_callback() to avoid calling callbacks registered during delivery.
+    size_t m_callback_count = -1;
+
+    uint64_t m_next_token = 0;
 
     template<typename Fn>
     void for_each_callback(Fn&& fn);
 
-    std::vector<Callback>::iterator find_callback(size_t token);
+    std::vector<Callback>::iterator find_callback(uint64_t token);
 };
 
 // A smart pointer to a CollectionNotifier that unregisters the notifier when
@@ -321,6 +331,22 @@ private:
     RealmCoordinator* m_coordinator = nullptr;
     std::exception_ptr m_error;
 };
+
+// Find which column of the row in the table contains the given container.
+//
+// LinkViews and Subtables know what row of their parent they're in, but not
+// what column, so we have to just check each one.
+template<typename Table, typename T, typename U>
+size_t find_container_column(Table& table, size_t row_ndx, T const& expected, int type, U (Table::*getter)(size_t, size_t))
+{
+    for (size_t i = 0, count = table.get_column_count(); i != count; ++i) {
+        if (table.get_column_type(i) == type && (table.*getter)(i, row_ndx) == expected) {
+            return i;
+        }
+    }
+    REALM_UNREACHABLE();
+}
+
 
 } // namespace _impl
 } // namespace realm

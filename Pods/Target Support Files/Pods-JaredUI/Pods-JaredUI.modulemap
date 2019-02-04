@@ -1,6 +1,0 @@
-framework module Pods_JaredUI {
-  umbrella header "Pods-JaredUI-umbrella.h"
-
-  export *
-  module * { export * }
-}

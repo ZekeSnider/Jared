@@ -67,8 +67,9 @@ public:
     static SyncManager& shared();
 
     // Configure the metadata and file management subsystems. This MUST be called upon startup.
-    void configure_file_system(const std::string& base_file_path,
+    void configure(const std::string& base_file_path,
                                MetadataMode metadata_mode=MetadataMode::Encryption,
+                               const std::string& user_agent_binding_info = "",
                                util::Optional<std::vector<char>> custom_encryption_key=none,
                                bool reset_metadata_on_error=false);
 
@@ -78,12 +79,24 @@ public:
     // The metadata and file management subsystems must also have already been configured.
     bool immediately_run_file_actions(const std::string& original_name);
 
+    // Use a single connection for all sync sessions for each host/port rather
+    // than one per session.
+    // This must be called before any sync sessions are created, cannot be
+    // disabled afterwards, and currently is incompatible with using a load
+    // balancer or automatic failover.
+    void enable_session_multiplexing();
+
+    // Sets the log level for the Sync Client.
+    // The log level can only be set up until the point the Sync Client is created. This happens when the first Session
+    // is created.
     void set_log_level(util::Logger::Level) noexcept;
     void set_logger_factory(SyncLoggerFactory&) noexcept;
 
-    /// Control whether the sync client attempts to reconnect immediately. Only set this to `true` for testing purposes.
-    void set_client_should_reconnect_immediately(bool reconnect_immediately);
-    bool client_should_reconnect_immediately() const noexcept;
+    // Sets the application level user agent string.
+    // This should have the format specified here: https://github.com/realm/realm-sync/blob/develop/src/realm/sync/client.hpp#L126
+    // The user agent can only be set up  until the  point the Sync Client is created. This happens when the first
+    // Session is created.
+    void set_user_agent(std::string user_agent);
 
     /// Ask all valid sync sessions to perform whatever tasks might be necessary to
     /// re-establish connectivity with the Realm Object Server. It is presumed that
@@ -104,22 +117,42 @@ public:
 
     // Get a sync user for a given identity, or create one if none exists yet, and set its token.
     // If a logged-out user exists, it will marked as logged back in.
-    std::shared_ptr<SyncUser> get_user(const std::string& identity,
-                                       std::string refresh_token,
-                                       util::Optional<std::string> auth_server_url=none,
-                                       SyncUser::TokenType token_type=SyncUser::TokenType::Normal);
-    // Get an existing user for a given identity, if one exists and is logged in.
-    std::shared_ptr<SyncUser> get_existing_logged_in_user(const std::string& identity) const;
+    std::shared_ptr<SyncUser> get_user(const SyncUserIdentifier& identifier, std::string refresh_token);
+
+    // Get or create an admin token user based on the given identity.
+    // Please note: a future version will remove this method and deprecate the
+    // use of identities for admin users completely.
+    // Warning: it is an error to create or get an admin token user with a given identity and
+    // specifying a URL, and later get that same user by specifying only the identity and no
+    // URL, or vice versa.
+    std::shared_ptr<SyncUser> get_admin_token_user_from_identity(const std::string& identity,
+                                                                 util::Optional<std::string> server_url,
+                                                                 const std::string& token);
+
+    // Get or create an admin token user for the given URL.
+    // If the user already exists, the token value will be ignored.
+    // If an old identity is provided and a directory for the user already exists, the directory
+    // will be renamed.
+    std::shared_ptr<SyncUser> get_admin_token_user(const std::string& server_url,
+                                                   const std::string& token,
+                                                   util::Optional<std::string> old_identity=none);
+
+    // Get an existing user for a given identifier, if one exists and is logged in.
+    std::shared_ptr<SyncUser> get_existing_logged_in_user(const SyncUserIdentifier&) const;
+
     // Get all the users that are logged in and not errored out.
     std::vector<std::shared_ptr<SyncUser>> all_logged_in_users() const;
     // Gets the currently logged in user. If there are more than 1 users logged in, an exception is thrown.
     std::shared_ptr<SyncUser> get_current_user() const;
 
     // Get the default path for a Realm for the given user and absolute unresolved URL.
-    std::string path_for_realm(const std::string& user_identity, const std::string& raw_realm_url) const;
+    std::string path_for_realm(const SyncUser& user, const std::string& raw_realm_url) const;
 
     // Get the path of the recovery directory for backed-up or recovered Realms.
     std::string recovery_directory_path() const;
+
+    // Get the unique identifier of this client.
+    std::string client_uuid() const;
 
     // Reset the singleton state for testing purposes. DO NOT CALL OUTSIDE OF TESTING CODE.
     // Precondition: any synced Realms or `SyncSession`s must be closed or rendered inactive prior to
@@ -128,6 +161,8 @@ public:
 
 private:
     using ReconnectMode = sync::Client::ReconnectMode;
+    
+    static constexpr const char c_admin_identity[] = "__auth";
 
     // Stop tracking the session for the given path if it is inactive.
     // No-op if the session is either still active or in the active sessions list
@@ -155,10 +190,18 @@ private:
     // Protects m_users
     mutable std::mutex m_user_mutex;
 
-    // A map of user identities to (shared pointers to) SyncUser objects.
-    std::unordered_map<std::string, std::shared_ptr<SyncUser>> m_users;
+    // A map of user ID/auth server URL pairs to (shared pointers to) SyncUser objects.
+    std::unordered_map<SyncUserIdentifier, std::shared_ptr<SyncUser>> m_users;
+    // A map of local identifiers to admin token users.
+    std::unordered_map<std::string, std::shared_ptr<SyncUser>> m_admin_token_users;
 
     mutable std::unique_ptr<_impl::SyncClient> m_sync_client;
+    bool m_multiplex_sessions = false;
+
+    // Optional information about the binding/application that is sent as part of the User-Agent
+    // when establishing a connection to the server.
+    std::string m_user_agent_binding_info;
+    std::string m_user_agent_application_info;
 
     // Protects m_file_manager and m_metadata_manager
     mutable std::mutex m_file_system_mutex;
@@ -172,6 +215,9 @@ private:
     // Sessions remove themselves from this map by calling `unregister_session` once they're
     // inactive and have performed any necessary cleanup work.
     std::unordered_map<std::string, std::shared_ptr<SyncSession>> m_sessions;
+
+    // The unique identifier of this client.
+    util::Optional<std::string> m_client_uuid;
 };
 
 } // namespace realm
