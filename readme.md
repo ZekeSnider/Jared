@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/ZekeSnider/Jared.svg?branch=master)](https://travis-ci.org/ZekeSnider/Jared)
+[![Build Status](https://travis-ci.org/ZekeSnider/Jared.svg?branch=master)](https://travis-ci.org/ZekeSnider/Jared)[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)[![Swift 4.0](https://img.shields.io/badge/Swift-4.2-orange.svg?style=flat)](https://developer.apple.com/swift/)
 
 <a name='Jared'/>
 
