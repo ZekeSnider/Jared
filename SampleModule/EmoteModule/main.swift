@@ -14,12 +14,12 @@ public class EmoteModule: RoutingModule {
     public var description = "A Description"
 
     required public init() {
-        let aRoute = Route(name: "test function", comparisons: [.StartsWith: ["/moduletest"]], call: self.test, description: "TEST")
+        let aRoute = Route(name: "test function", comparisons: [.startsWith: ["/moduletest"]], call: self.test, description: "TEST")
         routes = [aRoute]
     }
     
-    public func test(message:String, myRoom: Room) -> Void {
-        SendText("This command was loaded from a modularized bundle.", toRoom: myRoom)
+    public func test(message: Message) -> Void {
+        Jared.Send("This command was loaded from a modularized bundle.", to: message.RespondTo())
     }
 }
 

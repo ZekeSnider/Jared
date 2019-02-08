@@ -9,9 +9,6 @@
 import XCTest
 import JaredFramework
 
-
-
-
 class MessageTests: XCTestCase {
     let textBody = TextBody("Hey Jared")
     

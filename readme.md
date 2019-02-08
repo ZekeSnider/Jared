@@ -44,16 +44,19 @@ Type /help in a group chat with Jared to see a full list of commands. Type /help
 For reference, here is a list of the commands built in to Jared. Because functionality can be added with plugins, the built in functionality is kept light.
 
 + Thank You: Thanks Jared
-+ /ping: Check if the chat bot is available
-+ /version: Get the version of Jared running
-+ /send: Send a message repeatedly
-+ /schedule: Schedule messages
-+ /name: Change what Jared calls you
-+ /whoami: Get your name
++ `/ping`: Check if the chat bot is available
++ `/version`: Get the version of Jared running
++ `/send`: Send a message repeatedly
++ `/schedule`: Schedule messages
++ `/name`: Change what Jared calls you
++ `/whoami`: Get your name
 
 ### Configuration  
 A configuration file is located at ~/Library/Application Support/Jared/config.json which enables disabling of commands if desired. See [config-sample.json](config-sample.json) for an example.
 
+
+## Webhooks
+Jared supports webhooks for sending metadata about incoming and outgoing messages. To configure webhooks, add them to the `config.json` mentioned above. For more info on the 
 
 ## Plugins  
 Plugins are loaded dynamically from the ~/Library/Application Support/Jared/Plugins folder. To install a module, drag it in there and then send "/reload" to Jared. 
