@@ -22,7 +22,7 @@ Jared reads from the Messages database on a set interval and queries for new mes
 I've tried using private APIs such as MessagesKit to send/receive messages to no avail so far. If you have any leads on this front I'd love to hear about it.
 
 ## Installation  
-![Jared Main Window](/Screenshots/MainWindow.png)  
+![Jared Main Window](/Screenshots/MainWindow.png)
 
 Jared must be run a machine running macOS with an active messages account logged in. It has only been tested on 10.14 Mojave. It may work on old versions of macOS but this is not guaranteed as there may have been changes to the message database's schema. If you don't want Jared posting as you, it is recommended that you create a new Apple ID and user account on your mac, and run it in the background under that user. That way it's not using your main Apple ID.
 
@@ -71,5 +71,10 @@ If you developed any plugins, please contact me a link so I can add a link here!
 
 ### Development  
 If you would like to develop your own plugins, you need to build a .bundle to be loaded by Jared. You must include the [JaredFramework.framework](/JaredFramework/JaredFramework.framework) in your project and define a public subclass of RoutingModule. The bundle must set this class as the principle class in `Info.plist`. `Info.plist` must also contain a string for `JaredFrameworkVersion`, the current version number is `J2.0.0`.
+
+To include JaredFramework you have 3 options:
+1. Manually include it in the project
+2. Use [Carthage](https://github.com/Carthage/Carthage)
+3. Use [CocoaPods](https://cocoapods.org) (coming soon)
 
 Take a look at the [Sample project](/SampleModule) to see how the project should be configured. The README there contains instructions for how to build a plugin. Also look at the modules in contained in the main project for examples of more complicated routings.  

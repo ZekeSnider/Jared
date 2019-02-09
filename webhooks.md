@@ -37,7 +37,7 @@ The body of the POST request is in the following format:
   },
   "sender": {
     "handle": "zeke@swift.com",
-    "givenName": "Taylor",
+    "givenName": "Zeke",
     "isMe": true
   },
   "date": "2019-02-03T22:05:05.000Z"
