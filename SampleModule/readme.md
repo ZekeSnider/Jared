@@ -7,4 +7,9 @@ This is a sample project to demonstrate how a third party plugin can be built. T
 * In `Info.plist` set `JaredFrameworkVersion` to the correct version
 * In `Info.plist` set `Principal class` to be the the subclass of `RoutingModule` that should be used.
 
+To include JaredFramework you have 3 options:
+1. Manually include it in the project
+2. Use [Carthage](https://github.com/Carthage/Carthage)
+3. Use [CocoaPods](https://cocoapods.org) (coming soon)
+
 To create the routing module you must subclass `RoutingModule`. Routes can be defined and added to the `routes` member variable. Action handler methods must accept a `Message` variable and return void. They can call `Jared.Send` to send a message. You can construct a `RecipientEntity` yourself, or you can just call `message.RespondTo()` to respond to the incoming message.
