@@ -15,6 +15,8 @@ public class Jared {
         Send(message, whileBlocking: false)
     }
     
+    public static func Send(_ m)
+    
     public static func Send(_ message: Message, whileBlocking: Bool = false) {
         print("I want to send text \(message)")
         

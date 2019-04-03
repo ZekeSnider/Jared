@@ -12,4 +12,5 @@ end
 
 target "Jared" do
 	pod 'RealmSwift'
+    pod 'Telegraph'
 end

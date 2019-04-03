@@ -21,10 +21,18 @@ public struct Person: SenderEntity, RecipientEntity, Codable, Equatable {
     public var handle: String
     public var isMe: Bool = false
     
-    public init(givenName: String?, handle: String, isMe: Bool) {
+    enum CodingKeys : String, CodingKey{
+        case handle
+    }
+    
+    public init(handle: String) {
+        self.handle = handle
+    }
+    
+    public init(givenName: String?, handle: String, isMe: Bool?) {
         self.givenName = givenName
         self.handle = handle
-        self.isMe = isMe
+        self.isMe = isMe ?? false
     }
     
     public static func == (lhs: Person, rhs: Person) -> Bool {

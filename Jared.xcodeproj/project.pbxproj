@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		00FC0A452FD8C8D0FCDA16D4 /* Pods_Jared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4589B5638BC576CC8AB2700A /* Pods_Jared.framework */; };
 		1D6188C0EEA4AA406C15CC9E /* Pods_Jared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4589B5638BC576CC8AB2700A /* Pods_Jared.framework */; };
 		7F0E931D1D02FC250096BABE /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0E931C1D02FC250096BABE /* Global.swift */; };
 		7F84B6221CC506790059A82B /* JaredFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F84B6211CC506790059A82B /* JaredFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -31,9 +32,9 @@
 		B37E82821FA85B210069E15D /* SendTextSingleBuddy.scpt in Resources */ = {isa = PBXBuildFile; fileRef = B37E82811FA85B210069E15D /* SendTextSingleBuddy.scpt */; };
 		B39A65E01CC1FB1B003E26B0 /* Routing.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39A65DF1CC1FB1B003E26B0 /* Routing.swift */; };
 		B39F2B391CB3BCA700C0D35C /* SendText.scpt in Resources */ = {isa = PBXBuildFile; fileRef = B39F2B381CB3BCA700C0D35C /* SendText.scpt */; };
-		B3AECB5E2207CE2C003E32F8 /* Pods_Jared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4589B5638BC576CC8AB2700A /* Pods_Jared.framework */; };
 		B3AECB5F2207CE33003E32F8 /* JaredFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F84B61F1CC506790059A82B /* JaredFramework.framework */; };
 		B3BBA7D11CB3284A00E1749C /* CoreModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39EC17D1CB01FEF002C3161 /* CoreModule.swift */; };
+		B3C59284224DD17900116ECB /* WebServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C59283224DD17900116ECB /* WebServer.swift */; };
 		B3EF1DA02206849000953DE7 /* WebHookManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3327DC522066427009DD882 /* WebHookManager.swift */; };
 		B3EF1DA4220687DD00953DE7 /* URLProtocolMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3EF1DA3220687DD00953DE7 /* URLProtocolMock.swift */; };
 		B3EF1DA62206DFEA00953DE7 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3EF1DA52206DFEA00953DE7 /* Route.swift */; };
@@ -119,6 +120,7 @@
 		B3BBA7CC1CB3259A00E1749C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/CoreStrings.strings; sourceTree = "<group>"; };
 		B3BBA7CF1CB327C200E1749C /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
 		B3BBA7D01CB327C200E1749C /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/CoreStrings.strings; sourceTree = "<group>"; };
+		B3C59283224DD17900116ECB /* WebServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebServer.swift; sourceTree = "<group>"; };
 		B3EF1DA3220687DD00953DE7 /* URLProtocolMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLProtocolMock.swift; sourceTree = "<group>"; };
 		B3EF1DA52206DFEA00953DE7 /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 		B3EF1DA92206E09B00953DE7 /* Jared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Jared.swift; sourceTree = "<group>"; };
@@ -143,6 +145,7 @@
 			files = (
 				7F84B6261CC506790059A82B /* JaredFramework.framework in Frameworks */,
 				1D6188C0EEA4AA406C15CC9E /* Pods_Jared.framework in Frameworks */,
+				00FC0A452FD8C8D0FCDA16D4 /* Pods_Jared.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -151,7 +154,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B3AECB5F2207CE33003E32F8 /* JaredFramework.framework in Frameworks */,
-				B3AECB5E2207CE2C003E32F8 /* Pods_Jared.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -262,6 +264,7 @@
 				B39A65DF1CC1FB1B003E26B0 /* Routing.swift */,
 				B3327DC522066427009DD882 /* WebHookManager.swift */,
 				B3327DC32206607B009DD882 /* ContactHelper.swift */,
+				B3C59283224DD17900116ECB /* WebServer.swift */,
 				B35CE7142196AD4E002F52A7 /* DatabaseHandler.swift */,
 				7F0E931C1D02FC250096BABE /* Global.swift */,
 				B3BBA7CD1CB3259A00E1749C /* CoreStrings.strings */,
@@ -369,6 +372,7 @@
 				TargetAttributes = {
 					7F84B61E1CC506790059A82B = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = C7LJ587XF3;
 						LastSwiftMigration = 1010;
 						ProvisioningStyle = Automatic;
 					};
@@ -447,13 +451,19 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Jared/Pods-Jared-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/CocoaAsyncSocket/CocoaAsyncSocket.framework",
+				"${BUILT_PRODUCTS_DIR}/HTTPParserC/HTTPParserC.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/Telegraph/Telegraph.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaAsyncSocket.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HTTPParserC.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Telegraph.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -540,6 +550,7 @@
 				B316D1A61F3FFDF100AFF063 /* CoreModuleRealm.swift in Sources */,
 				B375A65921EB14470073F09F /* AboutViewController.swift in Sources */,
 				7F0E931D1D02FC250096BABE /* Global.swift in Sources */,
+				B3C59284224DD17900116ECB /* WebServer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -604,7 +615,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = C7LJ587XF3;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -630,7 +641,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = C7LJ587XF3;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
