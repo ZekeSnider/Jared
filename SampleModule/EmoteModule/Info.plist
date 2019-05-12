@@ -2,12 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>JaredFrameworkVersion</key>
-	<string>J1.0.0</string>
-	<key>CFBundleDisplayName</key>
-	<string>EmoteModule</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
+	<key>CFBundleDisplayName</key>
+	<string>EmoteModule</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -24,6 +22,8 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>JaredFrameworkVersion</key>
+	<string>J2.0.0</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2016 Zeke Snider. All rights reserved.</string>
 	<key>NSPrincipalClass</key>
