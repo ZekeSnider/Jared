@@ -38,7 +38,6 @@ class DatabaseHandler {
         querySinceID = getCurrentMaxRecordID()
     }
     
-    
     deinit {
         shouldExitThread = true
         if sqlite3_close(db) != SQLITE_OK {

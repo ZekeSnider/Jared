@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////
 //
-// Copyright 2017 Realm Inc.
+// Copyright 2018 Realm Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,12 +16,19 @@
 //
 ////////////////////////////////////////////////////////////////////////////
 
-#import <Foundation/Foundation.h>
+namespace realm {
+class Table;
+class TableView;
+template<typename> class BasicRowExpr;
+using RowExpr = BasicRowExpr<Table>;
+struct VersionID;
 
-#import "RLMResults.h"
+class AuditInterface {
+public:
+    virtual ~AuditInterface() {}
 
-@class RLMSyncPermission;
-
-// A private subclass of `RLMResults`.
-@interface RLMSyncPermissionResults : RLMResults<RLMSyncPermission *>
-@end
+    virtual void record_query(realm::VersionID, realm::TableView const&) = 0;
+    virtual void record_read(realm::VersionID, realm::RowExpr) = 0;
+    virtual void record_write(realm::VersionID, realm::VersionID) = 0;
+};
+}

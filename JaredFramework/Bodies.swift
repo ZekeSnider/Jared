@@ -13,8 +13,8 @@ public protocol MessageBody: Codable {}
 public struct TextBody: MessageBody, Codable {
     public var message: String
     
-    public init(_ inMessage: String) {
-        message = inMessage
+    public init(_ message: String) {
+        self.message = message
     }
 }
 

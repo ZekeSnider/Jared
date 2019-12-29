@@ -11,8 +11,8 @@ import Contacts
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
-    
     var Router = MessageRouting()
+    var Server = JaredWebServer()
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // If this is the first run of the application, request access
