@@ -9,7 +9,6 @@
 import Cocoa
 
 class AboutViewController: NSViewController {
-
     @IBAction func updateButtonClicked(_ sender: Any) {
         NSWorkspace.shared.open(URL(string: "https://github.com/zekesnider/jared/releases")!)
     }

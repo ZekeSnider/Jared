@@ -32,9 +32,10 @@
 		B37E82821FA85B210069E15D /* SendTextSingleBuddy.scpt in Resources */ = {isa = PBXBuildFile; fileRef = B37E82811FA85B210069E15D /* SendTextSingleBuddy.scpt */; };
 		B39A65E01CC1FB1B003E26B0 /* Routing.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39A65DF1CC1FB1B003E26B0 /* Routing.swift */; };
 		B39F2B391CB3BCA700C0D35C /* SendText.scpt in Resources */ = {isa = PBXBuildFile; fileRef = B39F2B381CB3BCA700C0D35C /* SendText.scpt */; };
+		B3A4C61423B867E300B7F009 /* MessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A4C61323B867E300B7F009 /* MessageRequest.swift */; };
 		B3AECB5F2207CE33003E32F8 /* JaredFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F84B61F1CC506790059A82B /* JaredFramework.framework */; };
 		B3BBA7D11CB3284A00E1749C /* CoreModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39EC17D1CB01FEF002C3161 /* CoreModule.swift */; };
-		B3C59284224DD17900116ECB /* WebServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C59283224DD17900116ECB /* WebServer.swift */; };
+		B3C59284224DD17900116ECB /* JaredWebServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C59283224DD17900116ECB /* JaredWebServer.swift */; };
 		B3EF1DA02206849000953DE7 /* WebHookManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3327DC522066427009DD882 /* WebHookManager.swift */; };
 		B3EF1DA4220687DD00953DE7 /* URLProtocolMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3EF1DA3220687DD00953DE7 /* URLProtocolMock.swift */; };
 		B3EF1DA62206DFEA00953DE7 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3EF1DA52206DFEA00953DE7 /* Route.swift */; };
@@ -117,10 +118,11 @@
 		B39EC1751CB01F55002C3161 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Message.swift; path = ../Jared/Message.swift; sourceTree = "<group>"; };
 		B39EC17D1CB01FEF002C3161 /* CoreModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreModule.swift; sourceTree = "<group>"; };
 		B39F2B381CB3BCA700C0D35C /* SendText.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = SendText.scpt; sourceTree = "<group>"; };
+		B3A4C61323B867E300B7F009 /* MessageRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRequest.swift; sourceTree = "<group>"; };
 		B3BBA7CC1CB3259A00E1749C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/CoreStrings.strings; sourceTree = "<group>"; };
 		B3BBA7CF1CB327C200E1749C /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
 		B3BBA7D01CB327C200E1749C /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/CoreStrings.strings; sourceTree = "<group>"; };
-		B3C59283224DD17900116ECB /* WebServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebServer.swift; sourceTree = "<group>"; };
+		B3C59283224DD17900116ECB /* JaredWebServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JaredWebServer.swift; sourceTree = "<group>"; };
 		B3EF1DA3220687DD00953DE7 /* URLProtocolMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLProtocolMock.swift; sourceTree = "<group>"; };
 		B3EF1DA52206DFEA00953DE7 /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 		B3EF1DA92206E09B00953DE7 /* Jared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Jared.swift; sourceTree = "<group>"; };
@@ -264,7 +266,8 @@
 				B39A65DF1CC1FB1B003E26B0 /* Routing.swift */,
 				B3327DC522066427009DD882 /* WebHookManager.swift */,
 				B3327DC32206607B009DD882 /* ContactHelper.swift */,
-				B3C59283224DD17900116ECB /* WebServer.swift */,
+				B3C59283224DD17900116ECB /* JaredWebServer.swift */,
+				B3A4C61323B867E300B7F009 /* MessageRequest.swift */,
 				B35CE7142196AD4E002F52A7 /* DatabaseHandler.swift */,
 				7F0E931C1D02FC250096BABE /* Global.swift */,
 				B3BBA7CD1CB3259A00E1749C /* CoreStrings.strings */,
@@ -539,6 +542,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3A4C61423B867E300B7F009 /* MessageRequest.swift in Sources */,
 				B39A65E01CC1FB1B003E26B0 /* Routing.swift in Sources */,
 				B3BBA7D11CB3284A00E1749C /* CoreModule.swift in Sources */,
 				B36563EF1F3D68980064B114 /* TouchBarTextFieldExtension.swift in Sources */,
@@ -550,7 +554,7 @@
 				B316D1A61F3FFDF100AFF063 /* CoreModuleRealm.swift in Sources */,
 				B375A65921EB14470073F09F /* AboutViewController.swift in Sources */,
 				7F0E931D1D02FC250096BABE /* Global.swift in Sources */,
-				B3C59284224DD17900116ECB /* WebServer.swift in Sources */,
+				B3C59284224DD17900116ECB /* JaredWebServer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

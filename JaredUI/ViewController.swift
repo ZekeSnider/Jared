@@ -9,14 +9,19 @@
 import Cocoa
 
 class ViewController: NSViewController {
-    
     var defaults: UserDefaults!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         let defaults = UserDefaults.standard
         
+        // Server should be disabled by default
+        if defaults.value(forKey: "RestApiIsDisabled") == nil {
+            defaults.set(false, forKey: "RestApiIsDisabled")
+        }
+        
         defaults.addObserver(self, forKeyPath: "JaredIsDisabled", options: .new, context: nil)
+        defaults.addObserver(self, forKeyPath: "RestApiIsDisabled", options: .new, context: nil)
         updateTouchBarButton()
     }
     
@@ -41,7 +46,8 @@ class ViewController: NSViewController {
     }
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if keyPath == "JaredIsDisabled" {
+        if keyPath == "JaredIsDisabled"
+            || keyPath == "RestApiIsDisabled" {
             updateTouchBarButton()
         }
     }
@@ -50,15 +56,28 @@ class ViewController: NSViewController {
         let defaults = UserDefaults.standard
         if (defaults.bool(forKey: "JaredIsDisabled")) {
             EnableDisableButton.title = "Enable"
-            EnableDisableUIButton.title = "Enable"
+            EnableDisableUiButton.title = "Enable Jared"
             JaredStatusLabel.stringValue = "Jared is currently disabled"
             statusImage.image = NSImage(named: NSImage.statusUnavailableName)
         }
         else {
             EnableDisableButton.title = "Disable"
-            EnableDisableUIButton.title = "Disable"
+            EnableDisableUiButton.title = "Disable Jared"
             JaredStatusLabel.stringValue = "Jared is currently enabled"
             statusImage.image = NSImage(named: NSImage.statusAvailableName)
+        }
+        
+        if (defaults.bool(forKey: "RestApiIsDisabled")) {
+//            EnableDisableButton.title = "Enable"
+            EnableDisableRestApiUiButton.title = "Enable API"
+            RestApiStatusLabel.stringValue = "REST API is currently disabled"
+            RestApiStatusImage.image = NSImage(named: NSImage.statusUnavailableName)
+        }
+        else {
+//            EnableDisableButton.title = "Disable"
+            EnableDisableRestApiUiButton.title = "Disable API"
+            RestApiStatusLabel.stringValue = "REST API is currently enabled"
+            RestApiStatusImage.image = NSImage(named: NSImage.statusAvailableName)
         }
     }
     
@@ -81,13 +100,16 @@ class ViewController: NSViewController {
         defaults.set(true, forKey: "JaredIsDisabled")
         updateTouchBarButton()
         
-        EnableDisableUIButton.isEnabled = false
+        EnableDisableUiButton.isEnabled = false
         EnableDisableButton.isEnabled = false
     }
     
     @IBOutlet weak var JaredStatusLabel: NSTextField!
-    @IBOutlet weak var EnableDisableUIButton: NSButton!
+    @IBOutlet weak var EnableDisableUiButton: NSButton!
     @IBOutlet weak var EnableDisableButton: NSButtonCell!
+    @IBOutlet weak var EnableDisableRestApiUiButton: NSButton!
+    @IBOutlet weak var RestApiStatusLabel: NSTextField!
+    @IBOutlet weak var RestApiStatusImage: NSImageView!
     @IBOutlet weak var statusImage: NSImageView!
     
     @IBAction func EnableDisableAction(_ sender: Any) {
@@ -98,6 +120,19 @@ class ViewController: NSViewController {
         }
         else {
             defaults.set(true, forKey: "JaredIsDisabled")
+        }
+        
+        updateTouchBarButton()
+    }
+    
+    @IBAction func EnableDisableRestApiAction(_ sender: Any) {
+        let defaults = UserDefaults.standard
+        
+        if (defaults.bool(forKey: "RestApiIsDisabled")) {
+            defaults.set(false, forKey: "RestApiIsDisabled")
+        }
+        else {
+            defaults.set(true, forKey: "RestApiIsDisabled")
         }
         
         updateTouchBarButton()

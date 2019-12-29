@@ -2,5 +2,8 @@
 	"routes": {
 	},
     "webhooks": [
-    ]
+    ],
+    "webserver": {
+        "port": 3000
+    }
 }

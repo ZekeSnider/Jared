@@ -37,7 +37,8 @@ Telegraph is a Secure Web Server for iOS, tvOS and macOS written in Swift.
 
 ## Versions
 
-- Swift 4.2: [master branch](https://github.com/Building42/Telegraph/tree/master)
+- Swift 5.0: [master branch](https://github.com/Building42/Telegraph/tree/master)
+- Swift 4.2: [swift-4.2 branch](https://github.com/Building42/Telegraph/tree/swift-4.2)
 - Swift 4.0: [swift-4 branch](https://github.com/Building42/Telegraph/tree/swift-4)
 - Swift 3.0: [swift-3 branch](https://github.com/Building42/Telegraph/tree/swift-3)
 
@@ -72,7 +73,7 @@ You can build the Telegraph framework and the examples with these steps:
 
 1. install [Carthage](https://github.com/Carthage/Carthage) using Homebrew
 2. clone the repository
-3. run `carthage bootstrap`
+3. run `carthage bootstrap --use-submodules --no-build`
 4. open Telegraph.xcworkspace, select a scheme and build
 
 This is only necessary if you want to make changes to the framework or try out the examples.
@@ -217,6 +218,33 @@ public class HTTPAppDetailsHandler: HTTPRequestHandler {
   }
 }
 ```
+
+### HTTP: Cross-Origin Resource Sharing (CORS)
+
+The CORS mechanism controls which sites will have permission to access the resources of your server. You can set CORS by sending the `Access-Control-Allow-Origin` header to the client. For development purposes it can be useful to allow all sites with the `*` value.
+
+```swift
+response.headers.accessControlAllowOrigin = "*"
+```
+
+If you want to make it a bit fancier, you can create a handler:
+
+```swift
+public class HTTPCORSHandler: HTTPRequestHandler {
+  public func respond(to request: HTTPRequest, nextHandler: HTTPRequest.Handler) throws -> HTTPResponse? {
+    let response = try nextHandler(request)
+
+    // Add access control header for GET requests
+    if request.method == .GET {
+      response?.headers.accessControlAllowOrigin = "*"
+    }
+
+    return response
+  }
+}
+```
+
+For increased security you can add additional checks, dig down into the request, and send back different CORS headers for different clients.
 
 ### HTTP: Client
 
@@ -365,7 +393,7 @@ If your app is send to the background or if the device goes on standby you typic
 
 ### What about HTTP/2 support?
 
-Ever wondered how the remote server knows that your browser is HTTP/2 compatible? During TLS negotiation, the application-layer protocol negotation (ALPN) extension field contains "h2" to signal that HTTP/2 is going be used. Apple doesn't offer any (public) methods in Secure Transport or CFNetwork to configure ALPN extensions. A secure HTTP/2 iOS implementation is therefor not possible at the moment.
+Ever wondered how the remote server knows that your browser is HTTP/2 compatible? During TLS negotiation, the application-layer protocol negotiation (ALPN) extension field contains "h2" to signal that HTTP/2 is going be used. Apple doesn't offer any (public) methods in Secure Transport or CFNetwork to configure ALPN extensions. A secure HTTP/2 iOS implementation is therefor not possible at the moment.
 
 ### Can I use this in my Objective-C project?
 

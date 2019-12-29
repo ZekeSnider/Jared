@@ -1,19 +1,20 @@
+//
+//  MessageRequest.swift
+//  Jared
+//
+//  Created by Zeke Snider on 12/28/19.
+//  Copyright © 2019 Zeke Snider. All rights reserved.
+//
+
 import Foundation
-import Telegraph
 import JaredFramework
 
-let server = Server()
-
-func initWebServer() {
-    server.route(.POST, "message", handleGreeting)
-    try! server.start(port: 9000)
-}
-
+// Struct that defines what parameters are accepted in requests
 public struct MessageRequest: Decodable {
     public var body: MessageBody
     public var recipient: RecipientEntity
     
-    enum CodingKeys : String, CodingKey{
+    enum CodingKeys : String, CodingKey {
         case body
         case recipient
     }
@@ -41,16 +42,4 @@ public struct MessageRequest: Decodable {
             throw ParameterError.runtimeError("the recipient parameter is incorrectly formatted")
         }
     }
-    
-}
-
-func handleGreeting(request: HTTPRequest) -> HTTPResponse {
-    do {
-        let parsedBody = try JSONDecoder().decode(MessageRequest.self, from: request.body)
-//      Jared.Send
-    } catch {
-        return HTTPResponse(HTTPStatus(code: 400), headers: HTTPHeaders(), content: error.localizedDescription)
-    }
-    
-    return HTTPResponse(content: "Hello")
 }

@@ -10,12 +10,12 @@ import Foundation
 
 public extension Data {
   /// The bytes for carriage return, line feed.
-  static let crlf = Data(bytes: [0xD, 0xA])
+  static let crlf = Data([0xD, 0xA])
 
   /// Creates data with a random set of bytes.
   init(randomNumberOfBytes count: Int) {
     self.init(count: count)
-    withUnsafeMutableBytes { _ = SecRandomCopyBytes(kSecRandomDefault, count, $0) }
+    withUnsafeMutableBytes { _ = SecRandomCopyBytes(kSecRandomDefault, count, $0.baseAddress!) }
   }
 
   /// An hexadecimal string representation of the bytes.
@@ -36,8 +36,8 @@ public extension Data {
   /// Masks the contents of the data with the provided mask bytes.
   mutating func mask(with maskBytes: [UInt8]) {
     let maskSize = maskBytes.count
-    for i in 0..<count {
-      self[i] ^= maskBytes[i % maskSize]
+    for index in 0..<count {
+      self[index] ^= maskBytes[index % maskSize]
     }
   }
 }

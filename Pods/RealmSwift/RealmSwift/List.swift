@@ -69,7 +69,7 @@ public final class List<Element: RealmCollectionValue>: ListBase {
 
     /// Creates a `List` that holds Realm model objects of type `Element`.
     public override init() {
-        super.init(array: Element._rlmArray())
+        super.init()
     }
 
     internal init(rlmArray: RLMArray<AnyObject>) {
@@ -438,6 +438,11 @@ public final class List<Element: RealmCollectionValue>: ListBase {
             block(RealmCollectionChange.fromObjc(value: self, change: change, error: error))
         }
     }
+
+    // swiftlint:disable:next identifier_name
+    @objc class func _unmanagedArray() -> RLMArray<AnyObject> {
+        return Element._rlmArray()
+    }
 }
 
 extension List where Element: MinMaxType {
@@ -481,6 +486,12 @@ extension List: RealmCollection {
     /// Returns a `RLMIterator` that yields successive elements in the `List`.
     public func makeIterator() -> RLMIterator<Element> {
         return RLMIterator(collection: _rlmArray)
+    }
+
+    /// :nodoc:
+    // swiftlint:disable:next identifier_name
+    public func _asNSFastEnumerator() -> Any {
+        return _rlmArray
     }
 
 #if swift(>=4)
@@ -576,7 +587,6 @@ extension List: MutableCollection {
         guard number <= count else {
             throwRealmException("It is not possible to remove more objects (\(number)) from a list"
                 + " than it already contains (\(count)).")
-            return
         }
         for _ in 0..<number {
             _rlmArray.removeObject(at: 0)
@@ -594,7 +604,6 @@ extension List: MutableCollection {
         guard number <= count else {
             throwRealmException("It is not possible to remove more objects (\(number)) from a list"
                 + " than it already contains (\(count)).")
-            return
         }
         for _ in 0..<number {
             _rlmArray.removeLastObject()
@@ -705,19 +714,29 @@ extension List: RangeReplaceableCollection {
         _rlmArray.removeLastObject()
     }
 
-#if swift(>=3.2)
-    // The issue described below is fixed in Swift 3.2 and above.
-#else
-    // These should not be necessary, but Swift 3.1's compiler fails to infer the `SubSequence`,
-    // and the standard library neglects to provide the default implementation of `subscript`
-    /// :nodoc:
-    public typealias SubSequence = RangeReplaceableRandomAccessSlice<List>
-
-    /// :nodoc:
-    public subscript(slice: Range<Int>) -> SubSequence {
-        return SubSequence(base: self, bounds: slice)
-    }
+}
 #endif
+
+// MARK: - Codable
+
+#if swift(>=4.1)
+extension List: Decodable where Element: Decodable {
+    public convenience init(from decoder: Decoder) throws {
+        self.init()
+        var container = try decoder.unkeyedContainer()
+        while !container.isAtEnd {
+            append(try container.decode(Element.self))
+        }
+    }
+}
+
+extension List: Encodable where Element: Encodable {
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.unkeyedContainer()
+        for value in self {
+            try container.encode(value)
+        }
+    }
 }
 #endif
 
@@ -732,10 +751,4 @@ extension List: AssistedObjectiveCBridgeable {
     internal var bridged: (objectiveCValue: Any, metadata: Any?) {
         return (objectiveCValue: _rlmArray, metadata: nil)
     }
-}
-// MARK: - Unavailable
-
-extension List {
-    @available(*, unavailable, renamed: "remove(at:)")
-    public func remove(objectAtIndex: Int) { fatalError() }
 }

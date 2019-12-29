@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/ZekeSnider/Jared.svg?branch=master)](https://travis-ci.org/ZekeSnider/Jared)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-[![Swift 4.0](https://img.shields.io/badge/Swift-4.2-orange.svg?style=flat)](https://developer.apple.com/swift/)
+[![Swift 4.2](https://img.shields.io/badge/Swift-4.2-orange.svg?style=flat)](https://developer.apple.com/swift/)
 
 <a name='Jared'/>
 
@@ -34,8 +34,15 @@ This is required because of macOS permissions that limit access to the messages 
 
 3. Run Jared.app
 
-4. Grant access to contacts
+4. (Optional) Grant access to contacts
 You can (optionally) allow Jared access to your contacts so that it can provide and update names of contacts. The contacts are used to set/retrieve names only. Nothing is sent to any server.
+
+5. (Optional) Allow inbound network connections
+If you have a firewall enabled on your mac, and you wish to use the REST API, you will need to allow Jared to accept inbound network connections as necessary. 
+
+6. Grant access to automate Messages
+If you are running macOS Catalina or later, you may see a system dialog requesting access to automate message when using Jared. This allows Jared to send messages.
+
 
 Once you have Jared setup you can type `/help` to get a list of commands. `/help,[command name]` will give you specific information. Use `/reload` to reload plugins.
 
@@ -57,9 +64,11 @@ For reference, here is a list of the commands built in to Jared. Because functio
 ### Configuration  
 A configuration file is located at `~/Library/Application Support/Jared/config.json` which enables disabling of commands if desired. See [config-sample.json](config-sample.json) for an example.
 
+## REST API
+Jared contains a web server with a REST API that can be enabled. For more information, [check out the REST API documentation](restapi.md).
 
 ## Webhooks
-Jared supports webhooks for sending metadata about incoming and outgoing messages. To configure webhooks, add them to the `config.json` mentioned above. For more info on the webhooks api, [check out the documentation](webhooks.md).
+Jared supports webhooks for sending metadata about incoming and outgoing messages. To configure webhooks, add them to the `config.json` mentioned above. For more info on the webhooks api, [check out the webhook documentation](webhooks.md).
 
 ## Plugins  
 Plugins are loaded dynamically from the `~/Library/Application Support/Jared/Plugins` folder. To install a module, drag it in there and then send `/reload` to Jared. 

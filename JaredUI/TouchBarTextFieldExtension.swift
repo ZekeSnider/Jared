@@ -10,7 +10,6 @@ import Foundation
 import Cocoa
 
 extension NSTextView {
-    
     @available(OSX 10.12.2, *)
     override open func makeTouchBar() -> NSTouchBar? {
         
