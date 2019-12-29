@@ -36,7 +36,7 @@ class WebhookTests: XCTestCase {
         
         // Not ideal but didn't want to plumb in a callback yet because
         // it's not used in the impl.
-        sleep(2)
+        sleep(5)
         
         XCTAssert(URLProtocolMock.matchedDataURLs.count == 1, "Webhooks were requested")
         
@@ -52,7 +52,7 @@ class WebhookTests: XCTestCase {
         
         webhookManager.notify(message: SAMPLE_MESSAGE)
         
-        sleep(2)
+        sleep(5)
         
         XCTAssert(URLProtocolMock.matchedDataURLs.count == 2, "Webhooks were requested after configuration change")
     }
