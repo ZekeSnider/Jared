@@ -53,15 +53,10 @@ class DatabaseHandler {
     }
     
     private func backgroundAction() {
-        let elapsed = queryNewRecords()
-        
-        guard (!shouldExitThread) else { return }
-        
-        if (elapsed < refreshSeconds) {
+        while shouldExitThread == false {
+            let elapsed = queryNewRecords()
             Thread.sleep(forTimeInterval: refreshSeconds - elapsed)
         }
-        
-        backgroundAction()
     }
     
     private func getCurrentMaxRecordID() -> String {
