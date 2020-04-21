@@ -30,11 +30,15 @@
 		B36563EF1F3D68980064B114 /* TouchBarTextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36563EE1F3D68980064B114 /* TouchBarTextFieldExtension.swift */; };
 		B375A65921EB14470073F09F /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B375A65821EB14470073F09F /* AboutViewController.swift */; };
 		B37E82821FA85B210069E15D /* SendTextSingleBuddy.scpt in Resources */ = {isa = PBXBuildFile; fileRef = B37E82811FA85B210069E15D /* SendTextSingleBuddy.scpt */; };
-		B39A65E01CC1FB1B003E26B0 /* Routing.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39A65DF1CC1FB1B003E26B0 /* Routing.swift */; };
+		B39A65E01CC1FB1B003E26B0 /* PluginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39A65DF1CC1FB1B003E26B0 /* PluginManager.swift */; };
 		B39F2B391CB3BCA700C0D35C /* SendText.scpt in Resources */ = {isa = PBXBuildFile; fileRef = B39F2B381CB3BCA700C0D35C /* SendText.scpt */; };
 		B3A4C61423B867E300B7F009 /* MessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A4C61323B867E300B7F009 /* MessageRequest.swift */; };
 		B3AECB5F2207CE33003E32F8 /* JaredFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F84B61F1CC506790059A82B /* JaredFramework.framework */; };
 		B3BBA7D11CB3284A00E1749C /* CoreModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39EC17D1CB01FEF002C3161 /* CoreModule.swift */; };
+		B3BF17C2244EBE9A00CC44C5 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BF17C1244EBE9A00CC44C5 /* Router.swift */; };
+		B3BF17C4244EBF4900CC44C5 /* InternalModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BF17C3244EBF4900CC44C5 /* InternalModule.swift */; };
+		B3BF17C6244EC47700CC44C5 /* MessageDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BF17C5244EC47700CC44C5 /* MessageDelegate.swift */; };
+		B3BF17C8244ECC0E00CC44C5 /* PluginManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BF17C7244EC89200CC44C5 /* PluginManagerDelegate.swift */; };
 		B3C59284224DD17900116ECB /* JaredWebServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C59283224DD17900116ECB /* JaredWebServer.swift */; };
 		B3EF1DA02206849000953DE7 /* WebHookManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3327DC522066427009DD882 /* WebHookManager.swift */; };
 		B3EF1DA4220687DD00953DE7 /* URLProtocolMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3EF1DA3220687DD00953DE7 /* URLProtocolMock.swift */; };
@@ -115,7 +119,7 @@
 		B3774D4E2424AFEB00F02F62 /* JaredDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = JaredDebug.entitlements; sourceTree = "<group>"; };
 		B37E82801FA85B170069E15D /* SendImageSingleBuddy.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = SendImageSingleBuddy.scpt; sourceTree = "<group>"; };
 		B37E82811FA85B210069E15D /* SendTextSingleBuddy.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = SendTextSingleBuddy.scpt; sourceTree = "<group>"; };
-		B39A65DF1CC1FB1B003E26B0 /* Routing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Routing.swift; sourceTree = "<group>"; };
+		B39A65DF1CC1FB1B003E26B0 /* PluginManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PluginManager.swift; sourceTree = "<group>"; };
 		B39EC1751CB01F55002C3161 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Message.swift; path = ../Jared/Message.swift; sourceTree = "<group>"; };
 		B39EC17D1CB01FEF002C3161 /* CoreModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreModule.swift; sourceTree = "<group>"; };
 		B39F2B381CB3BCA700C0D35C /* SendText.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = SendText.scpt; sourceTree = "<group>"; };
@@ -123,6 +127,10 @@
 		B3BBA7CC1CB3259A00E1749C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/CoreStrings.strings; sourceTree = "<group>"; };
 		B3BBA7CF1CB327C200E1749C /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
 		B3BBA7D01CB327C200E1749C /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/CoreStrings.strings; sourceTree = "<group>"; };
+		B3BF17C1244EBE9A00CC44C5 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		B3BF17C3244EBF4900CC44C5 /* InternalModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternalModule.swift; sourceTree = "<group>"; };
+		B3BF17C5244EC47700CC44C5 /* MessageDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDelegate.swift; sourceTree = "<group>"; };
+		B3BF17C7244EC89200CC44C5 /* PluginManagerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginManagerDelegate.swift; sourceTree = "<group>"; };
 		B3C59283224DD17900116ECB /* JaredWebServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JaredWebServer.swift; sourceTree = "<group>"; };
 		B3EF1DA3220687DD00953DE7 /* URLProtocolMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLProtocolMock.swift; sourceTree = "<group>"; };
 		B3EF1DA52206DFEA00953DE7 /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
@@ -212,14 +220,6 @@
 			path = JaredUI;
 			sourceTree = "<group>";
 		};
-		B3327DC922068151009DD882 /* Tests */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Tests;
-			path = Jared;
-			sourceTree = "<group>";
-		};
 		B3327DCF22068176009DD882 /* JaredTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -235,7 +235,6 @@
 			isa = PBXGroup;
 			children = (
 				B33278511CB2C94700BBDD3A /* AppKit.framework */,
-				B3327DC922068151009DD882 /* Tests */,
 				B39EC1741CB01F55002C3161 /* Jared */,
 				B33278781CB2CB1300BBDD3A /* JaredUI */,
 				7F84B6201CC506790059A82B /* JaredFramework */,
@@ -265,7 +264,8 @@
 				B39F2B381CB3BCA700C0D35C /* SendText.scpt */,
 				B37E82811FA85B210069E15D /* SendTextSingleBuddy.scpt */,
 				B361EEBA1F1DE24C0041113C /* config.json */,
-				B39A65DF1CC1FB1B003E26B0 /* Routing.swift */,
+				B3BF17C1244EBE9A00CC44C5 /* Router.swift */,
+				B39A65DF1CC1FB1B003E26B0 /* PluginManager.swift */,
 				B3327DC522066427009DD882 /* WebHookManager.swift */,
 				B3327DC32206607B009DD882 /* ContactHelper.swift */,
 				B3C59283224DD17900116ECB /* JaredWebServer.swift */,
@@ -273,6 +273,7 @@
 				B35CE7142196AD4E002F52A7 /* DatabaseHandler.swift */,
 				7F0E931C1D02FC250096BABE /* Global.swift */,
 				B3BBA7CD1CB3259A00E1749C /* CoreStrings.strings */,
+				B3BF17C9244ED26800CC44C5 /* Delegates */,
 				B39EC17C1CB01FDD002C3161 /* Modules */,
 				7FE220EC1CB3C8340081CE23 /* podfile */,
 			);
@@ -283,9 +284,19 @@
 			isa = PBXGroup;
 			children = (
 				B316D1A51F3FFDF100AFF063 /* CoreModuleRealm.swift */,
+				B3BF17C3244EBF4900CC44C5 /* InternalModule.swift */,
 				B39EC17D1CB01FEF002C3161 /* CoreModule.swift */,
 			);
 			name = Modules;
+			sourceTree = "<group>";
+		};
+		B3BF17C9244ED26800CC44C5 /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				B3BF17C5244EC47700CC44C5 /* MessageDelegate.swift */,
+				B3BF17C7244EC89200CC44C5 /* PluginManagerDelegate.swift */,
+			);
+			name = Delegates;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -544,16 +555,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3BF17C8244ECC0E00CC44C5 /* PluginManagerDelegate.swift in Sources */,
 				B3A4C61423B867E300B7F009 /* MessageRequest.swift in Sources */,
-				B39A65E01CC1FB1B003E26B0 /* Routing.swift in Sources */,
+				B39A65E01CC1FB1B003E26B0 /* PluginManager.swift in Sources */,
 				B3BBA7D11CB3284A00E1749C /* CoreModule.swift in Sources */,
 				B36563EF1F3D68980064B114 /* TouchBarTextFieldExtension.swift in Sources */,
 				B35CE7152196AD4E002F52A7 /* DatabaseHandler.swift in Sources */,
+				B3BF17C6244EC47700CC44C5 /* MessageDelegate.swift in Sources */,
 				B3327DC42206607B009DD882 /* ContactHelper.swift in Sources */,
 				B332787C1CB2CB1300BBDD3A /* ViewController.swift in Sources */,
 				B3327DC622066427009DD882 /* WebHookManager.swift in Sources */,
 				B332787A1CB2CB1300BBDD3A /* AppDelegate.swift in Sources */,
+				B3BF17C4244EBF4900CC44C5 /* InternalModule.swift in Sources */,
 				B316D1A61F3FFDF100AFF063 /* CoreModuleRealm.swift in Sources */,
+				B3BF17C2244EBE9A00CC44C5 /* Router.swift in Sources */,
 				B375A65921EB14470073F09F /* AboutViewController.swift in Sources */,
 				7F0E931D1D02FC250096BABE /* Global.swift in Sources */,
 				B3C59284224DD17900116ECB /* JaredWebServer.swift in Sources */,

@@ -147,7 +147,7 @@ class ViewController: NSViewController {
     }
     @IBAction func ReloadButtonPressed(_ sender: Any) {
         if let appDelegate = NSApplication.shared.delegate as? AppDelegate {
-            appDelegate.Router.reloadPlugins()
+            appDelegate.Router.reload()
         }
     }
     

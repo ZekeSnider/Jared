@@ -11,7 +11,7 @@ import Contacts
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
-    var Router = MessageRouting()
+    var Router = PluginManager()
     var Server = JaredWebServer()
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {

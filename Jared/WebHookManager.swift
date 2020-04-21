@@ -9,7 +9,7 @@
 import Foundation
 import JaredFramework
 
-class WebHookManager {
+class WebHookManager: MessageDelegate {
     var urlSession: URLSession?
     var webhooks: [String]?
     
@@ -18,7 +18,7 @@ class WebHookManager {
         urlSession = URLSession(configuration: session)
     }
     
-    public func notify(message: Message) {
+    public func didProcess(message: Message) {
         let webhookBody = WebHookManager.createWebhookBody(message)
         // loop over all webhooks, if the list is null, do nothing.
         for webhookBase in webhooks ?? [] {

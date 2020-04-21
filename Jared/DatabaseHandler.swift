@@ -189,7 +189,7 @@ class DatabaseHandler {
                 }
                 
                 let message = Message(body: TextBody(text), date: Date(timeIntervalSince1970: epochDate), sender: sender, recipient: recipient)
-                appDelegate.Router.route(message: message)
+                appDelegate.Router.router.route(message: message)
             }
         }
         
