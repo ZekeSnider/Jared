@@ -10,6 +10,57 @@ import Foundation
 import Cocoa
 import JaredFramework
 
+extension RoutingModule {
+    var fullDescription: String {
+        var documentation = ""
+        documentation += String(describing: type(of: self))
+        documentation += ": "
+        documentation += self.description
+        documentation += "\n==============\n"
+        
+        documentation += self.routes
+            .map{route in route.condenseDocumentation}
+            .joined(separator: "\n")
+        
+        return documentation
+    }
+}
+extension Route {
+    var condenseDocumentation: String {
+        var documentation = ""
+        documentation += self.name
+        documentation += ": "
+        
+        if let aRouteDescription = self.description {
+            documentation += aRouteDescription
+        }
+        return documentation
+    }
+    var fullDescription: String {
+        get {
+            var documentation = "Command: "
+            documentation += self.name
+            documentation += "\n===========\n"
+            if self.description != nil {
+                documentation += self.description!
+            }
+            else {
+                documentation += "Description not provided."
+            }
+            documentation += "\n\n"
+            if let parameterString = self.parameterSyntax {
+                documentation += "Parameters: "
+                documentation += parameterString
+            }
+            else {
+                documentation += "The developer of this route did not provide parameter documentation."
+            }
+            
+            return documentation
+        }
+    }
+}
+
 class InternalModule: RoutingModule {
     var description: String = NSLocalizedString("InternalModule")
     var routes: [Route] = []
@@ -54,58 +105,17 @@ class InternalModule: RoutingModule {
             return
         }
         
-        var documentation: String = ""
-        for aModule in pluginManager!.getAllModules() {
-            documentation += String(describing: type(of: aModule))
-            documentation += ": "
-            documentation += aModule.description
-            documentation += "\n==============\n"
+        let documentation = pluginManager!.getAllModules()
+            .map{ module in module.fullDescription }
+            .joined(separator: "\n\n")
             
-            for aRoute in aModule.routes {
-                documentation += aRoute.name
-                documentation += ": "
-                
-                if let aRouteDescription = aRoute.description {
-                    documentation += aRouteDescription
-                    documentation += "\n"
-                }
-            }
-            documentation += "\n"
-        }
         Jared.Send(documentation, to: message.RespondTo())
     }
     
     private func singleDocumentation(_ routeName: String) -> String {
-        for aModule in pluginManager!.getAllModules() {
-            for aRoute in aModule.routes {
-                if aRoute.name.lowercased() == routeName.lowercased() {
-                    guard (pluginManager?.enabled(routeName: routeName) == true) else {
-                        return ""
-                    }
-                    
-                    var documentation = "Command: "
-                    documentation += routeName
-                    documentation += "\n===========\n"
-                    if aRoute.description != nil {
-                        documentation += aRoute.description!
-                    }
-                    else {
-                        documentation += "Description not provided."
-                    }
-                    documentation += "\n\n"
-                    if let parameterString = aRoute.parameterSyntax {
-                        documentation += "Parameters: "
-                        documentation += parameterString
-                    }
-                    else {
-                        documentation += "The developer of this route did not provide parameter documentation."
-                    }
-                    
-                    return documentation
-                }
-            }
-        }
-        return ""
+        return pluginManager!.getAllRoutes()
+            .first(where: { route in route.name.lowercased() == routeName.lowercased() })?
+            .fullDescription ?? ""
     }
     
     private func localized(_ key: String) -> String {
