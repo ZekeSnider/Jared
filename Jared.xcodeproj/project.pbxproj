@@ -39,6 +39,7 @@
 		B3BF17C4244EBF4900CC44C5 /* InternalModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BF17C3244EBF4900CC44C5 /* InternalModule.swift */; };
 		B3BF17C6244EC47700CC44C5 /* MessageDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BF17C5244EC47700CC44C5 /* MessageDelegate.swift */; };
 		B3BF17C8244ECC0E00CC44C5 /* PluginManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BF17C7244EC89200CC44C5 /* PluginManagerDelegate.swift */; };
+		B3BF17CA244FDA3F00CC44C5 /* MessageDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BF17C5244EC47700CC44C5 /* MessageDelegate.swift */; };
 		B3C59284224DD17900116ECB /* JaredWebServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C59283224DD17900116ECB /* JaredWebServer.swift */; };
 		B3EF1DA02206849000953DE7 /* WebHookManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3327DC522066427009DD882 /* WebHookManager.swift */; };
 		B3EF1DA4220687DD00953DE7 /* URLProtocolMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3EF1DA3220687DD00953DE7 /* URLProtocolMock.swift */; };
@@ -519,7 +520,8 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\n";
+			shellScript = "
+";
 		};
 		B65EBE7C4ECD972DBDA97E50 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -579,6 +581,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3BF17CA244FDA3F00CC44C5 /* MessageDelegate.swift in Sources */,
 				B3327DD8220682ED009DD882 /* WebhookTests.swift in Sources */,
 				B3EF1DB02206E4EB00953DE7 /* MessageTests.swift in Sources */,
 				B3EF1DA4220687DD00953DE7 /* URLProtocolMock.swift in Sources */,

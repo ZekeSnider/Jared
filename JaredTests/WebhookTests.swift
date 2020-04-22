@@ -32,7 +32,7 @@ class WebhookTests: XCTestCase {
         URLProtocolMock.testURLs = [url: Data(MESSAGE_SERIALIZED.utf8)]
         let webhookManager = WebHookManager(webhooks: [WEBHOOK_TEST_URL], session: config)
         
-        webhookManager.notify(message: SAMPLE_MESSAGE)
+        webhookManager.didProcess(message: SAMPLE_MESSAGE)
         
         // Not ideal but didn't want to plumb in a callback yet because
         // it's not used in the impl.
@@ -50,7 +50,7 @@ class WebhookTests: XCTestCase {
         ]
         URLProtocolMock.matchedDataURLs = []
         
-        webhookManager.notify(message: SAMPLE_MESSAGE)
+        webhookManager.didProcess(message: SAMPLE_MESSAGE)
         
         sleep(5)
         
