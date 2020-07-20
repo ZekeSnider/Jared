@@ -17,6 +17,7 @@
 		7F84B62E1CC511B80059A82B /* CoreStrings.strings in Resources */ = {isa = PBXBuildFile; fileRef = B3BBA7CD1CB3259A00E1749C /* CoreStrings.strings */; };
 		7FE220ED1CB3C8340081CE23 /* podfile in Resources */ = {isa = PBXBuildFile; fileRef = 7FE220EC1CB3C8340081CE23 /* podfile */; };
 		7FF077EB1CBCFFCB008E33CB /* SendImage.scpt in Resources */ = {isa = PBXBuildFile; fileRef = 7FF077EA1CBCFFCB008E33CB /* SendImage.scpt */; };
+		B30F765624C5742800ADF57B /* SendTextUI.scpt in Resources */ = {isa = PBXBuildFile; fileRef = B30F765424C5740800ADF57B /* SendTextUI.scpt */; };
 		B316D1A61F3FFDF100AFF063 /* CoreModuleRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = B316D1A51F3FFDF100AFF063 /* CoreModuleRealm.swift */; };
 		B332787A1CB2CB1300BBDD3A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33278791CB2CB1300BBDD3A /* AppDelegate.swift */; };
 		B332787C1CB2CB1300BBDD3A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B332787B1CB2CB1300BBDD3A /* ViewController.swift */; };
@@ -100,6 +101,8 @@
 		7FE220EC1CB3C8340081CE23 /* podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		7FF077EA1CBCFFCB008E33CB /* SendImage.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = SendImage.scpt; sourceTree = "<group>"; };
 		8490C38E773007C8CC882DCB /* Pods-Jared.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Jared.release.xcconfig"; path = "Pods/Target Support Files/Pods-Jared/Pods-Jared.release.xcconfig"; sourceTree = "<group>"; };
+		B30F765424C5740800ADF57B /* SendTextUI.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = SendTextUI.scpt; sourceTree = "<group>"; };
+		B30F765724C574FD00ADF57B /* JaredRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = JaredRelease.entitlements; sourceTree = "<group>"; };
 		B316D1A51F3FFDF100AFF063 /* CoreModuleRealm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreModuleRealm.swift; sourceTree = "<group>"; };
 		B33278511CB2C94700BBDD3A /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		B33278771CB2CB1300BBDD3A /* Jared.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Jared.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -259,10 +262,12 @@
 		B39EC1741CB01F55002C3161 /* Jared */ = {
 			isa = PBXGroup;
 			children = (
+				B30F765724C574FD00ADF57B /* JaredRelease.entitlements */,
 				B3774D4E2424AFEB00F02F62 /* JaredDebug.entitlements */,
 				7FF077EA1CBCFFCB008E33CB /* SendImage.scpt */,
 				B37E82801FA85B170069E15D /* SendImageSingleBuddy.scpt */,
 				B39F2B381CB3BCA700C0D35C /* SendText.scpt */,
+				B30F765424C5740800ADF57B /* SendTextUI.scpt */,
 				B37E82811FA85B210069E15D /* SendTextSingleBuddy.scpt */,
 				B361EEBA1F1DE24C0041113C /* config.json */,
 				B3BF17C1244EBE9A00CC44C5 /* Router.swift */,
@@ -440,6 +445,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B30F765624C5742800ADF57B /* SendTextUI.scpt in Resources */,
 				7F84B62E1CC511B80059A82B /* CoreStrings.strings in Resources */,
 				B39F2B391CB3BCA700C0D35C /* SendText.scpt in Resources */,
 				B332787E1CB2CB1300BBDD3A /* Assets.xcassets in Resources */,
@@ -715,6 +721,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Jared/JaredRelease.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;

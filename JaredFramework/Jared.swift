@@ -9,6 +9,8 @@
 import Foundation
 
 public class Jared {
+    public static let useUIScripting = true
+  
     public static func Send(_ body: String, to recipient: RecipientEntity) {
         let me = Person(givenName: nil, handle: "", isMe: true)
         let message = Message(body: TextBody(body), date: Date(), sender: me, recipient: recipient)
@@ -30,7 +32,9 @@ public class Jared {
         var body: String?
         
         if let textBody = message.body as? TextBody {
-            if message.recipient is Person {
+			if useUIScripting {
+				scriptPath = Bundle.main.url(forResource: "SendTextUI", withExtension: "scpt")?.path
+			} else if message.recipient is Person {
                 scriptPath = Bundle.main.url(forResource: "SendTextSingleBuddy", withExtension: "scpt")?.path
             } else if message.recipient is Group {
                 scriptPath = Bundle.main.url(forResource: "SendText", withExtension: "scpt")?.path
