@@ -30,19 +30,27 @@ public class Jared {
         var body: String?
         
         if let textBody = message.body as? TextBody {
-            if message.recipient is Person {
-                scriptPath = Bundle.main.url(forResource: "SendTextSingleBuddy", withExtension: "scpt")?.path
-            } else if message.recipient is Group {
-                scriptPath = Bundle.main.url(forResource: "SendText", withExtension: "scpt")?.path
+            if #available(OSX 10.16, *) {
+                scriptPath = Bundle.main.url(forResource: "SendTextUI", withExtension: "scpt")?.path
+            } else {
+                if message.recipient is Person {
+                    scriptPath = Bundle.main.url(forResource: "SendTextSingleBuddy", withExtension: "scpt")?.path
+                } else if message.recipient is Group {
+                    scriptPath = Bundle.main.url(forResource: "SendText", withExtension: "scpt")?.path
+                }
             }
             
             recipient = message.recipient.handle
             body = textBody.message
         } else if let imageBody = message.body as? ImageBody {
-            if message.recipient is Person {
-                scriptPath = Bundle.main.url(forResource: "SendImageSingleBuddy", withExtension: "scpt")?.path
-            } else if message.recipient is Group {
-                scriptPath = Bundle.main.url(forResource: "SendImage", withExtension: "scpt")?.path
+            if #available(OSX 10.16, *) {
+                scriptPath = Bundle.main.url(forResource: "SendTextUI", withExtension: "scpt")?.path
+            } else {
+                if message.recipient is Person {
+                    scriptPath = Bundle.main.url(forResource: "SendImageSingleBuddy", withExtension: "scpt")?.path
+                } else if message.recipient is Group {
+                    scriptPath = Bundle.main.url(forResource: "SendImage", withExtension: "scpt")?.path
+                }
             }
             
             recipient = message.recipient.handle
@@ -54,9 +62,13 @@ public class Jared {
             task.launchPath = "/usr/bin/osascript"
             task.arguments = [scriptPath!, body!, recipient!]
             task.launch()
-            if whileBlocking {
+            
+            // Big Sur and later have to use UI scripting,
+            // so we need to block the thread.
+            if #available(OSX 10.16, *) {
                 task.waitUntilExit()
-                Thread.sleep(forTimeInterval: Double(5))
+            } else if whileBlocking {
+                task.waitUntilExit()
             }
         }
     }
