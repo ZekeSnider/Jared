@@ -22,8 +22,11 @@ class DatabaseHandler {
     var refreshSeconds = 5.0
     var authorizationError = false
     var statement: OpaquePointer? = nil
+	var router: Router?
     
-    init() {
+	init(router: Router) {
+		self.router = router
+		
         let databaseLocation = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask)[0].appendingPathComponent("Messages").appendingPathComponent("chat.db")
         
         if sqlite3_open(databaseLocation.path, &db) != SQLITE_OK {
@@ -112,7 +115,6 @@ class DatabaseHandler {
         var People = [Person]()
         
         while sqlite3_step(statement) == SQLITE_ROW {
-            
             guard let idcString = sqlite3_column_text(statement, 0) else {
                 break
             }
@@ -173,24 +175,20 @@ class DatabaseHandler {
             
             let buddyName = ContactHelper.RetreiveContact(handle: senderHandle)?.givenName
             let myName = ContactHelper.RetreiveContact(handle: destination)?.givenName
-            
-            if let appDelegate = NSApplication.shared.delegate as? AppDelegate {
-                let sender: Person
-                let recipient: RecipientEntity
-                
-                let group = retrieveGroupInfo(chatID: roomName)
-                
-                if (isFromMe) {
-                    sender = Person(givenName: myName, handle: destination, isMe: true)
-                    recipient = group ?? Person(givenName: buddyName, handle: senderHandle, isMe: false)
-                } else {
-                    sender = Person(givenName: buddyName, handle: senderHandle, isMe: false)
-                    recipient = group ?? Person(givenName: myName, handle: destination, isMe: true)
-                }
-                
-                let message = Message(body: TextBody(text), date: Date(timeIntervalSince1970: epochDate), sender: sender, recipient: recipient)
-                appDelegate.Router.router.route(message: message)
-            }
+			let sender: Person
+			let recipient: RecipientEntity
+			let group = retrieveGroupInfo(chatID: roomName)
+			
+			if (isFromMe) {
+				sender = Person(givenName: myName, handle: destination, isMe: true)
+				recipient = group ?? Person(givenName: buddyName, handle: senderHandle, isMe: false)
+			} else {
+				sender = Person(givenName: buddyName, handle: senderHandle, isMe: false)
+				recipient = group ?? Person(givenName: myName, handle: destination, isMe: true)
+			}
+			
+			let message = Message(body: TextBody(text), date: Date(timeIntervalSince1970: epochDate), sender: sender, recipient: recipient)
+			router?.route(message: message)
         }
         
         if sqlite3_finalize(statement) != SQLITE_OK {

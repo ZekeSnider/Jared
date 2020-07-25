@@ -34,10 +34,6 @@ class ViewController: NSViewController {
     
     override func viewDidAppear() {
         super.viewDidAppear()
-        let dbHandler = DatabaseHandler()
-        if (!dbHandler.authorizationError) {
-            dbHandler.start()
-        }
 
         if #available(OSX 10.12.2, *) {
             self.view.window?.unbind(NSBindingName(rawValue: #keyPath(touchBar))) // unbind first
