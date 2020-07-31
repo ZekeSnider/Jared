@@ -8,6 +8,45 @@
 
 import Foundation
 
+public struct Action: Encodable {
+	public var type: ActionType
+	
+	enum CodingKeys : String, CodingKey{
+        case type
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+		
+		try container.encode(type.hashValue, forKey: .type)
+	}
+}
+
+public enum ActionType {
+	case like
+	case love
+	case laugh
+	case exclaim
+	case question
+}
+
+public enum SendStyle {
+	case regular
+	case slam
+	case loud
+	case gentle
+	case invisibleInk
+	case echo
+	case spotlight
+	case balloons
+	case confetti
+	case love
+	case lasers
+	case fireworks
+	case shootingStar
+	case celebration
+}
+
 public struct Message: Encodable {
     public var body: MessageBody
     public var date: Date?
