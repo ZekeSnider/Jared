@@ -30,21 +30,22 @@ public enum ActionType {
 	case question
 }
 
-public enum SendStyle {
-	case regular
-	case slam
-	case loud
-	case gentle
-	case invisibleInk
-	case echo
-	case spotlight
-	case balloons
-	case confetti
-	case love
-	case lasers
-	case fireworks
-	case shootingStar
-	case celebration
+public enum SendStyle: String {
+	case regular = "regular"
+	case slam = "slam"
+	case loud = "loud"
+	case gentle = "gentle"
+	case invisibleInk = "invisible ink"
+	case echo = "echo"
+	case spotlight = "spotlight"
+	case balloons = "balloons"
+	case confetti = "confetti"
+	case love = "love"
+	case lasers = "lasers"
+	case fireworks = "fireworks"
+	case shootingStar = "shooting star"
+	case celebration = "celebration"
+	case unknown = "unknown"
 }
 
 public struct Message: Encodable {
@@ -53,6 +54,7 @@ public struct Message: Encodable {
     public var sender: SenderEntity
     public var recipient: RecipientEntity
 	public var attachments: [Attachment]
+	public var sendStyle: SendStyle
     
     enum CodingKeys : String, CodingKey{
         case date
@@ -60,6 +62,7 @@ public struct Message: Encodable {
         case sender
         case recipient
 		case attachments
+		case sendStyle
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -90,16 +93,52 @@ public struct Message: Encodable {
             try container.encode(formatter.string(from: notOptionalDate), forKey: .date)
         }
 		
+		try container.encode(sendStyle.rawValue, forKey: .sendStyle)
 		try container.encode(attachments, forKey: .attachments)
     }
+	
+//	public init (body: MessageBody, date: Date, sender: SenderEntity, recipient: RecipientEntity, attachments: [Attachment]) {
+//		self.init(body: body, date: date, sender: sender, recipient: recipient, attachments: attachments, sendStyle: nil)
+//	}
     
-	public init (body: MessageBody, date: Date, sender: SenderEntity, recipient: RecipientEntity, attachments: [Attachment]) {
+	public init (body: MessageBody, date: Date, sender: SenderEntity, recipient: RecipientEntity, attachments: [Attachment] = [], sendStyle: String? = nil) {
         self.body = body
         self.recipient = recipient
         self.sender = sender
         self.date = date
 		self.attachments = attachments
+		self.sendStyle = Message.getSendStyle(from: sendStyle)
     }
+	
+	private static func getSendStyle(from sendStyleString: String?) -> SendStyle {
+		guard let sendStyleString = sendStyleString else { return .regular }
+		switch(sendStyleString) {
+		case "com.apple.messages.effect.CKShootingStarEffect":
+			return .shootingStar
+		case "com.apple.messages.effect.CKLasersEffect":
+			return .lasers
+		case "com.apple.messages.effect.CKHeartEffect":
+			return .love
+		case "com.apple.messages.effect.CKHappyBirthdayEffect":
+			return .confetti
+		case "com.apple.messages.effect.CKFireworksEffect":
+			return .fireworks
+		case "com.apple.messages.effect.CKConfettiEffect":
+			return .confetti
+		case "com.apple.MobileSMS.expressivesend.loud":
+			return .loud
+		case "com.apple.MobileSMS.expressivesend.invisibleink":
+			return .invisibleInk
+		case "com.apple.MobileSMS.expressivesend.gentle":
+			return .gentle
+		case "com.apple.messages.effect.CKEchoEffect":
+			return .echo
+		case "com.apple.MobileSMS.expressivesend.impact":
+			return .slam
+		default:
+			return .unknown
+		}
+	}
     
     public func RespondTo() -> RecipientEntity {
         if let senderPerson = sender as? Person {
