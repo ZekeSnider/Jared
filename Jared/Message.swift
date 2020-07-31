@@ -13,12 +13,14 @@ public struct Message: Encodable {
     public var date: Date?
     public var sender: SenderEntity
     public var recipient: RecipientEntity
+	public var attachments: [Attachment]
     
     enum CodingKeys : String, CodingKey{
         case date
         case body
         case sender
         case recipient
+		case attachments
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -48,13 +50,16 @@ public struct Message: Encodable {
             
             try container.encode(formatter.string(from: notOptionalDate), forKey: .date)
         }
+		
+		try container.encode(attachments, forKey: .attachments)
     }
     
-    public init (body: MessageBody, date: Date, sender: SenderEntity, recipient: RecipientEntity) {
+	public init (body: MessageBody, date: Date, sender: SenderEntity, recipient: RecipientEntity, attachments: [Attachment]) {
         self.body = body
         self.recipient = recipient
         self.sender = sender
         self.date = date
+		self.attachments = attachments
     }
     
     public func RespondTo() -> RecipientEntity {

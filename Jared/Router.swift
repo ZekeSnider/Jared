@@ -47,7 +47,7 @@ class Router {
                             let url = (messageText.message as NSString).substring(with: match.range)
                             for comparisonString in aComparison.1 {
                                 if url.contains(comparisonString) {
-                                    let urlMessage = Message(body: TextBody(url), date: myMessage.date ?? Date(), sender: myMessage.sender, recipient: myMessage.recipient)
+                                    let urlMessage = Message(body: TextBody(url), date: myMessage.date ?? Date(), sender: myMessage.sender, recipient: myMessage.recipient, attachments: [])
                                     aRoute.call(urlMessage)
                                 }
                             }

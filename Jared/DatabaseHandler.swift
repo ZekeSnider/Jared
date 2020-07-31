@@ -127,20 +127,68 @@ class DatabaseHandler {
         return Group(name: "", handle: handle, participants: People)
     }
     
-    private func unwrapStringColumn(at column: Int32) -> String? {
-        if let cString = sqlite3_column_text(statement, column) {
+	private func unwrapStringColumn(for sqlStatement: OpaquePointer?, at column: Int32) -> String? {
+        if let cString = sqlite3_column_text(sqlStatement, column) {
             return String(cString: cString)
         } else {
             return nil
         }
     }
+	
+	private func retrieveAttachments(forMessage messageID: String) -> [Attachment] {
+		let query = """
+        SELECT ROWID,
+        filename,
+        mime_type,
+        transfer_name,
+        is_sticker
+        FROM attachment
+        INNER JOIN message_attachment_join
+        ON attachment.ROWID = message_attachment_join.attachment_id
+        WHERE message_id = ?
+        """
+		
+		var attachmentStatement: OpaquePointer? = nil
+		
+		defer { attachmentStatement = nil }
+			   
+	   	if sqlite3_prepare_v2(db, query, -1, &attachmentStatement, nil) != SQLITE_OK {
+		   let errmsg = String(cString: sqlite3_errmsg(db)!)
+		   print("error preparing select: \(errmsg)")
+	   	}
+	   
+		if sqlite3_bind_text(attachmentStatement, 1, messageID, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+		   let errmsg = String(cString: sqlite3_errmsg(db)!)
+		   print("failure binding foo: \(errmsg)")
+	   	}
+		
+		var attachments = [Attachment]()
+		
+		while sqlite3_step(attachmentStatement) == SQLITE_ROW {
+			guard let rowID = unwrapStringColumn(for: attachmentStatement, at: 0) else { continue }
+			guard let fileName = unwrapStringColumn(for: attachmentStatement, at: 1) else { continue }
+			guard let mimeType = unwrapStringColumn(for: attachmentStatement, at: 2) else { continue }
+			guard let transferName = unwrapStringColumn(for: attachmentStatement, at: 3) else { continue }
+            let isSticker = sqlite3_column_int(attachmentStatement, 4) == 1
+			
+			attachments.append(Attachment(id: Int(rowID)!, filePath: fileName, mimeType: mimeType, fileName: transferName, isSticker: isSticker))
+        }
+        
+        if sqlite3_finalize(attachmentStatement) != SQLITE_OK {
+            let errmsg = String(cString: sqlite3_errmsg(db)!)
+            print("error finalizing prepared statement: \(errmsg)")
+        }
+		
+		return attachments
+	}
     
     private func queryNewRecords() -> Double {
         let start = Date()
         
         let query = """
             SELECT handle.id, message.text, message.ROWID, message.cache_roomnames, message.is_from_me, message.destination_caller_id,
-                message.date/1000000000 + strftime("%s", "2001-01-01")
+                message.date/1000000000 + strftime("%s", "2001-01-01"),
+                message.cache_has_attachments
                 FROM message INNER JOIN handle
                 ON message.handle_id = handle.ROWID
                 WHERE message.ROWID > ?
@@ -159,13 +207,14 @@ class DatabaseHandler {
         }
         
         while sqlite3_step(statement) == SQLITE_ROW {
-            let senderHandleOptional = unwrapStringColumn(at: 0)
-            let textOptional = unwrapStringColumn(at: 1)
-            let rowID = unwrapStringColumn(at: 2)
-            let roomName = unwrapStringColumn(at: 3)
+            let senderHandleOptional = unwrapStringColumn(for: statement, at: 0)
+            let textOptional = unwrapStringColumn(for: statement, at: 1)
+            let rowID = unwrapStringColumn(for: statement, at: 2)
+            let roomName = unwrapStringColumn(for: statement, at: 3)
             let isFromMe = sqlite3_column_int(statement, 4) == 1
-            let destinationOptional = unwrapStringColumn(at: 5)
+			let destinationOptional = unwrapStringColumn(for: statement, at: 5)
             let epochDate = TimeInterval(sqlite3_column_int64(statement, 6))
+			let hasAttachment = sqlite3_column_int(statement, 7) == 1
             
             querySinceID = rowID;
             
@@ -187,7 +236,8 @@ class DatabaseHandler {
 				recipient = group ?? Person(givenName: myName, handle: destination, isMe: true)
 			}
 			
-			let message = Message(body: TextBody(text), date: Date(timeIntervalSince1970: epochDate), sender: sender, recipient: recipient)
+			let message = Message(body: TextBody(text), date: Date(timeIntervalSince1970: epochDate), sender: sender, recipient: recipient, attachments: hasAttachment ? retrieveAttachments(forMessage: rowID ?? "") : [])
+			
 			router?.route(message: message)
         }
         
