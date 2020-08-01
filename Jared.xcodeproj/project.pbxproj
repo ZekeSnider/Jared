@@ -19,6 +19,9 @@
 		7FF077EB1CBCFFCB008E33CB /* SendImage.scpt in Resources */ = {isa = PBXBuildFile; fileRef = 7FF077EA1CBCFFCB008E33CB /* SendImage.scpt */; };
 		B30F765624C5742800ADF57B /* SendTextUI.scpt in Resources */ = {isa = PBXBuildFile; fileRef = B30F765424C5740800ADF57B /* SendTextUI.scpt */; };
 		B316D1A61F3FFDF100AFF063 /* CoreModuleRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = B316D1A51F3FFDF100AFF063 /* CoreModuleRealm.swift */; };
+		B32DE51524D51F9C00AB3A71 /* RouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32DE51424D51F9C00AB3A71 /* RouterTests.swift */; };
+		B32DE51624D522DA00AB3A71 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BF17C1244EBE9A00CC44C5 /* Router.swift */; };
+		B32DE51824D5231800AB3A71 /* PluginManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BF17C7244EC89200CC44C5 /* PluginManagerDelegate.swift */; };
 		B332787A1CB2CB1300BBDD3A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33278791CB2CB1300BBDD3A /* AppDelegate.swift */; };
 		B332787C1CB2CB1300BBDD3A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B332787B1CB2CB1300BBDD3A /* ViewController.swift */; };
 		B332787E1CB2CB1300BBDD3A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B332787D1CB2CB1300BBDD3A /* Assets.xcassets */; };
@@ -101,9 +104,10 @@
 		7FE220EC1CB3C8340081CE23 /* podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		7FF077EA1CBCFFCB008E33CB /* SendImage.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = SendImage.scpt; sourceTree = "<group>"; };
 		8490C38E773007C8CC882DCB /* Pods-Jared.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Jared.release.xcconfig"; path = "Pods/Target Support Files/Pods-Jared/Pods-Jared.release.xcconfig"; sourceTree = "<group>"; };
-		B30F765424C5740800ADF57B /* SendTextUI.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = SendTextUI.scpt; sourceTree = "<group>"; };
+		B30F765424C5740800ADF57B /* SendTextUI.scpt */ = {isa = PBXFileReference; lastKnownFileType = text; path = SendTextUI.scpt; sourceTree = "<group>"; };
 		B30F765724C574FD00ADF57B /* JaredRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = JaredRelease.entitlements; sourceTree = "<group>"; };
 		B316D1A51F3FFDF100AFF063 /* CoreModuleRealm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreModuleRealm.swift; sourceTree = "<group>"; };
+		B32DE51424D51F9C00AB3A71 /* RouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterTests.swift; sourceTree = "<group>"; };
 		B33278511CB2C94700BBDD3A /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		B33278771CB2CB1300BBDD3A /* Jared.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Jared.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B33278791CB2CB1300BBDD3A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -229,6 +233,7 @@
 			children = (
 				B3327DC722068147009DD882 /* WebhookTests.swift */,
 				B3EF1DAF2206E4EB00953DE7 /* MessageTests.swift */,
+				B32DE51424D51F9C00AB3A71 /* RouterTests.swift */,
 				B3EF1DA3220687DD00953DE7 /* URLProtocolMock.swift */,
 				B3327DD222068176009DD882 /* Info.plist */,
 			);
@@ -587,9 +592,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B32DE51824D5231800AB3A71 /* PluginManagerDelegate.swift in Sources */,
+				B32DE51624D522DA00AB3A71 /* Router.swift in Sources */,
 				B3BF17CA244FDA3F00CC44C5 /* MessageDelegate.swift in Sources */,
 				B3327DD8220682ED009DD882 /* WebhookTests.swift in Sources */,
 				B3EF1DB02206E4EB00953DE7 /* MessageTests.swift in Sources */,
+				B32DE51524D51F9C00AB3A71 /* RouterTests.swift in Sources */,
 				B3EF1DA4220687DD00953DE7 /* URLProtocolMock.swift in Sources */,
 				B3EF1DA02206849000953DE7 /* WebHookManager.swift in Sources */,
 			);

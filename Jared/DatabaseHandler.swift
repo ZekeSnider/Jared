@@ -16,6 +16,36 @@ import SQLite3
 import Contacts
 
 class DatabaseHandler {
+	private static let groupQuery = """
+		SELECT handle.id
+			FROM chat_handle_join INNER JOIN handle ON chat_handle_join.handle_id = handle.ROWID
+			INNER JOIN chat ON chat_handle_join.chat_id = chat.ROWID
+			WHERE chat_handle_join.chat_id = ?
+	"""
+	private static let attachmentQuery = """
+	SELECT ROWID,
+	filename,
+	mime_type,
+	transfer_name,
+	is_sticker
+	FROM attachment
+	INNER JOIN message_attachment_join
+	ON attachment.ROWID = message_attachment_join.attachment_id
+	WHERE message_id = ?
+	"""
+	private static let newRecordquery = """
+		SELECT handle.id, message.text, message.ROWID, message.cache_roomnames, message.is_from_me, message.destination_caller_id,
+			message.date/1000000000 + strftime("%s", "2001-01-01"),
+			message.cache_has_attachments,
+			message.expressive_send_style_id,
+			message.associated_message_type,
+			message.associated_message_guid
+			FROM message INNER JOIN handle
+			ON message.handle_id = handle.ROWID
+			WHERE message.ROWID > ?
+	"""
+	private static let maxRecordIDQuery = "SELECT MAX(rowID) FROM message"
+	
     var db: OpaquePointer?
     var querySinceID: String?
     var shouldExitThread = false
@@ -63,11 +93,10 @@ class DatabaseHandler {
     }
     
     private func getCurrentMaxRecordID() -> String {
-        let query = "SELECT MAX(rowID) FROM message"
         var id: String?
         var statement: OpaquePointer?
         
-        if sqlite3_prepare_v2(db, query, -1, &statement, nil) != SQLITE_OK {
+		if sqlite3_prepare_v2(db, DatabaseHandler.maxRecordIDQuery, -1, &statement, nil) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
             print("error preparing select: \(errmsg)")
         }
@@ -93,16 +122,9 @@ class DatabaseHandler {
             return nil
         }
         
-        let query = """
-            SELECT handle.id
-                FROM chat_handle_join INNER JOIN handle ON chat_handle_join.handle_id = handle.ROWID
-                INNER JOIN chat ON chat_handle_join.chat_id = chat.ROWID
-                WHERE chat_handle_join.chat_id = ?
-        """
-        
         var statement: OpaquePointer?
         
-        if sqlite3_prepare_v2(db, query, -1, &statement, nil) != SQLITE_OK {
+		if sqlite3_prepare_v2(db, DatabaseHandler.groupQuery, -1, &statement, nil) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
             print("error preparing select: \(errmsg)")
         }
@@ -136,23 +158,11 @@ class DatabaseHandler {
     }
 	
 	private func retrieveAttachments(forMessage messageID: String) -> [Attachment] {
-		let query = """
-        SELECT ROWID,
-        filename,
-        mime_type,
-        transfer_name,
-        is_sticker
-        FROM attachment
-        INNER JOIN message_attachment_join
-        ON attachment.ROWID = message_attachment_join.attachment_id
-        WHERE message_id = ?
-        """
-		
 		var attachmentStatement: OpaquePointer? = nil
 		
 		defer { attachmentStatement = nil }
 			   
-	   	if sqlite3_prepare_v2(db, query, -1, &attachmentStatement, nil) != SQLITE_OK {
+		if sqlite3_prepare_v2(db, DatabaseHandler.attachmentQuery, -1, &attachmentStatement, nil) != SQLITE_OK {
 		   let errmsg = String(cString: sqlite3_errmsg(db)!)
 		   print("error preparing select: \(errmsg)")
 	   	}
@@ -184,22 +194,9 @@ class DatabaseHandler {
     
     private func queryNewRecords() -> Double {
         let start = Date()
-        
-        let query = """
-            SELECT handle.id, message.text, message.ROWID, message.cache_roomnames, message.is_from_me, message.destination_caller_id,
-                message.date/1000000000 + strftime("%s", "2001-01-01"),
-                message.cache_has_attachments,
-                message.expressive_send_style_id,
-                message.associated_message_type,
-                message.associated_message_guid
-                FROM message INNER JOIN handle
-                ON message.handle_id = handle.ROWID
-                WHERE message.ROWID > ?
-        """
-        
         defer { statement = nil }
         
-        if sqlite3_prepare_v2(db, query, -1, &statement, nil) != SQLITE_OK {
+		if sqlite3_prepare_v2(db, DatabaseHandler.newRecordquery, -1, &statement, nil) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
             print("error preparing select: \(errmsg)")
         }

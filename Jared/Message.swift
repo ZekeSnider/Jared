@@ -106,10 +106,6 @@ public struct Message: Encodable {
 			try container.encode(action, forKey: .action)
 		}
     }
-	
-//	public init (body: MessageBody, date: Date, sender: SenderEntity, recipient: RecipientEntity, attachments: [Attachment]) {
-//		self.init(body: body, date: date, sender: sender, recipient: recipient, attachments: attachments, sendStyle: nil)
-//	}
     
 	public init (body: MessageBody, date: Date, sender: SenderEntity, recipient: RecipientEntity, attachments: [Attachment] = [], sendStyle: String? = nil, associatedMessageType: Int? = nil, associatedMessageGUID: String? = nil) {
         self.body = body
