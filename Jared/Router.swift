@@ -57,7 +57,6 @@ class Router {
 					  for comparisonString in aComparison.1 {
 						  if myLowercaseMessage.hasPrefix(comparisonString.lowercased()) {
 							  aRoute.call(myMessage)
-							  break RootLoop
 						  }
 					  }
 				  }
@@ -66,7 +65,6 @@ class Router {
 					  for comparisonString in aComparison.1 {
 						  if myLowercaseMessage.contains(comparisonString.lowercased()) {
 							  aRoute.call(myMessage)
-							  break RootLoop
 						  }
 					  }
 				  }
@@ -75,7 +73,6 @@ class Router {
 					  for comparisonString in aComparison.1 {
 						  if myLowercaseMessage == comparisonString.lowercased() {
 							  aRoute.call(myMessage)
-							  break RootLoop
 						  }
 					  }
 				  }

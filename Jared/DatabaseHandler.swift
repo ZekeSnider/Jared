@@ -57,7 +57,8 @@ class DatabaseHandler {
 	init(router: Router) {
 		self.router = router
 		
-        let databaseLocation = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask)[0].appendingPathComponent("Messages").appendingPathComponent("chat.db")
+        let databaseLocation = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask)[0]
+            .appendingPathComponent("Messages").appendingPathComponent("chat.db")
         
         if sqlite3_open(databaseLocation.path, &db) != SQLITE_OK {
             NSLog("Error opening SQLite database. Likely Full disk access error.")
@@ -169,7 +170,7 @@ class DatabaseHandler {
 	   
 		if sqlite3_bind_text(attachmentStatement, 1, messageID, -1, SQLITE_TRANSIENT) != SQLITE_OK {
 		   let errmsg = String(cString: sqlite3_errmsg(db)!)
-		   print("failure binding foo: \(errmsg)")
+		   print("failure binding: \(errmsg)")
 	   	}
 		
 		var attachments = [Attachment]()
