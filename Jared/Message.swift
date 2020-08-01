@@ -10,24 +10,28 @@ import Foundation
 
 public struct Action: Encodable {
 	public var type: ActionType
+	public var targetGUID: String
 	
 	enum CodingKeys : String, CodingKey{
         case type
+		case targetGUID
     }
     
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
 		
-		try container.encode(type.hashValue, forKey: .type)
+		try container.encode(type.rawValue, forKey: .type)
+		try container.encode(targetGUID, forKey: .targetGUID)
 	}
 }
 
-public enum ActionType {
-	case like
-	case love
-	case laugh
-	case exclaim
-	case question
+public enum ActionType: String {
+	case like = "like"
+	case love = "love"
+	case laugh = "laugh"
+	case exclaim = "exclaim"
+	case question = "question"
+	case unknown = "unknown"
 }
 
 public enum SendStyle: String {
@@ -55,6 +59,7 @@ public struct Message: Encodable {
     public var recipient: RecipientEntity
 	public var attachments: [Attachment]
 	public var sendStyle: SendStyle
+	public var action: Action?
     
     enum CodingKeys : String, CodingKey{
         case date
@@ -63,6 +68,7 @@ public struct Message: Encodable {
         case recipient
 		case attachments
 		case sendStyle
+		case action
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -95,20 +101,37 @@ public struct Message: Encodable {
 		
 		try container.encode(sendStyle.rawValue, forKey: .sendStyle)
 		try container.encode(attachments, forKey: .attachments)
+		
+		if (action != nil) {
+			try container.encode(action, forKey: .action)
+		}
     }
 	
 //	public init (body: MessageBody, date: Date, sender: SenderEntity, recipient: RecipientEntity, attachments: [Attachment]) {
 //		self.init(body: body, date: date, sender: sender, recipient: recipient, attachments: attachments, sendStyle: nil)
 //	}
     
-	public init (body: MessageBody, date: Date, sender: SenderEntity, recipient: RecipientEntity, attachments: [Attachment] = [], sendStyle: String? = nil) {
+	public init (body: MessageBody, date: Date, sender: SenderEntity, recipient: RecipientEntity, attachments: [Attachment] = [], sendStyle: String? = nil, associatedMessageType: Int? = nil, associatedMessageGUID: String? = nil) {
         self.body = body
         self.recipient = recipient
         self.sender = sender
         self.date = date
 		self.attachments = attachments
 		self.sendStyle = Message.getSendStyle(from: sendStyle)
+		
+		if (associatedMessageType != 0 && associatedMessageGUID != nil) {
+			self.action = Action(type: Message.getActionType(from: associatedMessageType!), targetGUID: associatedMessageGUID!)
+		}
     }
+	
+	private static func getActionType(from actionTypeInt: Int) -> ActionType {
+		switch(actionTypeInt) {
+		case 2005:
+			return .question
+		default:
+			return .unknown
+		}
+	}
 	
 	private static func getSendStyle(from sendStyleString: String?) -> SendStyle {
 		guard let sendStyleString = sendStyleString else { return .regular }

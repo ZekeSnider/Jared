@@ -17,7 +17,7 @@ class Router {
         self.pluginManager = pluginManager
         self.messageDelegates = messageDelegates
     }
-    
+     
     func route(message myMessage: Message) {
         messageDelegates.forEach { delegate in delegate.didProcess(message: myMessage) }
         

@@ -189,7 +189,9 @@ class DatabaseHandler {
             SELECT handle.id, message.text, message.ROWID, message.cache_roomnames, message.is_from_me, message.destination_caller_id,
                 message.date/1000000000 + strftime("%s", "2001-01-01"),
                 message.cache_has_attachments,
-                message.expressive_send_style_id
+                message.expressive_send_style_id,
+                message.associated_message_type,
+                message.associated_message_guid
                 FROM message INNER JOIN handle
                 ON message.handle_id = handle.ROWID
                 WHERE message.ROWID > ?
@@ -217,6 +219,8 @@ class DatabaseHandler {
             let epochDate = TimeInterval(sqlite3_column_int64(statement, 6))
 			let hasAttachment = sqlite3_column_int(statement, 7) == 1
 			let sendStyle = unwrapStringColumn(for: statement, at: 8)
+			let associatedMessageType = sqlite3_column_int(statement, 9)
+			let associatedMessageGUID = unwrapStringColumn(for: statement, at: 10)
             
             querySinceID = rowID;
             
@@ -239,7 +243,7 @@ class DatabaseHandler {
 			}
 			
 			let message = Message(body: TextBody(text), date: Date(timeIntervalSince1970: epochDate), sender: sender, recipient: recipient, attachments: hasAttachment ? retrieveAttachments(forMessage: rowID ?? "") : [],
-								  sendStyle: sendStyle)
+				  sendStyle: sendStyle, associatedMessageType: Int(associatedMessageType), associatedMessageGUID: associatedMessageGUID)
 			
 			router?.route(message: message)
         }
