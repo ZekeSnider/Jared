@@ -25,6 +25,7 @@ extension RoutingModule {
         return documentation
     }
 }
+
 extension Route {
     var condenseDocumentation: String {
         var documentation = ""

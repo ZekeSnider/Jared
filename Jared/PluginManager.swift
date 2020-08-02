@@ -52,7 +52,7 @@ class PluginManager: PluginManagerDelegate {
         addInternalModules()
     }
     
-    func addInternalModules() {
+    private func addInternalModules() {
         modules.append(CoreModule())
         modules.append(InternalModule(pluginManager: self))
     }

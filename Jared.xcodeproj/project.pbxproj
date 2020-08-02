@@ -40,6 +40,9 @@
 		B39F2B391CB3BCA700C0D35C /* SendText.scpt in Resources */ = {isa = PBXBuildFile; fileRef = B39F2B381CB3BCA700C0D35C /* SendText.scpt */; };
 		B3A4C61423B867E300B7F009 /* MessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A4C61323B867E300B7F009 /* MessageRequest.swift */; };
 		B3AECB5F2207CE33003E32F8 /* JaredFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F84B61F1CC506790059A82B /* JaredFramework.framework */; };
+		B3B844B824D7791800DC162A /* ActionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B844B724D7791700DC162A /* ActionTest.swift */; };
+		B3B844BA24D77A4900DC162A /* SendStyleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B844B924D77A4800DC162A /* SendStyleTest.swift */; };
+		B3B844BC24D77BF200DC162A /* SendStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B844BB24D77BF200DC162A /* SendStyle.swift */; };
 		B3BBA7D11CB3284A00E1749C /* CoreModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39EC17D1CB01FEF002C3161 /* CoreModule.swift */; };
 		B3BF17C2244EBE9A00CC44C5 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BF17C1244EBE9A00CC44C5 /* Router.swift */; };
 		B3BF17C4244EBF4900CC44C5 /* InternalModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BF17C3244EBF4900CC44C5 /* InternalModule.swift */; };
@@ -136,6 +139,9 @@
 		B39EC17D1CB01FEF002C3161 /* CoreModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreModule.swift; sourceTree = "<group>"; };
 		B39F2B381CB3BCA700C0D35C /* SendText.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = SendText.scpt; sourceTree = "<group>"; };
 		B3A4C61323B867E300B7F009 /* MessageRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRequest.swift; sourceTree = "<group>"; };
+		B3B844B724D7791700DC162A /* ActionTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionTest.swift; sourceTree = "<group>"; };
+		B3B844B924D77A4800DC162A /* SendStyleTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendStyleTest.swift; sourceTree = "<group>"; };
+		B3B844BB24D77BF200DC162A /* SendStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendStyle.swift; sourceTree = "<group>"; };
 		B3BBA7CC1CB3259A00E1749C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/CoreStrings.strings; sourceTree = "<group>"; };
 		B3BBA7CF1CB327C200E1749C /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
 		B3BBA7D01CB327C200E1749C /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/CoreStrings.strings; sourceTree = "<group>"; };
@@ -210,6 +216,7 @@
 				7F84B6211CC506790059A82B /* JaredFramework.h */,
 				B39EC1751CB01F55002C3161 /* Message.swift */,
 				B32DE51924D5524300AB3A71 /* Action.swift */,
+				B3B844BB24D77BF200DC162A /* SendStyle.swift */,
 				B3EF1DAD2206E19100953DE7 /* Bodies.swift */,
 				B3EF1DAB2206E17900953DE7 /* Entities.swift */,
 				B3EF1DA92206E09B00953DE7 /* Jared.swift */,
@@ -238,6 +245,8 @@
 			children = (
 				B3327DC722068147009DD882 /* WebhookTests.swift */,
 				B3EF1DAF2206E4EB00953DE7 /* MessageTests.swift */,
+				B3B844B724D7791700DC162A /* ActionTest.swift */,
+				B3B844B924D77A4800DC162A /* SendStyleTest.swift */,
 				B32DE51424D51F9C00AB3A71 /* RouterTests.swift */,
 				B32DE51B24D552D300AB3A71 /* MockPluginManager.swift */,
 				B3EF1DA3220687DD00953DE7 /* URLProtocolMock.swift */,
@@ -564,6 +573,7 @@
 			files = (
 				B3EF1DAC2206E17900953DE7 /* Entities.swift in Sources */,
 				B3EF1DAE2206E19100953DE7 /* Bodies.swift in Sources */,
+				B3B844BC24D77BF200DC162A /* SendStyle.swift in Sources */,
 				B3EF1DAA2206E09B00953DE7 /* Jared.swift in Sources */,
 				B32DE51A24D5524300AB3A71 /* Action.swift in Sources */,
 				7F84B62B1CC5069C0059A82B /* Message.swift in Sources */,
@@ -602,6 +612,8 @@
 				B32DE51824D5231800AB3A71 /* PluginManagerDelegate.swift in Sources */,
 				B32DE51624D522DA00AB3A71 /* Router.swift in Sources */,
 				B3BF17CA244FDA3F00CC44C5 /* MessageDelegate.swift in Sources */,
+				B3B844B824D7791800DC162A /* ActionTest.swift in Sources */,
+				B3B844BA24D77A4900DC162A /* SendStyleTest.swift in Sources */,
 				B3327DD8220682ED009DD882 /* WebhookTests.swift in Sources */,
 				B3EF1DB02206E4EB00953DE7 /* MessageTests.swift in Sources */,
 				B32DE51C24D552D300AB3A71 /* MockPluginManager.swift in Sources */,

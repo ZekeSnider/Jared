@@ -15,6 +15,7 @@ class RouterTests: XCTestCase {
 	
     static let startsWithMessage = Message(body: TextBody("\(startWithString) some text after it"), date: Date(), sender: swiftPerson, recipient: mePerson)
     static let containsMessage = Message(body: TextBody("some text before \(containsString) some text after it"), date: Date(), sender: swiftPerson, recipient: mePerson)
+    static let isMessage = Message(body: TextBody(isString), date: Date(), sender: swiftPerson, recipient: mePerson)
 	
     static let mePerson = Person(givenName: "zeke", handle: "zeke@email.com", isMe: true)
     static let swiftPerson = Person(givenName: "taylor", handle: "taylor@swift.org", isMe: false)
@@ -62,5 +63,16 @@ class RouterTests: XCTestCase {
         let doesNotContain = Message(body: TextBody("Some random unrelated text."), date: Date(), sender: RouterTests.swiftPerson, recipient: RouterTests.mePerson)
         router.route(message: doesNotContain)
         XCTAssert(mockPluginManager.callCounts[containsString] == 1, "Contains delegate was not called")
+    }
+    
+    func testIs() {
+        // Is exactly
+        router.route(message: RouterTests.isMessage)
+        XCTAssert(mockPluginManager.callCounts[isString] == 1, "Contains delegate properly called")
+        
+        // Does not contain
+        let doesNotContain = Message(body: TextBody("\(isString) + Some random unrelated text."), date: Date(), sender: RouterTests.swiftPerson, recipient: RouterTests.mePerson)
+        router.route(message: doesNotContain)
+        XCTAssert(mockPluginManager.callCounts[isString] == 1, "Contains delegate was not called")
     }
 }

@@ -11,6 +11,8 @@ import JaredFramework
 
 let startWithString = "/startWith"
 let containsString = "/contains"
+let isString = "/is"
+
 let goodUrl = "https://zeke.dev"
 
 class MockPluginManager: PluginManagerDelegate {
@@ -21,8 +23,9 @@ class MockPluginManager: PluginManagerDelegate {
         let startWith = Route(name: startWithString, comparisons: [.startsWith: [startWithString]], call: {(message: Message) -> Void in self.increment(routeName: startWithString)}, description: "", parameterSyntax: "example syntax")
         let contains = Route(name: containsString, comparisons: [.contains: [containsString]], call: {(message) -> Void in self.increment(routeName: containsString)}, description: "")
         let url = Route(name: containsString, comparisons: [.containsURL: [goodUrl]], call: {(message) -> Void in self.increment(routeName: containsString)})
+        let isRoute = Route(name: isString, comparisons: [.is: [isString]], call: {(message) -> Void in self.increment(routeName: isString)})
         
-        return [startWith, contains, url]
+        return [startWith, contains, url, isRoute]
     }
     
     func getAllModules() -> [RoutingModule] {
