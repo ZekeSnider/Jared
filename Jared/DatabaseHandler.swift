@@ -204,7 +204,7 @@ class DatabaseHandler {
         
         if sqlite3_bind_text(statement, 1, querySinceID ?? "1000000000", -1, SQLITE_TRANSIENT) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
-            print("failure binding foo: \(errmsg)")
+            print("failure binding: \(errmsg)")
         }
         
         while sqlite3_step(statement) == SQLITE_ROW {

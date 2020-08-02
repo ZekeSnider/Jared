@@ -15,6 +15,15 @@ public enum ActionType: String {
     case exclaim = "exclaim"
     case question = "question"
     case unknown = "unknown"
+    
+    init(fromActionTypeInt actionTypeInt: Int) {
+        switch(actionTypeInt) {
+        case 2005:
+            self = .question
+        default:
+            self = .unknown
+        }
+    }
 }
 
 public enum SendStyle: String {
@@ -33,6 +42,40 @@ public enum SendStyle: String {
     case shootingStar = "shooting star"
     case celebration = "celebration"
     case unknown = "unknown"
+    
+    
+    init(fromIdentifier identifier: String?) {
+        guard let identifier = identifier else {
+            self = .regular
+            return
+        }
+        switch(identifier) {
+        case "com.apple.messages.effect.CKShootingStarEffect":
+            self = .shootingStar
+        case "com.apple.messages.effect.CKLasersEffect":
+            self = .lasers
+        case "com.apple.messages.effect.CKHeartEffect":
+            self = .love
+        case "com.apple.messages.effect.CKHappyBirthdayEffect":
+            self = .confetti
+        case "com.apple.messages.effect.CKFireworksEffect":
+            self = .fireworks
+        case "com.apple.messages.effect.CKConfettiEffect":
+            self = .confetti
+        case "com.apple.MobileSMS.expressivesend.loud":
+            self = .loud
+        case "com.apple.MobileSMS.expressivesend.invisibleink":
+            self = .invisibleInk
+        case "com.apple.MobileSMS.expressivesend.gentle":
+            self = .gentle
+        case "com.apple.messages.effect.CKEchoEffect":
+            self = .echo
+        case "com.apple.MobileSMS.expressivesend.impact":
+            self = .slam
+        default:
+            self = .unknown
+        }
+    }
 }
 
 public struct Action: Encodable {

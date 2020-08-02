@@ -16,7 +16,7 @@ public class Jared {
     }
     
     public static func Send(_ message: Message, whileBlocking: Bool = false) {
-        print("I want to send text \(message)")
+        NSLog("Attemping to send message: \(message)")
         
         let defaults = UserDefaults.standard
         

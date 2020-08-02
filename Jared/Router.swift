@@ -36,43 +36,43 @@ class Router {
             return
         }
         
-        RootLoop: for aRoute in pluginManager.getAllRoutes() {
-			  guard (pluginManager.enabled(routeName: aRoute.name)) else {
+        RootLoop: for route in pluginManager.getAllRoutes() {
+			  guard (pluginManager.enabled(routeName: route.name)) else {
 				  break
 			  }
-			  for aComparison in aRoute.comparisons {
-				  if aComparison.0 == .containsURL {
+			  for comparison in route.comparisons {
+				  if comparison.0 == .containsURL {
 					  for match in matches {
 						  let url = (messageText.message as NSString).substring(with: match.range)
-						  for comparisonString in aComparison.1 {
+						  for comparisonString in comparison.1 {
 							  if url.contains(comparisonString) {
 								  let urlMessage = Message(body: TextBody(url), date: myMessage.date ?? Date(), sender: myMessage.sender, recipient: myMessage.recipient, attachments: [])
-								  aRoute.call(urlMessage)
+								  route.call(urlMessage)
 							  }
 						  }
 					  }
 				  }
 					  
-				  else if aComparison.0 == .startsWith {
-					  for comparisonString in aComparison.1 {
+				  else if comparison.0 == .startsWith {
+					  for comparisonString in comparison.1 {
 						  if myLowercaseMessage.hasPrefix(comparisonString.lowercased()) {
-							  aRoute.call(myMessage)
+							  route.call(myMessage)
 						  }
 					  }
 				  }
 					  
-				  else if aComparison.0 == .contains {
-					  for comparisonString in aComparison.1 {
+				  else if comparison.0 == .contains {
+					  for comparisonString in comparison.1 {
 						  if myLowercaseMessage.contains(comparisonString.lowercased()) {
-							  aRoute.call(myMessage)
+							  route.call(myMessage)
 						  }
 					  }
 				  }
 					  
-				  else if aComparison.0 == .is {
-					  for comparisonString in aComparison.1 {
+				  else if comparison.0 == .is {
+					  for comparisonString in comparison.1 {
 						  if myLowercaseMessage == comparisonString.lowercased() {
-							  aRoute.call(myMessage)
+							  route.call(myMessage)
 						  }
 					  }
 				  }

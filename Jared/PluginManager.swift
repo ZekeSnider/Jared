@@ -1,5 +1,5 @@
 //
-//  TwitterModule.swift
+//  PluginManager.swift
 //  Jared
 //
 //  Created by Zeke Snider on 4/9/16.

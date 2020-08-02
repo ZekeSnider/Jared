@@ -69,51 +69,12 @@ public struct Message: Encodable {
         self.sender = sender
         self.date = date
 		self.attachments = attachments
-		self.sendStyle = Message.getSendStyle(from: sendStyle)
+		self.sendStyle = SendStyle(fromIdentifier: sendStyle)
 		
 		if (associatedMessageType != 0 && associatedMessageGUID != nil) {
-			self.action = Action(type: Message.getActionType(from: associatedMessageType!), targetGUID: associatedMessageGUID!)
+			self.action = Action(type: ActionType(fromActionTypeInt: associatedMessageType!), targetGUID: associatedMessageGUID!)
 		}
     }
-	
-	private static func getActionType(from actionTypeInt: Int) -> ActionType {
-		switch(actionTypeInt) {
-		case 2005:
-			return .question
-		default:
-			return .unknown
-		}
-	}
-	
-	private static func getSendStyle(from sendStyleString: String?) -> SendStyle {
-		guard let sendStyleString = sendStyleString else { return .regular }
-		switch(sendStyleString) {
-		case "com.apple.messages.effect.CKShootingStarEffect":
-			return .shootingStar
-		case "com.apple.messages.effect.CKLasersEffect":
-			return .lasers
-		case "com.apple.messages.effect.CKHeartEffect":
-			return .love
-		case "com.apple.messages.effect.CKHappyBirthdayEffect":
-			return .confetti
-		case "com.apple.messages.effect.CKFireworksEffect":
-			return .fireworks
-		case "com.apple.messages.effect.CKConfettiEffect":
-			return .confetti
-		case "com.apple.MobileSMS.expressivesend.loud":
-			return .loud
-		case "com.apple.MobileSMS.expressivesend.invisibleink":
-			return .invisibleInk
-		case "com.apple.MobileSMS.expressivesend.gentle":
-			return .gentle
-		case "com.apple.messages.effect.CKEchoEffect":
-			return .echo
-		case "com.apple.MobileSMS.expressivesend.impact":
-			return .slam
-		default:
-			return .unknown
-		}
-	}
     
     public func RespondTo() -> RecipientEntity {
         if let senderPerson = sender as? Person {
