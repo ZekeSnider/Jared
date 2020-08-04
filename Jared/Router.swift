@@ -9,7 +9,7 @@
 import Foundation
 import JaredFramework
 
-class Router {
+class Router : RouterDelegate {
     var pluginManager: PluginManagerDelegate
     var messageDelegates: [MessageDelegate]
     

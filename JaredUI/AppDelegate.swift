@@ -15,7 +15,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var Server = JaredWebServer()
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-		let dbHandler = DatabaseHandler(router: Router.router)
+        let messageDatabaseURL = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask)[0]
+            .appendingPathComponent("Messages").appendingPathComponent("chat.db")
+		let dbHandler = DatabaseHandler(router: Router.router, databaseLocation: messageDatabaseURL)
         if (!dbHandler.authorizationError) {
             dbHandler.start()
         }

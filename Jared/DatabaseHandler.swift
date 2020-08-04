@@ -52,19 +52,16 @@ class DatabaseHandler {
     var refreshSeconds = 5.0
     var authorizationError = false
     var statement: OpaquePointer? = nil
-	var router: Router?
+	var router: RouterDelegate?
     
-	init(router: Router) {
+    init(router: RouterDelegate, databaseLocation: URL) {
 		self.router = router
-		
-        let databaseLocation = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask)[0]
-            .appendingPathComponent("Messages").appendingPathComponent("chat.db")
         
         if sqlite3_open(databaseLocation.path, &db) != SQLITE_OK {
             NSLog("Error opening SQLite database. Likely Full disk access error.")
-            if let viewController = NSApplication.shared.keyWindow?.contentViewController as? ViewController {
-                viewController.displayAccessError()
-            }
+//            if let viewController = NSApplication.shared.keyWindow?.contentViewController as? ViewController {
+//                viewController.displayAccessError()
+//            }
             authorizationError = true
             return
         }
@@ -115,7 +112,7 @@ class DatabaseHandler {
             print("error finalizing prepared statement: \(errmsg)")
         }
         
-        return id ?? "10000000000000"
+        return id ?? "0"
     }
     
     private func retrieveGroupInfo(chatID: String?) -> Group? {

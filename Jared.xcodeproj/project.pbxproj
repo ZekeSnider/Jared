@@ -43,6 +43,14 @@
 		B3B844B824D7791800DC162A /* ActionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B844B724D7791700DC162A /* ActionTest.swift */; };
 		B3B844BA24D77A4900DC162A /* SendStyleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B844B924D77A4800DC162A /* SendStyleTest.swift */; };
 		B3B844BC24D77BF200DC162A /* SendStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B844BB24D77BF200DC162A /* SendStyle.swift */; };
+		B3B844BE24D8F90000DC162A /* scaffold.db in Resources */ = {isa = PBXBuildFile; fileRef = B3B844BD24D8F8FF00DC162A /* scaffold.db */; };
+		B3B844C024D8F91900DC162A /* DatabaseHandlerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B844BF24D8F91900DC162A /* DatabaseHandlerTest.swift */; };
+		B3B844C224D8FA7D00DC162A /* DatabaseTestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B844C124D8FA7D00DC162A /* DatabaseTestHelper.swift */; };
+		B3B844C424D9288000DC162A /* RouterDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B844C324D9287F00DC162A /* RouterDelegate.swift */; };
+		B3B844C524D9288000DC162A /* RouterDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B844C324D9287F00DC162A /* RouterDelegate.swift */; };
+		B3B844C724D9298000DC162A /* MockRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B844C624D9298000DC162A /* MockRouter.swift */; };
+		B3B844C824D92C2200DC162A /* DatabaseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35CE7142196AD4E002F52A7 /* DatabaseHandler.swift */; };
+		B3B844C924D92D1500DC162A /* ContactHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3327DC32206607B009DD882 /* ContactHelper.swift */; };
 		B3BBA7D11CB3284A00E1749C /* CoreModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39EC17D1CB01FEF002C3161 /* CoreModule.swift */; };
 		B3BF17C2244EBE9A00CC44C5 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BF17C1244EBE9A00CC44C5 /* Router.swift */; };
 		B3BF17C4244EBF4900CC44C5 /* InternalModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BF17C3244EBF4900CC44C5 /* InternalModule.swift */; };
@@ -142,6 +150,11 @@
 		B3B844B724D7791700DC162A /* ActionTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionTest.swift; sourceTree = "<group>"; };
 		B3B844B924D77A4800DC162A /* SendStyleTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendStyleTest.swift; sourceTree = "<group>"; };
 		B3B844BB24D77BF200DC162A /* SendStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendStyle.swift; sourceTree = "<group>"; };
+		B3B844BD24D8F8FF00DC162A /* scaffold.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = scaffold.db; sourceTree = "<group>"; };
+		B3B844BF24D8F91900DC162A /* DatabaseHandlerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseHandlerTest.swift; sourceTree = "<group>"; };
+		B3B844C124D8FA7D00DC162A /* DatabaseTestHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseTestHelper.swift; sourceTree = "<group>"; };
+		B3B844C324D9287F00DC162A /* RouterDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterDelegate.swift; sourceTree = "<group>"; };
+		B3B844C624D9298000DC162A /* MockRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRouter.swift; sourceTree = "<group>"; };
 		B3BBA7CC1CB3259A00E1749C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/CoreStrings.strings; sourceTree = "<group>"; };
 		B3BBA7CF1CB327C200E1749C /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
 		B3BBA7D01CB327C200E1749C /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/CoreStrings.strings; sourceTree = "<group>"; };
@@ -249,7 +262,11 @@
 				B3B844B924D77A4800DC162A /* SendStyleTest.swift */,
 				B32DE51424D51F9C00AB3A71 /* RouterTests.swift */,
 				B32DE51B24D552D300AB3A71 /* MockPluginManager.swift */,
+				B3B844C624D9298000DC162A /* MockRouter.swift */,
+				B3B844BF24D8F91900DC162A /* DatabaseHandlerTest.swift */,
 				B3EF1DA3220687DD00953DE7 /* URLProtocolMock.swift */,
+				B3B844C124D8FA7D00DC162A /* DatabaseTestHelper.swift */,
+				B3B844BD24D8F8FF00DC162A /* scaffold.db */,
 				B3327DD222068176009DD882 /* Info.plist */,
 			);
 			path = JaredTests;
@@ -319,6 +336,7 @@
 		B3BF17C9244ED26800CC44C5 /* Delegates */ = {
 			isa = PBXGroup;
 			children = (
+				B3B844C324D9287F00DC162A /* RouterDelegate.swift */,
 				B3BF17C5244EC47700CC44C5 /* MessageDelegate.swift */,
 				B3BF17C7244EC89200CC44C5 /* PluginManagerDelegate.swift */,
 			);
@@ -481,6 +499,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3B844BE24D8F90000DC162A /* scaffold.db in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -601,6 +620,7 @@
 				B3BF17C2244EBE9A00CC44C5 /* Router.swift in Sources */,
 				B375A65921EB14470073F09F /* AboutViewController.swift in Sources */,
 				7F0E931D1D02FC250096BABE /* Global.swift in Sources */,
+				B3B844C424D9288000DC162A /* RouterDelegate.swift in Sources */,
 				B3C59284224DD17900116ECB /* JaredWebServer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -609,10 +629,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3B844C924D92D1500DC162A /* ContactHelper.swift in Sources */,
+				B3B844C824D92C2200DC162A /* DatabaseHandler.swift in Sources */,
+				B3B844C024D8F91900DC162A /* DatabaseHandlerTest.swift in Sources */,
 				B32DE51824D5231800AB3A71 /* PluginManagerDelegate.swift in Sources */,
 				B32DE51624D522DA00AB3A71 /* Router.swift in Sources */,
 				B3BF17CA244FDA3F00CC44C5 /* MessageDelegate.swift in Sources */,
+				B3B844C524D9288000DC162A /* RouterDelegate.swift in Sources */,
 				B3B844B824D7791800DC162A /* ActionTest.swift in Sources */,
+				B3B844C724D9298000DC162A /* MockRouter.swift in Sources */,
+				B3B844C224D8FA7D00DC162A /* DatabaseTestHelper.swift in Sources */,
 				B3B844BA24D77A4900DC162A /* SendStyleTest.swift in Sources */,
 				B3327DD8220682ED009DD882 /* WebhookTests.swift in Sources */,
 				B3EF1DB02206E4EB00953DE7 /* MessageTests.swift in Sources */,
