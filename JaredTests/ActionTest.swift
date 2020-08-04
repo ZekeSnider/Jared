@@ -17,8 +17,8 @@ class ActionTest: XCTestCase {
     }
     
     func testFromActionTypeInt() {
-        XCTAssert(ActionType(fromActionTypeInt: 2005) == .question, "Properly deserializes known action type")
+        XCTAssertEqual(ActionType(fromActionTypeInt: 2005), .question, "Properly deserializes known action type")
         
-        XCTAssert(ActionType(fromActionTypeInt: 696969) == .unknown, "Properly deserializes unknown action type")
+        XCTAssertEqual(ActionType(fromActionTypeInt: 696969), .unknown, "Properly deserializes unknown action type")
     }
 }

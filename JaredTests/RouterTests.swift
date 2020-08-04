@@ -30,49 +30,49 @@ class RouterTests: XCTestCase {
 	func testDisable() {
 		// Does start with
 		router.route(message: RouterTests.startsWithMessage)
-		XCTAssert(mockPluginManager.callCounts[startWithString] == 1, "Starts with delegate properly called")
+		XCTAssertEqual(mockPluginManager.callCounts[startWithString], 1, "Starts with delegate properly called")
 		
 		// Disable it
 		mockPluginManager.toggleDisable(routeName: startWithString)
 		router.route(message: RouterTests.startsWithMessage)
-		XCTAssert(mockPluginManager.callCounts[startWithString] == 1, "Starts with delegate not called")
+		XCTAssertEqual(mockPluginManager.callCounts[startWithString], 1, "Starts with delegate not called")
 		
 		// Enable it again
 		mockPluginManager.toggleDisable(routeName: startWithString)
 		router.route(message: RouterTests.startsWithMessage)
-		XCTAssert(mockPluginManager.callCounts[startWithString] == 2, "Starts with delegate properly called")
+		XCTAssertEqual(mockPluginManager.callCounts[startWithString], 2, "Starts with delegate properly called")
 	}
 	
 	func testStartsWith() {
 		// Does start with
 		router.route(message: RouterTests.startsWithMessage)
-		XCTAssert(mockPluginManager.callCounts[startWithString] == 1, "Starts with delegate properly called")
+		XCTAssertEqual(mockPluginManager.callCounts[startWithString], 1, "Starts with delegate properly called")
 		
 		// Does not start with
 		let doesNotStartWith = Message(body: TextBody("Some random unrelated text."), date: Date(), sender: RouterTests.swiftPerson, recipient: RouterTests.mePerson)
 		router.route(message: doesNotStartWith)
-		XCTAssert(mockPluginManager.callCounts[startWithString] == 1, "Starts with delegate was not called")
+		XCTAssertEqual(mockPluginManager.callCounts[startWithString], 1, "Starts with delegate was not called")
 	}
     
     func testContains() {
         // Does contain
         router.route(message: RouterTests.containsMessage)
-        XCTAssert(mockPluginManager.callCounts[containsString] == 1, "Contains delegate properly called")
+        XCTAssertEqual(mockPluginManager.callCounts[containsString], 1, "Contains delegate properly called")
         
         // Does not contain
         let doesNotContain = Message(body: TextBody("Some random unrelated text."), date: Date(), sender: RouterTests.swiftPerson, recipient: RouterTests.mePerson)
         router.route(message: doesNotContain)
-        XCTAssert(mockPluginManager.callCounts[containsString] == 1, "Contains delegate was not called")
+        XCTAssertEqual(mockPluginManager.callCounts[containsString], 1, "Contains delegate was not called")
     }
     
     func testIs() {
         // Is exactly
         router.route(message: RouterTests.isMessage)
-        XCTAssert(mockPluginManager.callCounts[isString] == 1, "Contains delegate properly called")
+        XCTAssertEqual(mockPluginManager.callCounts[isString], 1, "Contains delegate properly called")
         
         // Does not contain
         let doesNotContain = Message(body: TextBody("\(isString) + Some random unrelated text."), date: Date(), sender: RouterTests.swiftPerson, recipient: RouterTests.mePerson)
         router.route(message: doesNotContain)
-        XCTAssert(mockPluginManager.callCounts[isString] == 1, "Contains delegate was not called")
+        XCTAssertEqual(mockPluginManager.callCounts[isString], 1, "Contains delegate was not called")
     }
 }
