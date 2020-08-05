@@ -7,8 +7,10 @@ class JaredWebServer: NSObject {
     var defaults: UserDefaults!
     var server: Server!
     var port: Int!
+    var configurationURL: URL
     
-    override init() {
+    init(configurationURL: URL) {
+        self.configurationURL = configurationURL
         super.init()
         defaults = UserDefaults.standard
         server = Server()
@@ -27,17 +29,14 @@ class JaredWebServer: NSObject {
     // Attempt to pull the port number from the config
     func assignPort() -> Int {
         let filemanager = FileManager.default
-        let appsupport = filemanager.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
-        let supportDir = appsupport.appendingPathComponent("Jared")
-        let configPath = supportDir.appendingPathComponent("config.json")
         do {
             // If config file does not exist, use default port
-            guard filemanager.fileExists(atPath: configPath.path) else {
+            guard filemanager.fileExists(atPath: configurationURL.path) else {
                 return JaredWebServer.DEFAULT_PORT
             }
             
             //Read the JSON config file
-            let jsonData = try! NSData(contentsOfFile: supportDir.appendingPathComponent("config.json").path, options: .mappedIfSafe)
+            let jsonData = try! NSData(contentsOfFile: configurationURL.path, options: .mappedIfSafe)
             
             // If the JSON format is not as expected at all, use the default port
             guard let jsonResult = try? JSONSerialization.jsonObject(with: jsonData as Data, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String:AnyObject] else {

@@ -1,4 +1,4 @@
-source 'https://github.com/CocoaPods/Specs.git'
+source 'https://cdn.cocoapods.org/'
 platform :osx, ’10.12’
 use_frameworks!
 
@@ -14,3 +14,8 @@ target "Jared" do
 	pod 'RealmSwift'
     pod 'Telegraph'
 end
+
+target "JaredTests" do
+    pod 'Telegraph'
+end
+
