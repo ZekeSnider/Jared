@@ -17,7 +17,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         let messageDatabaseURL = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask)[0]
             .appendingPathComponent("Messages").appendingPathComponent("chat.db")
-		let dbHandler = DatabaseHandler(router: Router.router, databaseLocation: messageDatabaseURL)
+        let viewController = NSApplication.shared.keyWindow?.contentViewController as? ViewController
+		let dbHandler = DatabaseHandler(router: Router.router, databaseLocation: messageDatabaseURL, diskAccessDelegate: viewController)
         if (!dbHandler.authorizationError) {
             dbHandler.start()
         }

@@ -24,7 +24,7 @@ class DatabaseHandlerTest: XCTestCase {
         testDatabaseLocation = bundle.url(forResource: "scaffold", withExtension: "db")
         helper = DatabaseTestHelper(databaseLocation: testDatabaseLocation)
         router = MockRouter()
-        databaseHandler = DatabaseHandler(router: router, databaseLocation: testDatabaseLocation)
+        databaseHandler = DatabaseHandler(router: router, databaseLocation: testDatabaseLocation, diskAccessDelegate: nil)
         databaseHandler.start()
     }
 

@@ -51,6 +51,8 @@
 		B3B844C724D9298000DC162A /* MockRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B844C624D9298000DC162A /* MockRouter.swift */; };
 		B3B844C824D92C2200DC162A /* DatabaseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35CE7142196AD4E002F52A7 /* DatabaseHandler.swift */; };
 		B3B844C924D92D1500DC162A /* ContactHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3327DC32206607B009DD882 /* ContactHelper.swift */; };
+		B3B844CB24DA5D1700DC162A /* DiskAccessDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B844CA24DA5D1700DC162A /* DiskAccessDelegate.swift */; };
+		B3B844CC24DA671E00DC162A /* DiskAccessDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B844CA24DA5D1700DC162A /* DiskAccessDelegate.swift */; };
 		B3BBA7D11CB3284A00E1749C /* CoreModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39EC17D1CB01FEF002C3161 /* CoreModule.swift */; };
 		B3BF17C2244EBE9A00CC44C5 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BF17C1244EBE9A00CC44C5 /* Router.swift */; };
 		B3BF17C4244EBF4900CC44C5 /* InternalModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BF17C3244EBF4900CC44C5 /* InternalModule.swift */; };
@@ -155,6 +157,7 @@
 		B3B844C124D8FA7D00DC162A /* DatabaseTestHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseTestHelper.swift; sourceTree = "<group>"; };
 		B3B844C324D9287F00DC162A /* RouterDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterDelegate.swift; sourceTree = "<group>"; };
 		B3B844C624D9298000DC162A /* MockRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRouter.swift; sourceTree = "<group>"; };
+		B3B844CA24DA5D1700DC162A /* DiskAccessDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskAccessDelegate.swift; sourceTree = "<group>"; };
 		B3BBA7CC1CB3259A00E1749C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/CoreStrings.strings; sourceTree = "<group>"; };
 		B3BBA7CF1CB327C200E1749C /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
 		B3BBA7D01CB327C200E1749C /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/CoreStrings.strings; sourceTree = "<group>"; };
@@ -338,6 +341,7 @@
 			children = (
 				B3B844C324D9287F00DC162A /* RouterDelegate.swift */,
 				B3BF17C5244EC47700CC44C5 /* MessageDelegate.swift */,
+				B3B844CA24DA5D1700DC162A /* DiskAccessDelegate.swift */,
 				B3BF17C7244EC89200CC44C5 /* PluginManagerDelegate.swift */,
 			);
 			name = Delegates;
@@ -614,6 +618,7 @@
 				B3327DC42206607B009DD882 /* ContactHelper.swift in Sources */,
 				B332787C1CB2CB1300BBDD3A /* ViewController.swift in Sources */,
 				B3327DC622066427009DD882 /* WebHookManager.swift in Sources */,
+				B3B844CB24DA5D1700DC162A /* DiskAccessDelegate.swift in Sources */,
 				B332787A1CB2CB1300BBDD3A /* AppDelegate.swift in Sources */,
 				B3BF17C4244EBF4900CC44C5 /* InternalModule.swift in Sources */,
 				B316D1A61F3FFDF100AFF063 /* CoreModuleRealm.swift in Sources */,
@@ -629,6 +634,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3B844CC24DA671E00DC162A /* DiskAccessDelegate.swift in Sources */,
 				B3B844C924D92D1500DC162A /* ContactHelper.swift in Sources */,
 				B3B844C824D92C2200DC162A /* DatabaseHandler.swift in Sources */,
 				B3B844C024D8F91900DC162A /* DatabaseHandlerTest.swift in Sources */,

@@ -42,7 +42,7 @@ class DatabaseHandler {
 			message.associated_message_guid
 			FROM message INNER JOIN handle
 			ON message.handle_id = handle.ROWID
-			WHERE message.ROWID > ?
+			WHERE message.ROWID > ? ORDER BY message.ROWID DESC
 	"""
 	private static let maxRecordIDQuery = "SELECT MAX(rowID) FROM message"
 	
@@ -54,14 +54,12 @@ class DatabaseHandler {
     var statement: OpaquePointer? = nil
 	var router: RouterDelegate?
     
-    init(router: RouterDelegate, databaseLocation: URL) {
+    init(router: RouterDelegate, databaseLocation: URL, diskAccessDelegate: DiskAccessDelegate?) {
 		self.router = router
         
         if sqlite3_open(databaseLocation.path, &db) != SQLITE_OK {
             NSLog("Error opening SQLite database. Likely Full disk access error.")
-//            if let viewController = NSApplication.shared.keyWindow?.contentViewController as? ViewController {
-//                viewController.displayAccessError()
-//            }
+            diskAccessDelegate?.displayAccessError()
             authorizationError = true
             return
         }
