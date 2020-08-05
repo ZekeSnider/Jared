@@ -39,19 +39,19 @@ class MessageTests: XCTestCase {
     }
 
     func testGetTextBody() {
-        XCTAssert(sampleTextMessage.getTextBody() == "Hey Jared", "getTextBody returns proper string")
-        XCTAssert(sampleImageMesage.getTextBody() == nil, "getTextBody returns nil for image body")
+        XCTAssertEqual(sampleTextMessage.getTextBody(), "Hey Jared", "getTextBody returns proper string")
+        XCTAssertEqual(sampleImageMesage.getTextBody(), nil, "getTextBody returns nil for image body")
     }
     
     func testGetImageBody() {
-        XCTAssert(sampleTextMessage.getImageBody() == nil, "getTextBody returns nil for text body")
-        XCTAssert(sampleImageMesage.getImageBody() == "/users/zeke/goodJaredImage.jpg", "getTextBody returns proper path")
+        XCTAssertEqual(sampleTextMessage.getImageBody(), nil, "getTextBody returns nil for text body")
+        XCTAssertEqual(sampleImageMesage.getImageBody(), "/users/zeke/goodJaredImage.jpg", "getTextBody returns proper path")
     }
     
     func testGetMessageResponse() {
-        XCTAssert(sampleTextMessage.RespondTo() as? Person == jaredPerson, "Message from me to person responds to recipient")
-        XCTAssert(messageFromMeToGroup.RespondTo() as? Group == sampleGroup, "Message from me to group responds to group")
-        XCTAssert(messageFromPersonToGroup.RespondTo() as? Group == sampleGroup, "Message from person to group responds to group")
-        XCTAssert(messageFromMeToPerson.RespondTo() as? Person == swiftPerson, "Message from me to person responds to person")
+        XCTAssertEqual(sampleTextMessage.RespondTo() as? Person, jaredPerson, "Message from me to person responds to recipient")
+        XCTAssertEqual(messageFromMeToGroup.RespondTo() as? Group, sampleGroup, "Message from me to group responds to group")
+        XCTAssertEqual(messageFromPersonToGroup.RespondTo() as? Group, sampleGroup, "Message from person to group responds to group")
+        XCTAssertEqual(messageFromMeToPerson.RespondTo() as? Person, swiftPerson, "Message from me to person responds to person")
     }
 }

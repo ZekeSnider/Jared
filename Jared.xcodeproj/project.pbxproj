@@ -19,6 +19,11 @@
 		7FF077EB1CBCFFCB008E33CB /* SendImage.scpt in Resources */ = {isa = PBXBuildFile; fileRef = 7FF077EA1CBCFFCB008E33CB /* SendImage.scpt */; };
 		B30F765624C5742800ADF57B /* SendTextUI.scpt in Resources */ = {isa = PBXBuildFile; fileRef = B30F765424C5740800ADF57B /* SendTextUI.scpt */; };
 		B316D1A61F3FFDF100AFF063 /* CoreModuleRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = B316D1A51F3FFDF100AFF063 /* CoreModuleRealm.swift */; };
+		B32DE51524D51F9C00AB3A71 /* RouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32DE51424D51F9C00AB3A71 /* RouterTests.swift */; };
+		B32DE51624D522DA00AB3A71 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BF17C1244EBE9A00CC44C5 /* Router.swift */; };
+		B32DE51824D5231800AB3A71 /* PluginManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BF17C7244EC89200CC44C5 /* PluginManagerDelegate.swift */; };
+		B32DE51A24D5524300AB3A71 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32DE51924D5524300AB3A71 /* Action.swift */; };
+		B32DE51C24D552D300AB3A71 /* MockPluginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32DE51B24D552D300AB3A71 /* MockPluginManager.swift */; };
 		B332787A1CB2CB1300BBDD3A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33278791CB2CB1300BBDD3A /* AppDelegate.swift */; };
 		B332787C1CB2CB1300BBDD3A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B332787B1CB2CB1300BBDD3A /* ViewController.swift */; };
 		B332787E1CB2CB1300BBDD3A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B332787D1CB2CB1300BBDD3A /* Assets.xcassets */; };
@@ -26,6 +31,7 @@
 		B3327DC42206607B009DD882 /* ContactHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3327DC32206607B009DD882 /* ContactHelper.swift */; };
 		B3327DC622066427009DD882 /* WebHookManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3327DC522066427009DD882 /* WebHookManager.swift */; };
 		B3327DD8220682ED009DD882 /* WebhookTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3327DC722068147009DD882 /* WebhookTests.swift */; };
+		B347A4A224DA766A00E93657 /* MessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A4C61323B867E300B7F009 /* MessageRequest.swift */; };
 		B35CE7152196AD4E002F52A7 /* DatabaseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35CE7142196AD4E002F52A7 /* DatabaseHandler.swift */; };
 		B361EEBB1F1DE24C0041113C /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = B361EEBA1F1DE24C0041113C /* config.json */; };
 		B36563EF1F3D68980064B114 /* TouchBarTextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36563EE1F3D68980064B114 /* TouchBarTextFieldExtension.swift */; };
@@ -35,6 +41,22 @@
 		B39F2B391CB3BCA700C0D35C /* SendText.scpt in Resources */ = {isa = PBXBuildFile; fileRef = B39F2B381CB3BCA700C0D35C /* SendText.scpt */; };
 		B3A4C61423B867E300B7F009 /* MessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A4C61323B867E300B7F009 /* MessageRequest.swift */; };
 		B3AECB5F2207CE33003E32F8 /* JaredFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F84B61F1CC506790059A82B /* JaredFramework.framework */; };
+		B3B844B824D7791800DC162A /* ActionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B844B724D7791700DC162A /* ActionTest.swift */; };
+		B3B844BA24D77A4900DC162A /* SendStyleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B844B924D77A4800DC162A /* SendStyleTest.swift */; };
+		B3B844BC24D77BF200DC162A /* SendStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B844BB24D77BF200DC162A /* SendStyle.swift */; };
+		B3B844BE24D8F90000DC162A /* scaffold.db in Resources */ = {isa = PBXBuildFile; fileRef = B3B844BD24D8F8FF00DC162A /* scaffold.db */; };
+		B3B844C024D8F91900DC162A /* DatabaseHandlerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B844BF24D8F91900DC162A /* DatabaseHandlerTest.swift */; };
+		B3B844C224D8FA7D00DC162A /* DatabaseTestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B844C124D8FA7D00DC162A /* DatabaseTestHelper.swift */; };
+		B3B844C424D9288000DC162A /* RouterDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B844C324D9287F00DC162A /* RouterDelegate.swift */; };
+		B3B844C524D9288000DC162A /* RouterDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B844C324D9287F00DC162A /* RouterDelegate.swift */; };
+		B3B844C724D9298000DC162A /* MockRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B844C624D9298000DC162A /* MockRouter.swift */; };
+		B3B844C824D92C2200DC162A /* DatabaseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35CE7142196AD4E002F52A7 /* DatabaseHandler.swift */; };
+		B3B844C924D92D1500DC162A /* ContactHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3327DC32206607B009DD882 /* ContactHelper.swift */; };
+		B3B844CB24DA5D1700DC162A /* DiskAccessDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B844CA24DA5D1700DC162A /* DiskAccessDelegate.swift */; };
+		B3B844CC24DA671E00DC162A /* DiskAccessDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B844CA24DA5D1700DC162A /* DiskAccessDelegate.swift */; };
+		B3B844CE24DA6AB200DC162A /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = B3B844CD24DA6AB200DC162A /* config.json */; };
+		B3B844D024DA6AC800DC162A /* JaredWebServerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B844CF24DA6AC800DC162A /* JaredWebServerTest.swift */; };
+		B3B844D224DA6BBB00DC162A /* JaredWebServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C59283224DD17900116ECB /* JaredWebServer.swift */; };
 		B3BBA7D11CB3284A00E1749C /* CoreModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39EC17D1CB01FEF002C3161 /* CoreModule.swift */; };
 		B3BF17C2244EBE9A00CC44C5 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BF17C1244EBE9A00CC44C5 /* Router.swift */; };
 		B3BF17C4244EBF4900CC44C5 /* InternalModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BF17C3244EBF4900CC44C5 /* InternalModule.swift */; };
@@ -49,6 +71,7 @@
 		B3EF1DAC2206E17900953DE7 /* Entities.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3EF1DAB2206E17900953DE7 /* Entities.swift */; };
 		B3EF1DAE2206E19100953DE7 /* Bodies.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3EF1DAD2206E19100953DE7 /* Bodies.swift */; };
 		B3EF1DB02206E4EB00953DE7 /* MessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3EF1DAF2206E4EB00953DE7 /* MessageTests.swift */; };
+		E4911DF4614B81D99C27CFF5 /* Pods_JaredTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 468EA41747ED2E0CB098C6BD /* Pods_JaredTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,6 +117,9 @@
 		19C9C2FBC44EE08B0C7851EA /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		36A7776B61089A66EA5C166B /* Pods-JaredUI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JaredUI.release.xcconfig"; path = "Pods/Target Support Files/Pods-JaredUI/Pods-JaredUI.release.xcconfig"; sourceTree = "<group>"; };
 		4589B5638BC576CC8AB2700A /* Pods_Jared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Jared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		468EA41747ED2E0CB098C6BD /* Pods_JaredTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_JaredTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		589F788B0CFB8CBDA890F242 /* Pods-JaredTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JaredTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JaredTests/Pods-JaredTests.debug.xcconfig"; sourceTree = "<group>"; };
+		64E9DE9392D51A396C2939FB /* Pods-JaredTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JaredTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-JaredTests/Pods-JaredTests.release.xcconfig"; sourceTree = "<group>"; };
 		7F0E931C1D02FC250096BABE /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		7F84B61F1CC506790059A82B /* JaredFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = JaredFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F84B6211CC506790059A82B /* JaredFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JaredFramework.h; sourceTree = "<group>"; };
@@ -101,9 +127,12 @@
 		7FE220EC1CB3C8340081CE23 /* podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		7FF077EA1CBCFFCB008E33CB /* SendImage.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = SendImage.scpt; sourceTree = "<group>"; };
 		8490C38E773007C8CC882DCB /* Pods-Jared.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Jared.release.xcconfig"; path = "Pods/Target Support Files/Pods-Jared/Pods-Jared.release.xcconfig"; sourceTree = "<group>"; };
-		B30F765424C5740800ADF57B /* SendTextUI.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = SendTextUI.scpt; sourceTree = "<group>"; };
+		B30F765424C5740800ADF57B /* SendTextUI.scpt */ = {isa = PBXFileReference; lastKnownFileType = text; path = SendTextUI.scpt; sourceTree = "<group>"; };
 		B30F765724C574FD00ADF57B /* JaredRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = JaredRelease.entitlements; sourceTree = "<group>"; };
 		B316D1A51F3FFDF100AFF063 /* CoreModuleRealm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreModuleRealm.swift; sourceTree = "<group>"; };
+		B32DE51424D51F9C00AB3A71 /* RouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterTests.swift; sourceTree = "<group>"; };
+		B32DE51924D5524300AB3A71 /* Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
+		B32DE51B24D552D300AB3A71 /* MockPluginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPluginManager.swift; sourceTree = "<group>"; };
 		B33278511CB2C94700BBDD3A /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		B33278771CB2CB1300BBDD3A /* Jared.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Jared.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B33278791CB2CB1300BBDD3A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -128,6 +157,18 @@
 		B39EC17D1CB01FEF002C3161 /* CoreModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreModule.swift; sourceTree = "<group>"; };
 		B39F2B381CB3BCA700C0D35C /* SendText.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = SendText.scpt; sourceTree = "<group>"; };
 		B3A4C61323B867E300B7F009 /* MessageRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRequest.swift; sourceTree = "<group>"; };
+		B3B844B724D7791700DC162A /* ActionTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionTest.swift; sourceTree = "<group>"; };
+		B3B844B924D77A4800DC162A /* SendStyleTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendStyleTest.swift; sourceTree = "<group>"; };
+		B3B844BB24D77BF200DC162A /* SendStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendStyle.swift; sourceTree = "<group>"; };
+		B3B844BD24D8F8FF00DC162A /* scaffold.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = scaffold.db; sourceTree = "<group>"; };
+		B3B844BF24D8F91900DC162A /* DatabaseHandlerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseHandlerTest.swift; sourceTree = "<group>"; };
+		B3B844C124D8FA7D00DC162A /* DatabaseTestHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseTestHelper.swift; sourceTree = "<group>"; };
+		B3B844C324D9287F00DC162A /* RouterDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterDelegate.swift; sourceTree = "<group>"; };
+		B3B844C624D9298000DC162A /* MockRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRouter.swift; sourceTree = "<group>"; };
+		B3B844CA24DA5D1700DC162A /* DiskAccessDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskAccessDelegate.swift; sourceTree = "<group>"; };
+		B3B844CD24DA6AB200DC162A /* config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = config.json; path = Jared/config.json; sourceTree = SOURCE_ROOT; };
+		B3B844CF24DA6AC800DC162A /* JaredWebServerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JaredWebServerTest.swift; sourceTree = "<group>"; };
+		B3B844D324DA6F5700DC162A /* Telegraph.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Telegraph.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3BBA7CC1CB3259A00E1749C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/CoreStrings.strings; sourceTree = "<group>"; };
 		B3BBA7CF1CB327C200E1749C /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
 		B3BBA7D01CB327C200E1749C /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/CoreStrings.strings; sourceTree = "<group>"; };
@@ -169,6 +210,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B3AECB5F2207CE33003E32F8 /* JaredFramework.framework in Frameworks */,
+				E4911DF4614B81D99C27CFF5 /* Pods_JaredTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -182,6 +224,8 @@
 				36A7776B61089A66EA5C166B /* Pods-JaredUI.release.xcconfig */,
 				0984B41FE3CF12361577AA41 /* Pods-Jared.debug.xcconfig */,
 				8490C38E773007C8CC882DCB /* Pods-Jared.release.xcconfig */,
+				589F788B0CFB8CBDA890F242 /* Pods-JaredTests.debug.xcconfig */,
+				64E9DE9392D51A396C2939FB /* Pods-JaredTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -189,9 +233,11 @@
 		739CD530157F72CF2AD79314 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B3B844D324DA6F5700DC162A /* Telegraph.framework */,
 				19C9C2FBC44EE08B0C7851EA /* Pods.framework */,
 				C31CB7445EAF3431D6AA3FD4 /* Pods_JaredUI.framework */,
 				4589B5638BC576CC8AB2700A /* Pods_Jared.framework */,
+				468EA41747ED2E0CB098C6BD /* Pods_JaredTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -201,6 +247,8 @@
 			children = (
 				7F84B6211CC506790059A82B /* JaredFramework.h */,
 				B39EC1751CB01F55002C3161 /* Message.swift */,
+				B32DE51924D5524300AB3A71 /* Action.swift */,
+				B3B844BB24D77BF200DC162A /* SendStyle.swift */,
 				B3EF1DAD2206E19100953DE7 /* Bodies.swift */,
 				B3EF1DAB2206E17900953DE7 /* Entities.swift */,
 				B3EF1DA92206E09B00953DE7 /* Jared.swift */,
@@ -229,7 +277,15 @@
 			children = (
 				B3327DC722068147009DD882 /* WebhookTests.swift */,
 				B3EF1DAF2206E4EB00953DE7 /* MessageTests.swift */,
-				B3EF1DA3220687DD00953DE7 /* URLProtocolMock.swift */,
+				B3B844B724D7791700DC162A /* ActionTest.swift */,
+				B3B844B924D77A4800DC162A /* SendStyleTest.swift */,
+				B32DE51424D51F9C00AB3A71 /* RouterTests.swift */,
+				B3B844CF24DA6AC800DC162A /* JaredWebServerTest.swift */,
+				B3B844BF24D8F91900DC162A /* DatabaseHandlerTest.swift */,
+				B3B844C124D8FA7D00DC162A /* DatabaseTestHelper.swift */,
+				B3B844D124DA6B1200DC162A /* Mocks */,
+				B3B844BD24D8F8FF00DC162A /* scaffold.db */,
+				B3B844CD24DA6AB200DC162A /* config.json */,
 				B3327DD222068176009DD882 /* Info.plist */,
 			);
 			path = JaredTests;
@@ -296,10 +352,22 @@
 			name = Modules;
 			sourceTree = "<group>";
 		};
+		B3B844D124DA6B1200DC162A /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				B32DE51B24D552D300AB3A71 /* MockPluginManager.swift */,
+				B3B844C624D9298000DC162A /* MockRouter.swift */,
+				B3EF1DA3220687DD00953DE7 /* URLProtocolMock.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
 		B3BF17C9244ED26800CC44C5 /* Delegates */ = {
 			isa = PBXGroup;
 			children = (
+				B3B844C324D9287F00DC162A /* RouterDelegate.swift */,
 				B3BF17C5244EC47700CC44C5 /* MessageDelegate.swift */,
+				B3B844CA24DA5D1700DC162A /* DiskAccessDelegate.swift */,
 				B3BF17C7244EC89200CC44C5 /* PluginManagerDelegate.swift */,
 			);
 			name = Delegates;
@@ -347,7 +415,6 @@
 				B33278751CB2CB1300BBDD3A /* Resources */,
 				B39A65DD1CC1F8BC003E26B0 /* Embed Frameworks */,
 				7D874CC6DD192CC67F87BEB5 /* [CP] Embed Pods Frameworks */,
-				B65EBE7C4ECD972DBDA97E50 /* [CP] Copy Pods Resources */,
 				B375A65A21EB15E90073F09F /* ShellScript */,
 			);
 			buildRules = (
@@ -364,9 +431,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B3327DD522068176009DD882 /* Build configuration list for PBXNativeTarget "JaredTests" */;
 			buildPhases = (
+				442CFFC026BCAC0300EF7558 /* [CP] Check Pods Manifest.lock */,
 				B3327DCA22068176009DD882 /* Sources */,
 				B3327DCB22068176009DD882 /* Frameworks */,
 				B3327DCC22068176009DD882 /* Resources */,
+				6ACFF462C1EE27EB65F59D8E /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -461,19 +530,65 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3B844BE24D8F90000DC162A /* scaffold.db in Resources */,
+				B3B844CE24DA6AB200DC162A /* config.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		442CFFC026BCAC0300EF7558 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-JaredTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6ACFF462C1EE27EB65F59D8E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-JaredTests/Pods-JaredTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/CocoaAsyncSocket/CocoaAsyncSocket.framework",
+				"${BUILT_PRODUCTS_DIR}/HTTPParserC/HTTPParserC.framework",
+				"${BUILT_PRODUCTS_DIR}/Telegraph/Telegraph.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaAsyncSocket.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HTTPParserC.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Telegraph.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-JaredTests/Pods-JaredTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		7D874CC6DD192CC67F87BEB5 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Jared/Pods-Jared-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-Jared/Pods-Jared-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/CocoaAsyncSocket/CocoaAsyncSocket.framework",
 				"${BUILT_PRODUCTS_DIR}/HTTPParserC/HTTPParserC.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
@@ -490,7 +605,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Jared/Pods-Jared-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Jared/Pods-Jared-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		AF01638400485C00E0947C76 /* [CP] Check Pods Manifest.lock */ = {
@@ -529,21 +644,6 @@
 			shellScript = "
 ";
 		};
-		B65EBE7C4ECD972DBDA97E50 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Jared/Pods-Jared-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -553,7 +653,9 @@
 			files = (
 				B3EF1DAC2206E17900953DE7 /* Entities.swift in Sources */,
 				B3EF1DAE2206E19100953DE7 /* Bodies.swift in Sources */,
+				B3B844BC24D77BF200DC162A /* SendStyle.swift in Sources */,
 				B3EF1DAA2206E09B00953DE7 /* Jared.swift in Sources */,
+				B32DE51A24D5524300AB3A71 /* Action.swift in Sources */,
 				7F84B62B1CC5069C0059A82B /* Message.swift in Sources */,
 				B3EF1DA62206DFEA00953DE7 /* Route.swift in Sources */,
 			);
@@ -573,12 +675,14 @@
 				B3327DC42206607B009DD882 /* ContactHelper.swift in Sources */,
 				B332787C1CB2CB1300BBDD3A /* ViewController.swift in Sources */,
 				B3327DC622066427009DD882 /* WebHookManager.swift in Sources */,
+				B3B844CB24DA5D1700DC162A /* DiskAccessDelegate.swift in Sources */,
 				B332787A1CB2CB1300BBDD3A /* AppDelegate.swift in Sources */,
 				B3BF17C4244EBF4900CC44C5 /* InternalModule.swift in Sources */,
 				B316D1A61F3FFDF100AFF063 /* CoreModuleRealm.swift in Sources */,
 				B3BF17C2244EBE9A00CC44C5 /* Router.swift in Sources */,
 				B375A65921EB14470073F09F /* AboutViewController.swift in Sources */,
 				7F0E931D1D02FC250096BABE /* Global.swift in Sources */,
+				B3B844C424D9288000DC162A /* RouterDelegate.swift in Sources */,
 				B3C59284224DD17900116ECB /* JaredWebServer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -587,9 +691,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B347A4A224DA766A00E93657 /* MessageRequest.swift in Sources */,
+				B3B844D224DA6BBB00DC162A /* JaredWebServer.swift in Sources */,
+				B3B844CC24DA671E00DC162A /* DiskAccessDelegate.swift in Sources */,
+				B3B844C924D92D1500DC162A /* ContactHelper.swift in Sources */,
+				B3B844C824D92C2200DC162A /* DatabaseHandler.swift in Sources */,
+				B3B844C024D8F91900DC162A /* DatabaseHandlerTest.swift in Sources */,
+				B32DE51824D5231800AB3A71 /* PluginManagerDelegate.swift in Sources */,
+				B32DE51624D522DA00AB3A71 /* Router.swift in Sources */,
 				B3BF17CA244FDA3F00CC44C5 /* MessageDelegate.swift in Sources */,
+				B3B844C524D9288000DC162A /* RouterDelegate.swift in Sources */,
+				B3B844B824D7791800DC162A /* ActionTest.swift in Sources */,
+				B3B844C724D9298000DC162A /* MockRouter.swift in Sources */,
+				B3B844C224D8FA7D00DC162A /* DatabaseTestHelper.swift in Sources */,
+				B3B844BA24D77A4900DC162A /* SendStyleTest.swift in Sources */,
 				B3327DD8220682ED009DD882 /* WebhookTests.swift in Sources */,
 				B3EF1DB02206E4EB00953DE7 /* MessageTests.swift in Sources */,
+				B32DE51C24D552D300AB3A71 /* MockPluginManager.swift in Sources */,
+				B3B844D024DA6AC800DC162A /* JaredWebServerTest.swift in Sources */,
+				B32DE51524D51F9C00AB3A71 /* RouterTests.swift in Sources */,
 				B3EF1DA4220687DD00953DE7 /* URLProtocolMock.swift in Sources */,
 				B3EF1DA02206849000953DE7 /* WebHookManager.swift in Sources */,
 			);
@@ -744,6 +864,7 @@
 		};
 		B3327DD622068176009DD882 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 589F788B0CFB8CBDA890F242 /* Pods-JaredTests.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -769,6 +890,7 @@
 		};
 		B3327DD722068176009DD882 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 64E9DE9392D51A396C2939FB /* Pods-JaredTests.release.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";

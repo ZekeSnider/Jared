@@ -11,12 +11,12 @@ import Foundation
 public class Jared {
     public static func Send(_ body: String, to recipient: RecipientEntity) {
         let me = Person(givenName: nil, handle: "", isMe: true)
-        let message = Message(body: TextBody(body), date: Date(), sender: me, recipient: recipient)
+        let message = Message(body: TextBody(body), date: Date(), sender: me, recipient: recipient, attachments: [])
         Send(message, whileBlocking: false)
     }
     
     public static func Send(_ message: Message, whileBlocking: Bool = false) {
-        print("I want to send text \(message)")
+        NSLog("Attemping to send message: \(message)")
         
         let defaults = UserDefaults.standard
         

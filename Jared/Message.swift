@@ -13,12 +13,18 @@ public struct Message: Encodable {
     public var date: Date?
     public var sender: SenderEntity
     public var recipient: RecipientEntity
+	public var attachments: [Attachment]
+	public var sendStyle: SendStyle
+	public var action: Action?
     
     enum CodingKeys : String, CodingKey{
         case date
         case body
         case sender
         case recipient
+		case attachments
+		case sendStyle
+		case action
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -48,13 +54,26 @@ public struct Message: Encodable {
             
             try container.encode(formatter.string(from: notOptionalDate), forKey: .date)
         }
+		
+		try container.encode(sendStyle.rawValue, forKey: .sendStyle)
+		try container.encode(attachments, forKey: .attachments)
+		
+		if (action != nil) {
+			try container.encode(action, forKey: .action)
+		}
     }
     
-    public init (body: MessageBody, date: Date, sender: SenderEntity, recipient: RecipientEntity) {
+	public init (body: MessageBody, date: Date, sender: SenderEntity, recipient: RecipientEntity, attachments: [Attachment] = [], sendStyle: String? = nil, associatedMessageType: Int? = nil, associatedMessageGUID: String? = nil) {
         self.body = body
         self.recipient = recipient
         self.sender = sender
         self.date = date
+		self.attachments = attachments
+		self.sendStyle = SendStyle(fromIdentifier: sendStyle)
+		
+		if (associatedMessageType != 0 && associatedMessageGUID != nil) {
+            self.action = Action(actionTypeInt: associatedMessageType!, targetGUID: associatedMessageGUID!.replacingOccurrences(of: "p:0/", with: ""))
+		}
     }
     
     public func RespondTo() -> RecipientEntity {

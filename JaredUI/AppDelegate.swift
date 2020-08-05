@@ -11,11 +11,16 @@ import Contacts
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
-    var Router = PluginManager()
-    var Server = JaredWebServer()
+    let Router = PluginManager()
+    let Server = JaredWebServer(configurationURL: FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
+        .appendingPathComponent("Jared")
+        .appendingPathComponent("config.json"))
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-		let dbHandler = DatabaseHandler(router: Router.router)
+        let messageDatabaseURL = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask)[0]
+            .appendingPathComponent("Messages").appendingPathComponent("chat.db")
+        let viewController = NSApplication.shared.keyWindow?.contentViewController as? ViewController
+		let dbHandler = DatabaseHandler(router: Router.router, databaseLocation: messageDatabaseURL, diskAccessDelegate: viewController)
         if (!dbHandler.authorizationError) {
             dbHandler.start()
         }

@@ -1,5 +1,5 @@
 //
-//  TwitterModule.swift
+//  PluginManager.swift
 //  Jared
 //
 //  Created by Zeke Snider on 4/9/16.
@@ -52,7 +52,7 @@ class PluginManager: PluginManagerDelegate {
         addInternalModules()
     }
     
-    func addInternalModules() {
+    private func addInternalModules() {
         modules.append(CoreModule())
         modules.append(InternalModule(pluginManager: self))
     }

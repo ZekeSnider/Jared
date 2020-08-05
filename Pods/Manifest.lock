@@ -14,6 +14,14 @@ DEPENDENCIES:
   - RealmSwift
   - Telegraph
 
+SPEC REPOS:
+  trunk:
+    - CocoaAsyncSocket
+    - HTTPParserC
+    - Realm
+    - RealmSwift
+    - Telegraph
+
 SPEC CHECKSUMS:
   CocoaAsyncSocket: eafaa68a7e0ec99ead0a7b35015e0bf25d2c8987
   HTTPParserC: 1ed389f80bb57a5b967d87d5358b8a94418394ee
@@ -21,6 +29,6 @@ SPEC CHECKSUMS:
   RealmSwift: 402f1e379a8ef82c635313037b043f0f06de880c
   Telegraph: 28cfb24fae20bc1399475062352977cc314aa097
 
-PODFILE CHECKSUM: b112a5394a83be5c825d47408783e80cbf9870ed
+PODFILE CHECKSUM: e0657ab133c8feba95d9a127b222132ef9e041c8
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.9.3

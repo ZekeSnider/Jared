@@ -130,7 +130,6 @@ class CoreModule: RoutingModule {
         
         //Decrement the concurrent send counter for this user
         currentSends[message.sender.handle] = (currentSends[message.sender.handle] ?? 0) - 1
-        
     }
     
     func scheduleThread() {

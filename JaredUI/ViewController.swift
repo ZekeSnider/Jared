@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class ViewController: NSViewController {
+class ViewController: NSViewController, DiskAccessDelegate {
     var defaults: UserDefaults!
     
     override func viewDidLoad() {

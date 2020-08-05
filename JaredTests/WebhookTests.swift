@@ -38,7 +38,7 @@ class WebhookTests: XCTestCase {
         // it's not used in the impl.
         sleep(5)
         
-        XCTAssert(URLProtocolMock.matchedDataURLs.count == 1, "Webhooks were requested")
+        XCTAssertEqual(URLProtocolMock.matchedDataURLs.count, 1, "Webhooks were requested")
         
         // setup for second call which adds another url to the webhook
         // list
@@ -54,6 +54,6 @@ class WebhookTests: XCTestCase {
         
         sleep(5)
         
-        XCTAssert(URLProtocolMock.matchedDataURLs.count == 2, "Webhooks were requested after configuration change")
+        XCTAssertEqual(URLProtocolMock.matchedDataURLs.count, 2, "Webhooks were requested after configuration change")
     }
 }
