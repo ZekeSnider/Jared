@@ -72,7 +72,7 @@ public struct Message: Encodable {
 		self.sendStyle = SendStyle(fromIdentifier: sendStyle)
 		
 		if (associatedMessageType != 0 && associatedMessageGUID != nil) {
-            self.action = Action(actionTypeInt: associatedMessageType!, targetGUID: associatedMessageGUID!)
+            self.action = Action(actionTypeInt: associatedMessageType!, targetGUID: associatedMessageGUID!.replacingOccurrences(of: "p:0/", with: ""))
 		}
     }
     
