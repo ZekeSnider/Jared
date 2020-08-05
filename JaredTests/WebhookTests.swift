@@ -21,11 +21,11 @@ class WebhookTests: XCTestCase {
         config = URLSessionConfiguration.ephemeral
         config.protocolClasses = [URLProtocolMock.self]
     }
-
+    
     override func tearDown() {
         URLProtocolMock.matchedDataURLs = []
     }
-
+    
     func testvalidURLsCall() {
         // set up first call to webhook with one url
         let url = URL(string: WEBHOOK_TEST_URL)

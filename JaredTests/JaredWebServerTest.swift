@@ -20,7 +20,7 @@ class JaredWebServerTest: XCTestCase {
         testDatabaseLocation = bundle.url(forResource: "config", withExtension: "json")
         webServer = JaredWebServer(configurationURL: testDatabaseLocation)
     }
-
+    
     override func tearDown() {
     }
     

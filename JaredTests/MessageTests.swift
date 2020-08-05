@@ -34,10 +34,10 @@ class MessageTests: XCTestCase {
         messageFromPersonToGroup = Message(body: textBody, date: Date(), sender: swiftPerson, recipient: sampleGroup)
         messageFromMeToPerson = Message(body: textBody, date: Date(), sender: mePerson, recipient: swiftPerson)
     }
-
+    
     override func tearDown() {
     }
-
+    
     func testGetTextBody() {
         XCTAssertEqual(sampleTextMessage.getTextBody(), "Hey Jared", "getTextBody returns proper string")
         XCTAssertEqual(sampleImageMesage.getTextBody(), nil, "getTextBody returns nil for image body")

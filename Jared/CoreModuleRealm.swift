@@ -10,12 +10,12 @@ enum IntervalType: String {
 }
 
 let intervalSeconds: [IntervalType: Double] =
-[
-    .Minute: 60.0,
-    .Hour: 3600.0,
-    .Day: 86400.0,
-    .Week: 604800.0,
-    .Month: 2592000.0
+    [
+        .Minute: 60.0,
+        .Hour: 3600.0,
+        .Day: 86400.0,
+        .Week: 604800.0,
+        .Month: 2592000.0
 ]
 
 class SchedulePost: Object {

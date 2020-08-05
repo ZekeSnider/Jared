@@ -12,7 +12,7 @@ import JaredFramework
 class ActionTest: XCTestCase {
     override func setUp() {
     }
-
+    
     override func tearDown() {
     }
     

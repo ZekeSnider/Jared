@@ -43,13 +43,13 @@ public enum ActionEvent: String {
 }
 
 public struct Action: Encodable {
-	public var type: ActionType
+    public var type: ActionType
     public var event: ActionEvent
-	public var targetGUID: String
-	
-	enum CodingKeys : String, CodingKey{
+    public var targetGUID: String
+    
+    enum CodingKeys : String, CodingKey{
         case type
-		case targetGUID
+        case targetGUID
         case event
     }
     
@@ -67,9 +67,9 @@ public struct Action: Encodable {
     
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-		
-		try container.encode(type.rawValue, forKey: .type)
-		try container.encode(targetGUID, forKey: .targetGUID)
+        
+        try container.encode(type.rawValue, forKey: .type)
+        try container.encode(targetGUID, forKey: .targetGUID)
         try container.encode(event.rawValue, forKey: .event)
-	}
+    }
 }

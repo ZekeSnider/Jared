@@ -28,7 +28,7 @@ class CoreModule: RoutingModule {
     required public init() {
         let appsupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0].appendingPathComponent("Jared").appendingPathComponent("CoreModule")
         let realmLocation = appsupport.appendingPathComponent("database.realm")
-            
+        
         try! FileManager.default.createDirectory(at: appsupport, withIntermediateDirectories: true, attributes: nil)
         
         let config = Realm.Configuration(
@@ -51,7 +51,7 @@ class CoreModule: RoutingModule {
         let schedule = Route(name: "/schedule", comparisons: [.startsWith: ["/schedule"]], call: self.schedule, description: NSLocalizedString("scheduleDescription"), parameterSyntax: "/schedule")
         
         let barf = Route(name: "/barf", comparisons: [.startsWith: ["/barf"]], call: self.barf, description: NSLocalizedString("barfDescription"))
-
+        
         routes = [ping, thankYou, version, send, whoami, name, schedule, barf]
         
         //Launch background thread that will check for scheduled messages to send
@@ -153,7 +153,7 @@ class CoreModule: RoutingModule {
             //Check to see if we are within the re-send period for this scheduled message
             //values should converge on the number of send interval if we're supposed to send.
             if (roundedHigher - roundedLower == Double(post.sendIntervalNumber)) {
-
+                
                 //Check to make sure the last time we sent this scheduled message it was not within this send interval
                 if (nowDate - post.lastSendDate.timeIntervalSinceReferenceDate) > (Double(post.sendIntervalNumber) * intervalSeconds[post.sendIntervalTypeEnum]!) {
                     
@@ -166,7 +166,7 @@ class CoreModule: RoutingModule {
                     }
                 }
             }
-            //We've gone over when the last message for the schedule would have sent. We should delete it from the database
+                //We've gone over when the last message for the schedule would have sent. We should delete it from the database
             else if Int(roundedLower) > post.sendNumberTimes {
                 try! realm.write {
                     realm.delete(post)
@@ -220,13 +220,13 @@ class CoreModule: RoutingModule {
                  "handle": message.RespondTo().handle,
                  "sendNumberTimes": sendTimes,
                  "startDate": Date(),
-                ])
+            ])
             
             let realm  = try! Realm()
             try! realm.write {
                 realm.add(newPost)
             }
-
+            
             Jared.Send("Your post has been succesfully scheduled.", to: message.RespondTo())
             break
         case "delete":
@@ -300,7 +300,7 @@ class CoreModule: RoutingModule {
         
         let peopleFound = try! store.unifiedContacts(matching: searchPredicate, keysToFetch:[CNContactFamilyNameKey as CNKeyDescriptor, CNContactGivenNameKey as CNKeyDescriptor])
         
-            
+        
         //We need to create the contact
         if (peopleFound.count == 0) {
             // Creating a new contact
@@ -317,18 +317,18 @@ class CoreModule: RoutingModule {
                 let iPhonePhone = CNLabeledValue(label: "iPhone", value: CNPhoneNumber(stringValue:message.sender.handle))
                 newContact.phoneNumbers = [iPhonePhone]
             }
-        
+            
             let saveRequest = CNSaveRequest()
             saveRequest.add(newContact, toContainerWithIdentifier:nil)
             do {
                 try store.execute(saveRequest)
             } catch {
-               return Jared.Send("There was an error saving your contact..", to: message.RespondTo())
+                return Jared.Send("There was an error saving your contact..", to: message.RespondTo())
             }
             
             Jared.Send("Ok, I'll call you \(parsedMessage[1]) from now on.", to: message.RespondTo())
         }
-        //The contact already exists, modify the value
+            //The contact already exists, modify the value
         else {
             let mutableContact = peopleFound[0].mutableCopy() as! CNMutableContact
             mutableContact.givenName = parsedMessage[1]

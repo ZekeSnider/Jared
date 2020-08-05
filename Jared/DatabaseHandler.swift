@@ -16,13 +16,13 @@ import SQLite3
 import Contacts
 
 class DatabaseHandler {
-	private static let groupQuery = """
+    private static let groupQuery = """
 		SELECT handle.id
 			FROM chat_handle_join INNER JOIN handle ON chat_handle_join.handle_id = handle.ROWID
 			INNER JOIN chat ON chat_handle_join.chat_id = chat.ROWID
 			WHERE chat_handle_join.chat_id = ?
 	"""
-	private static let attachmentQuery = """
+    private static let attachmentQuery = """
 	SELECT ROWID,
 	filename,
 	mime_type,
@@ -33,7 +33,7 @@ class DatabaseHandler {
 	ON attachment.ROWID = message_attachment_join.attachment_id
 	WHERE message_id = ?
 	"""
-	private static let newRecordquery = """
+    private static let newRecordquery = """
 		SELECT handle.id, message.text, message.ROWID, message.cache_roomnames, message.is_from_me, message.destination_caller_id,
 			message.date/1000000000 + strftime("%s", "2001-01-01"),
 			message.cache_has_attachments,
@@ -44,18 +44,18 @@ class DatabaseHandler {
 			ON message.handle_id = handle.ROWID
 			WHERE message.ROWID > ? ORDER BY message.ROWID DESC
 	"""
-	private static let maxRecordIDQuery = "SELECT MAX(rowID) FROM message"
-	
+    private static let maxRecordIDQuery = "SELECT MAX(rowID) FROM message"
+    
     var db: OpaquePointer?
     var querySinceID: String?
     var shouldExitThread = false
     var refreshSeconds = 5.0
     var authorizationError = false
     var statement: OpaquePointer? = nil
-	var router: RouterDelegate?
+    var router: RouterDelegate?
     
     init(router: RouterDelegate, databaseLocation: URL, diskAccessDelegate: DiskAccessDelegate?) {
-		self.router = router
+        self.router = router
         
         if sqlite3_open(databaseLocation.path, &db) != SQLITE_OK {
             NSLog("Error opening SQLite database. Likely Full disk access error.")
@@ -92,7 +92,7 @@ class DatabaseHandler {
         var id: String?
         var statement: OpaquePointer?
         
-		if sqlite3_prepare_v2(db, DatabaseHandler.maxRecordIDQuery, -1, &statement, nil) != SQLITE_OK {
+        if sqlite3_prepare_v2(db, DatabaseHandler.maxRecordIDQuery, -1, &statement, nil) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
             print("error preparing select: \(errmsg)")
         }
@@ -120,7 +120,7 @@ class DatabaseHandler {
         
         var statement: OpaquePointer?
         
-		if sqlite3_prepare_v2(db, DatabaseHandler.groupQuery, -1, &statement, nil) != SQLITE_OK {
+        if sqlite3_prepare_v2(db, DatabaseHandler.groupQuery, -1, &statement, nil) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
             print("error preparing select: \(errmsg)")
         }
@@ -145,54 +145,54 @@ class DatabaseHandler {
         return Group(name: "", handle: handle, participants: People)
     }
     
-	private func unwrapStringColumn(for sqlStatement: OpaquePointer?, at column: Int32) -> String? {
+    private func unwrapStringColumn(for sqlStatement: OpaquePointer?, at column: Int32) -> String? {
         if let cString = sqlite3_column_text(sqlStatement, column) {
             return String(cString: cString)
         } else {
             return nil
         }
     }
-	
-	private func retrieveAttachments(forMessage messageID: String) -> [Attachment] {
-		var attachmentStatement: OpaquePointer? = nil
-		
-		defer { attachmentStatement = nil }
-			   
-		if sqlite3_prepare_v2(db, DatabaseHandler.attachmentQuery, -1, &attachmentStatement, nil) != SQLITE_OK {
-		   let errmsg = String(cString: sqlite3_errmsg(db)!)
-		   print("error preparing select: \(errmsg)")
-	   	}
-	   
-		if sqlite3_bind_text(attachmentStatement, 1, messageID, -1, SQLITE_TRANSIENT) != SQLITE_OK {
-		   let errmsg = String(cString: sqlite3_errmsg(db)!)
-		   print("failure binding: \(errmsg)")
-	   	}
-		
-		var attachments = [Attachment]()
-		
-		while sqlite3_step(attachmentStatement) == SQLITE_ROW {
-			guard let rowID = unwrapStringColumn(for: attachmentStatement, at: 0) else { continue }
-			guard let fileName = unwrapStringColumn(for: attachmentStatement, at: 1) else { continue }
-			guard let mimeType = unwrapStringColumn(for: attachmentStatement, at: 2) else { continue }
-			guard let transferName = unwrapStringColumn(for: attachmentStatement, at: 3) else { continue }
+    
+    private func retrieveAttachments(forMessage messageID: String) -> [Attachment] {
+        var attachmentStatement: OpaquePointer? = nil
+        
+        defer { attachmentStatement = nil }
+        
+        if sqlite3_prepare_v2(db, DatabaseHandler.attachmentQuery, -1, &attachmentStatement, nil) != SQLITE_OK {
+            let errmsg = String(cString: sqlite3_errmsg(db)!)
+            print("error preparing select: \(errmsg)")
+        }
+        
+        if sqlite3_bind_text(attachmentStatement, 1, messageID, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+            let errmsg = String(cString: sqlite3_errmsg(db)!)
+            print("failure binding: \(errmsg)")
+        }
+        
+        var attachments = [Attachment]()
+        
+        while sqlite3_step(attachmentStatement) == SQLITE_ROW {
+            guard let rowID = unwrapStringColumn(for: attachmentStatement, at: 0) else { continue }
+            guard let fileName = unwrapStringColumn(for: attachmentStatement, at: 1) else { continue }
+            guard let mimeType = unwrapStringColumn(for: attachmentStatement, at: 2) else { continue }
+            guard let transferName = unwrapStringColumn(for: attachmentStatement, at: 3) else { continue }
             let isSticker = sqlite3_column_int(attachmentStatement, 4) == 1
-			
-			attachments.append(Attachment(id: Int(rowID)!, filePath: fileName, mimeType: mimeType, fileName: transferName, isSticker: isSticker))
+            
+            attachments.append(Attachment(id: Int(rowID)!, filePath: fileName, mimeType: mimeType, fileName: transferName, isSticker: isSticker))
         }
         
         if sqlite3_finalize(attachmentStatement) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
             print("error finalizing prepared statement: \(errmsg)")
         }
-		
-		return attachments
-	}
+        
+        return attachments
+    }
     
     private func queryNewRecords() -> Double {
         let start = Date()
         defer { statement = nil }
         
-		if sqlite3_prepare_v2(db, DatabaseHandler.newRecordquery, -1, &statement, nil) != SQLITE_OK {
+        if sqlite3_prepare_v2(db, DatabaseHandler.newRecordquery, -1, &statement, nil) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
             print("error preparing select: \(errmsg)")
         }
@@ -208,12 +208,12 @@ class DatabaseHandler {
             let rowID = unwrapStringColumn(for: statement, at: 2)
             let roomName = unwrapStringColumn(for: statement, at: 3)
             let isFromMe = sqlite3_column_int(statement, 4) == 1
-			let destinationOptional = unwrapStringColumn(for: statement, at: 5)
+            let destinationOptional = unwrapStringColumn(for: statement, at: 5)
             let epochDate = TimeInterval(sqlite3_column_int64(statement, 6))
-			let hasAttachment = sqlite3_column_int(statement, 7) == 1
-			let sendStyle = unwrapStringColumn(for: statement, at: 8)
-			let associatedMessageType = sqlite3_column_int(statement, 9)
-			let associatedMessageGUID = unwrapStringColumn(for: statement, at: 10)
+            let hasAttachment = sqlite3_column_int(statement, 7) == 1
+            let sendStyle = unwrapStringColumn(for: statement, at: 8)
+            let associatedMessageType = sqlite3_column_int(statement, 9)
+            let associatedMessageGUID = unwrapStringColumn(for: statement, at: 10)
             
             querySinceID = rowID;
             
@@ -223,22 +223,22 @@ class DatabaseHandler {
             
             let buddyName = ContactHelper.RetreiveContact(handle: senderHandle)?.givenName
             let myName = ContactHelper.RetreiveContact(handle: destination)?.givenName
-			let sender: Person
-			let recipient: RecipientEntity
-			let group = retrieveGroupInfo(chatID: roomName)
-			
-			if (isFromMe) {
-				sender = Person(givenName: myName, handle: destination, isMe: true)
-				recipient = group ?? Person(givenName: buddyName, handle: senderHandle, isMe: false)
-			} else {
-				sender = Person(givenName: buddyName, handle: senderHandle, isMe: false)
-				recipient = group ?? Person(givenName: myName, handle: destination, isMe: true)
-			}
-			
-			let message = Message(body: TextBody(text), date: Date(timeIntervalSince1970: epochDate), sender: sender, recipient: recipient, attachments: hasAttachment ? retrieveAttachments(forMessage: rowID ?? "") : [],
-				  sendStyle: sendStyle, associatedMessageType: Int(associatedMessageType), associatedMessageGUID: associatedMessageGUID)
-			
-			router?.route(message: message)
+            let sender: Person
+            let recipient: RecipientEntity
+            let group = retrieveGroupInfo(chatID: roomName)
+            
+            if (isFromMe) {
+                sender = Person(givenName: myName, handle: destination, isMe: true)
+                recipient = group ?? Person(givenName: buddyName, handle: senderHandle, isMe: false)
+            } else {
+                sender = Person(givenName: buddyName, handle: senderHandle, isMe: false)
+                recipient = group ?? Person(givenName: myName, handle: destination, isMe: true)
+            }
+            
+            let message = Message(body: TextBody(text), date: Date(timeIntervalSince1970: epochDate), sender: sender, recipient: recipient, attachments: hasAttachment ? retrieveAttachments(forMessage: rowID ?? "") : [],
+                                  sendStyle: sendStyle, associatedMessageType: Int(associatedMessageType), associatedMessageGUID: associatedMessageGUID)
+            
+            router?.route(message: message)
         }
         
         if sqlite3_finalize(statement) != SQLITE_OK {

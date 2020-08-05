@@ -47,7 +47,7 @@ class URLProtocolMock: URLProtocol {
             if let data = URLProtocolMock.testURLs[url] {
                 URLProtocolMock.matchedDataURLs.append(url)
                 
-                 // …and if we have test data for that URL…
+                // …and if we have test data for that URL…
                 // …load it immediately.
                 self.client?.urlProtocol(self, didLoad: data)
             }

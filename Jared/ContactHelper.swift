@@ -23,9 +23,9 @@ class ContactHelper {
             }
             
             let contacts = try! store.unifiedContacts(matching: searchPredicate, keysToFetch:[CNContactFamilyNameKey as CNKeyDescriptor,
-                 CNContactGivenNameKey as CNKeyDescriptor,
-                 CNContactEmailAddressesKey as CNKeyDescriptor,
-                 CNContactPhoneNumbersKey as CNKeyDescriptor])
+                                                                                              CNContactGivenNameKey as CNKeyDescriptor,
+                                                                                              CNContactEmailAddressesKey as CNKeyDescriptor,
+                                                                                              CNContactPhoneNumbersKey as CNKeyDescriptor])
             
             if (contacts.count == 1) {
                 return contacts[0]

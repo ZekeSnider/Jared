@@ -109,7 +109,7 @@ class InternalModule: RoutingModule {
         let documentation = pluginManager!.getAllModules()
             .map{ module in module.fullDescription }
             .joined(separator: "\n\n")
-            
+        
         Jared.Send(documentation, to: message.RespondTo())
     }
     
