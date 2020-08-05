@@ -31,6 +31,10 @@ public enum SendStyle: String {
             return
         }
         switch(identifier) {
+        case "com.apple.messages.effect.CKSpotlightEffect":
+            self = .spotlight
+        case "com.apple.messages.effect.CKSparklesEffect":
+            self = .celebration
         case "com.apple.messages.effect.CKShootingStarEffect":
             self = .shootingStar
         case "com.apple.messages.effect.CKLasersEffect":
@@ -38,7 +42,7 @@ public enum SendStyle: String {
         case "com.apple.messages.effect.CKHeartEffect":
             self = .love
         case "com.apple.messages.effect.CKHappyBirthdayEffect":
-            self = .confetti
+            self = .balloons
         case "com.apple.messages.effect.CKFireworksEffect":
             self = .fireworks
         case "com.apple.messages.effect.CKConfettiEffect":
