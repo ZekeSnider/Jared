@@ -19,7 +19,6 @@ class MessageTests: XCTestCase {
     var sampleGroup: Group!
     
     var sampleTextMessage: Message!
-    var sampleImageMesage: Message!
     var messageFromMeToGroup: Message!
     var messageFromMeToPerson: Message!
     var messageFromPersonToGroup: Message!
@@ -28,7 +27,6 @@ class MessageTests: XCTestCase {
         sampleGroup = Group(name: "thank u next", handle: "chat1000", participants: [mePerson, jaredPerson, swiftPerson])
         
         sampleTextMessage = Message(body: textBody, date: Date(), sender: mePerson, recipient: jaredPerson)
-        sampleImageMesage = Message(body: ImageBody("/users/zeke/goodJaredImage.jpg"), date: Date(), sender: mePerson, recipient: jaredPerson)
         
         messageFromMeToGroup = Message(body: textBody, date: Date(), sender: mePerson, recipient: sampleGroup)
         messageFromPersonToGroup = Message(body: textBody, date: Date(), sender: swiftPerson, recipient: sampleGroup)
@@ -40,12 +38,6 @@ class MessageTests: XCTestCase {
     
     func testGetTextBody() {
         XCTAssertEqual(sampleTextMessage.getTextBody(), "Hey Jared", "getTextBody returns proper string")
-        XCTAssertEqual(sampleImageMesage.getTextBody(), nil, "getTextBody returns nil for image body")
-    }
-    
-    func testGetImageBody() {
-        XCTAssertEqual(sampleTextMessage.getImageBody(), nil, "getTextBody returns nil for text body")
-        XCTAssertEqual(sampleImageMesage.getImageBody(), "/users/zeke/goodJaredImage.jpg", "getTextBody returns proper path")
     }
     
     func testGetMessageResponse() {

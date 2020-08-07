@@ -42,19 +42,6 @@ public class Jared {
             
             recipient = message.recipient.handle
             body = textBody.message
-        } else if let imageBody = message.body as? ImageBody {
-            if #available(OSX 10.16, *) {
-                scriptPath = Bundle.main.url(forResource: "SendTextUI", withExtension: "scpt")?.path
-            } else {
-                if message.recipient is Person {
-                    scriptPath = Bundle.main.url(forResource: "SendImageSingleBuddy", withExtension: "scpt")?.path
-                } else if message.recipient is Group {
-                    scriptPath = Bundle.main.url(forResource: "SendImage", withExtension: "scpt")?.path
-                }
-            }
-            
-            recipient = message.recipient.handle
-            body = imageBody.ImagePath
         }
         
         if scriptPath != nil && recipient != nil && body != nil {

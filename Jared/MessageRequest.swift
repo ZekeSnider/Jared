@@ -28,8 +28,6 @@ public struct MessageRequest: Decodable {
         
         if let textBody = try? container.decode(TextBody.self, forKey: .body) {
             self.body = textBody
-        } else if let imageBody = try? container.decode(ImageBody.self, forKey: .body) {
-            self.body = imageBody
         } else {
             throw ParameterError.runtimeError("the body parameter is incorrectly formatted")
         }

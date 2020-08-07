@@ -94,5 +94,3 @@ class JaredWebServer: NSObject {
         }
     }
 }
-
-

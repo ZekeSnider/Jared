@@ -249,4 +249,3 @@ class DatabaseHandler {
         return NSDate().timeIntervalSince(start)
     }
 }
-

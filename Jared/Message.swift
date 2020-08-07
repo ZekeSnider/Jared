@@ -32,8 +32,6 @@ public struct Message: Encodable {
         
         if let textBody = body as? TextBody {
             try container.encode(textBody, forKey: .body)
-        } else if let imageBody = body as? ImageBody {
-            try container.encode(imageBody, forKey: .body)
         }
         
         if let person = sender as? Person {
@@ -107,13 +105,5 @@ public struct Message: Encodable {
     
     public func getTextParameters() -> [String]? {
         return self.getTextBody()?.components(separatedBy: ",")
-    }
-    
-    public func getImageBody() -> String? {
-        guard let body = self.body as? ImageBody else {
-            return nil
-        }
-        
-        return body.ImagePath
     }
 }
