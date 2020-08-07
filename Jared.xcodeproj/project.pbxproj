@@ -20,6 +20,7 @@
 		B30F765624C5742800ADF57B /* SendTextUI.scpt in Resources */ = {isa = PBXBuildFile; fileRef = B30F765424C5740800ADF57B /* SendTextUI.scpt */; };
 		B316D1A61F3FFDF100AFF063 /* CoreModuleRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = B316D1A51F3FFDF100AFF063 /* CoreModuleRealm.swift */; };
 		B319235724DD311B001904BA /* InternalModuleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B319235624DD311B001904BA /* InternalModuleTest.swift */; };
+		B319235824DD319D001904BA /* InternalModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BF17C3244EBF4900CC44C5 /* InternalModule.swift */; };
 		B32DE51524D51F9C00AB3A71 /* RouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32DE51424D51F9C00AB3A71 /* RouterTests.swift */; };
 		B32DE51624D522DA00AB3A71 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BF17C1244EBE9A00CC44C5 /* Router.swift */; };
 		B32DE51824D5231800AB3A71 /* PluginManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BF17C7244EC89200CC44C5 /* PluginManagerDelegate.swift */; };
@@ -712,6 +713,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B319235824DD319D001904BA /* InternalModule.swift in Sources */,
 				B347A4B024DD1E0E00E93657 /* Global.swift in Sources */,
 				B347A4A224DA766A00E93657 /* MessageRequest.swift in Sources */,
 				B3B844D224DA6BBB00DC162A /* JaredWebServer.swift in Sources */,

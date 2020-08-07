@@ -12,10 +12,6 @@ import JaredFramework
 import Contacts
 import RealmSwift
 
-public func NSLocalizedString(_ key: String) -> String {
-    return NSLocalizedString(key, tableName: "CoreStrings", comment: "")
-}
-
 class CoreModule: RoutingModule {
     var description: String = NSLocalizedString("CoreDescription")
     var routes: [Route] = []

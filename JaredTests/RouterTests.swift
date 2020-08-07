@@ -22,6 +22,14 @@ class RouterTests: XCTestCase {
     
     override func setUp() {
         router = Router(pluginManager: mockPluginManager, messageDelegates: [])
+        
+        let module1 = MockRoute(sender: JaredMock())
+        module1.add(route: Route(name: startWithString, comparisons: [.startsWith: [startWithString]], call: {(message: Message) -> Void in self.mockPluginManager.increment(routeName: startWithString)}, description: "", parameterSyntax: "example syntax"))
+        module1.add(route: Route(name: containsString, comparisons: [.contains: [containsString]], call: {(message) -> Void in self.mockPluginManager.increment(routeName: containsString)}, description: ""))
+        module1.add(route: Route(name: containsString, comparisons: [.containsURL: [goodUrl]], call: {(message) -> Void in self.mockPluginManager.increment(routeName: containsString)}))
+        module1.add(route: Route(name: isString, comparisons: [.is: [isString]], call: {(message) -> Void in self.mockPluginManager.increment(routeName: isString)}))
+        
+        mockPluginManager.add(module: module1)
     }
     
     override func tearDown() {

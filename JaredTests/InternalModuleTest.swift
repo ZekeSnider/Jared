@@ -7,27 +7,36 @@
 //
 
 import XCTest
+import JaredFramework
 
 class InternalModuleTest: XCTestCase {
-
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    var internalModule: InternalModule!
+    var sender: JaredMock!
+    var pluginManager: MockPluginManager!
+    let mePerson = Person(givenName: "zeke", handle: "zeke@email.com", isMe: true)
+    let swiftPerson = Person(givenName: "taylor", handle: "taylor@swift.org", isMe: false)
+    
+    override func setUp() {
+        self.sender = JaredMock()
+        self.pluginManager = MockPluginManager()
+        internalModule = InternalModule(sender: sender, pluginManager: pluginManager)
     }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    override func tearDown() {
     }
 
     func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+        let module1 = MockRoute(sender: JaredMock())
+        module1.add(route: Route(name: startWithString, comparisons: [.startsWith: [startWithString]], call: {(message: Message) -> Void in self.pluginManager.increment(routeName: startWithString)}, description: "hello hello", parameterSyntax: "example syntax"))
+        module1.add(route: Route(name: containsString, comparisons: [.contains: [containsString]], call: {(message) -> Void in self.pluginManager.increment(routeName: containsString)}, description: "sfadjklfsa"))
+        module1.add(route: Route(name: containsString, comparisons: [.containsURL: [goodUrl]], call: {(message) -> Void in self.pluginManager.increment(routeName: containsString)}))
+        module1.add(route: Route(name: isString, comparisons: [.is: [isString]], call: {(message) -> Void in self.pluginManager.increment(routeName: isString)}))
+        
+        pluginManager.add(module: module1)
+        
+        internalModule.sendDocumentation(message: Message(body: TextBody(""), date: Date(), sender: mePerson, recipient: swiftPerson))
+        let message = (sender.calls[0].body as! TextBody).message
+        XCTAssertEqual((sender.calls[0].body as! TextBody).message, "MockRoute: no description\n==============\n/startWith: hello hello\n/contains: sfadjklfsa\n/contains: \n/is: ")
     }
 
 }

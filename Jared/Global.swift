@@ -14,3 +14,7 @@ extension Collection {
         return index >= startIndex && index < endIndex ? self[index] : nil
     }
 }
+
+public func NSLocalizedString(_ key: String) -> String {
+    return NSLocalizedString(key, tableName: "CoreStrings", comment: "")
+}
