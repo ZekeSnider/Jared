@@ -10,6 +10,8 @@ import XCTest
 import JaredFramework
 
 class ActionTest: XCTestCase {
+    static let removeLikeJSON = "{\"type\":\"like\",\"targetGUID\":\"goodGUID\",\"event\":\"removed\"}"
+    static let placeLoveJSON = "{\"type\":\"love\",\"targetGUID\":\"goodGUID\",\"event\":\"placed\"}"
     override func setUp() {
     }
     
@@ -17,8 +19,20 @@ class ActionTest: XCTestCase {
     }
     
     func testFromActionTypeInt() {
-        XCTAssertEqual(ActionType(fromActionTypeInt: 2005), .question, "Properly deserializes known action type")
+        let targetGUID = "goodGUID"
+        let encoder = JSONEncoder()
+        var action = Action(actionTypeInt: 3001, targetGUID: targetGUID)
         
-        XCTAssertEqual(ActionType(fromActionTypeInt: 696969), .unknown, "Properly deserializes unknown action type")
+        XCTAssertEqual(action.event, .removed, "Event marked as removed")
+        XCTAssertEqual(action.type, .like, "Type is correct")
+        XCTAssertEqual(String(data: try! encoder.encode(action), encoding: .utf8),
+                       ActionTest.removeLikeJSON, "Encoding works as expected")
+        
+        action = Action(actionTypeInt: 2000, targetGUID: targetGUID)
+        
+        XCTAssertEqual(action.event, .placed, "Event marked as removed")
+        XCTAssertEqual(action.type, .love, "Type is correct")
+        XCTAssertEqual(String(data: try! encoder.encode(action), encoding: .utf8),
+                       ActionTest.placeLoveJSON, "Encoding works as expected")
     }
 }

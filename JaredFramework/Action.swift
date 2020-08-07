@@ -8,50 +8,20 @@
 
 import Foundation
 
-public enum ActionType: String {
-    case like = "like"
-    case dislike = "dislike"
-    case love = "love"
-    case laugh = "laugh"
-    case exclaim = "exclaim"
-    case question = "question"
-    case unknown = "unknown"
-    
-    public init(fromActionTypeInt actionTypeInt: Int) {
-        switch(actionTypeInt) {
-        case 2000:
-            self = .love
-        case 2001:
-            self = .like
-        case 2002:
-            self = .dislike
-        case 2003:
-            self = .laugh
-        case 2004:
-            self = .exclaim
-        case 2005:
-            self = .question
-        default:
-            self = .unknown
-        }
-    }
-}
-
-public enum ActionEvent: String {
-    case placed = "placed"
-    case removed = "removed"
-}
-
 public struct Action: Encodable {
-    public var type: ActionType
-    public var event: ActionEvent
-    public var targetGUID: String
-    
     enum CodingKeys : String, CodingKey{
         case type
         case targetGUID
         case event
     }
+    public enum ActionEvent: String {
+        case placed = "placed"
+        case removed = "removed"
+    }
+    
+    public var type: ActionType
+    public var event: ActionEvent
+    public var targetGUID: String
     
     public init(actionTypeInt: Int, targetGUID: String) {
         if (actionTypeInt >= 3000) {
