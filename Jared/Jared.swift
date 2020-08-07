@@ -7,15 +7,16 @@
 //
 
 import Foundation
+import JaredFramework
 
-public class Jared {
-    public static func Send(_ body: String, to recipient: RecipientEntity) {
+public class Jared: MessageSender {
+    public func Send(_ body: String, to recipient: RecipientEntity) {
         let me = Person(givenName: nil, handle: "", isMe: true)
         let message = Message(body: TextBody(body), date: Date(), sender: me, recipient: recipient, attachments: [])
-        Send(message, whileBlocking: false)
+        Send(message)
     }
     
-    public static func Send(_ message: Message, whileBlocking: Bool = false) {
+    public func Send(_ message: Message) {
         NSLog("Attemping to send message: \(message)")
         
         let defaults = UserDefaults.standard
@@ -53,8 +54,6 @@ public class Jared {
             // Big Sur and later have to use UI scripting,
             // so we need to block the thread.
             if #available(OSX 10.16, *) {
-                task.waitUntilExit()
-            } else if whileBlocking {
                 task.waitUntilExit()
             }
         }

@@ -45,5 +45,5 @@ public struct Route {
 public protocol RoutingModule {
     var routes: [Route] {get}
     var description: String {get}
-    init()
+    init(sender: MessageSender)
 }

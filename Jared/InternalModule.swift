@@ -67,12 +67,14 @@ class InternalModule: RoutingModule {
     var routes: [Route] = []
     var defaults: UserDefaults
     var pluginManager: PluginManagerDelegate?
+    var sender: MessageSender
     
-    required public convenience init() {
-        self.init(pluginManager: nil)
+    required public convenience init(sender: MessageSender) {
+        self.init(sender: sender, pluginManager: nil)
     }
     
-    init(pluginManager: PluginManagerDelegate?) {
+    init(sender: MessageSender, pluginManager: PluginManagerDelegate?) {
+        self.sender = sender
         self.pluginManager = pluginManager
         defaults = UserDefaults.standard
         
@@ -86,23 +88,23 @@ class InternalModule: RoutingModule {
     
     func enable(message: Message) -> Void {
         defaults.set(false, forKey: "JaredIsDisabled")
-        Jared.Send(localized("enabledMessage"), to: message.RespondTo())
+        sender.Send(localized("enabledMessage"), to: message.RespondTo())
     }
     
     func disable(message: Message) -> Void {
         defaults.set(true, forKey: "JaredIsDisabled")
-        Jared.Send(localized("disabledMessage"), to: message.RespondTo())
+        sender.Send(localized("disabledMessage"), to: message.RespondTo())
     }
     
     func reload(message: Message) -> Void {
         pluginManager?.reload()
-        Jared.Send(localized("reloadMessage"), to: message.RespondTo())
+        sender.Send(localized("reloadMessage"), to: message.RespondTo())
     }
     
     func sendDocumentation(message: Message) {
         let parameters = message.getTextParameters()
         if parameters?.count == 2 {
-            Jared.Send(singleDocumentation(parameters![1]), to: message.RespondTo())
+            sender.Send(singleDocumentation(parameters![1]), to: message.RespondTo())
             return
         }
         
@@ -110,7 +112,7 @@ class InternalModule: RoutingModule {
             .map{ module in module.fullDescription }
             .joined(separator: "\n\n")
         
-        Jared.Send(documentation, to: message.RespondTo())
+        sender.Send(documentation, to: message.RespondTo())
     }
     
     private func singleDocumentation(_ routeName: String) -> String {

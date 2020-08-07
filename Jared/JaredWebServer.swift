@@ -7,14 +7,16 @@ class JaredWebServer: NSObject {
     var defaults: UserDefaults!
     var server: Server!
     var port: Int!
+    var sender: MessageSender
     var configurationURL: URL
     
-    init(configurationURL: URL) {
+    init(sender: MessageSender, configurationURL: URL) {
         self.configurationURL = configurationURL
+        self.sender = sender
         super.init()
         defaults = UserDefaults.standard
         server = Server()
-        server.route(.POST, "message", JaredWebServer.handleMessageRequest)
+        server.route(.POST, "message", handleMessageRequest)
         
         port = assignPort()
         
@@ -77,13 +79,13 @@ class JaredWebServer: NSObject {
         server.stop()
     }
     
-    static func handleMessageRequest(request: HTTPRequest) -> HTTPResponse {
+    private func handleMessageRequest(request: HTTPRequest) -> HTTPResponse {
         // Attempt to decode the request body to the MessageRequest struct
         do {
             let parsedBody = try JSONDecoder().decode(MessageRequest.self, from: request.body)
             
             if let textBody = parsedBody.body as? TextBody {
-                Jared.Send(textBody.message, to: parsedBody.recipient)
+                sender.Send(textBody.message, to: parsedBody.recipient)
                 return HTTPResponse()
             }
             else {
