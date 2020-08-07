@@ -10,6 +10,7 @@ import XCTest
 import JaredFramework
 
 class JaredWebServerTest: XCTestCase {
+    static let validBody = "{\"body\": {\"message\": \"clandestine meetings\"},\"recipient\": {\"handle\": \"handle@email.com\"}}"
     static let invalidBody = "{dskjfal/iqwkjfdslol}"
     
     var jaredMock: JaredMock!
@@ -58,5 +59,29 @@ class JaredWebServerTest: XCTestCase {
         _ = semaphore.wait(timeout: .distantFuture)
         print()
         XCTAssertEqual(requestError?.localizedDescription, "Could not connect to the server.", "Request fails when the server is stopped")
+    }
+    
+    func testValidRequest() {
+        // Start the server
+        webServer.start()
+        
+        // Make an invalid post request
+        var request = URLRequest(url: URL(string: "http://localhost:3000/message")!)
+        request.httpMethod = "POST"
+        request.httpBody = JaredWebServerTest.validBody.data(using: String.Encoding.utf8)
+        request.addValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+        
+        var httpResponse: HTTPURLResponse?
+        let semaphore = DispatchSemaphore(value: 0)
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            httpResponse = response as? HTTPURLResponse
+            semaphore.signal()
+        }.resume()
+        
+        _ = semaphore.wait(timeout: .distantFuture)
+        XCTAssertEqual(httpResponse?.statusCode, 200, "Valid request is successful")
+        XCTAssertEqual(jaredMock.calls.count, 1, "One message sent")
+        XCTAssertEqual((jaredMock.calls[0].body as! TextBody).message, "clandestine meetings", "Message was correct")
+        XCTAssertEqual((jaredMock.calls[0].recipient as! Person).handle, "handle@email.com", "recipient email is correct")
     }
 }

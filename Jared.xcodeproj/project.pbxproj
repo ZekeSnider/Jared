@@ -19,6 +19,7 @@
 		7FF077EB1CBCFFCB008E33CB /* SendImage.scpt in Resources */ = {isa = PBXBuildFile; fileRef = 7FF077EA1CBCFFCB008E33CB /* SendImage.scpt */; };
 		B30F765624C5742800ADF57B /* SendTextUI.scpt in Resources */ = {isa = PBXBuildFile; fileRef = B30F765424C5740800ADF57B /* SendTextUI.scpt */; };
 		B316D1A61F3FFDF100AFF063 /* CoreModuleRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = B316D1A51F3FFDF100AFF063 /* CoreModuleRealm.swift */; };
+		B319235724DD311B001904BA /* InternalModuleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B319235624DD311B001904BA /* InternalModuleTest.swift */; };
 		B32DE51524D51F9C00AB3A71 /* RouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32DE51424D51F9C00AB3A71 /* RouterTests.swift */; };
 		B32DE51624D522DA00AB3A71 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BF17C1244EBE9A00CC44C5 /* Router.swift */; };
 		B32DE51824D5231800AB3A71 /* PluginManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BF17C7244EC89200CC44C5 /* PluginManagerDelegate.swift */; };
@@ -37,6 +38,8 @@
 		B347A4A924DD119A00E93657 /* JaredMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B347A4A824DD119A00E93657 /* JaredMock.swift */; };
 		B347A4AB24DD165200E93657 /* ActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B347A4AA24DD165200E93657 /* ActionType.swift */; };
 		B347A4AD24DD170C00E93657 /* ActionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B347A4AC24DD170C00E93657 /* ActionTest.swift */; };
+		B347A4AF24DD1CD000E93657 /* GlobalTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B347A4AE24DD1CD000E93657 /* GlobalTest.swift */; };
+		B347A4B024DD1E0E00E93657 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0E931C1D02FC250096BABE /* Global.swift */; };
 		B35CE7152196AD4E002F52A7 /* DatabaseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35CE7142196AD4E002F52A7 /* DatabaseHandler.swift */; };
 		B361EEBB1F1DE24C0041113C /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = B361EEBA1F1DE24C0041113C /* config.json */; };
 		B36563EF1F3D68980064B114 /* TouchBarTextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36563EE1F3D68980064B114 /* TouchBarTextFieldExtension.swift */; };
@@ -134,6 +137,7 @@
 		B30F765424C5740800ADF57B /* SendTextUI.scpt */ = {isa = PBXFileReference; lastKnownFileType = text; path = SendTextUI.scpt; sourceTree = "<group>"; };
 		B30F765724C574FD00ADF57B /* JaredRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = JaredRelease.entitlements; sourceTree = "<group>"; };
 		B316D1A51F3FFDF100AFF063 /* CoreModuleRealm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreModuleRealm.swift; sourceTree = "<group>"; };
+		B319235624DD311B001904BA /* InternalModuleTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternalModuleTest.swift; sourceTree = "<group>"; };
 		B32DE51424D51F9C00AB3A71 /* RouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterTests.swift; sourceTree = "<group>"; };
 		B32DE51924D5524300AB3A71 /* Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
 		B32DE51B24D552D300AB3A71 /* MockPluginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPluginManager.swift; sourceTree = "<group>"; };
@@ -153,6 +157,7 @@
 		B347A4A824DD119A00E93657 /* JaredMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JaredMock.swift; sourceTree = "<group>"; };
 		B347A4AA24DD165200E93657 /* ActionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionType.swift; sourceTree = "<group>"; };
 		B347A4AC24DD170C00E93657 /* ActionTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionTest.swift; sourceTree = "<group>"; };
+		B347A4AE24DD1CD000E93657 /* GlobalTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalTest.swift; sourceTree = "<group>"; };
 		B35CE7142196AD4E002F52A7 /* DatabaseHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseHandler.swift; sourceTree = "<group>"; };
 		B361EEBA1F1DE24C0041113C /* config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config.json; sourceTree = "<group>"; };
 		B36563EE1F3D68980064B114 /* TouchBarTextFieldExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchBarTextFieldExtension.swift; sourceTree = "<group>"; };
@@ -287,11 +292,13 @@
 				B3327DC722068147009DD882 /* WebhookTests.swift */,
 				B3EF1DAF2206E4EB00953DE7 /* MessageTests.swift */,
 				B3B844B724D7791700DC162A /* ActionTypeTest.swift */,
+				B347A4AE24DD1CD000E93657 /* GlobalTest.swift */,
 				B347A4AC24DD170C00E93657 /* ActionTest.swift */,
 				B3B844B924D77A4800DC162A /* SendStyleTest.swift */,
 				B32DE51424D51F9C00AB3A71 /* RouterTests.swift */,
 				B3B844CF24DA6AC800DC162A /* JaredWebServerTest.swift */,
 				B3B844BF24D8F91900DC162A /* DatabaseHandlerTest.swift */,
+				B319235624DD311B001904BA /* InternalModuleTest.swift */,
 				B3B844C124D8FA7D00DC162A /* DatabaseTestHelper.swift */,
 				B3B844D124DA6B1200DC162A /* Mocks */,
 				B3B844BD24D8F8FF00DC162A /* scaffold.db */,
@@ -705,9 +712,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B347A4B024DD1E0E00E93657 /* Global.swift in Sources */,
 				B347A4A224DA766A00E93657 /* MessageRequest.swift in Sources */,
 				B3B844D224DA6BBB00DC162A /* JaredWebServer.swift in Sources */,
 				B3B844CC24DA671E00DC162A /* DiskAccessDelegate.swift in Sources */,
+				B319235724DD311B001904BA /* InternalModuleTest.swift in Sources */,
 				B3B844C924D92D1500DC162A /* ContactHelper.swift in Sources */,
 				B3B844C824D92C2200DC162A /* DatabaseHandler.swift in Sources */,
 				B3B844C024D8F91900DC162A /* DatabaseHandlerTest.swift in Sources */,
@@ -728,6 +737,7 @@
 				B32DE51524D51F9C00AB3A71 /* RouterTests.swift in Sources */,
 				B3EF1DA4220687DD00953DE7 /* URLProtocolMock.swift in Sources */,
 				B3EF1DA02206849000953DE7 /* WebHookManager.swift in Sources */,
+				B347A4AF24DD1CD000E93657 /* GlobalTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

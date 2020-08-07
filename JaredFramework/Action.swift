@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct Action: Encodable {
+public struct Action: Encodable, Equatable {
     enum CodingKeys : String, CodingKey{
         case type
         case targetGUID
