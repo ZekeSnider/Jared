@@ -12,13 +12,15 @@ import JaredFramework
 class JaredWebServerTest: XCTestCase {
     static let invalidBody = "{dskjfal/iqwkjfdslol}"
     
+    var jaredMock: JaredMock!
     var testDatabaseLocation: URL!
     var webServer: JaredWebServer!
     
     override func setUp() {
+        jaredMock = JaredMock()
         let bundle = Bundle(for: type(of: self))
         testDatabaseLocation = bundle.url(forResource: "config", withExtension: "json")
-        webServer = JaredWebServer(configurationURL: testDatabaseLocation)
+        webServer = JaredWebServer(sender: jaredMock, configurationURL: testDatabaseLocation)
     }
     
     override func tearDown() {
