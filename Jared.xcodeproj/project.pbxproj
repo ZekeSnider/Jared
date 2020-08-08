@@ -49,6 +49,7 @@
 		B369509224DE91760027CB1E /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B369509124DE91760027CB1E /* Configuration.swift */; };
 		B369509324DE952D0027CB1E /* Configuration.plist in Resources */ = {isa = PBXBuildFile; fileRef = B369508F24DE8FD00027CB1E /* Configuration.plist */; };
 		B369509424DE963D0027CB1E /* Configuration.plist in Resources */ = {isa = PBXBuildFile; fileRef = B369508F24DE8FD00027CB1E /* Configuration.plist */; };
+		B369509524DF224D0027CB1E /* SendImageSingleBuddy.scpt in Resources */ = {isa = PBXBuildFile; fileRef = B37E82801FA85B170069E15D /* SendImageSingleBuddy.scpt */; };
 		B375A65921EB14470073F09F /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B375A65821EB14470073F09F /* AboutViewController.swift */; };
 		B37E82821FA85B210069E15D /* SendTextSingleBuddy.scpt in Resources */ = {isa = PBXBuildFile; fileRef = B37E82811FA85B210069E15D /* SendTextSingleBuddy.scpt */; };
 		B39A65E01CC1FB1B003E26B0 /* PluginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39A65DF1CC1FB1B003E26B0 /* PluginManager.swift */; };
@@ -604,6 +605,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B369509524DF224D0027CB1E /* SendImageSingleBuddy.scpt in Resources */,
 				B30F765624C5742800ADF57B /* SendTextUI.scpt in Resources */,
 				B369509424DE963D0027CB1E /* Configuration.plist in Resources */,
 				7F84B62E1CC511B80059A82B /* CoreStrings.strings in Resources */,

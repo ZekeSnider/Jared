@@ -84,13 +84,16 @@ class JaredWebServer: NSObject {
         do {
             let parsedBody = try JSONDecoder().decode(MessageRequest.self, from: request.body)
             
-            if let textBody = parsedBody.body as? TextBody {
-                sender.Send(textBody.message, to: parsedBody.recipient)
-                return HTTPResponse()
+            let textBody = parsedBody.body as? TextBody
+            
+            guard (textBody != nil || parsedBody.attachments != nil) else {
+                return HTTPResponse(HTTPStatus(code: 400, phrase: "Bad Request"), headers: HTTPHeaders(), content: "A text body and/or attachments are required")
             }
-            else {
-                return HTTPResponse(HTTPStatus(code: 400, phrase: "Bad Request"), headers: HTTPHeaders(), content: "Image body types are not supported yet.")
-            }
+            
+            let message = Message(body: parsedBody.body, date: Date(), sender: Person(givenName: nil, handle: "", isMe: true), recipient: parsedBody.recipient, attachments: parsedBody.attachments ?? [], sendStyle: nil, associatedMessageType: nil, associatedMessageGUID: nil)
+            
+            sender.Send(message)
+            return HTTPResponse()
         } catch {
             return HTTPResponse(HTTPStatus(code: 400, phrase: "Bad Request"), headers: HTTPHeaders(), content: error.localizedDescription)
         }

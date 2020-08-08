@@ -10,6 +10,12 @@ import Foundation
 import JaredFramework
 
 public class Jared: MessageSender {
+    let queue = OperationQueue()
+    
+    init() {
+        queue.maxConcurrentOperationCount = 1
+    }
+    
     public func Send(_ body: String, to recipient: RecipientEntity?) {
         guard let recipient = recipient else {
             return
@@ -30,7 +36,7 @@ public class Jared: MessageSender {
         }
         
         var scriptPath: String?
-        var recipient: String?
+        let recipient = message.recipient.handle
         var body: String?
         
         if let textBody = message.body as? TextBody {
@@ -44,22 +50,38 @@ public class Jared: MessageSender {
                 }
             }
             
-            recipient = message.recipient.handle
             body = textBody.message
-        }
-        
-        if scriptPath != nil && recipient != nil && body != nil {
-            let task = Process()
-            task.launchPath = "/usr/bin/osascript"
-            task.arguments = [scriptPath!, body!, recipient!]
-            task.launch()
             
-            // Big Sur and later have to use UI scripting,
-            // so we need to block the thread.
-            if #available(OSX 10.16, *) {
-                task.waitUntilExit()
+            queue.addOperation {
+                self.executeScript(scriptPath: scriptPath, body: body, recipient: recipient)
             }
         }
+        
+        if let attachments = message.attachments {
+            if message.recipient is Person {
+                scriptPath = Bundle.main.url(forResource: "SendImageSingleBuddy", withExtension: "scpt")?.path
+            } else if message.recipient is Group {
+                scriptPath = Bundle.main.url(forResource: "SendImage", withExtension: "scpt")?.path
+            }
+            
+            attachments.forEach{attachment in
+                queue.addOperation {
+                    self.executeScript(scriptPath: scriptPath, body: attachment.filePath, recipient: recipient)
+                }
+            }
+        }
+    }
+    
+    private func executeScript(scriptPath: String?, body: String?, recipient: String?) {
+        guard(scriptPath != nil && body != nil && recipient != nil) else {
+            return
+        }
+        
+        let task = Process()
+        task.launchPath = "/usr/bin/osascript"
+        task.arguments = [scriptPath!, body!, recipient!]
+        task.launch()
+        task.waitUntilExit()
     }
 }
 

@@ -9,11 +9,11 @@
 import Foundation
 
 public struct Message: Encodable {
-    public var body: MessageBody
+    public var body: MessageBody?
     public var date: Date?
     public var sender: SenderEntity
     public var recipient: RecipientEntity
-    public var attachments: [Attachment]
+    public var attachments: [Attachment]?
     public var sendStyle: SendStyle
     public var action: Action?
     
@@ -61,7 +61,7 @@ public struct Message: Encodable {
         }
     }
     
-    public init (body: MessageBody, date: Date, sender: SenderEntity, recipient: RecipientEntity, attachments: [Attachment] = [], sendStyle: String? = nil, associatedMessageType: Int? = nil, associatedMessageGUID: String? = nil) {
+    public init (body: MessageBody?, date: Date, sender: SenderEntity, recipient: RecipientEntity, attachments: [Attachment] = [], sendStyle: String? = nil, associatedMessageType: Int? = nil, associatedMessageGUID: String? = nil) {
         self.body = body
         self.recipient = recipient
         self.sender = sender
