@@ -9,6 +9,8 @@
 import Foundation
 import JaredFramework
 
+// This is a mock implementation of a message sender that you can use in unit test
+// Do not use this a real implementation.
 class JaredMock: MessageSender {
     public var calls = [Message]()
     

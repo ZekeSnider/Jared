@@ -45,6 +45,7 @@
 		B35CE7152196AD4E002F52A7 /* DatabaseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35CE7142196AD4E002F52A7 /* DatabaseHandler.swift */; };
 		B361EEBB1F1DE24C0041113C /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = B361EEBA1F1DE24C0041113C /* config.json */; };
 		B36563EF1F3D68980064B114 /* TouchBarTextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36563EE1F3D68980064B114 /* TouchBarTextFieldExtension.swift */; };
+		B36710C224DF60D500DA1C5D /* JaredMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B347A4A824DD119A00E93657 /* JaredMock.swift */; };
 		B369509024DE8FD00027CB1E /* Configuration.plist in Resources */ = {isa = PBXBuildFile; fileRef = B369508F24DE8FD00027CB1E /* Configuration.plist */; };
 		B369509224DE91760027CB1E /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B369509124DE91760027CB1E /* Configuration.swift */; };
 		B369509324DE952D0027CB1E /* Configuration.plist in Resources */ = {isa = PBXBuildFile; fileRef = B369508F24DE8FD00027CB1E /* Configuration.plist */; };
@@ -294,6 +295,7 @@
 				B3EF1DAB2206E17900953DE7 /* Entities.swift */,
 				B3EF1DA52206DFEA00953DE7 /* Route.swift */,
 				B369509124DE91760027CB1E /* Configuration.swift */,
+				B347A4A824DD119A00E93657 /* JaredMock.swift */,
 				7F84B6231CC506790059A82B /* Info.plist */,
 				B369508F24DE8FD00027CB1E /* Configuration.plist */,
 			);
@@ -413,7 +415,6 @@
 			isa = PBXGroup;
 			children = (
 				B32DE51B24D552D300AB3A71 /* MockPluginManager.swift */,
-				B347A4A824DD119A00E93657 /* JaredMock.swift */,
 				B3B844C624D9298000DC162A /* MockRouter.swift */,
 				B3EF1DA3220687DD00953DE7 /* URLProtocolMock.swift */,
 			);
@@ -745,6 +746,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B36710C224DF60D500DA1C5D /* JaredMock.swift in Sources */,
 				B347A4A624DD0CE500E93657 /* MessageSender.swift in Sources */,
 				B3EF1DAC2206E17900953DE7 /* Entities.swift in Sources */,
 				B3EF1DAE2206E19100953DE7 /* Bodies.swift in Sources */,
