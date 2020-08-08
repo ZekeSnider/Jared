@@ -17,10 +17,10 @@ import Contacts
 
 class DatabaseHandler {
     private static let groupQuery = """
-		SELECT handle.id
+		SELECT handle.id, display_name, chat.guid
 			FROM chat_handle_join INNER JOIN handle ON chat_handle_join.handle_id = handle.ROWID
 			INNER JOIN chat ON chat_handle_join.chat_id = chat.ROWID
-			WHERE chat_handle_join.chat_id = ?
+			WHERE chat.chat_identifier = ?
 	"""
     private static let attachmentQuery = """
 	SELECT ROWID,
@@ -39,8 +39,8 @@ class DatabaseHandler {
 			message.cache_has_attachments,
 			message.expressive_send_style_id,
 			message.associated_message_type,
-			message.associated_message_guid, message.guid
-			FROM message INNER JOIN handle
+			message.associated_message_guid, message.guid, destination_caller_id
+			FROM message LEFT JOIN handle
 			ON message.handle_id = handle.ROWID
 			WHERE message.ROWID > ? ORDER BY message.ROWID ASC
 	"""
@@ -114,7 +114,7 @@ class DatabaseHandler {
     }
     
     private func retrieveGroupInfo(chatID: String?) -> Group? {
-        guard let handle = chatID else {
+        guard let chatHandle = chatID else {
             return nil
         }
         
@@ -131,18 +131,23 @@ class DatabaseHandler {
         }
         
         var People = [Person]()
+        var groupName: String?
+        var chatGUID: String?
         
         while sqlite3_step(statement) == SQLITE_ROW {
             guard let idcString = sqlite3_column_text(statement, 0) else {
                 break
             }
+            groupName = unwrapStringColumn(for: statement, at: 1)
+            chatGUID = unwrapStringColumn(for: statement, at: 2)
+            
             let handle = String(cString: idcString)
             let contact = ContactHelper.RetreiveContact(handle: handle)
             
             People.append(Person(givenName: contact?.givenName, handle: handle, isMe: false))
         }
         
-        return Group(name: "", handle: handle, participants: People)
+        return Group(name: groupName, handle: chatGUID ?? chatHandle, participants: People)
     }
     
     private func unwrapStringColumn(for sqlStatement: OpaquePointer?, at column: Int32) -> String? {
@@ -191,6 +196,7 @@ class DatabaseHandler {
     private func queryNewRecords() -> Double {
         let start = Date()
         defer { statement = nil }
+        querySinceID = "225925"
         
         if sqlite3_prepare_v2(db, DatabaseHandler.newRecordquery, -1, &statement, nil) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
@@ -203,7 +209,7 @@ class DatabaseHandler {
         }
         
         while sqlite3_step(statement) == SQLITE_ROW {
-            let senderHandleOptional = unwrapStringColumn(for: statement, at: 0)
+            var senderHandleOptional = unwrapStringColumn(for: statement, at: 0)
             let textOptional = unwrapStringColumn(for: statement, at: 1)
             let rowID = unwrapStringColumn(for: statement, at: 2)
             let roomName = unwrapStringColumn(for: statement, at: 3)
@@ -215,9 +221,14 @@ class DatabaseHandler {
             let associatedMessageType = sqlite3_column_int(statement, 9)
             let associatedMessageGUID = unwrapStringColumn(for: statement, at: 10)
             let guid = unwrapStringColumn(for: statement, at: 11)
+            let destinationCallerId = unwrapStringColumn(for: statement, at: 12)
             NSLog("Processing \(rowID ?? "unknown")")
             
             querySinceID = rowID;
+            
+            if (senderHandleOptional == nil && isFromMe == true && roomName != nil) {
+                senderHandleOptional = destinationCallerId
+            }
             
             guard let senderHandle = senderHandleOptional, let text = textOptional, let destination = destinationOptional else {
                 break
