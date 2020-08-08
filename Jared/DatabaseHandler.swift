@@ -39,7 +39,7 @@ class DatabaseHandler {
 			message.cache_has_attachments,
 			message.expressive_send_style_id,
 			message.associated_message_type,
-			message.associated_message_guid
+			message.associated_message_guid, message.guid
 			FROM message INNER JOIN handle
 			ON message.handle_id = handle.ROWID
 			WHERE message.ROWID > ? ORDER BY message.ROWID ASC
@@ -214,6 +214,7 @@ class DatabaseHandler {
             let sendStyle = unwrapStringColumn(for: statement, at: 8)
             let associatedMessageType = sqlite3_column_int(statement, 9)
             let associatedMessageGUID = unwrapStringColumn(for: statement, at: 10)
+            let guid = unwrapStringColumn(for: statement, at: 11)
             NSLog("Processing \(rowID ?? "unknown")")
             
             querySinceID = rowID;
@@ -236,8 +237,8 @@ class DatabaseHandler {
                 recipient = group ?? Person(givenName: myName, handle: destination, isMe: true)
             }
             
-            let message = Message(body: TextBody(text), date: Date(timeIntervalSince1970: epochDate), sender: sender, recipient: recipient, attachments: hasAttachment ? retrieveAttachments(forMessage: rowID ?? "") : [],
-                                  sendStyle: sendStyle, associatedMessageType: Int(associatedMessageType), associatedMessageGUID: associatedMessageGUID)
+            let message = Message(body: TextBody(text), date: Date(timeIntervalSince1970: epochDate), sender: sender, recipient: recipient, guid: guid, attachments: hasAttachment ? retrieveAttachments(forMessage: rowID ?? "") : [],
+                sendStyle: sendStyle, associatedMessageType: Int(associatedMessageType), associatedMessageGUID: associatedMessageGUID)
             
             router?.route(message: message)
         }

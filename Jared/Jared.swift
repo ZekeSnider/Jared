@@ -35,11 +35,12 @@ public class Jared: MessageSender {
             return
         }
         
-        var scriptPath: String?
         let recipient = message.recipient.handle
-        var body: String?
         
         if let textBody = message.body as? TextBody {
+            var scriptPath: String?
+            let body = textBody.message
+            
             if #available(OSX 10.16, *) {
                 scriptPath = Bundle.main.url(forResource: "SendTextUI", withExtension: "scpt")?.path
             } else {
@@ -50,14 +51,14 @@ public class Jared: MessageSender {
                 }
             }
             
-            body = textBody.message
-            
             queue.addOperation {
                 self.executeScript(scriptPath: scriptPath, body: body, recipient: recipient)
             }
         }
         
         if let attachments = message.attachments {
+            var scriptPath: String?
+            
             if message.recipient is Person {
                 scriptPath = Bundle.main.url(forResource: "SendImageSingleBuddy", withExtension: "scpt")?.path
             } else if message.recipient is Group {

@@ -16,6 +16,7 @@ public struct Message: Encodable {
     public var attachments: [Attachment]?
     public var sendStyle: SendStyle
     public var action: Action?
+    public var guid: String?
     
     enum CodingKeys : String, CodingKey{
         case date
@@ -25,6 +26,7 @@ public struct Message: Encodable {
         case attachments
         case sendStyle
         case action
+        case guid
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -55,19 +57,21 @@ public struct Message: Encodable {
         
         try container.encode(sendStyle.rawValue, forKey: .sendStyle)
         try container.encode(attachments, forKey: .attachments)
+        try container.encode(guid, forKey: .guid)
         
         if (action != nil) {
             try container.encode(action, forKey: .action)
         }
     }
     
-    public init (body: MessageBody?, date: Date, sender: SenderEntity, recipient: RecipientEntity, attachments: [Attachment] = [], sendStyle: String? = nil, associatedMessageType: Int? = nil, associatedMessageGUID: String? = nil) {
+    public init (body: MessageBody?, date: Date, sender: SenderEntity, recipient: RecipientEntity, guid: String? = nil, attachments: [Attachment] = [], sendStyle: String? = nil, associatedMessageType: Int? = nil, associatedMessageGUID: String? = nil) {
         self.body = body
         self.recipient = recipient
         self.sender = sender
         self.date = date
         self.attachments = attachments
         self.sendStyle = SendStyle(fromIdentifier: sendStyle)
+        self.guid = guid
         
         if (associatedMessageType != 0 && associatedMessageGUID != nil) {
             self.action = Action(actionTypeInt: associatedMessageType!, targetGUID: associatedMessageGUID!.replacingOccurrences(of: "p:0/", with: ""))

@@ -13,6 +13,7 @@ public enum Compare {
     case contains
     case `is`
     case containsURL
+    case isReaction
 }
 
 public struct Route {
