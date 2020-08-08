@@ -7,20 +7,19 @@
 //
 
 import Foundation
-import JaredFramework
 
 // This is a mock implementation of a message sender that you can use in unit test
 // Do not use this a real implementation.
 class JaredMock: MessageSender {
     public var calls = [Message]()
     
-    func Send(_ body: String, to recipient: RecipientEntity?) {
+    func send(_ body: String, to recipient: RecipientEntity?) {
         let me = Person(givenName: nil, handle: "", isMe: true)
         let message = Message(body: TextBody(body), date: Date(), sender: me, recipient: recipient!, attachments: [])
-        Send(message)
+        send(message)
     }
     
-    func Send(_ message: Message) {
+    func send(_ message: Message) {
         calls.append(message)
     }
 }

@@ -16,16 +16,16 @@ public class Jared: MessageSender {
         queue.maxConcurrentOperationCount = 1
     }
     
-    public func Send(_ body: String, to recipient: RecipientEntity?) {
+    public func send(_ body: String, to recipient: RecipientEntity?) {
         guard let recipient = recipient else {
             return
         }
         let me = Person(givenName: nil, handle: "", isMe: true)
         let message = Message(body: TextBody(body), date: Date(), sender: me, recipient: recipient, attachments: [])
-        Send(message)
+        send(message)
     }
     
-    public func Send(_ message: Message) {
+    public func send(_ message: Message) {
         NSLog("Attemping to send message: \(message)")
         
         let defaults = UserDefaults.standard

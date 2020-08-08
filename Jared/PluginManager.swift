@@ -10,7 +10,7 @@ import Foundation
 import JaredFramework
 
 class PluginManager: PluginManagerDelegate {
-    var FrameworkVersion: String = "J2.0.0"
+    var FrameworkVersion: String = "J3.0.0"
     var modules:[RoutingModule] = []
     var bundles:[Bundle] = []
     var supportDir: URL?

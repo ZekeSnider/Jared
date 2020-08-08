@@ -88,23 +88,23 @@ class InternalModule: RoutingModule {
     
     func enable(message: Message) -> Void {
         defaults.set(false, forKey: "JaredIsDisabled")
-        sender.Send(localized("enabledMessage"), to: message.RespondTo())
+        sender.send(localized("enabledMessage"), to: message.RespondTo())
     }
     
     func disable(message: Message) -> Void {
         defaults.set(true, forKey: "JaredIsDisabled")
-        sender.Send(localized("disabledMessage"), to: message.RespondTo())
+        sender.send(localized("disabledMessage"), to: message.RespondTo())
     }
     
     func reload(message: Message) -> Void {
         pluginManager?.reload()
-        sender.Send(localized("reloadMessage"), to: message.RespondTo())
+        sender.send(localized("reloadMessage"), to: message.RespondTo())
     }
     
     func sendDocumentation(message: Message) {
         let parameters = message.getTextParameters()
         if parameters?.count == 2 {
-            sender.Send(singleDocumentation(parameters![1]), to: message.RespondTo())
+            sender.send(singleDocumentation(parameters![1]), to: message.RespondTo())
             return
         }
         
@@ -112,7 +112,7 @@ class InternalModule: RoutingModule {
             .map{ module in module.fullDescription }
             .joined(separator: "\n\n")
         
-        sender.Send(documentation, to: message.RespondTo())
+        sender.send(documentation, to: message.RespondTo())
     }
     
     private func singleDocumentation(_ routeName: String) -> String {

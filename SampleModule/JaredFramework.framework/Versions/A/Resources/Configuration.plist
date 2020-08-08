@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>actionType</key>
+	<dict>
+		<key>2000</key>
+		<string>love</string>
+		<key>2001</key>
+		<string>like</string>
+		<key>2002</key>
+		<string>dislike</string>
+		<key>2003</key>
+		<string>laugh</string>
+		<key>2004</key>
+		<string>exclaim</string>
+		<key>2005</key>
+		<string>question</string>
+	</dict>
+	<key>sendStyle</key>
+	<dict>
+		<key>com.apple.messages.effect.CKSpotlightEffect</key>
+		<string>spotlight</string>
+		<key>com.apple.messages.effect.CKSparklesEffect</key>
+		<string>celebration</string>
+		<key>com.apple.messages.effect.CKShootingStarEffect</key>
+		<string>shootingStar</string>
+		<key>com.apple.messages.effect.CKLasersEffect</key>
+		<string>lasers</string>
+		<key>com.apple.messages.effect.CKHeartEffect</key>
+		<string>love</string>
+		<key>com.apple.messages.effect.CKHappyBirthdayEffect</key>
+		<string>balloons</string>
+		<key>com.apple.messages.effect.CKFireworksEffect</key>
+		<string>fireworks</string>
+		<key>com.apple.messages.effect.CKConfettiEffect</key>
+		<string>confetti</string>
+		<key>com.apple.MobileSMS.expressivesend.loud</key>
+		<string>loud</string>
+		<key>com.apple.MobileSMS.expressivesend.invisibleink</key>
+		<string>invisibleInk</string>
+		<key>com.apple.MobileSMS.expressivesend.gentle</key>
+		<string>gentle</string>
+		<key>com.apple.messages.effect.CKEchoEffect</key>
+		<string>echo</string>
+		<key>com.apple.MobileSMS.expressivesend.impact</key>
+		<string>slam</string>
+	</dict>
+</dict>
+</plist>

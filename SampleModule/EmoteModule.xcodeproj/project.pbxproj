@@ -8,17 +8,27 @@
 
 /* Begin PBXBuildFile section */
 		7F84B62D1CC5075D0059A82B /* JaredFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F84B62C1CC5075D0059A82B /* JaredFramework.framework */; };
+		B36710E124DF68CC00DA1C5D /* JaredFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F84B62C1CC5075D0059A82B /* JaredFramework.framework */; };
 		B39A66091CC2018A003E26B0 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39A66081CC2018A003E26B0 /* main.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		7F84B62C1CC5075D0059A82B /* JaredFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = JaredFramework.framework; sourceTree = "<group>"; };
+		B36710D824DF681300DA1C5D /* EmoteTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EmoteTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B39A65FE1CC20181003E26B0 /* EmoteModule.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EmoteModule.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		B39A66011CC20181003E26B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B39A66081CC2018A003E26B0 /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		B36710D524DF681300DA1C5D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B36710E124DF68CC00DA1C5D /* JaredFramework.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B39A65FB1CC20181003E26B0 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -30,12 +40,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B36710E024DF68CC00DA1C5D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		B39A65F51CC20181003E26B0 = {
 			isa = PBXGroup;
 			children = (
 				7F84B62C1CC5075D0059A82B /* JaredFramework.framework */,
 				B39A66001CC20181003E26B0 /* EmoteModule */,
 				B39A65FF1CC20181003E26B0 /* Products */,
+				B36710E024DF68CC00DA1C5D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -43,6 +61,7 @@
 			isa = PBXGroup;
 			children = (
 				B39A65FE1CC20181003E26B0 /* EmoteModule.bundle */,
+				B36710D824DF681300DA1C5D /* EmoteTest.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -59,6 +78,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		B36710D724DF681300DA1C5D /* EmoteTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B36710DF24DF681400DA1C5D /* Build configuration list for PBXNativeTarget "EmoteTest" */;
+			buildPhases = (
+				B36710D424DF681300DA1C5D /* Sources */,
+				B36710D524DF681300DA1C5D /* Frameworks */,
+				B36710D624DF681300DA1C5D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = EmoteTest;
+			productName = EmoteTest;
+			productReference = B36710D824DF681300DA1C5D /* EmoteTest.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		B39A65FD1CC20181003E26B0 /* EmoteModule */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B39A66041CC20181003E26B0 /* Build configuration list for PBXNativeTarget "EmoteModule" */;
@@ -82,9 +118,15 @@
 		B39A65F61CC20181003E26B0 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 1160;
 				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = "Zeke Snider";
 				TargetAttributes = {
+					B36710D724DF681300DA1C5D = {
+						CreatedOnToolsVersion = 11.6;
+						DevelopmentTeam = C7LJ587XF3;
+						ProvisioningStyle = Automatic;
+					};
 					B39A65FD1CC20181003E26B0 = {
 						CreatedOnToolsVersion = 7.3;
 					};
@@ -104,11 +146,19 @@
 			projectRoot = "";
 			targets = (
 				B39A65FD1CC20181003E26B0 /* EmoteModule */,
+				B36710D724DF681300DA1C5D /* EmoteTest */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		B36710D624DF681300DA1C5D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B39A65FC1CC20181003E26B0 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -119,6 +169,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		B36710D424DF681300DA1C5D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B39A65FA1CC20181003E26B0 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -130,6 +187,62 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		B36710DD24DF681400DA1C5D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = C7LJ587XF3;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = EmoteTest/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zekesnider.EmoteTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		B36710DE24DF681400DA1C5D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = C7LJ587XF3;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = EmoteTest/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zekesnider.EmoteTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		B39A66021CC20181003E26B0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -284,6 +397,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		B36710DF24DF681400DA1C5D /* Build configuration list for PBXNativeTarget "EmoteTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B36710DD24DF681400DA1C5D /* Debug */,
+				B36710DE24DF681400DA1C5D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		B39A65F91CC20181003E26B0 /* Build configuration list for PBXProject "EmoteModule" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
