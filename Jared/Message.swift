@@ -74,7 +74,7 @@ public struct Message: Encodable {
         }
     }
     
-    public func RespondTo() -> RecipientEntity {
+    public func RespondTo() -> RecipientEntity? {
         if let senderPerson = sender as? Person {
             if (senderPerson.isMe) {
                 if let person = recipient as? Person {
@@ -92,7 +92,7 @@ public struct Message: Encodable {
         }
         
         NSLog("Couldn't coerce respond to entity properly.")
-        return Person(givenName: nil, handle: "", isMe: false)
+        return nil
     }
     
     public func getTextBody() -> String? {

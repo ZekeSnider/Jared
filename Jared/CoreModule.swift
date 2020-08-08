@@ -215,7 +215,7 @@ class CoreModule: RoutingModule {
                 ["sendIntervalNumber" : sendIntervalNumber,
                  "sendIntervalType": sendIntervalType.rawValue,
                  "text": sendMessage,
-                 "handle": message.RespondTo().handle,
+                 "handle": message.RespondTo()?.handle,
                  "sendNumberTimes": sendTimes,
                  "startDate": Date(),
             ])

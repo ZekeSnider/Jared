@@ -42,7 +42,7 @@ class DatabaseHandler {
 			message.associated_message_guid
 			FROM message INNER JOIN handle
 			ON message.handle_id = handle.ROWID
-			WHERE message.ROWID > ? ORDER BY message.ROWID DESC
+			WHERE message.ROWID > ? ORDER BY message.ROWID ASC
 	"""
     private static let maxRecordIDQuery = "SELECT MAX(rowID) FROM message"
     
@@ -214,6 +214,7 @@ class DatabaseHandler {
             let sendStyle = unwrapStringColumn(for: statement, at: 8)
             let associatedMessageType = sqlite3_column_int(statement, 9)
             let associatedMessageGUID = unwrapStringColumn(for: statement, at: 10)
+            NSLog("Processing \(rowID ?? "unknown")")
             
             querySinceID = rowID;
             

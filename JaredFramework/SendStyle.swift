@@ -13,7 +13,7 @@ public enum SendStyle: String {
     case slam = "slam"
     case loud = "loud"
     case gentle = "gentle"
-    case invisibleInk = "invisible ink"
+    case invisibleInk = "invisibleInk"
     case echo = "echo"
     case spotlight = "spotlight"
     case balloons = "balloons"
@@ -21,7 +21,7 @@ public enum SendStyle: String {
     case love = "love"
     case lasers = "lasers"
     case fireworks = "fireworks"
-    case shootingStar = "shooting star"
+    case shootingStar = "shootingStar"
     case celebration = "celebration"
     case unknown = "unknown"
     
@@ -30,34 +30,10 @@ public enum SendStyle: String {
             self = .regular
             return
         }
-        switch(identifier) {
-        case "com.apple.messages.effect.CKSpotlightEffect":
-            self = .spotlight
-        case "com.apple.messages.effect.CKSparklesEffect":
-            self = .celebration
-        case "com.apple.messages.effect.CKShootingStarEffect":
-            self = .shootingStar
-        case "com.apple.messages.effect.CKLasersEffect":
-            self = .lasers
-        case "com.apple.messages.effect.CKHeartEffect":
-            self = .love
-        case "com.apple.messages.effect.CKHappyBirthdayEffect":
-            self = .balloons
-        case "com.apple.messages.effect.CKFireworksEffect":
-            self = .fireworks
-        case "com.apple.messages.effect.CKConfettiEffect":
-            self = .confetti
-        case "com.apple.MobileSMS.expressivesend.loud":
-            self = .loud
-        case "com.apple.MobileSMS.expressivesend.invisibleink":
-            self = .invisibleInk
-        case "com.apple.MobileSMS.expressivesend.gentle":
-            self = .gentle
-        case "com.apple.messages.effect.CKEchoEffect":
-            self = .echo
-        case "com.apple.MobileSMS.expressivesend.impact":
-            self = .slam
-        default:
+        
+        if let configurationMapping = Configuration.shared.parameters?.sendStyle[identifier] {
+            self.init(rawValue: configurationMapping)!
+        } else {
             self = .unknown
         }
     }

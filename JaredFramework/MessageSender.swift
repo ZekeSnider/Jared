@@ -9,6 +9,6 @@
 import Foundation
 
 public protocol MessageSender {
-    func Send(_ body: String, to recipient: RecipientEntity)
+    func Send(_ body: String, to recipient: RecipientEntity?)
     func Send(_ message: Message)
 }

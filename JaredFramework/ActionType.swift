@@ -18,20 +18,9 @@ public enum ActionType: String {
     case unknown = "unknown"
     
     public init(fromActionTypeInt actionTypeInt: Int) {
-        switch(actionTypeInt) {
-        case 2000:
-            self = .love
-        case 2001:
-            self = .like
-        case 2002:
-            self = .dislike
-        case 2003:
-            self = .laugh
-        case 2004:
-            self = .exclaim
-        case 2005:
-            self = .question
-        default:
+        if let configurationMapping = Configuration.shared.parameters?.actionType[actionTypeInt] {
+            self.init(rawValue: configurationMapping)!
+        } else {
             self = .unknown
         }
     }

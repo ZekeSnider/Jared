@@ -10,7 +10,10 @@ import Foundation
 import JaredFramework
 
 public class Jared: MessageSender {
-    public func Send(_ body: String, to recipient: RecipientEntity) {
+    public func Send(_ body: String, to recipient: RecipientEntity?) {
+        guard let recipient = recipient else {
+            return
+        }
         let me = Person(givenName: nil, handle: "", isMe: true)
         let message = Message(body: TextBody(body), date: Date(), sender: me, recipient: recipient, attachments: [])
         Send(message)
