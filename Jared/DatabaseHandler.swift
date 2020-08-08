@@ -196,7 +196,6 @@ class DatabaseHandler {
     private func queryNewRecords() -> Double {
         let start = Date()
         defer { statement = nil }
-        querySinceID = "225925"
         
         if sqlite3_prepare_v2(db, DatabaseHandler.newRecordquery, -1, &statement, nil) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)

@@ -44,10 +44,10 @@ public class Jared: MessageSender {
             if #available(OSX 10.16, *) {
                 scriptPath = Bundle.main.url(forResource: "SendTextUI", withExtension: "scpt")?.path
             } else {
-                if message.recipient is Person {
-                    scriptPath = Bundle.main.url(forResource: "SendTextSingleBuddy", withExtension: "scpt")?.path
-                } else if message.recipient is Group {
+                if message.recipient.handle.contains(";+;") {
                     scriptPath = Bundle.main.url(forResource: "SendText", withExtension: "scpt")?.path
+                } else {
+                    scriptPath = Bundle.main.url(forResource: "SendTextSingleBuddy", withExtension: "scpt")?.path
                 }
             }
             
@@ -59,10 +59,10 @@ public class Jared: MessageSender {
         if let attachments = message.attachments {
             var scriptPath: String?
             
-            if message.recipient is Person {
-                scriptPath = Bundle.main.url(forResource: "SendImageSingleBuddy", withExtension: "scpt")?.path
-            } else if message.recipient is Group {
+            if message.recipient.handle.contains(";+;") {
                 scriptPath = Bundle.main.url(forResource: "SendImage", withExtension: "scpt")?.path
+            } else {
+                scriptPath = Bundle.main.url(forResource: "SendImageSingleBuddy", withExtension: "scpt")?.path
             }
             
             attachments.forEach{attachment in
