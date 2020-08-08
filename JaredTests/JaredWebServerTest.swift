@@ -38,13 +38,13 @@ class JaredWebServerTest: XCTestCase {
         request.addValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
         
         var httpResponse: HTTPURLResponse?
-        let semaphore = DispatchSemaphore(value: 0)
+        let badRequestPromise = XCTestExpectation(description: "bad request response received")
         URLSession.shared.dataTask(with: request) { (data, response, error) in
             httpResponse = response as? HTTPURLResponse
-            semaphore.signal()
+            badRequestPromise.fulfill()
         }.resume()
         
-        _ = semaphore.wait(timeout: .distantFuture)
+        wait(for: [badRequestPromise], timeout: 5)
         XCTAssertEqual(httpResponse?.statusCode, 400, "Bad request status header")
         
         // Stop the server
@@ -52,11 +52,12 @@ class JaredWebServerTest: XCTestCase {
         
         // Make a request and verify that it doesn't work
         var requestError: Error?
+        let noResponsePromise = XCTestExpectation(description: "no response received")
         URLSession.shared.dataTask(with: request) { (data, response, error) in
             requestError = error
-            semaphore.signal()
+            noResponsePromise.fulfill()
         }.resume()
-        _ = semaphore.wait(timeout: .distantFuture)
+        wait(for: [noResponsePromise], timeout: 5)
         print()
         XCTAssertEqual(requestError?.localizedDescription, "Could not connect to the server.", "Request fails when the server is stopped")
     }
@@ -72,13 +73,13 @@ class JaredWebServerTest: XCTestCase {
         request.addValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
         
         var httpResponse: HTTPURLResponse?
-        let semaphore = DispatchSemaphore(value: 0)
+        let promise = XCTestExpectation(description: "response received")
         URLSession.shared.dataTask(with: request) { (data, response, error) in
             httpResponse = response as? HTTPURLResponse
-            semaphore.signal()
+            promise.fulfill()
         }.resume()
         
-        _ = semaphore.wait(timeout: .distantFuture)
+        wait(for: [promise], timeout: 5)
         XCTAssertEqual(httpResponse?.statusCode, 200, "Valid request is successful")
         XCTAssertEqual(jaredMock.calls.count, 1, "One message sent")
         XCTAssertEqual((jaredMock.calls[0].body as! TextBody).message, "clandestine meetings", "Message was correct")

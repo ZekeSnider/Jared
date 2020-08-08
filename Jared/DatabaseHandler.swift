@@ -84,7 +84,7 @@ class DatabaseHandler {
     private func backgroundAction() {
         while shouldExitThread == false {
             let elapsed = queryNewRecords()
-            Thread.sleep(forTimeInterval: refreshSeconds - elapsed)
+            Thread.sleep(forTimeInterval: max(0, refreshSeconds - elapsed))
         }
     }
     
