@@ -32,7 +32,7 @@ class JaredWebServerTest: XCTestCase {
         webServer.start()
         
         // Make an invalid post request
-        var request = URLRequest(url: URL(string: "http://localhost:3000/message")!)
+        var request = URLRequest(url: URL(string: "http://localhost:3005/message")!)
         request.httpMethod = "POST"
         request.httpBody = JaredWebServerTest.invalidBody.data(using: String.Encoding.utf8)
         request.addValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
@@ -67,7 +67,7 @@ class JaredWebServerTest: XCTestCase {
         webServer.start()
         
         // Make an invalid post request
-        var request = URLRequest(url: URL(string: "http://localhost:3000/message")!)
+        var request = URLRequest(url: URL(string: "http://localhost:3005/message")!)
         request.httpMethod = "POST"
         request.httpBody = JaredWebServerTest.validBody.data(using: String.Encoding.utf8)
         request.addValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")

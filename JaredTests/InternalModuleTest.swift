@@ -35,8 +35,12 @@ class InternalModuleTest: XCTestCase {
         pluginManager.add(module: module1)
         
         internalModule.sendDocumentation(message: Message(body: TextBody(""), date: Date(), sender: mePerson, recipient: swiftPerson))
-        let message = (sender.calls[0].body as! TextBody).message
-        XCTAssertEqual((sender.calls[0].body as! TextBody).message, "MockRoute: no description\n==============\n/startWith: hello hello\n/contains: sfadjklfsa\n/contains: \n/is: ")
+        var message = (sender.calls[0].body as! TextBody).message
+        XCTAssertEqual(message, "MockRoute: no description\n==============\n/startWith: hello hello\n/contains: sfadjklfsa\n/contains: \n/is: ")
+        
+        internalModule.sendDocumentation(message: Message(body: TextBody("/help,\(startWithString)"), date: Date(), sender: mePerson, recipient: swiftPerson))
+        message = (sender.calls[1].body as! TextBody).message
+        XCTAssertEqual(message, "Command: /startWith\n===========\nhello hello\n\nParameters: example syntax")
     }
 
 }
