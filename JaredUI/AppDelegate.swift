@@ -26,6 +26,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+        if (ProcessInfo().arguments[safe: 1] == "-UITesting") {
+            setStateForUITesting()
+        }
+        
         let messageDatabaseURL = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask)[0]
             .appendingPathComponent("Messages").appendingPathComponent("chat.db")
         let viewController = NSApplication.shared.keyWindow?.contentViewController as? ViewController
@@ -43,6 +47,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
+    }
+    
+    private func setStateForUITesting() {
+        UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
     }
 }
 

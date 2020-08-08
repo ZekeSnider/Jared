@@ -26,7 +26,34 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      codeCoverageEnabled = "YES"
+      onlyGenerateCoverageForSpecifiedTargets = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "B33278761CB2CB1300BBDD3A"
+            BuildableName = "Jared.app"
+            BlueprintName = "Jared"
+            ReferencedContainer = "container:Jared.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
+      <CodeCoverageTargets>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "B33278761CB2CB1300BBDD3A"
+            BuildableName = "Jared.app"
+            BlueprintName = "Jared"
+            ReferencedContainer = "container:Jared.xcodeproj">
+         </BuildableReference>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "7F84B61E1CC506790059A82B"
+            BuildableName = "JaredFramework.framework"
+            BlueprintName = "JaredFramework"
+            ReferencedContainer = "container:Jared.xcodeproj">
+         </BuildableReference>
+      </CodeCoverageTargets>
       <Testables>
          <TestableReference
             skipped = "NO">
@@ -38,18 +65,17 @@
                ReferencedContainer = "container:Jared.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "B319235E24DE76A2001904BA"
+               BuildableName = "JaredUITests.xctest"
+               BlueprintName = "JaredUITests"
+               ReferencedContainer = "container:Jared.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "B33278761CB2CB1300BBDD3A"
-            BuildableName = "Jared.app"
-            BlueprintName = "Jared"
-            ReferencedContainer = "container:Jared.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
-      <AdditionalOptions>
-      </AdditionalOptions>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -72,8 +98,6 @@
             ReferencedContainer = "container:Jared.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <AdditionalOptions>
-      </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
