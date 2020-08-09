@@ -11,12 +11,14 @@ import JaredFramework
 
 // Struct that defines what parameters are accepted in requests
 public struct MessageRequest: Decodable {
-    public var body: MessageBody
+    public var body: MessageBody?
     public var recipient: RecipientEntity
+    public var attachments: [Attachment]?
     
     enum CodingKeys : String, CodingKey {
         case body
         case recipient
+        case attachments
     }
     
     enum ParameterError: Error {
@@ -26,13 +28,8 @@ public struct MessageRequest: Decodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        if let textBody = try? container.decode(TextBody.self, forKey: .body) {
-            self.body = textBody
-        } else if let imageBody = try? container.decode(ImageBody.self, forKey: .body) {
-            self.body = imageBody
-        } else {
-            throw ParameterError.runtimeError("the body parameter is incorrectly formatted")
-        }
+        self.attachments = try? container.decode([Attachment].self, forKey: .attachments)
+        self.body = try? container.decode(TextBody.self, forKey: .body)
         
         if let person = try? container.decode(Person.self, forKey: .recipient) {
             self.recipient = person
@@ -40,6 +37,11 @@ public struct MessageRequest: Decodable {
             self.recipient = group
         } else {
             throw ParameterError.runtimeError("the recipient parameter is incorrectly formatted")
+        }
+        
+        // One of attachments or body must not be nil
+        guard (attachments != nil || body != nil) else {
+            throw ParameterError.runtimeError("the body parameter is incorrectly formatted")
         }
     }
 }

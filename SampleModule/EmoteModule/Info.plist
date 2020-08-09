@@ -23,7 +23,7 @@
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>JaredFrameworkVersion</key>
-	<string>J2.0.0</string>
+	<string>J3.0.0</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2016 Zeke Snider. All rights reserved.</string>
 	<key>NSPrincipalClass</key>

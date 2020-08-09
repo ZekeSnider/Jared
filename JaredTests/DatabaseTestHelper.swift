@@ -26,6 +26,12 @@ INSERT INTO message ("guid", "text", "handle_id", "service", "account", "account
     let insertChatMessageJoin = """
 INSERT INTO "main"."chat_message_join" ("chat_id", "message_id", "message_date") VALUES (?, ?, ?);
 """
+
+
+    
+    let insertMessageAttachmentJoin = """
+    INSERT INTO message_attachment_join ("message_id", "attachment_id") VALUES (?, ?);
+"""
     
     var db: OpaquePointer?
     
@@ -196,7 +202,9 @@ INSERT INTO "main"."chat_message_join" ("chat_id", "message_id", "message_date")
             print("failure binding foo: \(errmsg)")
         }
         
-        if sqlite3_step(statement) == SQLITE_DONE {
+        let result = sqlite3_step(statement)
+        print(String(cString: sqlite3_errmsg(db)!))
+        if result == SQLITE_DONE {
             print("Successfully inserted row.")
         }
         
@@ -225,6 +233,77 @@ INSERT INTO "main"."chat_message_join" ("chat_id", "message_id", "message_date")
         }
         
         if sqlite3_step(statement) == SQLITE_DONE {
+            print("Successfully inserted row.")
+        }
+    }
+    
+    let insertAttachmentQuery = """
+        INSERT INTO "attachment" ("guid", "created_date", "filename", "mime_type", "is_outgoing", "transfer_name", "is_sticker") VALUES (?, ?, ?, ?, ?, ?, ?);
+    """
+    func insertAttachment(guid: String, createdAt: Int, filePath: String, mimeType: String, isOutgoing: Bool, transferName: String, isSticker: Bool) -> Int {
+        var statement: OpaquePointer?
+        
+        if sqlite3_prepare_v2(db, insertAttachmentQuery, -1, &statement, nil) != SQLITE_OK {
+            let errmsg = String(cString: sqlite3_errmsg(db)!)
+            print("error preparing select: \(errmsg)")
+        }
+        
+        if sqlite3_bind_text(statement, 1, guid, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+            let errmsg = String(cString: sqlite3_errmsg(db)!)
+            print("failure binding foo: \(errmsg)")
+        }
+        if sqlite3_bind_int64(statement, 2, Int64(createdAt)) != SQLITE_OK {
+            let errmsg = String(cString: sqlite3_errmsg(db)!)
+            print("failure binding foo: \(errmsg)")
+        }
+        if sqlite3_bind_text(statement, 3, filePath, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+            let errmsg = String(cString: sqlite3_errmsg(db)!)
+            print("failure binding foo: \(errmsg)")
+        }
+        if sqlite3_bind_text(statement, 4, mimeType, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+            let errmsg = String(cString: sqlite3_errmsg(db)!)
+            print("failure binding foo: \(errmsg)")
+        }
+        if sqlite3_bind_int(statement, 5, isOutgoing ? 1 : 0) != SQLITE_OK {
+            let errmsg = String(cString: sqlite3_errmsg(db)!)
+            print("failure binding foo: \(errmsg)")
+        }
+        if sqlite3_bind_text(statement, 6, transferName, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+            let errmsg = String(cString: sqlite3_errmsg(db)!)
+            print("failure binding foo: \(errmsg)")
+        }
+        if sqlite3_bind_int(statement, 7, isSticker ? 1 : 0) != SQLITE_OK {
+            let errmsg = String(cString: sqlite3_errmsg(db)!)
+            print("failure binding foo: \(errmsg)")
+        }
+        
+        if sqlite3_step(statement) == SQLITE_DONE {
+            print("Successfully inserted row.")
+        }
+        
+        return Int(sqlite3_last_insert_rowid(db))
+    }
+    
+    func linkAttachmentAndMessage(messageID: Int, attachmentID: Int) {
+        var statement: OpaquePointer?
+        
+        if sqlite3_prepare_v2(db, insertMessageAttachmentJoin, -1, &statement, nil) != SQLITE_OK {
+            let errmsg = String(cString: sqlite3_errmsg(db)!)
+            print("error preparing select: \(errmsg)")
+        }
+        
+        if sqlite3_bind_int(statement, 1, Int32(messageID)) != SQLITE_OK {
+            let errmsg = String(cString: sqlite3_errmsg(db)!)
+            print("failure binding foo: \(errmsg)")
+        }
+        if sqlite3_bind_int(statement, 2, Int32(attachmentID)) != SQLITE_OK {
+            let errmsg = String(cString: sqlite3_errmsg(db)!)
+            print("failure binding foo: \(errmsg)")
+        }
+        
+        let result = sqlite3_step(statement)
+        print(String(cString: sqlite3_errmsg(db)!))
+        if result == SQLITE_DONE {
             print("Successfully inserted row.")
         }
     }

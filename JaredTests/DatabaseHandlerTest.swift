@@ -41,8 +41,14 @@ class DatabaseHandlerTest: XCTestCase {
         let messageID = helper.insertMessage(guid: "lol", messageText: "hello world", handleID: handleID, service: "iMessage", account: "zeke", accountGuid: "String", date: timestamp, dateRead: nil, dateDelivered: nil, isFromMe: true, hasAttachments: false, destinationCallerID: "zeke")
         helper.linkChatAndMessage(chatID: chatID, messageID: messageID, date: timestamp)
         
+        let timestamp2 = currentTimestamp()
+        let messageID2 = helper.insertMessage(guid: "lol2", messageText: "hello world", handleID: handleID, service: "iMessage", account: "zeke", accountGuid: "String", date: timestamp2, dateRead: nil, dateDelivered: nil, isFromMe: true, hasAttachments: true, destinationCallerID: "zeke")
+        helper.linkChatAndMessage(chatID: chatID, messageID: messageID2, date: timestamp2)
+        let attachmentID = helper.insertAttachment(guid: "qq", createdAt: timestamp2, filePath: "~/fdsf", mimeType: "image/jpeg", isOutgoing: true, transferName: "hello.jpg", isSticker: false)
+        helper.linkAttachmentAndMessage(messageID: messageID2, attachmentID: attachmentID)
+        
         sleep(10)
         
-        XCTAssertEqual(router.messages.count, 1, "count is 1")
+        XCTAssertEqual(router.messages.count, 2, "Both messages routed")
     }
 }

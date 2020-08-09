@@ -76,6 +76,11 @@ class Router : RouterDelegate {
                         }
                     }
                 }
+                else if comparison.0 == .isReaction {
+                    if myMessage.action != nil {
+                        route.call(myMessage)
+                    }
+                }
             }
         }
     }

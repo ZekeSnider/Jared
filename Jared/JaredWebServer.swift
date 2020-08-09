@@ -7,14 +7,16 @@ class JaredWebServer: NSObject {
     var defaults: UserDefaults!
     var server: Server!
     var port: Int!
+    var sender: MessageSender
     var configurationURL: URL
     
-    init(configurationURL: URL) {
+    init(sender: MessageSender, configurationURL: URL) {
         self.configurationURL = configurationURL
+        self.sender = sender
         super.init()
         defaults = UserDefaults.standard
         server = Server()
-        server.route(.POST, "message", JaredWebServer.handleMessageRequest)
+        server.route(.POST, "message", handleMessageRequest)
         
         port = assignPort()
         
@@ -77,22 +79,23 @@ class JaredWebServer: NSObject {
         server.stop()
     }
     
-    static func handleMessageRequest(request: HTTPRequest) -> HTTPResponse {
+    private func handleMessageRequest(request: HTTPRequest) -> HTTPResponse {
         // Attempt to decode the request body to the MessageRequest struct
         do {
             let parsedBody = try JSONDecoder().decode(MessageRequest.self, from: request.body)
             
-            if let textBody = parsedBody.body as? TextBody {
-                Jared.Send(textBody.message, to: parsedBody.recipient)
-                return HTTPResponse()
+            let textBody = parsedBody.body as? TextBody
+            
+            guard (textBody != nil || parsedBody.attachments != nil) else {
+                return HTTPResponse(HTTPStatus(code: 400, phrase: "Bad Request"), headers: HTTPHeaders(), content: "A text body and/or attachments are required")
             }
-            else {
-                return HTTPResponse(HTTPStatus(code: 400, phrase: "Bad Request"), headers: HTTPHeaders(), content: "Image body types are not supported yet.")
-            }
+            
+            let message = Message(body: parsedBody.body, date: Date(), sender: Person(givenName: nil, handle: "", isMe: true), recipient: parsedBody.recipient, attachments: parsedBody.attachments ?? [], sendStyle: nil, associatedMessageType: nil, associatedMessageGUID: nil)
+            
+            sender.send(message)
+            return HTTPResponse()
         } catch {
             return HTTPResponse(HTTPStatus(code: 400, phrase: "Bad Request"), headers: HTTPHeaders(), content: error.localizedDescription)
         }
     }
 }
-
-

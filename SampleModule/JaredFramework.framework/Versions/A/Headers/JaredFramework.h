@@ -15,5 +15,3 @@ FOUNDATION_EXPORT double JaredFrameworkVersionNumber;
 FOUNDATION_EXPORT const unsigned char JaredFrameworkVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <JaredFramework/PublicHeader.h>
-
-

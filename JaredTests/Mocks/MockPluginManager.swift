@@ -15,21 +15,41 @@ let isString = "/is"
 
 let goodUrl = "https://zeke.dev"
 
+class MockRoute: RoutingModule {
+    var sender: MessageSender
+    var routes = [Route]()
+    
+    var description: String
+    
+    required public convenience init(sender: MessageSender) {
+        self.init(sender: sender, description: "no description")
+    }
+    
+    init(sender: MessageSender, description: String) {
+        self.sender = sender
+        self.description = description
+    }
+    
+    func add(route: Route) {
+        routes.append(route)
+    }
+}
+
 class MockPluginManager: PluginManagerDelegate {
     var callCounts = [String: Int]()
     var disabled = [String: Bool]()
-    
-    func getAllRoutes() -> [Route] {
-        let startWith = Route(name: startWithString, comparisons: [.startsWith: [startWithString]], call: {(message: Message) -> Void in self.increment(routeName: startWithString)}, description: "", parameterSyntax: "example syntax")
-        let contains = Route(name: containsString, comparisons: [.contains: [containsString]], call: {(message) -> Void in self.increment(routeName: containsString)}, description: "")
-        let url = Route(name: containsString, comparisons: [.containsURL: [goodUrl]], call: {(message) -> Void in self.increment(routeName: containsString)})
-        let isRoute = Route(name: isString, comparisons: [.is: [isString]], call: {(message) -> Void in self.increment(routeName: isString)})
-        
-        return [startWith, contains, url, isRoute]
-    }
+    var routingModules = [RoutingModule]()
     
     func getAllModules() -> [RoutingModule] {
-        return []
+        return routingModules
+    }
+    
+    func add(module: RoutingModule) {
+        routingModules.append(module)
+    }
+
+    func getAllRoutes() -> [Route] {
+        return routingModules.flatMap { module in module.routes }
     }
     
     func reload() {

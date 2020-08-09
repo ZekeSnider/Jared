@@ -10,7 +10,7 @@ import Foundation
 import JaredFramework
 
 class PluginManager: PluginManagerDelegate {
-    var FrameworkVersion: String = "J2.0.0"
+    var FrameworkVersion: String = "J3.0.0"
     var modules:[RoutingModule] = []
     var bundles:[Bundle] = []
     var supportDir: URL?
@@ -18,9 +18,11 @@ class PluginManager: PluginManagerDelegate {
     var routeConfig: [String: [String:AnyObject]]?
     var webhooks: [String]?
     var webHookManager: WebHookManager?
+    var sender: MessageSender
     public var router: Router!
     
-    init () {
+    init (sender: MessageSender) {
+        self.sender = sender
         let filemanager = FileManager.default
         let appsupport = filemanager.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
         let supportDir = appsupport.appendingPathComponent("Jared")
@@ -53,8 +55,8 @@ class PluginManager: PluginManagerDelegate {
     }
     
     private func addInternalModules() {
-        modules.append(CoreModule())
-        modules.append(InternalModule(pluginManager: self))
+        modules.append(CoreModule(sender: sender))
+        modules.append(InternalModule(sender: sender, pluginManager: self))
     }
     
     func loadPlugins(_ pluginDir: URL) {
@@ -95,7 +97,7 @@ class PluginManager: PluginManagerDelegate {
         }
         
         //Initialize it
-        let module: RoutingModule = principleClass.init()
+        let module: RoutingModule = principleClass.init(sender: sender)
         bundles.append(myBundle)
         
         //Add it to our modules

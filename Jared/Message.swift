@@ -9,13 +9,14 @@
 import Foundation
 
 public struct Message: Encodable {
-    public var body: MessageBody
+    public var body: MessageBody?
     public var date: Date?
     public var sender: SenderEntity
     public var recipient: RecipientEntity
-    public var attachments: [Attachment]
+    public var attachments: [Attachment]?
     public var sendStyle: SendStyle
     public var action: Action?
+    public var guid: String?
     
     enum CodingKeys : String, CodingKey{
         case date
@@ -25,24 +26,28 @@ public struct Message: Encodable {
         case attachments
         case sendStyle
         case action
+        case guid
     }
     
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
+        var recipientCopy = recipient
         
         if let textBody = body as? TextBody {
             try container.encode(textBody, forKey: .body)
-        } else if let imageBody = body as? ImageBody {
-            try container.encode(imageBody, forKey: .body)
         }
         
         if let person = sender as? Person {
             try container.encode(person, forKey: .sender)
         }
         
-        if let person = recipient as? Person {
+        if let abstractRecipient = recipient as? AbstractRecipient {
+            recipientCopy = abstractRecipient.getSpecificEntity()
+        }
+        
+        if let person = recipientCopy as? Person {
             try container.encode(person, forKey: .recipient)
-        } else if let group = recipient as? Group {
+        } else if let group = recipientCopy as? Group {
             try container.encode(group, forKey: .recipient)
         }
         
@@ -57,26 +62,28 @@ public struct Message: Encodable {
         
         try container.encode(sendStyle.rawValue, forKey: .sendStyle)
         try container.encode(attachments, forKey: .attachments)
+        try container.encode(guid, forKey: .guid)
         
         if (action != nil) {
             try container.encode(action, forKey: .action)
         }
     }
     
-    public init (body: MessageBody, date: Date, sender: SenderEntity, recipient: RecipientEntity, attachments: [Attachment] = [], sendStyle: String? = nil, associatedMessageType: Int? = nil, associatedMessageGUID: String? = nil) {
+    public init (body: MessageBody?, date: Date, sender: SenderEntity, recipient: RecipientEntity, guid: String? = nil, attachments: [Attachment] = [], sendStyle: String? = nil, associatedMessageType: Int? = nil, associatedMessageGUID: String? = nil) {
         self.body = body
         self.recipient = recipient
         self.sender = sender
         self.date = date
         self.attachments = attachments
         self.sendStyle = SendStyle(fromIdentifier: sendStyle)
+        self.guid = guid
         
         if (associatedMessageType != 0 && associatedMessageGUID != nil) {
             self.action = Action(actionTypeInt: associatedMessageType!, targetGUID: associatedMessageGUID!.replacingOccurrences(of: "p:0/", with: ""))
         }
     }
     
-    public func RespondTo() -> RecipientEntity {
+    public func RespondTo() -> RecipientEntity? {
         if let senderPerson = sender as? Person {
             if (senderPerson.isMe) {
                 if let person = recipient as? Person {
@@ -94,7 +101,7 @@ public struct Message: Encodable {
         }
         
         NSLog("Couldn't coerce respond to entity properly.")
-        return Person(givenName: nil, handle: "", isMe: false)
+        return nil
     }
     
     public func getTextBody() -> String? {
@@ -107,13 +114,5 @@ public struct Message: Encodable {
     
     public func getTextParameters() -> [String]? {
         return self.getTextBody()?.components(separatedBy: ",")
-    }
-    
-    public func getImageBody() -> String? {
-        guard let body = self.body as? ImageBody else {
-            return nil
-        }
-        
-        return body.ImagePath
     }
 }

@@ -13,6 +13,7 @@ public enum Compare {
     case contains
     case `is`
     case containsURL
+    case isReaction
 }
 
 public struct Route {
@@ -45,5 +46,5 @@ public struct Route {
 public protocol RoutingModule {
     var routes: [Route] {get}
     var description: String {get}
-    init()
+    init(sender: MessageSender)
 }

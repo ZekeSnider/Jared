@@ -10,16 +10,20 @@ import Foundation
 import JaredFramework
 
 public class EmoteModule: RoutingModule {
+    var sender: MessageSender
+    
     public var routes: [Route] = []
     public var description = "A Description"
 
-    required public init() {
-        let aRoute = Route(name: "test function", comparisons: [.startsWith: ["/moduletest"]], call: self.test, description: "TEST")
-        routes = [aRoute]
+    required public init(sender: MessageSender) {
+        self.sender = sender
+        
+        let testRoute = Route(name: "test function", comparisons: [.startsWith: ["/moduletest"]], call: self.test, description: "TEST")
+        routes = [testRoute]
     }
     
     public func test(message: Message) -> Void {
-        Jared.Send("This command was loaded from a modularized bundle.", to: message.RespondTo())
+        sender.send("This command was loaded from a modularized bundle.", to: message.RespondTo())
     }
 }
 
