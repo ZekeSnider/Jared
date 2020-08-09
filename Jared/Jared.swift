@@ -17,9 +17,13 @@ public class Jared: MessageSender {
     }
     
     public func send(_ body: String, to recipient: RecipientEntity?) {
-        guard let recipient = recipient else {
+        guard var recipient = recipient else {
             return
         }
+        if let abstract = recipient as? AbstractRecipient {
+            recipient = abstract.getSpecificEntity()
+        }
+        
         let me = Person(givenName: nil, handle: "", isMe: true)
         let message = Message(body: TextBody(body), date: Date(), sender: me, recipient: recipient, attachments: [])
         send(message)

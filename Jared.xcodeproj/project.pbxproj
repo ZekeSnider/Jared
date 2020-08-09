@@ -37,7 +37,6 @@
 		B347A4A224DA766A00E93657 /* MessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A4C61323B867E300B7F009 /* MessageRequest.swift */; };
 		B347A4A624DD0CE500E93657 /* MessageSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = B347A4A324DD0B7400E93657 /* MessageSender.swift */; };
 		B347A4A724DD0FCF00E93657 /* Jared.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3EF1DA92206E09B00953DE7 /* Jared.swift */; };
-		B347A4A924DD119A00E93657 /* JaredMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B347A4A824DD119A00E93657 /* JaredMock.swift */; };
 		B347A4AB24DD165200E93657 /* ActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B347A4AA24DD165200E93657 /* ActionType.swift */; };
 		B347A4AD24DD170C00E93657 /* ActionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B347A4AC24DD170C00E93657 /* ActionTest.swift */; };
 		B347A4AF24DD1CD000E93657 /* GlobalTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B347A4AE24DD1CD000E93657 /* GlobalTest.swift */; };
@@ -45,7 +44,7 @@
 		B35CE7152196AD4E002F52A7 /* DatabaseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35CE7142196AD4E002F52A7 /* DatabaseHandler.swift */; };
 		B361EEBB1F1DE24C0041113C /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = B361EEBA1F1DE24C0041113C /* config.json */; };
 		B36563EF1F3D68980064B114 /* TouchBarTextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36563EE1F3D68980064B114 /* TouchBarTextFieldExtension.swift */; };
-		B36710C224DF60D500DA1C5D /* JaredMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B347A4A824DD119A00E93657 /* JaredMock.swift */; };
+		B36710E224DFB5EC00DA1C5D /* JaredMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B347A4A824DD119A00E93657 /* JaredMock.swift */; };
 		B369509024DE8FD00027CB1E /* Configuration.plist in Resources */ = {isa = PBXBuildFile; fileRef = B369508F24DE8FD00027CB1E /* Configuration.plist */; };
 		B369509224DE91760027CB1E /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B369509124DE91760027CB1E /* Configuration.swift */; };
 		B369509324DE952D0027CB1E /* Configuration.plist in Resources */ = {isa = PBXBuildFile; fileRef = B369508F24DE8FD00027CB1E /* Configuration.plist */; };
@@ -295,7 +294,6 @@
 				B3EF1DAB2206E17900953DE7 /* Entities.swift */,
 				B3EF1DA52206DFEA00953DE7 /* Route.swift */,
 				B369509124DE91760027CB1E /* Configuration.swift */,
-				B347A4A824DD119A00E93657 /* JaredMock.swift */,
 				7F84B6231CC506790059A82B /* Info.plist */,
 				B369508F24DE8FD00027CB1E /* Configuration.plist */,
 			);
@@ -417,6 +415,7 @@
 				B32DE51B24D552D300AB3A71 /* MockPluginManager.swift */,
 				B3B844C624D9298000DC162A /* MockRouter.swift */,
 				B3EF1DA3220687DD00953DE7 /* URLProtocolMock.swift */,
+				B347A4A824DD119A00E93657 /* JaredMock.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -746,7 +745,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B36710C224DF60D500DA1C5D /* JaredMock.swift in Sources */,
 				B347A4A624DD0CE500E93657 /* MessageSender.swift in Sources */,
 				B3EF1DAC2206E17900953DE7 /* Entities.swift in Sources */,
 				B3EF1DAE2206E19100953DE7 /* Bodies.swift in Sources */,
@@ -811,10 +809,10 @@
 				B32DE51624D522DA00AB3A71 /* Router.swift in Sources */,
 				B3BF17CA244FDA3F00CC44C5 /* MessageDelegate.swift in Sources */,
 				B3B844C524D9288000DC162A /* RouterDelegate.swift in Sources */,
-				B347A4A924DD119A00E93657 /* JaredMock.swift in Sources */,
 				B3B844B824D7791800DC162A /* ActionTypeTest.swift in Sources */,
 				B3B844C724D9298000DC162A /* MockRouter.swift in Sources */,
 				B347A4AD24DD170C00E93657 /* ActionTest.swift in Sources */,
+				B36710E224DFB5EC00DA1C5D /* JaredMock.swift in Sources */,
 				B3B844C224D8FA7D00DC162A /* DatabaseTestHelper.swift in Sources */,
 				B3B844BA24D77A4900DC162A /* SendStyleTest.swift in Sources */,
 				B3327DD8220682ED009DD882 /* WebhookTests.swift in Sources */,

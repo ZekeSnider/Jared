@@ -31,6 +31,7 @@ public struct Message: Encodable {
     
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
+        var recipientCopy = recipient
         
         if let textBody = body as? TextBody {
             try container.encode(textBody, forKey: .body)
@@ -40,9 +41,13 @@ public struct Message: Encodable {
             try container.encode(person, forKey: .sender)
         }
         
-        if let person = recipient as? Person {
+        if let abstractRecipient = recipient as? AbstractRecipient {
+            recipientCopy = abstractRecipient.getSpecificEntity()
+        }
+        
+        if let person = recipientCopy as? Person {
             try container.encode(person, forKey: .recipient)
-        } else if let group = recipient as? Group {
+        } else if let group = recipientCopy as? Group {
             try container.encode(group, forKey: .recipient)
         }
         

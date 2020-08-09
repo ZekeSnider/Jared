@@ -16,6 +16,21 @@ public protocol SenderEntity: Codable {
     var givenName: String? {get set}
 }
 
+// This represents an entity which could either be a person or a group
+// Use this if you have a handle but don't know what type it is.
+// If you know the type, please construct a group or person directly.
+public struct AbstractRecipient: RecipientEntity, Codable, Equatable {
+    public var handle: String
+    
+    public func getSpecificEntity() -> RecipientEntity {
+        if handle.contains(";-;") {
+            return Group(name: nil, handle: handle, participants: [])
+        } else {
+            return Person(handle: handle)
+        }
+    }
+}
+
 public struct Person: SenderEntity, RecipientEntity, Codable, Equatable {
     public var givenName: String?
     public var handle: String
