@@ -38,6 +38,8 @@ public struct Person: SenderEntity, RecipientEntity, Codable, Equatable {
     
     enum CodingKeys : String, CodingKey{
         case handle
+        case givenName
+        case isMe
     }
     
     public init(handle: String) {
