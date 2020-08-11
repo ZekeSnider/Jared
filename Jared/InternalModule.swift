@@ -78,30 +78,30 @@ class InternalModule: RoutingModule {
         self.pluginManager = pluginManager
         defaults = UserDefaults.standard
         
-        let enable = Route(name:"/enable", comparisons: [.startsWith: ["/enable"]], call: self.enable, description: localized("enableDescription"))
-        let disable = Route(name:"/disable", comparisons: [.startsWith: ["/disable"]], call: self.disable, description: localized("disableDescription"))
-        let documentation = Route(name:"/help", comparisons: [.startsWith: ["/help"]], call: self.sendDocumentation, description: localized("helpDescription"))
-        let reload = Route(name:"/reload", comparisons: [.startsWith: ["/reload"]], call: self.reload, description: localized("reloadDescription"))
+        let enable = Route(name:"/enable", comparisons: [.startsWith: ["/enable"]], call: {[weak self] in self?.enable($0)}, description: localized("enableDescription"))
+        let disable = Route(name:"/disable", comparisons: [.startsWith: ["/disable"]], call: {[weak self] in self?.disable($0)}, description: localized("disableDescription"))
+        let documentation = Route(name:"/help", comparisons: [.startsWith: ["/help"]], call: {[weak self] in self?.sendDocumentation($0)}, description: localized("helpDescription"))
+        let reload = Route(name:"/reload", comparisons: [.startsWith: ["/reload"]], call: {[weak self] in self?.self.reload($0)}, description: localized("reloadDescription"))
         
         routes = [enable, disable, documentation, reload]
     }
     
-    func enable(message: Message) -> Void {
+    func enable(_ message: Message) -> Void {
         defaults.set(false, forKey: "JaredIsDisabled")
         sender.send(localized("enabledMessage"), to: message.RespondTo())
     }
     
-    func disable(message: Message) -> Void {
+    func disable(_ message: Message) -> Void {
         defaults.set(true, forKey: "JaredIsDisabled")
         sender.send(localized("disabledMessage"), to: message.RespondTo())
     }
     
-    func reload(message: Message) -> Void {
+    func reload(_ message: Message) -> Void {
         pluginManager?.reload()
         sender.send(localized("reloadMessage"), to: message.RespondTo())
     }
     
-    func sendDocumentation(message: Message) {
+    func sendDocumentation(_ message: Message) {
         let parameters = message.getTextParameters()
         if parameters?.count == 2 {
             sender.send(singleDocumentation(parameters![1]), to: message.RespondTo())

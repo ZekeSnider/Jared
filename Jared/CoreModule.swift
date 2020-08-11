@@ -34,21 +34,21 @@ class CoreModule: RoutingModule {
         )
         Realm.Configuration.defaultConfiguration = config
         
-        let ping = Route(name:"/ping", comparisons: [.startsWith: ["/ping"]], call: self.pingCall, description: NSLocalizedString("pingDescription"))
+        let ping = Route(name:"/ping", comparisons: [.startsWith: ["/ping"]], call: {[weak self] in self?.pingCall($0)}, description: NSLocalizedString("pingDescription"))
         
-        let thankYou = Route(name:"Thank You", comparisons: [.startsWith: [NSLocalizedString("ThanksJaredCommand")]], call: self.thanksJared, description: NSLocalizedString("ThanksJaredResponse"))
+        let thankYou = Route(name:"Thank You", comparisons: [.startsWith: [NSLocalizedString("ThanksJaredCommand")]], call: {[weak self] in self?.thanksJared($0)}, description: NSLocalizedString("ThanksJaredResponse"))
         
-        let version = Route(name: "/version", comparisons: [.startsWith: ["/version"]], call: self.getVersion, description: "Get the version of Jared running")
+        let version = Route(name: "/version", comparisons: [.startsWith: ["/version"]], call: {[weak self] in self?.getVersion($0)}, description: "Get the version of Jared running")
         
-        let whoami = Route(name: "/whoami", comparisons: [.startsWith: ["/whoami"]], call: self.getWho, description: "Get your name")
+        let whoami = Route(name: "/whoami", comparisons: [.startsWith: ["/whoami"]], call: {[weak self] in self?.getWho($0)}, description: "Get your name")
         
-        let send = Route(name: "/send", comparisons: [.startsWith: ["/send"]], call: self.sendRepeat, description: NSLocalizedString("sendDescription"),parameterSyntax: NSLocalizedString("sendSyntax"))
+        let send = Route(name: "/send", comparisons: [.startsWith: ["/send"]], call: {[weak self] in self?.sendRepeat($0)}, description: NSLocalizedString("sendDescription"),parameterSyntax: NSLocalizedString("sendSyntax"))
         
-        let name = Route(name: "/name", comparisons: [.startsWith: ["/name"]], call: self.changeName, description: "Change what Jared calls you", parameterSyntax: "/name,[your preferred name]")
+        let name = Route(name: "/name", comparisons: [.startsWith: ["/name"]], call: {[weak self] in self?.changeName($0)}, description: "Change what Jared calls you", parameterSyntax: "/name,[your preferred name]")
         
-        let schedule = Route(name: "/schedule", comparisons: [.startsWith: ["/schedule"]], call: self.schedule, description: NSLocalizedString("scheduleDescription"), parameterSyntax: "/schedule")
+        let schedule = Route(name: "/schedule", comparisons: [.startsWith: ["/schedule"]], call: {[weak self] in self?.schedule($0)}, description: NSLocalizedString("scheduleDescription"), parameterSyntax: "/schedule")
         
-        let barf = Route(name: "/barf", comparisons: [.startsWith: ["/barf"]], call: self.barf, description: NSLocalizedString("barfDescription"))
+        let barf = Route(name: "/barf", comparisons: [.startsWith: ["/barf"]], call: {[weak self] in self?.barf($0)}, description: NSLocalizedString("barfDescription"))
         
         routes = [ping, thankYou, version, send, whoami, name, schedule, barf]
         
@@ -58,15 +58,15 @@ class CoreModule: RoutingModule {
     }
     
     
-    func pingCall(incoming: Message) -> Void {
+    func pingCall(_ incoming: Message) -> Void {
         sender.send(NSLocalizedString("PongResponse"), to: incoming.RespondTo())
     }
     
-    func barf(incoming: Message) -> Void {
+    func barf(_ incoming: Message) -> Void {
         sender.send(String(data: try! JSONEncoder().encode(incoming), encoding: .utf8) ?? "nil", to: incoming.RespondTo())
     }
     
-    func getWho(message: Message) -> Void {
+    func getWho(_ message: Message) -> Void {
         if message.sender.givenName != nil {
             sender.send("Your name is \(message.sender.givenName!).", to: message.RespondTo())
         }
@@ -75,17 +75,17 @@ class CoreModule: RoutingModule {
         }
     }
     
-    func thanksJared(message: Message) -> Void {
+    func thanksJared(_ message: Message) -> Void {
         sender.send(NSLocalizedString("WelcomeResponse"), to: message.RespondTo())
     }
     
-    func getVersion(message: Message) -> Void {
+    func getVersion(_ message: Message) -> Void {
         sender.send(NSLocalizedString("versionResponse"), to: message.RespondTo())
     }
     
     var guessMin: Int? = 0
     
-    func sendRepeat(message: Message) -> Void {
+    func sendRepeat(_ message: Message) -> Void {
         guard let parameters = message.getTextParameters() else {
             return sender.send("Inappropriate input type.", to: message.RespondTo())
         }
@@ -177,7 +177,7 @@ class CoreModule: RoutingModule {
         scheduleThread()
     }
     
-    func schedule(message: Message) {
+    func schedule(_ message: Message) {
         // /schedule,add,1,week,5,full Message
         // /schedule,delete,1
         // /schedule,list
@@ -274,7 +274,7 @@ class CoreModule: RoutingModule {
         }
     }
     
-    func changeName(message: Message) {
+    func changeName(_ message: Message) {
         guard let parsedMessage = message.getTextParameters() else {
             return sender.send("Inappropriate input type", to:message.RespondTo())
         }

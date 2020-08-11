@@ -11,8 +11,8 @@ import JaredFramework
 
 class PluginManager: PluginManagerDelegate {
     var FrameworkVersion: String = "J3.0.0"
-    var modules:[RoutingModule] = []
-    var bundles:[Bundle] = []
+    private var modules: [RoutingModule] = []
+    private var bundles: [Bundle] = []
     var supportDir: URL?
     var disabled = false
     var routeConfig: [String: [String:AnyObject]]?
@@ -109,13 +109,13 @@ class PluginManager: PluginManagerDelegate {
         let supportDir = appsupport.appendingPathComponent("Jared")
         let pluginDir = supportDir.appendingPathComponent("Plugins")
         
-        modules = []
+        modules.removeAll()
         
         for bundle in bundles {
             bundle.unload()
         }
         
-        bundles = []
+        bundles.removeAll()
         
         loadPlugins(pluginDir)
         addInternalModules()
