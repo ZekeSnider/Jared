@@ -1,12 +1,12 @@
 PODS:
-  - CocoaAsyncSocket (7.6.3)
+  - CocoaAsyncSocket (7.6.4)
   - HTTPParserC (2.9.2)
-  - Realm (4.3.0):
-    - Realm/Headers (= 4.3.0)
-  - Realm/Headers (4.3.0)
-  - RealmSwift (4.3.0):
-    - Realm (= 4.3.0)
-  - Telegraph (0.27):
+  - Realm (5.3.3):
+    - Realm/Headers (= 5.3.3)
+  - Realm/Headers (5.3.3)
+  - RealmSwift (5.3.3):
+    - Realm (= 5.3.3)
+  - Telegraph (0.28):
     - CocoaAsyncSocket (~> 7.5)
     - HTTPParserC (~> 2.7)
 
@@ -23,12 +23,12 @@ SPEC REPOS:
     - Telegraph
 
 SPEC CHECKSUMS:
-  CocoaAsyncSocket: eafaa68a7e0ec99ead0a7b35015e0bf25d2c8987
+  CocoaAsyncSocket: 694058e7c0ed05a9e217d1b3c7ded962f4180845
   HTTPParserC: 1ed389f80bb57a5b967d87d5358b8a94418394ee
-  Realm: 9357c3589555793e1860a7104a7412bca4a48d99
-  RealmSwift: 402f1e379a8ef82c635313037b043f0f06de880c
-  Telegraph: 28cfb24fae20bc1399475062352977cc314aa097
+  Realm: 2d57ea355bf8ca2a0964d6bfb38d28d7ff2addf6
+  RealmSwift: 0a709536ecea30eea1d3c514f6ade2ed078dee3c
+  Telegraph: 6820cf262064f2c15a393fb56401834141d0310e
 
-PODFILE CHECKSUM: e0657ab133c8feba95d9a127b222132ef9e041c8
+PODFILE CHECKSUM: 9197daa41072abbc69022a219954724300467bfe
 
 COCOAPODS: 1.9.3
