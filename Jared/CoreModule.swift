@@ -304,7 +304,7 @@ class CoreModule: RoutingModule {
             // Creating a new contact
             let newContact = CNMutableContact()
             newContact.givenName = parsedMessage[1]
-            newContact.note = "Created By sender.app"
+            newContact.note = "Created By jared.app"
             
             //If it contains an at, add the handle as email, otherwise add it as phone
             if (message.sender.handle.contains("@")) {
