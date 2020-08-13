@@ -41,7 +41,7 @@ class JaredWebServer: NSObject {
             let jsonData = try! NSData(contentsOfFile: configurationURL.path, options: .mappedIfSafe)
             
             // If the JSON format is not as expected at all, use the default port
-            guard let jsonResult = try? JSONSerialization.jsonObject(with: jsonData as Data, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String:AnyObject] else {
+            guard let jsonResult = ((try? JSONSerialization.jsonObject(with: jsonData as Data, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String:AnyObject]) as [String : AnyObject]??) else {
                 return JaredWebServer.DEFAULT_PORT
             }
             

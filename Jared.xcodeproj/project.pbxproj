@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00FC0A452FD8C8D0FCDA16D4 /* Pods_Jared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4589B5638BC576CC8AB2700A /* Pods_Jared.framework */; };
 		1D6188C0EEA4AA406C15CC9E /* Pods_Jared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4589B5638BC576CC8AB2700A /* Pods_Jared.framework */; };
 		7F0E931D1D02FC250096BABE /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0E931C1D02FC250096BABE /* Global.swift */; };
 		7F84B6221CC506790059A82B /* JaredFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F84B6211CC506790059A82B /* JaredFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -240,7 +239,6 @@
 			files = (
 				7F84B6261CC506790059A82B /* JaredFramework.framework in Frameworks */,
 				1D6188C0EEA4AA406C15CC9E /* Pods_Jared.framework in Frameworks */,
-				00FC0A452FD8C8D0FCDA16D4 /* Pods_Jared.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -534,13 +532,13 @@
 					New,
 				);
 				LastSwiftUpdateCheck = 1160;
-				LastUpgradeCheck = 1000;
+				LastUpgradeCheck = 1160;
 				ORGANIZATIONNAME = "Zeke Snider";
 				TargetAttributes = {
 					7F84B61E1CC506790059A82B = {
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = C7LJ587XF3;
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = 1160;
 						ProvisioningStyle = Automatic;
 					};
 					B319235E24DE76A2001904BA = {
@@ -552,12 +550,13 @@
 					B33278761CB2CB1300BBDD3A = {
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = C7LJ587XF3;
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = 1160;
 						ProvisioningStyle = Automatic;
 					};
 					B3327DCD22068176009DD882 = {
 						CreatedOnToolsVersion = 10.1;
 						DevelopmentTeam = C7LJ587XF3;
+						LastSwiftMigration = 1160;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -876,7 +875,7 @@
 		7F84B6291CC506790059A82B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -893,7 +892,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -902,7 +901,7 @@
 		7F84B62A1CC506790059A82B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -919,7 +918,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -998,7 +997,7 @@
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -1025,7 +1024,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -1051,7 +1050,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.zekesnider.JaredTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -1075,7 +1074,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zekesnider.JaredTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};

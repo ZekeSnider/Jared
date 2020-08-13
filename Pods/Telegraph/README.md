@@ -1,6 +1,6 @@
 ![Telegraph: Secure Web Server for iOS, tvOS and macOS](https://github.com/Building42/Telegraph/raw/master/Resources/logo.png)
 
-[![Build Status](https://travis-ci.org/Building42/Telegraph.svg?branch=master)](https://travis-ci.org/Building42/Telegraph)
+![Telegraph CI](https://github.com/Building42/Telegraph/workflows/Telegraph%20CI/badge.svg)
 [![CocoaPods compatible](https://img.shields.io/cocoapods/v/Telegraph.svg?style=flat)](https://cocoapods.org/pods/Telegraph)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![License](https://img.shields.io/cocoapods/l/Telegraph.svg?style=flat)](https://cocoapods.org/pods/Telegraph)
@@ -44,6 +44,20 @@ Telegraph is a Secure Web Server for iOS, tvOS and macOS written in Swift.
 
 ## Installation
 
+### Swift Package Manager
+
+The [Swift Package Manager](https://swift.org/package-manager/) is a tool for automating the distribution of Swift code.
+
+Xcode 11 or later has integrated support for the Swift Package Manager. You can add Telegraph to your project by choosing the File - Swift Packages - Add Package Dependency option. Use the repository url as specified below and select the version you want to use.
+
+Or you can manually add a `Package.swift` file to your project with:
+
+```swift
+dependencies: [
+    .package(url: "https://github.com/Building42/Telegraph.git")
+]
+```
+
 ### Carthage
 
 Carthage is a decentralized dependency manager that builds your dependencies into binary frameworks.
@@ -71,10 +85,10 @@ See [CocoaPods - Getting Started](https://guides.cocoapods.org/using/getting-sta
 
 You can build the Telegraph framework and the examples with these steps:
 
-1. install [Carthage](https://github.com/Carthage/Carthage) using Homebrew
-2. clone the repository
-3. run `carthage bootstrap --use-submodules --no-build`
-4. open Telegraph.xcworkspace, select a scheme and build
+1. clone the repository
+2. open Telegraph.xcworkspace
+3. make sure that Xcode downloads the Swift Package Dependencies
+4. select one of the example schemes and build
 
 This is only necessary if you want to make changes to the framework or try out the examples.
 
@@ -363,6 +377,13 @@ There are only a few web servers available for iOS and many of them don't have S
 
 Basically what you want is a Certificate Authority and a Device certificate signed by that authority.
 You can find a nice tutorial at: https://jamielinux.com/docs/openssl-certificate-authority/
+
+See the Tools folder for a script that can create self-signed certificates for you. The script is very basic and you will probably need to edit some
+information in the `config-ca.cnf` and `config-localhost.cnf` files. The certificates generated with the script are meant for development purposes only.
+
+### Why aren't my certificates working on iOS 13 or macOS 10.15 (or later)?
+
+Apple has introduced new security requirements with iOS 13 and macOS 10.15. For more information see: https://support.apple.com/en-us/HT210176
 
 ### My server isn't working properly
 

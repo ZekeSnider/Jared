@@ -211,11 +211,15 @@ class CoreModule: RoutingModule {
             
             let sendMessage = parameters[5]
             
+            guard let respondToHandle = message.RespondTo()?.handle else {
+                return
+            }
+            
             let newPost = SchedulePost(value:
                 ["sendIntervalNumber" : sendIntervalNumber,
                  "sendIntervalType": sendIntervalType.rawValue,
                  "text": sendMessage,
-                 "handle": message.RespondTo()?.handle,
+                 "handle": respondToHandle,
                  "sendNumberTimes": sendTimes,
                  "startDate": Date(),
             ])
