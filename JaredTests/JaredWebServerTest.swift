@@ -83,6 +83,6 @@ class JaredWebServerTest: XCTestCase {
         XCTAssertEqual(httpResponse?.statusCode, 200, "Valid request is successful")
         XCTAssertEqual(jaredMock.calls.count, 1, "One message sent")
         XCTAssertEqual((jaredMock.calls[0].body as! TextBody).message, "clandestine meetings", "Message was correct")
-        XCTAssertEqual((jaredMock.calls[0].recipient as! Person).handle, "handle@email.com", "recipient email is correct")
+        XCTAssertEqual((jaredMock.calls[0].recipient as! AbstractRecipient).handle, "handle@email.com", "recipient email is correct")
     }
 }

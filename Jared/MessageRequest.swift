@@ -35,6 +35,8 @@ public struct MessageRequest: Decodable {
             self.recipient = person
         } else if let group = try? container.decode(Group.self, forKey: .recipient) {
             self.recipient = group
+        } else if let abstractRecipient = try? container.decode(AbstractRecipient.self, forKey: .recipient) {
+            self.recipient = abstractRecipient
         } else {
             throw ParameterError.runtimeError("the recipient parameter is incorrectly formatted")
         }
