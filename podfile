@@ -11,7 +11,6 @@ post_install do |installer|
 end
 
 target "Jared" do
-	pod 'RealmSwift'
     pod 'Telegraph'
 end
 

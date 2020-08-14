@@ -50,8 +50,6 @@ class CoreModule: RoutingModule {
     required public init(sender: MessageSender) {
         self.sender = sender
         let appsupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0].appendingPathComponent("Jared").appendingPathComponent("CoreModule")
-        let realmLocation = appsupport.appendingPathComponent("database.realm")
-        
         try! FileManager.default.createDirectory(at: appsupport, withIntermediateDirectories: true, attributes: nil)
         
         let ping = Route(name:"/ping", comparisons: [.startsWith: ["/ping"]], call: {[weak self] in self?.pingCall($0)}, description: NSLocalizedString("pingDescription"))
