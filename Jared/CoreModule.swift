@@ -26,7 +26,7 @@ let intervalSeconds: [IntervalType: Double] =
         .Day: 86400.0,
         .Week: 604800.0,
         .Month: 2592000.0
-]
+    ]
 
 class CoreModule: RoutingModule {
     var description: String = NSLocalizedString("CoreDescription")
@@ -106,8 +106,6 @@ class CoreModule: RoutingModule {
         sender.send(NSLocalizedString("versionResponse"), to: message.RespondTo())
     }
     
-    var guessMin: Int? = 0
-    
     func sendRepeat(_ message: Message) -> Void {
         guard let parameters = message.getTextParameters() else {
             return sender.send("Inappropriate input type.", to: message.RespondTo())
@@ -179,7 +177,6 @@ class CoreModule: RoutingModule {
         guard parameters.count > 1 else {
             return sender.send("More parameters required.", to: message.RespondTo())
         }
-        
         
         switch parameters[1] {
         case "add":

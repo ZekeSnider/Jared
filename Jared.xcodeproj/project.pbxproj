@@ -12,7 +12,6 @@
 		7F84B6221CC506790059A82B /* JaredFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F84B6211CC506790059A82B /* JaredFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7F84B6261CC506790059A82B /* JaredFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F84B61F1CC506790059A82B /* JaredFramework.framework */; };
 		7F84B6271CC506790059A82B /* JaredFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7F84B61F1CC506790059A82B /* JaredFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		7F84B62B1CC5069C0059A82B /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39EC1751CB01F55002C3161 /* Message.swift */; };
 		7F84B62E1CC511B80059A82B /* CoreStrings.strings in Resources */ = {isa = PBXBuildFile; fileRef = B3BBA7CD1CB3259A00E1749C /* CoreStrings.strings */; };
 		7FE220ED1CB3C8340081CE23 /* podfile in Resources */ = {isa = PBXBuildFile; fileRef = 7FE220EC1CB3C8340081CE23 /* podfile */; };
 		7FF077EB1CBCFFCB008E33CB /* SendImage.scpt in Resources */ = {isa = PBXBuildFile; fileRef = 7FF077EA1CBCFFCB008E33CB /* SendImage.scpt */; };
@@ -40,6 +39,7 @@
 		B347A4AF24DD1CD000E93657 /* GlobalTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B347A4AE24DD1CD000E93657 /* GlobalTest.swift */; };
 		B347A4B024DD1E0E00E93657 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0E931C1D02FC250096BABE /* Global.swift */; };
 		B353946224E64DDE00F9424A /* PersistentContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B353946124E64DDE00F9424A /* PersistentContainer.swift */; };
+		B353946424E7A89A00F9424A /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = B353946324E7A89A00F9424A /* Message.swift */; };
 		B35CE7152196AD4E002F52A7 /* DatabaseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35CE7142196AD4E002F52A7 /* DatabaseHandler.swift */; };
 		B361EEBB1F1DE24C0041113C /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = B361EEBA1F1DE24C0041113C /* config.json */; };
 		B36563EF1F3D68980064B114 /* TouchBarTextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36563EE1F3D68980064B114 /* TouchBarTextFieldExtension.swift */; };
@@ -175,6 +175,7 @@
 		B347A4AC24DD170C00E93657 /* ActionTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionTest.swift; sourceTree = "<group>"; };
 		B347A4AE24DD1CD000E93657 /* GlobalTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalTest.swift; sourceTree = "<group>"; };
 		B353946124E64DDE00F9424A /* PersistentContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistentContainer.swift; sourceTree = "<group>"; };
+		B353946324E7A89A00F9424A /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		B35CE7142196AD4E002F52A7 /* DatabaseHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseHandler.swift; sourceTree = "<group>"; };
 		B361EEBA1F1DE24C0041113C /* config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config.json; sourceTree = "<group>"; };
 		B36563EE1F3D68980064B114 /* TouchBarTextFieldExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchBarTextFieldExtension.swift; sourceTree = "<group>"; };
@@ -185,7 +186,6 @@
 		B37E82801FA85B170069E15D /* SendImageSingleBuddy.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = SendImageSingleBuddy.scpt; sourceTree = "<group>"; };
 		B37E82811FA85B210069E15D /* SendTextSingleBuddy.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = SendTextSingleBuddy.scpt; sourceTree = "<group>"; };
 		B39A65DF1CC1FB1B003E26B0 /* PluginManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PluginManager.swift; sourceTree = "<group>"; };
-		B39EC1751CB01F55002C3161 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Message.swift; path = ../Jared/Message.swift; sourceTree = "<group>"; };
 		B39EC17D1CB01FEF002C3161 /* CoreModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreModule.swift; sourceTree = "<group>"; };
 		B39F2B381CB3BCA700C0D35C /* SendText.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = SendText.scpt; sourceTree = "<group>"; };
 		B3A4C61323B867E300B7F009 /* MessageRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRequest.swift; sourceTree = "<group>"; };
@@ -285,12 +285,12 @@
 			isa = PBXGroup;
 			children = (
 				7F84B6211CC506790059A82B /* JaredFramework.h */,
-				B39EC1751CB01F55002C3161 /* Message.swift */,
 				B347A4A324DD0B7400E93657 /* MessageSender.swift */,
 				B32DE51924D5524300AB3A71 /* Action.swift */,
 				B347A4AA24DD165200E93657 /* ActionType.swift */,
 				B3B844BB24D77BF200DC162A /* SendStyle.swift */,
 				B3EF1DAD2206E19100953DE7 /* Bodies.swift */,
+				B353946324E7A89A00F9424A /* Message.swift */,
 				B3EF1DAB2206E17900953DE7 /* Entities.swift */,
 				B3EF1DA52206DFEA00953DE7 /* Route.swift */,
 				B369509124DE91760027CB1E /* Configuration.swift */,
@@ -733,7 +733,8 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\n";
+			shellScript = "
+";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -745,11 +746,11 @@
 				B347A4A624DD0CE500E93657 /* MessageSender.swift in Sources */,
 				B3EF1DAC2206E17900953DE7 /* Entities.swift in Sources */,
 				B3EF1DAE2206E19100953DE7 /* Bodies.swift in Sources */,
+				B353946424E7A89A00F9424A /* Message.swift in Sources */,
 				B369509224DE91760027CB1E /* Configuration.swift in Sources */,
 				B3B844BC24D77BF200DC162A /* SendStyle.swift in Sources */,
 				B32DE51A24D5524300AB3A71 /* Action.swift in Sources */,
 				B347A4AB24DD165200E93657 /* ActionType.swift in Sources */,
-				7F84B62B1CC5069C0059A82B /* Message.swift in Sources */,
 				B3EF1DA62206DFEA00953DE7 /* Route.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
