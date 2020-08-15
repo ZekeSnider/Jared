@@ -12,7 +12,7 @@
 		7F84B6221CC506790059A82B /* JaredFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F84B6211CC506790059A82B /* JaredFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7F84B6261CC506790059A82B /* JaredFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F84B61F1CC506790059A82B /* JaredFramework.framework */; };
 		7F84B6271CC506790059A82B /* JaredFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7F84B61F1CC506790059A82B /* JaredFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		7F84B62E1CC511B80059A82B /* CoreStrings.strings in Resources */ = {isa = PBXBuildFile; fileRef = B3BBA7CD1CB3259A00E1749C /* CoreStrings.strings */; };
+		7F84B62E1CC511B80059A82B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B3BBA7CD1CB3259A00E1749C /* Localizable.strings */; };
 		7FE220ED1CB3C8340081CE23 /* podfile in Resources */ = {isa = PBXBuildFile; fileRef = 7FE220EC1CB3C8340081CE23 /* podfile */; };
 		7FF077EB1CBCFFCB008E33CB /* SendImage.scpt in Resources */ = {isa = PBXBuildFile; fileRef = 7FF077EA1CBCFFCB008E33CB /* SendImage.scpt */; };
 		B30F765624C5742800ADF57B /* SendTextUI.scpt in Resources */ = {isa = PBXBuildFile; fileRef = B30F765424C5740800ADF57B /* SendTextUI.scpt */; };
@@ -40,6 +40,7 @@
 		B347A4B024DD1E0E00E93657 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0E931C1D02FC250096BABE /* Global.swift */; };
 		B353946224E64DDE00F9424A /* PersistentContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B353946124E64DDE00F9424A /* PersistentContainer.swift */; };
 		B353946424E7A89A00F9424A /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = B353946324E7A89A00F9424A /* Message.swift */; };
+		B353946824E7C58E00F9424A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B3BBA7CD1CB3259A00E1749C /* Localizable.strings */; };
 		B35CE7152196AD4E002F52A7 /* DatabaseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35CE7142196AD4E002F52A7 /* DatabaseHandler.swift */; };
 		B361EEBB1F1DE24C0041113C /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = B361EEBA1F1DE24C0041113C /* config.json */; };
 		B36563EF1F3D68980064B114 /* TouchBarTextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36563EE1F3D68980064B114 /* TouchBarTextFieldExtension.swift */; };
@@ -201,9 +202,9 @@
 		B3B844CD24DA6AB200DC162A /* config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = config.json; path = Jared/config.json; sourceTree = SOURCE_ROOT; };
 		B3B844CF24DA6AC800DC162A /* JaredWebServerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JaredWebServerTest.swift; sourceTree = "<group>"; };
 		B3B844D324DA6F5700DC162A /* Telegraph.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Telegraph.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B3BBA7CC1CB3259A00E1749C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/CoreStrings.strings; sourceTree = "<group>"; };
+		B3BBA7CC1CB3259A00E1749C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B3BBA7CF1CB327C200E1749C /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
-		B3BBA7D01CB327C200E1749C /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/CoreStrings.strings; sourceTree = "<group>"; };
+		B3BBA7D01CB327C200E1749C /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B3BF17C1244EBE9A00CC44C5 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		B3BF17C3244EBF4900CC44C5 /* InternalModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternalModule.swift; sourceTree = "<group>"; };
 		B3BF17C5244EC47700CC44C5 /* MessageDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDelegate.swift; sourceTree = "<group>"; };
@@ -392,7 +393,7 @@
 				B35CE7142196AD4E002F52A7 /* DatabaseHandler.swift */,
 				7F0E931C1D02FC250096BABE /* Global.swift */,
 				B3EF1DA92206E09B00953DE7 /* Jared.swift */,
-				B3BBA7CD1CB3259A00E1749C /* CoreStrings.strings */,
+				B3BBA7CD1CB3259A00E1749C /* Localizable.strings */,
 				B3BF17C9244ED26800CC44C5 /* Delegates */,
 				B39EC17C1CB01FDD002C3161 /* Modules */,
 				7FE220EC1CB3C8340081CE23 /* podfile */,
@@ -610,7 +611,7 @@
 				B369509524DF224D0027CB1E /* SendImageSingleBuddy.scpt in Resources */,
 				B30F765624C5742800ADF57B /* SendTextUI.scpt in Resources */,
 				B369509424DE963D0027CB1E /* Configuration.plist in Resources */,
-				7F84B62E1CC511B80059A82B /* CoreStrings.strings in Resources */,
+				7F84B62E1CC511B80059A82B /* Localizable.strings in Resources */,
 				B39F2B391CB3BCA700C0D35C /* SendText.scpt in Resources */,
 				B332787E1CB2CB1300BBDD3A /* Assets.xcassets in Resources */,
 				7FE220ED1CB3C8340081CE23 /* podfile in Resources */,
@@ -625,6 +626,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B353946824E7C58E00F9424A /* Localizable.strings in Resources */,
 				B369509324DE952D0027CB1E /* Configuration.plist in Resources */,
 				B3B844BE24D8F90000DC162A /* scaffold.db in Resources */,
 				B3B844CE24DA6AB200DC162A /* config.json in Resources */,
@@ -860,13 +862,13 @@
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
-		B3BBA7CD1CB3259A00E1749C /* CoreStrings.strings */ = {
+		B3BBA7CD1CB3259A00E1749C /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
 				B3BBA7CC1CB3259A00E1749C /* en */,
 				B3BBA7D01CB327C200E1749C /* ja */,
 			);
-			name = CoreStrings.strings;
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

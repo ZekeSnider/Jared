@@ -39,22 +39,22 @@ extension Route {
     }
     var fullDescription: String {
         get {
-            var documentation = InternalModule.localized("commandPrefix")
+            var documentation = NSLocalizedString("commandPrefix")
             documentation += self.name
             documentation += "\n===========\n"
             if self.description != nil {
                 documentation += self.description!
             }
             else {
-                documentation += InternalModule.localized("noDescription")
+                documentation += NSLocalizedString("noDescription")
             }
             documentation += "\n\n"
             if let parameterString = self.parameterSyntax {
-                documentation += InternalModule.localized("parametersPrefix")
+                documentation += NSLocalizedString("parametersPrefix")
                 documentation += parameterString
             }
             else {
-                documentation += InternalModule.localized("noDescriptionBody")
+                documentation += NSLocalizedString("noDescriptionBody")
             }
             
             return documentation
@@ -78,27 +78,27 @@ class InternalModule: RoutingModule {
         self.pluginManager = pluginManager
         defaults = UserDefaults.standard
         
-        let enable = Route(name:"/enable", comparisons: [.startsWith: ["/enable"]], call: {[weak self] in self?.enable($0)}, description: InternalModule.localized("enableDescription"))
-        let disable = Route(name:"/disable", comparisons: [.startsWith: ["/disable"]], call: {[weak self] in self?.disable($0)}, description: InternalModule.localized("disableDescription"))
-        let documentation = Route(name:"/help", comparisons: [.startsWith: ["/help"]], call: {[weak self] in self?.sendDocumentation($0)}, description: InternalModule.localized("helpDescription"))
-        let reload = Route(name:"/reload", comparisons: [.startsWith: ["/reload"]], call: {[weak self] in self?.self.reload($0)}, description: InternalModule.localized("reloadDescription"))
+        let enable = Route(name:"/enable", comparisons: [.startsWith: ["/enable"]], call: {[weak self] in self?.enable($0)}, description: NSLocalizedString("enableDescription"))
+        let disable = Route(name:"/disable", comparisons: [.startsWith: ["/disable"]], call: {[weak self] in self?.disable($0)}, description: NSLocalizedString("disableDescription"))
+        let documentation = Route(name:"/help", comparisons: [.startsWith: ["/help"]], call: {[weak self] in self?.sendDocumentation($0)}, description: NSLocalizedString("helpDescription"))
+        let reload = Route(name:"/reload", comparisons: [.startsWith: ["/reload"]], call: {[weak self] in self?.self.reload($0)}, description: NSLocalizedString("reloadDescription"))
         
         routes = [enable, disable, documentation, reload]
     }
     
     func enable(_ message: Message) -> Void {
         defaults.set(false, forKey: "JaredIsDisabled")
-        sender.send(InternalModule.localized("enabledMessage"), to: message.RespondTo())
+        sender.send(NSLocalizedString("enabledMessage"), to: message.RespondTo())
     }
     
     func disable(_ message: Message) -> Void {
         defaults.set(true, forKey: "JaredIsDisabled")
-        sender.send(InternalModule.localized("disabledMessage"), to: message.RespondTo())
+        sender.send(NSLocalizedString("disabledMessage"), to: message.RespondTo())
     }
     
     func reload(_ message: Message) -> Void {
         pluginManager?.reload()
-        sender.send(InternalModule.localized("reloadMessage"), to: message.RespondTo())
+        sender.send(NSLocalizedString("reloadMessage"), to: message.RespondTo())
     }
     
     func sendDocumentation(_ message: Message) {
@@ -119,9 +119,5 @@ class InternalModule: RoutingModule {
         return pluginManager!.getAllRoutes()
             .first(where: { route in route.name.lowercased() == routeName.lowercased() })?
             .fullDescription ?? ""
-    }
-    
-    public static func localized(_ key: String) -> String {
-        return NSLocalizedString(key, tableName: "CoreStrings", comment: "")
     }
 }

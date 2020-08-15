@@ -16,5 +16,5 @@ extension Collection {
 }
 
 public func NSLocalizedString(_ key: String) -> String {
-    return NSLocalizedString(key, tableName: "CoreStrings", comment: "")
+    return Bundle(for: InternalModule.self).localizedString(forKey: key, value: nil, table: nil)
 }
