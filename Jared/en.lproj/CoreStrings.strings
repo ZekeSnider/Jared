@@ -51,3 +51,8 @@
 /* reload */
 "reloadDescription" = "Reload plugins";
 "reloadMessage" = "Successfully reloaded plugins.";
+
+"commandPrefix" = "Command: ";
+"parametersPrefix" = "Parameters: ";
+"noDescription" = "Description not provided.";
+"noDescriptionBody" = "The developer of this route did not provide parameter documentation.";
