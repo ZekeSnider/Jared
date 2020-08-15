@@ -18,7 +18,7 @@ public class EmoteModule: RoutingModule {
     required public init(sender: MessageSender) {
         self.sender = sender
         
-        let testRoute = Route(name: "test function", comparisons: [.startsWith: ["/moduletest"]], call: self.test, description: "TEST")
+        let testRoute = Route(name: "test function", comparisons: [.startsWith: ["/moduletest"]], call: {[weak self] in self?.test(message: $0)}, description: "TEST")
         routes = [testRoute]
     }
     
