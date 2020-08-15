@@ -10,7 +10,23 @@ import Foundation
 import Cocoa
 import JaredFramework
 import Contacts
-import RealmSwift
+
+enum IntervalType: String {
+    case Minute
+    case Hour
+    case Day
+    case Week
+    case Month
+}
+
+let intervalSeconds: [IntervalType: Double] =
+    [
+        .Minute: 60.0,
+        .Hour: 3600.0,
+        .Day: 86400.0,
+        .Week: 604800.0,
+        .Month: 2592000.0
+    ]
 
 class CoreModule: RoutingModule {
     var description: String = NSLocalizedString("CoreDescription")
@@ -19,20 +35,22 @@ class CoreModule: RoutingModule {
     var currentSends: [String: Int] = [:]
     let scheduleCheckInterval = 30.0 * 60.0
     var sender: MessageSender
+    var timer: Timer!
     
-    let mystring = NSLocalizedString("hello", tableName: "CoreStrings", value: "", comment: "")
+    var persistentContainer: PersistentContainer = {
+        let container = PersistentContainer(name: "CoreModule")
+        container.loadPersistentStores { description, error in
+            if let error = error {
+                fatalError("Unable to load persistent stores: \(error)")
+            }
+        }
+        return container
+    }()
     
     required public init(sender: MessageSender) {
         self.sender = sender
         let appsupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0].appendingPathComponent("Jared").appendingPathComponent("CoreModule")
-        let realmLocation = appsupport.appendingPathComponent("database.realm")
-        
         try! FileManager.default.createDirectory(at: appsupport, withIntermediateDirectories: true, attributes: nil)
-        
-        let config = Realm.Configuration(
-            fileURL: realmLocation.absoluteURL
-        )
-        Realm.Configuration.defaultConfiguration = config
         
         let ping = Route(name:"/ping", comparisons: [.startsWith: ["/ping"]], call: {[weak self] in self?.pingCall($0)}, description: NSLocalizedString("pingDescription"))
         
@@ -53,8 +71,13 @@ class CoreModule: RoutingModule {
         routes = [ping, thankYou, version, send, whoami, name, schedule, barf]
         
         //Launch background thread that will check for scheduled messages to send
-        let dispatchQueue = DispatchQueue(label: "Message Scheduling Background Thread", qos: .background)
-        dispatchQueue.async(execute: self.scheduleThread)
+        timer = Timer.scheduledTimer(withTimeInterval: 10, repeats: true, block: {[weak self] (theTimer) in
+            self?.scheduleThread()
+        })
+    }
+    
+    deinit {
+        timer.invalidate()
     }
     
     
@@ -82,8 +105,6 @@ class CoreModule: RoutingModule {
     func getVersion(_ message: Message) -> Void {
         sender.send(NSLocalizedString("versionResponse"), to: message.RespondTo())
     }
-    
-    var guessMin: Int? = 0
     
     func sendRepeat(_ message: Message) -> Void {
         guard let parameters = message.getTextParameters() else {
@@ -130,51 +151,19 @@ class CoreModule: RoutingModule {
         currentSends[message.sender.handle] = (currentSends[message.sender.handle] ?? 0) - 1
     }
     
-    func scheduleThread() {
-        //Get all scheduled posts
-        let realm  = try! Realm()
-        let posts = realm.objects(SchedulePost.self)
-        
-        let nowDate = Date().timeIntervalSinceReferenceDate
-        let lowerIntervalBound = nowDate - scheduleCheckInterval
+    @objc func scheduleThread() {
+        let posts = getPendingPosts()
         
         //Loop over all posts
         for post in posts {
-            //Number of send intervals since lower bound
-            let lowerTimeDiff = (lowerIntervalBound - post.startDate.timeIntervalSinceReferenceDate) / (intervalSeconds[post.sendIntervalTypeEnum]! * Double(post.sendIntervalNumber))
-            
-            //Number of send intervals since upper bound
-            let upperTimeDiff = (nowDate - post.startDate.timeIntervalSinceReferenceDate) / (intervalSeconds[post.sendIntervalTypeEnum]! * Double(post.sendIntervalNumber))
-            let roundedLower = floor(lowerTimeDiff)
-            let roundedHigher = ceil(upperTimeDiff)
-            
-            //Check to see if we are within the re-send period for this scheduled message
-            //values should converge on the number of send interval if we're supposed to send.
-            if (roundedHigher - roundedLower == Double(post.sendIntervalNumber)) {
-                
-                //Check to make sure the last time we sent this scheduled message it was not within this send interval
-                if (nowDate - post.lastSendDate.timeIntervalSinceReferenceDate) > (Double(post.sendIntervalNumber) * intervalSeconds[post.sendIntervalTypeEnum]!) {
-                    
-                    //TODO: make this work with Person entity
-                    //Send the message and write to the database with the new lastSendDate
-                    let sendRoom = Group(name: nil, handle: post.handle, participants: [])
-                    sender.send(post.text, to: sendRoom)
-                    try! realm.write {
-                        post.lastSendDate = Date()
-                    }
-                }
+            guard let handle = post.handle, let text = post.text else {
+                continue
             }
-                //We've gone over when the last message for the schedule would have sent. We should delete it from the database
-            else if Int(roundedLower) > post.sendNumberTimes {
-                try! realm.write {
-                    realm.delete(post)
-                }
-            }
+            
+            let recipient = AbstractRecipient(handle: handle)
+            sender.send(text, to: recipient)
+            bumpPost(post: post)
         }
-        
-        //Wait for next iteration...
-        Thread.sleep(forTimeInterval: Double(scheduleCheckInterval))
-        scheduleThread()
     }
     
     func schedule(_ message: Message) {
@@ -189,86 +178,78 @@ class CoreModule: RoutingModule {
             return sender.send("More parameters required.", to: message.RespondTo())
         }
         
-        let realm  = try! Realm()
-        
         switch parameters[1] {
         case "add":
             guard parameters.count > 5 else {
                 return sender.send("Incorrect number of parameters specified.", to: message.RespondTo())
             }
-            
+
             guard let sendIntervalNumber = Int(parameters[2]) else {
                 return sender.send("Send interval number must be an integer.", to: message.RespondTo())
             }
-            
+
             guard let sendIntervalType = IntervalType(rawValue: parameters[3]) else {
                 return sender.send("Send interval type must be a valid input (hour, day, week, month).", to: message.RespondTo())
             }
-            
+
             guard let sendTimes = Int(parameters[4]) else {
                 return sender.send("Send times must be an integer.", to: message.RespondTo())
             }
-            
+
             let sendMessage = parameters[5]
-            
+
             guard let respondToHandle = message.RespondTo()?.handle else {
                 return
             }
+
+            let post = NSEntityDescription.insertNewObject(forEntityName: "SchedulePost", into:  persistentContainer.viewContext) as! SchedulePost
+            post.sendIntervalNumber = Int64(sendIntervalNumber)
+            post.sendNumberTimes = Int64(sendTimes)
+            post.sendIntervalType = sendIntervalType.rawValue
+            post.currentSendCount = 0
+            post.text = sendMessage
+            post.handle = respondToHandle
+            post.startDate = Date()
+            post.sendNext = getNextSendTime(number: sendIntervalNumber, type: sendIntervalType)
             
-            let newPost = SchedulePost(value:
-                ["sendIntervalNumber" : sendIntervalNumber,
-                 "sendIntervalType": sendIntervalType.rawValue,
-                 "text": sendMessage,
-                 "handle": respondToHandle,
-                 "sendNumberTimes": sendTimes,
-                 "startDate": Date(),
-            ])
-            
-            let realm  = try! Realm()
-            try! realm.write {
-                realm.add(newPost)
-            }
-            
+            persistentContainer.saveContext()
             sender.send("Your post has been succesfully scheduled.", to: message.RespondTo())
             break
         case "delete":
+            guard let respondHandle = message.RespondTo()?.handle else {
+                return
+            }
             guard parameters.count > 2 else {
                 return sender.send("The second parameter must be a valid id.", to: message.RespondTo())
             }
-            
+
             guard let deleteID = Int(parameters[2]) else {
                 return sender.send("The delete ID must be an integer.", to: message.RespondTo())
             }
-            
+
             guard deleteID > 0 else {
                 return sender.send("The delete ID must be an positive integer.", to: message.RespondTo())
             }
-            
-            let schedulePost = realm.objects(SchedulePost.self).filter("handle == %@", message.sender.handle)
-            
-            guard schedulePost.count >= deleteID  else {
+
+            let posts = getPosts(for: respondHandle)
+            guard posts.count >= deleteID else {
                 return sender.send("The specified post ID is not valid.", to: message.RespondTo())
             }
-            
-            guard schedulePost[deleteID - 1].handle == message.sender.handle else {
-                return sender.send("You do not have permission to delete this scheduled message.", to: message.RespondTo())
-            }
-            
-            try! realm.write {
-                realm.delete(schedulePost[deleteID - 1])
-            }
+
+            persistentContainer.viewContext.delete(posts[deleteID - 1])
+            persistentContainer.saveContext()
             sender.send("The specified scheduled post has been deleted.", to: message.RespondTo())
-            
+
             break
         case "list":
-            var scheduledPosts = realm.objects(SchedulePost.self).filter("handle == %@", message.sender.handle)
-            scheduledPosts = scheduledPosts.sorted(byKeyPath: "startDate", ascending: false)
-            
-            var sendMessage = "\(message.sender.givenName ?? "Hello"), you have \(scheduledPosts.count) posts scheduled."
-            var iterator = 1
-            for post in scheduledPosts {
-                sendMessage += "\n\(iterator): Send a message every \(post.sendIntervalNumber) \(post.sendIntervalType)(s) \(post.sendNumberTimes) time(s), starting on \(post.startDate.description(with: Locale.current))."
-                iterator += 1
+            guard let respondHandle = message.RespondTo()?.handle else {
+                return
+            }
+            let posts = getPosts(for: respondHandle)
+
+            var sendMessage = "\(message.sender.givenName ?? "Hello"), you have \(posts.count) posts scheduled."
+            for (index, post) in posts.enumerated() {
+                sendMessage += "\n\(index + 1): Send a message every \(post.sendIntervalNumber) \(post.sendIntervalType!)(s) \(post.sendNumberTimes) time(s), starting on \(post.startDate!.description(with: Locale.current))."
             }
             sender.send(sendMessage, to: message.RespondTo())
             break
@@ -330,7 +311,7 @@ class CoreModule: RoutingModule {
             
             sender.send("Ok, I'll call you \(parsedMessage[1]) from now on.", to: message.RespondTo())
         }
-            //The contact already exists, modify the value
+        //The contact already exists, modify the value
         else {
             let mutableContact = peopleFound[0].mutableCopy() as! CNMutableContact
             mutableContact.givenName = parsedMessage[1]
@@ -341,5 +322,44 @@ class CoreModule: RoutingModule {
             
             sender.send("Ok, I'll call you \(parsedMessage[1]) from now on.", to: message.RespondTo())
         }
+    }
+    
+    private func getNextSendTime(number: Int, type: IntervalType) -> Date {
+        return Date().addingTimeInterval(Double(number) * (intervalSeconds[type] ?? 0))
+    }
+    
+    private func getPosts(for handle: String) -> [SchedulePost] {
+        let postRequest:NSFetchRequest<SchedulePost> = SchedulePost.fetchRequest()
+        let sortDescriptor = NSSortDescriptor(key: "startDate", ascending: false)
+        postRequest.sortDescriptors = [sortDescriptor]
+        postRequest.predicate = NSPredicate(format: "handle == %@", handle)
+
+        do {
+            return try persistentContainer.viewContext.fetch(postRequest)
+        } catch {
+            return []
+        }
+    }
+    
+    private func getPendingPosts() -> [SchedulePost] {
+        let postRequest:NSFetchRequest<SchedulePost> = SchedulePost.fetchRequest()
+        postRequest.predicate = NSPredicate(format: "sendNext <= %@", NSDate())
+
+        do {
+            return try persistentContainer.viewContext.fetch(postRequest)
+        } catch {
+            return []
+        }
+    }
+    
+    private func bumpPost(post: SchedulePost) {
+        post.currentSendCount += 1
+        
+        if (post.currentSendCount == post.sendNumberTimes) {
+            persistentContainer.viewContext.delete(post)
+        } else {
+            post.sendNext = getNextSendTime(number: Int(post.sendIntervalNumber), type: IntervalType(rawValue: post.sendIntervalType!)!)
+        }
+        persistentContainer.saveContext()
     }
 }

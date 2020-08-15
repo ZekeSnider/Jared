@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19F101" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="SchedulePost" representedClassName="SchedulePost" syncable="YES" codeGenerationType="class">
+        <attribute name="currentSendCount" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="handle" optional="YES" attributeType="String"/>
+        <attribute name="sendIntervalNumber" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="sendIntervalType" optional="YES" attributeType="String"/>
+        <attribute name="sendNext" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="sendNumberTimes" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="startDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="text" optional="YES" attributeType="String"/>
+    </entity>
+    <elements>
+        <element name="SchedulePost" positionX="-63" positionY="-18" width="128" height="163"/>
+    </elements>
+</model>

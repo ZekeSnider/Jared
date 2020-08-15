@@ -22,6 +22,10 @@ public protocol SenderEntity: Codable {
 public struct AbstractRecipient: RecipientEntity, Codable, Equatable {
     public var handle: String
     
+    public init(handle: String) {
+        self.handle = handle
+    }
+    
     public func getSpecificEntity() -> RecipientEntity {
         if handle.contains(";-;") {
             return Group(name: nil, handle: handle, participants: [])
