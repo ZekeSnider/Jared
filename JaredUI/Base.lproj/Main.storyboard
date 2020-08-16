@@ -506,7 +506,7 @@ All rights reserved.</string>
                 </viewController>
                 <customObject id="pbS-Ak-ndy" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="301" y="896"/>
+            <point key="canvasLocation" x="402" y="898"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="R2V-B0-nI4">
@@ -536,11 +536,11 @@ All rights reserved.</string>
             <objects>
                 <viewController title="Jared" storyboardIdentifier="APIKeyPanel" id="XfG-lQ-9wD" customClass="ViewController" customModule="Jared" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="176"/>
+                        <rect key="frame" x="0.0" y="0.0" width="558" height="209"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ndf-cS-v7Z">
-                                <rect key="frame" x="310" y="13" width="156" height="32"/>
+                                <rect key="frame" x="388" y="13" width="156" height="32"/>
                                 <buttonCell key="cell" type="push" title="Open Plugin Folder" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Cg8-ZL-KVX">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -549,8 +549,18 @@ All rights reserved.</string>
                                     <action selector="OpenPluginsButtonAction:" target="XfG-lQ-9wD" id="bvb-Pn-9Sh"/>
                                 </connections>
                             </button>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="i1d-II-CRR">
+                                <rect key="frame" x="14" y="13" width="130" height="32"/>
+                                <buttonCell key="cell" type="push" title="Reload Plugins" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="R03-zL-JIN">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="ReloadButtonPressed:" target="XfG-lQ-9wD" id="Dnb-te-hQo"/>
+                                </connections>
+                            </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TGv-df-gfJ">
-                                <rect key="frame" x="343" y="132" width="123" height="32"/>
+                                <rect key="frame" x="421" y="161" width="123" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="push" title="Disable Jared" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="D1V-vF-OOT">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -561,12 +571,12 @@ All rights reserved.</string>
                                 </connections>
                             </button>
                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A1L-my-aOk">
-                                <rect key="frame" x="20" y="137" width="18" height="19"/>
+                                <rect key="frame" x="20" y="166" width="18" height="19"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="vxL-Li-GhX"/>
                             </imageView>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2V5-Ep-TtZ">
-                                <rect key="frame" x="44" y="139" width="165" height="17"/>
+                                <rect key="frame" x="46" y="168" width="313" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Jared is currently enabled." id="Evo-lo-agp">
                                     <font key="font" metaFont="system"/>
@@ -575,12 +585,12 @@ All rights reserved.</string>
                                 </textFieldCell>
                             </textField>
                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="22o-hP-m2g">
-                                <rect key="frame" x="20" y="105" width="18" height="19"/>
+                                <rect key="frame" x="20" y="111" width="18" height="19"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="TH7-YF-Od1"/>
                             </imageView>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GLv-Vr-bLh">
-                                <rect key="frame" x="44" y="106" width="188" height="17"/>
+                                <rect key="frame" x="46" y="110" width="313" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="REST API is currently enabled." id="wKw-Wv-xLC">
                                     <font key="font" metaFont="system"/>
@@ -592,7 +602,7 @@ All rights reserved.</string>
                                 </connections>
                             </textField>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FWv-Ct-Itm">
-                                <rect key="frame" x="357" y="97" width="109" height="32"/>
+                                <rect key="frame" x="435" y="103" width="109" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="push" title="Disable API" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="r2Z-1u-x9d">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -603,7 +613,7 @@ All rights reserved.</string>
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nri-Jh-ck0">
-                                <rect key="frame" x="44" y="74" width="231" height="17"/>
+                                <rect key="frame" x="46" y="80" width="313" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Contacts access is currently enabled" id="lGG-1c-JxU">
                                     <font key="font" metaFont="system"/>
@@ -611,8 +621,38 @@ All rights reserved.</string>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xkG-Y7-S2f">
+                                <rect key="frame" x="20" y="79" width="18" height="19"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="yAG-gO-kgq"/>
+                            </imageView>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HGe-4T-c2w">
+                                <rect key="frame" x="46" y="140" width="313" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Jared can send messages" id="FIi-Yk-wcu">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="M3h-5M-WGC">
+                                <rect key="frame" x="382" y="131" width="162" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="Manage Automation" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="DW4-Ix-CuW">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="sendStatusButtonAction:" target="XfG-lQ-9wD" id="yHm-XQ-uej"/>
+                                </connections>
+                            </button>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RMv-eT-Ovo">
+                                <rect key="frame" x="20" y="139" width="18" height="19"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="bon-wI-RR8"/>
+                            </imageView>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4E3-JQ-C34">
-                                <rect key="frame" x="325" y="65" width="139" height="32"/>
+                                <rect key="frame" x="405" y="72" width="139" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="push" title="Enable Contacts" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="a0O-kX-MBm">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -620,21 +660,6 @@ All rights reserved.</string>
                                 </buttonCell>
                                 <connections>
                                     <action selector="contactsButtonAction:" target="XfG-lQ-9wD" id="CKL-JC-SiT"/>
-                                </connections>
-                            </button>
-                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xkG-Y7-S2f">
-                                <rect key="frame" x="20" y="73" width="18" height="19"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="yAG-gO-kgq"/>
-                            </imageView>
-                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="i1d-II-CRR">
-                                <rect key="frame" x="14" y="13" width="130" height="32"/>
-                                <buttonCell key="cell" type="push" title="Reload Plugins" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="R03-zL-JIN">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="ReloadButtonPressed:" target="XfG-lQ-9wD" id="Dnb-te-hQo"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -723,12 +748,15 @@ All rights reserved.</string>
                         <outlet property="contactsButton" destination="4E3-JQ-C34" id="5Xf-QB-76E"/>
                         <outlet property="contactsLabel" destination="Nri-Jh-ck0" id="R5A-Hf-pA2"/>
                         <outlet property="contactsStatusImage" destination="xkG-Y7-S2f" id="K1J-f5-FOl"/>
+                        <outlet property="sendStatusButton" destination="M3h-5M-WGC" id="b19-sl-agJ"/>
+                        <outlet property="sendStatusImage" destination="RMv-eT-Ovo" id="oSt-ZX-moM"/>
+                        <outlet property="sendStatusLabel" destination="HGe-4T-c2w" id="U3a-D1-uXh"/>
                         <outlet property="statusImage" destination="A1L-my-aOk" id="5CN-7g-hEf"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-236" y="952"/>
+            <point key="canvasLocation" x="-197" y="968.5"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="ZZn-28-m0u">

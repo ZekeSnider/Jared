@@ -13,13 +13,15 @@ class ViewController: NSViewController, DiskAccessDelegate {
     let observeKeys = [
         JaredConstants.jaredIsDisabled,
         JaredConstants.restApiIsDisabled,
-        JaredConstants.contactsAccess
+        JaredConstants.contactsAccess,
+        JaredConstants.sendMessageAccess
     ]
     var defaults: UserDefaults!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         defaults = UserDefaults.standard
+        PermissionsHelper.canSendMessages()
         
         observeKeys.forEach { path in
             defaults.addObserver(self, forKeyPath: path, options: .new, context: nil)
@@ -104,6 +106,35 @@ class ViewController: NSViewController, DiskAccessDelegate {
                 self.contactsStatusImage.image = NSImage(named: NSImage.statusUnavailableName)
                 break
             }
+            
+            switch(AutomationPermissionState(rawValue: self.defaults.integer(forKey: JaredConstants.sendMessageAccess))) {
+            case .authorized:
+                self.sendStatusLabel.stringValue = "Jared can send messages"
+                self.sendStatusImage.image = NSImage(named: NSImage.statusAvailableName)
+                self.sendStatusButton.title = "Manage automation"
+                
+                if #available(OSX 10.14, *) {
+                    self.sendStatusButton.isEnabled = true
+                } else {
+                    self.sendStatusButton.isEnabled = false
+                }
+            case .declined:
+                self.sendStatusLabel.stringValue = "Jared not permitted to send messages."
+                self.sendStatusImage.image = NSImage(named: NSImage.statusUnavailableName)
+                self.sendStatusButton.title = "Manage automation"
+            case .notDetermined:
+                self.sendStatusLabel.stringValue = "Messages send automation permissions not set."
+                self.sendStatusImage.image = NSImage(named: NSImage.statusPartiallyAvailableName)
+                self.sendStatusButton.title = "Enable automation"
+            case .notRunning:
+                self.sendStatusLabel.stringValue = "Jared cannot check send permissions because Messages is not open"
+                self.sendStatusImage.image = NSImage(named: NSImage.statusPartiallyAvailableName)
+                self.sendStatusButton.title = "Recheck"
+            case .none, .unknown:
+                self.sendStatusLabel.stringValue = "Messages send automation status unkown"
+                self.sendStatusImage.image = NSImage(named: NSImage.statusPartiallyAvailableName)
+                self.sendStatusButton.title = "Manage automation"
+            }
         }
     }
     
@@ -140,6 +171,9 @@ class ViewController: NSViewController, DiskAccessDelegate {
     @IBOutlet weak var contactsStatusImage: NSImageView!
     @IBOutlet weak var contactsLabel: NSTextField!
     @IBOutlet weak var contactsButton: NSButton!
+    @IBOutlet weak var sendStatusImage: NSImageView!
+    @IBOutlet weak var sendStatusLabel: NSTextField!
+    @IBOutlet weak var sendStatusButton: NSButton!
     
     @IBAction func EnableDisableAction(_ sender: Any) {
         if (defaults.bool(forKey: JaredConstants.jaredIsDisabled)) {
@@ -174,6 +208,23 @@ class ViewController: NSViewController, DiskAccessDelegate {
             }
         }
     }
+    
+    @IBAction func sendStatusButtonAction(_ sender: Any) {
+        if #available(OSX 10.14, *) {
+            switch(PermissionsHelper.canSendMessages()) {
+            case .notRunning:
+                NSWorkspace.shared.open(URL(string: JaredConstants.messagesUrl)!)
+                sendStatusButtonAction(sender)
+                break
+            case .authorized, .declined, .unknown:
+                NSWorkspace.shared.open(URL(string: JaredConstants.automationAccessUrl)!)
+                break
+            case .notDetermined:
+                PermissionsHelper.requestMessageAutomation()
+            }
+        }
+    }
+    
     
     @IBAction func OpenPluginsButtonAction(_ sender: Any) {
         let filemanager = FileManager.default
