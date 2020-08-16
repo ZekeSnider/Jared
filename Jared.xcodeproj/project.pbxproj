@@ -86,6 +86,8 @@
 		B3EF1DAE2206E19100953DE7 /* Bodies.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3EF1DAD2206E19100953DE7 /* Bodies.swift */; };
 		B3EF1DB02206E4EB00953DE7 /* MessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3EF1DAF2206E4EB00953DE7 /* MessageTests.swift */; };
 		B3F185F724E51C880051C696 /* CoreModule.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B3F185F524E51C880051C696 /* CoreModule.xcdatamodeld */; };
+		B3FB28F224E9BAF7003BA6CB /* PermissionsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3FB28F124E9BAF7003BA6CB /* PermissionsHelper.swift */; };
+		B3FB28F424E9BCBD003BA6CB /* JaredConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3FB28F324E9BCBD003BA6CB /* JaredConstants.swift */; };
 		E4911DF4614B81D99C27CFF5 /* Pods_JaredTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 468EA41747ED2E0CB098C6BD /* Pods_JaredTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -217,6 +219,8 @@
 		B3EF1DAD2206E19100953DE7 /* Bodies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bodies.swift; sourceTree = "<group>"; };
 		B3EF1DAF2206E4EB00953DE7 /* MessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTests.swift; sourceTree = "<group>"; };
 		B3F185F624E51C880051C696 /* CoreModule.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreModule.xcdatamodel; sourceTree = "<group>"; };
+		B3FB28F124E9BAF7003BA6CB /* PermissionsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsHelper.swift; sourceTree = "<group>"; };
+		B3FB28F324E9BCBD003BA6CB /* JaredConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JaredConstants.swift; sourceTree = "<group>"; };
 		B85E2F9206C873C167385410 /* Pods-JaredUI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JaredUI.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JaredUI/Pods-JaredUI.debug.xcconfig"; sourceTree = "<group>"; };
 		C31CB7445EAF3431D6AA3FD4 /* Pods_JaredUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_JaredUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -388,6 +392,8 @@
 				B39A65DF1CC1FB1B003E26B0 /* PluginManager.swift */,
 				B3327DC522066427009DD882 /* WebHookManager.swift */,
 				B3327DC32206607B009DD882 /* ContactHelper.swift */,
+				B3FB28F124E9BAF7003BA6CB /* PermissionsHelper.swift */,
+				B3FB28F324E9BCBD003BA6CB /* JaredConstants.swift */,
 				B3C59283224DD17900116ECB /* JaredWebServer.swift */,
 				B3A4C61323B867E300B7F009 /* MessageRequest.swift */,
 				B35CE7142196AD4E002F52A7 /* DatabaseHandler.swift */,
@@ -781,6 +787,7 @@
 				B3327DC42206607B009DD882 /* ContactHelper.swift in Sources */,
 				B332787C1CB2CB1300BBDD3A /* ViewController.swift in Sources */,
 				B3327DC622066427009DD882 /* WebHookManager.swift in Sources */,
+				B3FB28F224E9BAF7003BA6CB /* PermissionsHelper.swift in Sources */,
 				B3B844CB24DA5D1700DC162A /* DiskAccessDelegate.swift in Sources */,
 				B332787A1CB2CB1300BBDD3A /* AppDelegate.swift in Sources */,
 				B3BF17C4244EBF4900CC44C5 /* InternalModule.swift in Sources */,
@@ -790,6 +797,7 @@
 				B353946224E64DDE00F9424A /* PersistentContainer.swift in Sources */,
 				B3B844C424D9288000DC162A /* RouterDelegate.swift in Sources */,
 				B3C59284224DD17900116ECB /* JaredWebServer.swift in Sources */,
+				B3FB28F424E9BCBD003BA6CB /* JaredConstants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

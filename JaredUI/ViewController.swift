@@ -15,13 +15,8 @@ class ViewController: NSViewController, DiskAccessDelegate {
         super.viewDidLoad()
         let defaults = UserDefaults.standard
         
-        // Server should be disabled by default
-        if defaults.value(forKey: "RestApiIsDisabled") == nil {
-            defaults.set(false, forKey: "RestApiIsDisabled")
-        }
-        
-        defaults.addObserver(self, forKeyPath: "JaredIsDisabled", options: .new, context: nil)
-        defaults.addObserver(self, forKeyPath: "RestApiIsDisabled", options: .new, context: nil)
+        defaults.addObserver(self, forKeyPath: JaredConstants.jaredIsDisabled, options: .new, context: nil)
+        defaults.addObserver(self, forKeyPath: JaredConstants.restApiIsDisabled, options: .new, context: nil)
         updateTouchBarButton()
     }
     
@@ -29,7 +24,7 @@ class ViewController: NSViewController, DiskAccessDelegate {
         if #available(OSX 10.12.2, *) {
             self.view.window?.unbind(NSBindingName(rawValue: #keyPath(touchBar)))
         }
-        UserDefaults.standard.removeObserver(self, forKeyPath: "JaredIsDisabled")
+        UserDefaults.standard.removeObserver(self, forKeyPath: JaredConstants.jaredIsDisabled)
     }
     
     override func viewDidAppear() {
@@ -42,7 +37,7 @@ class ViewController: NSViewController, DiskAccessDelegate {
     }
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if keyPath == "JaredIsDisabled"
+        if keyPath == JaredConstants.jaredIsDisabled
             || keyPath == "RestApiIsDisabled" {
             updateTouchBarButton()
         }
@@ -50,7 +45,7 @@ class ViewController: NSViewController, DiskAccessDelegate {
     
     func updateTouchBarButton() {
         let defaults = UserDefaults.standard
-        if (defaults.bool(forKey: "JaredIsDisabled")) {
+        if (defaults.bool(forKey: JaredConstants.restApiIsDisabled)) {
             EnableDisableButton.title = "Enable"
             EnableDisableUiButton.title = "Enable Jared"
             JaredStatusLabel.stringValue = "Jared is currently disabled"
@@ -63,7 +58,7 @@ class ViewController: NSViewController, DiskAccessDelegate {
             statusImage.image = NSImage(named: NSImage.statusAvailableName)
         }
         
-        if (defaults.bool(forKey: "RestApiIsDisabled")) {
+        if (defaults.bool(forKey: JaredConstants.restApiIsDisabled)) {
 //            EnableDisableButton.title = "Enable"
             EnableDisableRestApiUiButton.title = "Enable API"
             RestApiStatusLabel.stringValue = "REST API is currently disabled"
@@ -93,7 +88,7 @@ class ViewController: NSViewController, DiskAccessDelegate {
         }
         
         let defaults = UserDefaults.standard
-        defaults.set(true, forKey: "JaredIsDisabled")
+        defaults.set(true, forKey: JaredConstants.jaredIsDisabled)
         updateTouchBarButton()
         
         EnableDisableUiButton.isEnabled = false
@@ -111,11 +106,11 @@ class ViewController: NSViewController, DiskAccessDelegate {
     @IBAction func EnableDisableAction(_ sender: Any) {
         let defaults = UserDefaults.standard
         
-        if (defaults.bool(forKey: "JaredIsDisabled")) {
-            defaults.set(false, forKey: "JaredIsDisabled")
+        if (defaults.bool(forKey: JaredConstants.jaredIsDisabled)) {
+            defaults.set(false, forKey: JaredConstants.jaredIsDisabled)
         }
         else {
-            defaults.set(true, forKey: "JaredIsDisabled")
+            defaults.set(true, forKey: JaredConstants.jaredIsDisabled)
         }
         
         updateTouchBarButton()
@@ -124,11 +119,11 @@ class ViewController: NSViewController, DiskAccessDelegate {
     @IBAction func EnableDisableRestApiAction(_ sender: Any) {
         let defaults = UserDefaults.standard
         
-        if (defaults.bool(forKey: "RestApiIsDisabled")) {
-            defaults.set(false, forKey: "RestApiIsDisabled")
+        if (defaults.bool(forKey: JaredConstants.restApiIsDisabled)) {
+            defaults.set(false, forKey: JaredConstants.restApiIsDisabled)
         }
         else {
-            defaults.set(true, forKey: "RestApiIsDisabled")
+            defaults.set(true, forKey: JaredConstants.restApiIsDisabled)
         }
         
         updateTouchBarButton()
