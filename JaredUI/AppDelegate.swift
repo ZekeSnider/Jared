@@ -18,7 +18,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         UserDefaults.standard.register(defaults: [
             JaredConstants.jaredIsDisabled: false,
             JaredConstants.restApiIsDisabled: true,
-            JaredConstants.contactsAccess: CNAuthorizationStatus.notDetermined.rawValue
+            JaredConstants.contactsAccess: CNAuthorizationStatus.notDetermined.rawValue,
+            JaredConstants.fullDiskAccess: true
         ])
         PermissionsHelper.getContactsStatus()
         
@@ -41,9 +42,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             .appendingPathComponent("Messages").appendingPathComponent("chat.db")
         let viewController = NSApplication.shared.keyWindow?.contentViewController as? ViewController
 		let dbHandler = DatabaseHandler(router: router.router, databaseLocation: messageDatabaseURL, diskAccessDelegate: viewController)
-        if (!dbHandler.authorizationError) {
-            dbHandler.start()
-        }
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {

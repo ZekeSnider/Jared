@@ -13,6 +13,7 @@ struct JaredConstants {
     static let jaredIsDisabled = "JaredIsDisabled"
     static let contactsAccess = "ContactsAccess"
     static let sendMessageAccess = "SendMessageAccess"
+    static let fullDiskAccess = "FullDiskAccess"
     static let fullDiskAcccessUrl = "x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles"
     static let contactsAccessUrl = "x-apple.systempreferences:com.apple.preference.security?Privacy_Contacts"
     static let automationAccessUrl = "x-apple.systempreferences:com.apple.preference.security?Privacy_Automation"

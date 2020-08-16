@@ -14,7 +14,8 @@ class ViewController: NSViewController, DiskAccessDelegate {
         JaredConstants.jaredIsDisabled,
         JaredConstants.restApiIsDisabled,
         JaredConstants.contactsAccess,
-        JaredConstants.sendMessageAccess
+        JaredConstants.sendMessageAccess,
+        JaredConstants.fullDiskAccess
     ]
     var defaults: UserDefaults!
     
@@ -135,6 +136,11 @@ class ViewController: NSViewController, DiskAccessDelegate {
                 self.sendStatusImage.image = NSImage(named: NSImage.statusPartiallyAvailableName)
                 self.sendStatusButton.title = "Manage automation"
             }
+            
+            if(!self.defaults.bool(forKey: JaredConstants.fullDiskAccess)) {
+                self.EnableDisableUiButton.title = "Enable Disk Access"
+                self.EnableDisableButton.title = "Enable Disk Access"
+            }
         }
     }
     
@@ -152,13 +158,6 @@ class ViewController: NSViewController, DiskAccessDelegate {
         if(res == NSApplication.ModalResponse.alertFirstButtonReturn) {
             NSWorkspace.shared.open(URL(string: JaredConstants.fullDiskAcccessUrl)!)
         }
-        
-        let defaults = UserDefaults.standard
-        defaults.set(true, forKey: JaredConstants.jaredIsDisabled)
-        updateTouchBarButton()
-        
-        EnableDisableUiButton.isEnabled = false
-        EnableDisableButton.isEnabled = false
     }
     
     @IBOutlet weak var JaredStatusLabel: NSTextField!
@@ -176,14 +175,15 @@ class ViewController: NSViewController, DiskAccessDelegate {
     @IBOutlet weak var sendStatusButton: NSButton!
     
     @IBAction func EnableDisableAction(_ sender: Any) {
-        if (defaults.bool(forKey: JaredConstants.jaredIsDisabled)) {
-            defaults.set(false, forKey: JaredConstants.jaredIsDisabled)
+        if (defaults.bool(forKey: JaredConstants.fullDiskAccess)) {
+            if (defaults.bool(forKey: JaredConstants.jaredIsDisabled)) {
+                defaults.set(false, forKey: JaredConstants.jaredIsDisabled)
+            } else {
+                defaults.set(true, forKey: JaredConstants.jaredIsDisabled)
+            }
+        } else {
+            NSWorkspace.shared.open(URL(string: JaredConstants.fullDiskAcccessUrl)!)
         }
-        else {
-            defaults.set(true, forKey: JaredConstants.jaredIsDisabled)
-        }
-        
-        updateTouchBarButton()
     }
     
     @IBAction func EnableDisableRestApiAction(_ sender: Any) {
@@ -193,8 +193,6 @@ class ViewController: NSViewController, DiskAccessDelegate {
         else {
             defaults.set(true, forKey: JaredConstants.restApiIsDisabled)
         }
-        
-        updateTouchBarButton()
     }
     
     @IBAction func contactsButtonAction(_ sender: Any) {
@@ -224,7 +222,6 @@ class ViewController: NSViewController, DiskAccessDelegate {
             }
         }
     }
-    
     
     @IBAction func OpenPluginsButtonAction(_ sender: Any) {
         let filemanager = FileManager.default
