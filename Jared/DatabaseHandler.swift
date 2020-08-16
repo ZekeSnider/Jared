@@ -1,5 +1,5 @@
 //
-//  sqlitetest.swift
+//  DatabaseHandler.swift
 //  JaredUI
 //
 //  Created by Zeke Snider on 11/9/18.
@@ -9,11 +9,8 @@
 internal let SQLITE_STATIC = unsafeBitCast(0, to: sqlite3_destructor_type.self)
 internal let SQLITE_TRANSIENT = unsafeBitCast(-1, to: sqlite3_destructor_type.self)
 
-import Cocoa
 import JaredFramework
-import Foundation
 import SQLite3
-import Contacts
 
 class DatabaseHandler {
     private static let groupQuery = """

@@ -10,15 +10,17 @@ import Foundation
 import Contacts
 
 class PermissionsHelper {
-    func getContactsStatus() -> CNAuthorizationStatus {
-        return CNContactStore.authorizationStatus(for: CNEntityType.contacts)
+    static func getContactsStatus() -> CNAuthorizationStatus {
+        let status = CNContactStore.authorizationStatus(for: CNEntityType.contacts)
+        UserDefaults.standard.set(status.rawValue, forKey: JaredConstants.contactsAccess)
+        return status
     }
     
-    func requestContactsAccess() {
-        // If this is the first run of the application, request access
-        // to contacts to pull sender info
+    static func requestContactsAccess() {
         if(CNContactStore.authorizationStatus(for: CNEntityType.contacts) == .notDetermined) {
-            CNContactStore().requestAccess(for: CNEntityType.contacts, completionHandler: {_,_ in })
+            CNContactStore().requestAccess(for: CNEntityType.contacts, completionHandler: {enabled, _ in
+                getContactsStatus()
+            })
         }
     }
 }

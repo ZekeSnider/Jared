@@ -26,7 +26,6 @@ class ContactHelper {
                                                                                               CNContactGivenNameKey as CNKeyDescriptor,
                                                                                               CNContactEmailAddressesKey as CNKeyDescriptor,
                                                                                               CNContactPhoneNumbersKey as CNKeyDescriptor])
-            
             if (contacts.count == 1) {
                 return contacts[0]
             }

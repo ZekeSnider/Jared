@@ -70,6 +70,7 @@ class JaredWebServer: NSObject {
         } else {
             start()
         }
+        
     }
     
     func start() {

@@ -15,6 +15,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var router: PluginManager
     var server: JaredWebServer
     override init() {
+        UserDefaults.standard.register(defaults: [
+            JaredConstants.jaredIsDisabled: false,
+            JaredConstants.restApiIsDisabled: true,
+            JaredConstants.contactsAccess: CNAuthorizationStatus.notDetermined.rawValue
+        ])
+        PermissionsHelper.getContactsStatus()
+        
         let configurationURL = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
             .appendingPathComponent("Jared")
             .appendingPathComponent("config.json")
@@ -36,12 +43,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		let dbHandler = DatabaseHandler(router: router.router, databaseLocation: messageDatabaseURL, diskAccessDelegate: viewController)
         if (!dbHandler.authorizationError) {
             dbHandler.start()
-        }
-		
-        // If this is the first run of the application, request access
-        // to contacts to pull sender info
-        if(CNContactStore.authorizationStatus(for: CNEntityType.contacts) == .notDetermined) {
-            CNContactStore().requestAccess(for: CNEntityType.contacts, completionHandler: {_,_ in })
         }
     }
     

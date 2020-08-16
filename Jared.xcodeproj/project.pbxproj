@@ -379,7 +379,6 @@
 		B39EC1741CB01F55002C3161 /* Jared */ = {
 			isa = PBXGroup;
 			children = (
-				B353946124E64DDE00F9424A /* PersistentContainer.swift */,
 				B30F765724C574FD00ADF57B /* JaredRelease.entitlements */,
 				B3774D4E2424AFEB00F02F62 /* JaredDebug.entitlements */,
 				7FF077EA1CBCFFCB008E33CB /* SendImage.scpt */,
@@ -388,6 +387,7 @@
 				B30F765424C5740800ADF57B /* SendTextUI.scpt */,
 				B37E82811FA85B210069E15D /* SendTextSingleBuddy.scpt */,
 				B361EEBA1F1DE24C0041113C /* config.json */,
+				B353946124E64DDE00F9424A /* PersistentContainer.swift */,
 				B3BF17C1244EBE9A00CC44C5 /* Router.swift */,
 				B39A65DF1CC1FB1B003E26B0 /* PluginManager.swift */,
 				B3327DC522066427009DD882 /* WebHookManager.swift */,
@@ -573,10 +573,9 @@
 			};
 			buildConfigurationList = B39EC16D1CB01F55002C3161 /* Build configuration list for PBXProject "Jared" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
 				Base,
 				ja,
