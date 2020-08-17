@@ -11,7 +11,7 @@ import Contacts
 
 class PermissionsHelper {
     static func requestMessageAutomation() {
-        canSendMessages(shouldPrompt: true)
+        let _ = canSendMessages(shouldPrompt: true)
     }
     
     static func canSendMessages(shouldPrompt: Bool = false) -> AutomationPermissionState {
@@ -49,7 +49,7 @@ class PermissionsHelper {
     static func requestContactsAccess() {
         if(CNContactStore.authorizationStatus(for: CNEntityType.contacts) == .notDetermined) {
             CNContactStore().requestAccess(for: CNEntityType.contacts, completionHandler: {enabled, _ in
-                getContactsStatus()
+                let _ = getContactsStatus()
             })
         }
     }

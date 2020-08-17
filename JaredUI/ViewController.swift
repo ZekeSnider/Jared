@@ -22,7 +22,7 @@ class ViewController: NSViewController, DiskAccessDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         defaults = UserDefaults.standard
-        PermissionsHelper.canSendMessages()
+        let _ = PermissionsHelper.canSendMessages()
         
         observeKeys.forEach { path in
             defaults.addObserver(self, forKeyPath: path, options: .new, context: nil)

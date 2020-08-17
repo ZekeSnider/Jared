@@ -25,7 +25,6 @@ class DatabaseHandlerTest: XCTestCase {
         helper = DatabaseTestHelper(databaseLocation: testDatabaseLocation)
         router = MockRouter()
         databaseHandler = DatabaseHandler(router: router, databaseLocation: testDatabaseLocation, diskAccessDelegate: nil)
-        databaseHandler.start()
     }
     
     override func tearDown() {

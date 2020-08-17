@@ -14,6 +14,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var sender: Jared
     var router: PluginManager
     var server: JaredWebServer
+    var databaseHelper: DatabaseHandler!
     override init() {
         UserDefaults.standard.register(defaults: [
             JaredConstants.jaredIsDisabled: false,
@@ -21,7 +22,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             JaredConstants.contactsAccess: CNAuthorizationStatus.notDetermined.rawValue,
             JaredConstants.fullDiskAccess: true
         ])
-        PermissionsHelper.getContactsStatus()
+        let _ = PermissionsHelper.getContactsStatus()
         
         let configurationURL = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
             .appendingPathComponent("Jared")
@@ -41,7 +42,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let messageDatabaseURL = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask)[0]
             .appendingPathComponent("Messages").appendingPathComponent("chat.db")
         let viewController = NSApplication.shared.keyWindow?.contentViewController as? ViewController
-		let dbHandler = DatabaseHandler(router: router.router, databaseLocation: messageDatabaseURL, diskAccessDelegate: viewController)
+		databaseHelper = DatabaseHandler(router: router.router, databaseLocation: messageDatabaseURL, diskAccessDelegate: viewController)
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {
