@@ -7,21 +7,27 @@
 //
 
 import Cocoa
+import Contacts
 
 class ViewController: NSViewController, DiskAccessDelegate {
+    let observeKeys = [
+        JaredConstants.jaredIsDisabled,
+        JaredConstants.restApiIsDisabled,
+        JaredConstants.contactsAccess,
+        JaredConstants.sendMessageAccess,
+        JaredConstants.fullDiskAccess
+    ]
     var defaults: UserDefaults!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let defaults = UserDefaults.standard
+        defaults = UserDefaults.standard
+        let _ = PermissionsHelper.canSendMessages()
         
-        // Server should be disabled by default
-        if defaults.value(forKey: "RestApiIsDisabled") == nil {
-            defaults.set(false, forKey: "RestApiIsDisabled")
+        observeKeys.forEach { path in
+            defaults.addObserver(self, forKeyPath: path, options: .new, context: nil)
         }
         
-        defaults.addObserver(self, forKeyPath: "JaredIsDisabled", options: .new, context: nil)
-        defaults.addObserver(self, forKeyPath: "RestApiIsDisabled", options: .new, context: nil)
         updateTouchBarButton()
     }
     
@@ -29,7 +35,7 @@ class ViewController: NSViewController, DiskAccessDelegate {
         if #available(OSX 10.12.2, *) {
             self.view.window?.unbind(NSBindingName(rawValue: #keyPath(touchBar)))
         }
-        UserDefaults.standard.removeObserver(self, forKeyPath: "JaredIsDisabled")
+        UserDefaults.standard.removeObserver(self, forKeyPath: JaredConstants.jaredIsDisabled)
     }
     
     override func viewDidAppear() {
@@ -42,38 +48,101 @@ class ViewController: NSViewController, DiskAccessDelegate {
     }
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if keyPath == "JaredIsDisabled"
-            || keyPath == "RestApiIsDisabled" {
+        guard let keyPath = keyPath else {
+            return
+        }
+        
+        if observeKeys.contains(keyPath) {
             updateTouchBarButton()
         }
     }
     
     func updateTouchBarButton() {
-        let defaults = UserDefaults.standard
-        if (defaults.bool(forKey: "JaredIsDisabled")) {
-            EnableDisableButton.title = "Enable"
-            EnableDisableUiButton.title = "Enable Jared"
-            JaredStatusLabel.stringValue = "Jared is currently disabled"
-            statusImage.image = NSImage(named: NSImage.statusUnavailableName)
-        }
-        else {
-            EnableDisableButton.title = "Disable"
-            EnableDisableUiButton.title = "Disable Jared"
-            JaredStatusLabel.stringValue = "Jared is currently enabled"
-            statusImage.image = NSImage(named: NSImage.statusAvailableName)
-        }
-        
-        if (defaults.bool(forKey: "RestApiIsDisabled")) {
-//            EnableDisableButton.title = "Enable"
-            EnableDisableRestApiUiButton.title = "Enable API"
-            RestApiStatusLabel.stringValue = "REST API is currently disabled"
-            RestApiStatusImage.image = NSImage(named: NSImage.statusUnavailableName)
-        }
-        else {
-//            EnableDisableButton.title = "Disable"
-            EnableDisableRestApiUiButton.title = "Disable API"
-            RestApiStatusLabel.stringValue = "REST API is currently enabled"
-            RestApiStatusImage.image = NSImage(named: NSImage.statusAvailableName)
+        DispatchQueue.main.async{
+            let noDiskAccess = !self.defaults.bool(forKey: JaredConstants.fullDiskAccess)
+            
+            if (self.defaults.bool(forKey: JaredConstants.jaredIsDisabled) || noDiskAccess) {
+                self.EnableDisableButton.title = "Enable"
+                self.EnableDisableUiButton.title = "Enable Jared"
+                self.JaredStatusLabel.stringValue = "Jared is currently disabled"
+                self.statusImage.image = NSImage(named: NSImage.statusUnavailableName)
+            }
+            else {
+                self.EnableDisableButton.title = "Disable"
+                self.EnableDisableUiButton.title = "Disable Jared"
+                self.JaredStatusLabel.stringValue = "Jared is currently enabled"
+                self.statusImage.image = NSImage(named: NSImage.statusAvailableName)
+            }
+            
+            if(noDiskAccess) {
+                self.EnableDisableUiButton.title = "Enable Disk Access"
+                self.EnableDisableButton.title = "Enable Disk Access"
+            }
+            
+            if (self.defaults.bool(forKey: JaredConstants.restApiIsDisabled)) {
+                self.EnableDisableRestApiUiButton.title = "Enable API"
+                self.RestApiStatusLabel.stringValue = "REST API is currently disabled"
+                self.RestApiStatusImage.image = NSImage(named: NSImage.statusUnavailableName)
+            }
+            else {
+                self.EnableDisableRestApiUiButton.title = "Disable API"
+                self.RestApiStatusLabel.stringValue = "REST API is currently enabled"
+                self.RestApiStatusImage.image = NSImage(named: NSImage.statusAvailableName)
+            }
+            
+            switch(CNAuthorizationStatus(rawValue: self.defaults.integer(forKey: JaredConstants.contactsAccess))) {
+            case .notDetermined:
+                self.contactsLabel.stringValue = "Contacts access not set"
+                self.contactsButton.title = "Enable Contacts"
+                self.contactsStatusImage.image = NSImage(named: NSImage.statusPartiallyAvailableName)
+                break
+            case .authorized:
+                self.contactsLabel.stringValue = "Contacts access authorized"
+                self.contactsButton.title = "Manage Contacts"
+                self.contactsStatusImage.image = NSImage(named: NSImage.statusAvailableName)
+                break
+            case .denied:
+                self.contactsLabel.stringValue = "Contacts access denied"
+                self.contactsStatusImage.image = NSImage(named: NSImage.statusUnavailableName)
+                break
+            case .restricted:
+                self.contactsLabel.stringValue = "Contacts access restricted"
+                self.contactsStatusImage.image = NSImage(named: NSImage.statusUnavailableName)
+                break
+            default:
+                self.contactsButton.title = "Manage Contacts"
+                self.contactsStatusImage.image = NSImage(named: NSImage.statusUnavailableName)
+                break
+            }
+            
+            switch(AutomationPermissionState(rawValue: self.defaults.integer(forKey: JaredConstants.sendMessageAccess))) {
+            case .authorized:
+                self.sendStatusLabel.stringValue = "Jared can send messages"
+                self.sendStatusImage.image = NSImage(named: NSImage.statusAvailableName)
+                self.sendStatusButton.title = "Manage automation"
+                
+                if #available(OSX 10.14, *) {
+                    self.sendStatusButton.isEnabled = true
+                } else {
+                    self.sendStatusButton.isEnabled = false
+                }
+            case .declined:
+                self.sendStatusLabel.stringValue = "Jared not permitted to send messages."
+                self.sendStatusImage.image = NSImage(named: NSImage.statusUnavailableName)
+                self.sendStatusButton.title = "Manage automation"
+            case .notDetermined:
+                self.sendStatusLabel.stringValue = "Messages send automation permissions not set."
+                self.sendStatusImage.image = NSImage(named: NSImage.statusPartiallyAvailableName)
+                self.sendStatusButton.title = "Enable automation"
+            case .notRunning:
+                self.sendStatusLabel.stringValue = "Jared cannot check send permissions because Messages is not open"
+                self.sendStatusImage.image = NSImage(named: NSImage.statusPartiallyAvailableName)
+                self.sendStatusButton.title = "Recheck"
+            case .none, .unknown:
+                self.sendStatusLabel.stringValue = "Messages send automation status unkown"
+                self.sendStatusImage.image = NSImage(named: NSImage.statusPartiallyAvailableName)
+                self.sendStatusButton.title = "Manage automation"
+            }
         }
     }
     
@@ -89,15 +158,8 @@ class ViewController: NSViewController, DiskAccessDelegate {
         let res = alert.runModal()
         
         if(res == NSApplication.ModalResponse.alertFirstButtonReturn) {
-            NSWorkspace.shared.open(URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles")!)
+            NSWorkspace.shared.open(URL(string: JaredConstants.fullDiskAcccessUrl)!)
         }
-        
-        let defaults = UserDefaults.standard
-        defaults.set(true, forKey: "JaredIsDisabled")
-        updateTouchBarButton()
-        
-        EnableDisableUiButton.isEnabled = false
-        EnableDisableButton.isEnabled = false
     }
     
     @IBOutlet weak var JaredStatusLabel: NSTextField!
@@ -107,31 +169,60 @@ class ViewController: NSViewController, DiskAccessDelegate {
     @IBOutlet weak var RestApiStatusLabel: NSTextField!
     @IBOutlet weak var RestApiStatusImage: NSImageView!
     @IBOutlet weak var statusImage: NSImageView!
+    @IBOutlet weak var contactsStatusImage: NSImageView!
+    @IBOutlet weak var contactsLabel: NSTextField!
+    @IBOutlet weak var contactsButton: NSButton!
+    @IBOutlet weak var sendStatusImage: NSImageView!
+    @IBOutlet weak var sendStatusLabel: NSTextField!
+    @IBOutlet weak var sendStatusButton: NSButton!
     
     @IBAction func EnableDisableAction(_ sender: Any) {
-        let defaults = UserDefaults.standard
-        
-        if (defaults.bool(forKey: "JaredIsDisabled")) {
-            defaults.set(false, forKey: "JaredIsDisabled")
+        if (defaults.bool(forKey: JaredConstants.fullDiskAccess)) {
+            if (defaults.bool(forKey: JaredConstants.jaredIsDisabled)) {
+                defaults.set(false, forKey: JaredConstants.jaredIsDisabled)
+            } else {
+                defaults.set(true, forKey: JaredConstants.jaredIsDisabled)
+            }
+        } else {
+            NSWorkspace.shared.open(URL(string: JaredConstants.fullDiskAcccessUrl)!)
         }
-        else {
-            defaults.set(true, forKey: "JaredIsDisabled")
-        }
-        
-        updateTouchBarButton()
     }
     
     @IBAction func EnableDisableRestApiAction(_ sender: Any) {
-        let defaults = UserDefaults.standard
-        
-        if (defaults.bool(forKey: "RestApiIsDisabled")) {
-            defaults.set(false, forKey: "RestApiIsDisabled")
+        if (defaults.bool(forKey: JaredConstants.restApiIsDisabled)) {
+            defaults.set(false, forKey: JaredConstants.restApiIsDisabled)
         }
         else {
-            defaults.set(true, forKey: "RestApiIsDisabled")
+            defaults.set(true, forKey: JaredConstants.restApiIsDisabled)
         }
-        
-        updateTouchBarButton()
+    }
+    
+    @IBAction func contactsButtonAction(_ sender: Any) {
+        DispatchQueue.global(qos: .background).async {
+            switch(CNAuthorizationStatus(rawValue: self.defaults.integer(forKey: JaredConstants.contactsAccess))) {
+            case .notDetermined:
+                PermissionsHelper.requestContactsAccess()
+                return
+            default:
+                NSWorkspace.shared.open(URL(string: JaredConstants.contactsAccessUrl)!)
+            }
+        }
+    }
+    
+    @IBAction func sendStatusButtonAction(_ sender: Any) {
+        if #available(OSX 10.14, *) {
+            switch(PermissionsHelper.canSendMessages()) {
+            case .notRunning:
+                NSWorkspace.shared.open(URL(string: JaredConstants.messagesUrl)!)
+                sendStatusButtonAction(sender)
+                break
+            case .authorized, .declined, .unknown:
+                NSWorkspace.shared.open(URL(string: JaredConstants.automationAccessUrl)!)
+                break
+            case .notDetermined:
+                PermissionsHelper.requestMessageAutomation()
+            }
+        }
     }
     
     @IBAction func OpenPluginsButtonAction(_ sender: Any) {

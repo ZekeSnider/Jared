@@ -268,7 +268,6 @@ class CoreModule: RoutingModule {
             return sender.send("Wrong arguments.", to: message.RespondTo())
         }
         
-        
         guard (CNContactStore.authorizationStatus(for: CNEntityType.contacts) == .authorized) else {
             return sender.send("Sorry, I do not have access to contacts.", to: message.RespondTo())
         }

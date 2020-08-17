@@ -20,12 +20,13 @@ class JaredWebServer: NSObject {
         
         port = assignPort()
         
-        defaults.addObserver(self, forKeyPath: "RestApiIsDisabled", options: .new, context: nil)
+        defaults.addObserver(self, forKeyPath: JaredConstants.restApiIsDisabled, options: .new, context: nil)
         updateServerState()
     }
     
     deinit {
-        UserDefaults.standard.removeObserver(self, forKeyPath: "JaredIsDisabled")
+        stop()
+        UserDefaults.standard.removeObserver(self, forKeyPath: JaredConstants.jaredIsDisabled)
     }
     
     // Attempt to pull the port number from the config
@@ -58,17 +59,18 @@ class JaredWebServer: NSObject {
     }
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if (keyPath == "RestApiIsDisabled") {
+        if (keyPath == JaredConstants.restApiIsDisabled) {
             updateServerState()
         }
     }
     
     func updateServerState() {
-        if (defaults.bool(forKey: "RestApiIsDisabled")) {
+        if (defaults.bool(forKey: JaredConstants.restApiIsDisabled)) {
             stop()
         } else {
             start()
         }
+        
     }
     
     func start() {

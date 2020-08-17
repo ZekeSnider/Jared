@@ -35,7 +35,7 @@ public class Jared: MessageSender {
         let defaults = UserDefaults.standard
         
         //Don't send the message if Jared is currently disabled.
-        guard !defaults.bool(forKey: "JaredIsDisabled") else {
+        guard !defaults.bool(forKey: JaredConstants.jaredIsDisabled) else {
             return
         }
         

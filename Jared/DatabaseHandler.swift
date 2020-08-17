@@ -1,5 +1,5 @@
 //
-//  sqlitetest.swift
+//  DatabaseHandler.swift
 //  JaredUI
 //
 //  Created by Zeke Snider on 11/9/18.
@@ -9,11 +9,8 @@
 internal let SQLITE_STATIC = unsafeBitCast(0, to: sqlite3_destructor_type.self)
 internal let SQLITE_TRANSIENT = unsafeBitCast(-1, to: sqlite3_destructor_type.self)
 
-import Cocoa
 import JaredFramework
-import Foundation
 import SQLite3
-import Contacts
 
 class DatabaseHandler {
     private static let groupQuery = """
@@ -50,7 +47,6 @@ class DatabaseHandler {
     var querySinceID: String?
     var shouldExitThread = false
     var refreshSeconds = 5.0
-    var authorizationError = false
     var statement: OpaquePointer? = nil
     var router: RouterDelegate?
     
@@ -59,12 +55,14 @@ class DatabaseHandler {
         
         if sqlite3_open(databaseLocation.path, &db) != SQLITE_OK {
             NSLog("Error opening SQLite database. Likely Full disk access error.")
+            UserDefaults.standard.set(false, forKey: JaredConstants.fullDiskAccess)
             diskAccessDelegate?.displayAccessError()
-            authorizationError = true
             return
         }
+        UserDefaults.standard.set(true, forKey: JaredConstants.fullDiskAccess)
         
         querySinceID = getCurrentMaxRecordID()
+        start()
     }
     
     deinit {

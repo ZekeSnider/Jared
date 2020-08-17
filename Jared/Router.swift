@@ -32,7 +32,7 @@ class Router : RouterDelegate {
         
         let defaults = UserDefaults.standard
         
-        guard !defaults.bool(forKey: "JaredIsDisabled") || myLowercaseMessage == "/enable" else {
+        guard !defaults.bool(forKey: JaredConstants.jaredIsDisabled) || myLowercaseMessage == "/enable" else {
             return
         }
         
