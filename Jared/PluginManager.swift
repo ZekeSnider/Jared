@@ -15,9 +15,9 @@ class PluginManager: PluginManagerDelegate {
     private var bundles: [Bundle] = []
     var supportDir: URL?
     var disabled = false
-    var routeConfig: [String: [String:AnyObject]]?
+    var config: ConfigurationFile
     var webhooks: [String]?
-    var webHookManager: WebHookManager?
+    var webHookManager: WebHookManager
     var sender: MessageSender
     public var router: Router!
     
@@ -27,7 +27,6 @@ class PluginManager: PluginManagerDelegate {
         let appsupport = filemanager.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
         let supportDir = appsupport.appendingPathComponent("Jared")
         let pluginDir = supportDir.appendingPathComponent("Plugins")
-        var webhooks: [String]?
         
         try! filemanager.createDirectory(at: supportDir, withIntermediateDirectories: true, attributes: nil)
         try! filemanager.createDirectory(at: pluginDir, withIntermediateDirectories: true, attributes: nil)
@@ -40,15 +39,13 @@ class PluginManager: PluginManagerDelegate {
             }
             
             //Read the JSON config file
+            
             let jsonData = try! NSData(contentsOfFile: supportDir.appendingPathComponent("config.json").path, options: .mappedIfSafe)
-            if let jsonResult = try! JSONSerialization.jsonObject(with: jsonData as Data, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String:AnyObject]
-            {
-                routeConfig = jsonResult["routes"] as? [String : [String: AnyObject]]
-                webhooks = jsonResult["webhooks"] as? [String]
-            }
+            self.config = try! JSONDecoder().decode(ConfigurationFile.self, from: jsonData as Data)
         }
         
-        router = Router(pluginManager: self, messageDelegates: [WebHookManager(webhooks: webhooks ?? [])])
+        webHookManager = WebHookManager(webhooks: config.webhooks, sender: sender)
+        router = Router(pluginManager: self, messageDelegates: [webHookManager])
         
         loadPlugins(pluginDir)
         addInternalModules()
@@ -57,6 +54,7 @@ class PluginManager: PluginManagerDelegate {
     private func addInternalModules() {
         modules.append(CoreModule(sender: sender))
         modules.append(InternalModule(sender: sender, pluginManager: self))
+        modules.append(webHookManager)
     }
     
     func loadPlugins(_ pluginDir: URL) {
@@ -122,8 +120,8 @@ class PluginManager: PluginManagerDelegate {
     }
     
     func enabled(routeName: String) -> Bool {
-        if (routeConfig?[routeName.lowercased()]?["disabled"] as? Bool == true) {
-            return false
+        if let routeConfig = config.routes[routeName.lowercased()] {
+            return !routeConfig.disabled
         } else {
             return true
         }
@@ -134,6 +132,8 @@ class PluginManager: PluginManagerDelegate {
     }
     
     func getAllRoutes() -> [Route] {
-        return modules.flatMap { module in module.routes }
+        var routes = modules.flatMap { module in module.routes }
+        routes.append(contentsOf: webHookManager.routes)
+        return routes
     }
 }

@@ -50,6 +50,7 @@
 		B369509324DE952D0027CB1E /* Configuration.plist in Resources */ = {isa = PBXBuildFile; fileRef = B369508F24DE8FD00027CB1E /* Configuration.plist */; };
 		B369509424DE963D0027CB1E /* Configuration.plist in Resources */ = {isa = PBXBuildFile; fileRef = B369508F24DE8FD00027CB1E /* Configuration.plist */; };
 		B369509524DF224D0027CB1E /* SendImageSingleBuddy.scpt in Resources */ = {isa = PBXBuildFile; fileRef = B37E82801FA85B170069E15D /* SendImageSingleBuddy.scpt */; };
+		B36C8D7F24EA655900C00A99 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36C8D7E24EA655900C00A99 /* Configuration.swift */; };
 		B375A65921EB14470073F09F /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B375A65821EB14470073F09F /* AboutViewController.swift */; };
 		B37E82821FA85B210069E15D /* SendTextSingleBuddy.scpt in Resources */ = {isa = PBXBuildFile; fileRef = B37E82811FA85B210069E15D /* SendTextSingleBuddy.scpt */; };
 		B39A65E01CC1FB1B003E26B0 /* PluginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39A65DF1CC1FB1B003E26B0 /* PluginManager.swift */; };
@@ -58,6 +59,8 @@
 		B3AECB5F2207CE33003E32F8 /* JaredFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F84B61F1CC506790059A82B /* JaredFramework.framework */; };
 		B3B7E52424E9EE2000A3FBD1 /* AutomationPermissionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B7E52324E9EE2000A3FBD1 /* AutomationPermissionState.swift */; };
 		B3B7E52524EA00BC00A3FBD1 /* JaredConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3FB28F324E9BCBD003BA6CB /* JaredConstants.swift */; };
+		B3B7E52724EA520A00A3FBD1 /* RouteProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B7E52624EA520A00A3FBD1 /* RouteProvider.swift */; };
+		B3B7E52924EA579600A3FBD1 /* Webhook.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B7E52824EA579600A3FBD1 /* Webhook.swift */; };
 		B3B844B824D7791800DC162A /* ActionTypeTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B844B724D7791700DC162A /* ActionTypeTest.swift */; };
 		B3B844BA24D77A4900DC162A /* SendStyleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B844B924D77A4800DC162A /* SendStyleTest.swift */; };
 		B3B844BC24D77BF200DC162A /* SendStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B844BB24D77BF200DC162A /* SendStyle.swift */; };
@@ -186,6 +189,7 @@
 		B36563EE1F3D68980064B114 /* TouchBarTextFieldExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchBarTextFieldExtension.swift; sourceTree = "<group>"; };
 		B369508F24DE8FD00027CB1E /* Configuration.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Configuration.plist; sourceTree = "<group>"; };
 		B369509124DE91760027CB1E /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
+		B36C8D7E24EA655900C00A99 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		B375A65821EB14470073F09F /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		B3774D4E2424AFEB00F02F62 /* JaredDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = JaredDebug.entitlements; sourceTree = "<group>"; };
 		B37E82801FA85B170069E15D /* SendImageSingleBuddy.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = SendImageSingleBuddy.scpt; sourceTree = "<group>"; };
@@ -195,6 +199,8 @@
 		B39F2B381CB3BCA700C0D35C /* SendText.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = SendText.scpt; sourceTree = "<group>"; };
 		B3A4C61323B867E300B7F009 /* MessageRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRequest.swift; sourceTree = "<group>"; };
 		B3B7E52324E9EE2000A3FBD1 /* AutomationPermissionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomationPermissionState.swift; sourceTree = "<group>"; };
+		B3B7E52624EA520A00A3FBD1 /* RouteProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteProvider.swift; sourceTree = "<group>"; };
+		B3B7E52824EA579600A3FBD1 /* Webhook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Webhook.swift; sourceTree = "<group>"; };
 		B3B844B724D7791700DC162A /* ActionTypeTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionTypeTest.swift; sourceTree = "<group>"; };
 		B3B844B924D77A4800DC162A /* SendStyleTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendStyleTest.swift; sourceTree = "<group>"; };
 		B3B844BB24D77BF200DC162A /* SendStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendStyle.swift; sourceTree = "<group>"; };
@@ -403,6 +409,8 @@
 				B35CE7142196AD4E002F52A7 /* DatabaseHandler.swift */,
 				7F0E931C1D02FC250096BABE /* Global.swift */,
 				B3EF1DA92206E09B00953DE7 /* Jared.swift */,
+				B36C8D7E24EA655900C00A99 /* Configuration.swift */,
+				B3B7E52824EA579600A3FBD1 /* Webhook.swift */,
 				B3BBA7CD1CB3259A00E1749C /* Localizable.strings */,
 				B3BF17C9244ED26800CC44C5 /* Delegates */,
 				B39EC17C1CB01FDD002C3161 /* Modules */,
@@ -438,6 +446,7 @@
 				B3B844C324D9287F00DC162A /* RouterDelegate.swift */,
 				B3BF17C5244EC47700CC44C5 /* MessageDelegate.swift */,
 				B3B844CA24DA5D1700DC162A /* DiskAccessDelegate.swift */,
+				B3B7E52624EA520A00A3FBD1 /* RouteProvider.swift */,
 				B3BF17C7244EC89200CC44C5 /* PluginManagerDelegate.swift */,
 			);
 			name = Delegates;
@@ -793,13 +802,16 @@
 				B3FB28F224E9BAF7003BA6CB /* PermissionsHelper.swift in Sources */,
 				B3B844CB24DA5D1700DC162A /* DiskAccessDelegate.swift in Sources */,
 				B332787A1CB2CB1300BBDD3A /* AppDelegate.swift in Sources */,
+				B3B7E52724EA520A00A3FBD1 /* RouteProvider.swift in Sources */,
 				B3BF17C4244EBF4900CC44C5 /* InternalModule.swift in Sources */,
 				B3BF17C2244EBE9A00CC44C5 /* Router.swift in Sources */,
 				B375A65921EB14470073F09F /* AboutViewController.swift in Sources */,
 				7F0E931D1D02FC250096BABE /* Global.swift in Sources */,
 				B353946224E64DDE00F9424A /* PersistentContainer.swift in Sources */,
+				B36C8D7F24EA655900C00A99 /* Configuration.swift in Sources */,
 				B3B844C424D9288000DC162A /* RouterDelegate.swift in Sources */,
 				B3B7E52424E9EE2000A3FBD1 /* AutomationPermissionState.swift in Sources */,
+				B3B7E52924EA579600A3FBD1 /* Webhook.swift in Sources */,
 				B3C59284224DD17900116ECB /* JaredWebServer.swift in Sources */,
 				B3FB28F424E9BCBD003BA6CB /* JaredConstants.swift in Sources */,
 			);
