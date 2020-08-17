@@ -59,7 +59,9 @@ class ViewController: NSViewController, DiskAccessDelegate {
     
     func updateTouchBarButton() {
         DispatchQueue.main.async{
-            if (self.defaults.bool(forKey: JaredConstants.jaredIsDisabled)) {
+            let noDiskAccess = !self.defaults.bool(forKey: JaredConstants.fullDiskAccess)
+            
+            if (self.defaults.bool(forKey: JaredConstants.jaredIsDisabled) || noDiskAccess) {
                 self.EnableDisableButton.title = "Enable"
                 self.EnableDisableUiButton.title = "Enable Jared"
                 self.JaredStatusLabel.stringValue = "Jared is currently disabled"
@@ -70,6 +72,11 @@ class ViewController: NSViewController, DiskAccessDelegate {
                 self.EnableDisableUiButton.title = "Disable Jared"
                 self.JaredStatusLabel.stringValue = "Jared is currently enabled"
                 self.statusImage.image = NSImage(named: NSImage.statusAvailableName)
+            }
+            
+            if(noDiskAccess) {
+                self.EnableDisableUiButton.title = "Enable Disk Access"
+                self.EnableDisableButton.title = "Enable Disk Access"
             }
             
             if (self.defaults.bool(forKey: JaredConstants.restApiIsDisabled)) {
@@ -135,11 +142,6 @@ class ViewController: NSViewController, DiskAccessDelegate {
                 self.sendStatusLabel.stringValue = "Messages send automation status unkown"
                 self.sendStatusImage.image = NSImage(named: NSImage.statusPartiallyAvailableName)
                 self.sendStatusButton.title = "Manage automation"
-            }
-            
-            if(!self.defaults.bool(forKey: JaredConstants.fullDiskAccess)) {
-                self.EnableDisableUiButton.title = "Enable Disk Access"
-                self.EnableDisableButton.title = "Enable Disk Access"
             }
         }
     }

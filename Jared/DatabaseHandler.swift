@@ -55,7 +55,6 @@ class DatabaseHandler {
         
         if sqlite3_open(databaseLocation.path, &db) != SQLITE_OK {
             NSLog("Error opening SQLite database. Likely Full disk access error.")
-            UserDefaults.standard.set(true, forKey: JaredConstants.jaredIsDisabled)
             UserDefaults.standard.set(false, forKey: JaredConstants.fullDiskAccess)
             diskAccessDelegate?.displayAccessError()
             return
