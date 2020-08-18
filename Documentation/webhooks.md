@@ -65,4 +65,20 @@ The body of the POST request is in the following format:
     }
   }
 ]
+
+  "webhooks": [
+    {
+      "url": "http://localhost:2000/",
+      "routes": [
+        {
+          "name": "test route",
+          "description": "a test route",
+          "parameterSyntax": "/hello",
+          "comparisons": {
+            "startsWith": ["/hello"]
+          }
+        }
+      ]
+    }
+  ],
 ```

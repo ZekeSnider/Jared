@@ -33,10 +33,7 @@ class PluginManager: PluginManagerDelegate {
         
         let configPath = supportDir.appendingPathComponent("config.json")
         do {
-            //Copy an empty config file if the conig file does not exist
-            if !filemanager.fileExists(atPath: configPath.path) {
-                try! filemanager.copyItem(at: (Bundle.main.resourceURL?.appendingPathComponent("config.json"))!, to: configPath)
-            }
+            PluginManager.createConfigFileIfNotExists(at: configPath, using: filemanager)
             
             //Read the JSON config file
             let jsonData = try! NSData(contentsOfFile: supportDir.appendingPathComponent("config.json").path, options: .mappedIfSafe)
@@ -50,6 +47,15 @@ class PluginManager: PluginManagerDelegate {
         addInternalModules()
     }
     
+    //Copy an empty config file if the conig file does not exist
+    private static func createConfigFileIfNotExists(at path: URL, using fileManager: FileManager) {
+        //Copy an empty config file if the conig file does not exist
+        if !fileManager.fileExists(atPath: path.path) {
+            try! fileManager.copyItem(at: (Bundle.main.resourceURL?.appendingPathComponent("config.json"))!, to: path)
+        }
+    }
+    
+    
     private func addInternalModules() {
         modules.append(CoreModule(sender: sender))
         modules.append(InternalModule(sender: sender, pluginManager: self))
@@ -59,7 +65,8 @@ class PluginManager: PluginManagerDelegate {
     func loadPlugins(_ pluginDir: URL) {
         //Loop through all files in our plugin directory
         let filemanager = FileManager.default
-        let files = filemanager.enumerator(at: pluginDir, includingPropertiesForKeys: [], options: [.skipsHiddenFiles, .skipsPackageDescendants], errorHandler: nil)
+        let files = filemanager.enumerator(at: pluginDir, includingPropertiesForKeys: [],
+            options: [.skipsHiddenFiles, .skipsPackageDescendants], errorHandler: nil)
         
         while let file = files?.nextObject() as? URL {
             if let bundle = validateBundle(file) {

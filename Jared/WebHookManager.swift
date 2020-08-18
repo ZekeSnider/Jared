@@ -53,7 +53,6 @@ class WebHookManager: MessageDelegate, RoutingModule {
         
         urlSession.dataTask(with: request) { data, response, error in
             guard useResponse, error == nil, let data = data else {
-                NSLog("Retrieved empty data from webhook")
                 return
             }
             guard let decoded = try? JSONDecoder().decode(WebhookResponse.self, from: data) else {
