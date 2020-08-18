@@ -13,3 +13,9 @@ struct Webhook: Decodable {
     var url: String
     var routes: [Route]?
 }
+
+struct WebhookResponse: Decodable {
+    var success: Bool
+    var body: TextBody?
+    var error: String?
+}

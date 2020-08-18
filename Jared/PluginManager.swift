@@ -39,7 +39,6 @@ class PluginManager: PluginManagerDelegate {
             }
             
             //Read the JSON config file
-            
             let jsonData = try! NSData(contentsOfFile: supportDir.appendingPathComponent("config.json").path, options: .mappedIfSafe)
             self.config = try! JSONDecoder().decode(ConfigurationFile.self, from: jsonData as Data)
         }
@@ -132,8 +131,6 @@ class PluginManager: PluginManagerDelegate {
     }
     
     func getAllRoutes() -> [Route] {
-        var routes = modules.flatMap { module in module.routes }
-        routes.append(contentsOf: webHookManager.routes)
-        return routes
+        return modules.flatMap { module in module.routes }
     }
 }

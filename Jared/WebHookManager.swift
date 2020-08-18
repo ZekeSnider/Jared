@@ -16,8 +16,8 @@ class WebHookManager: MessageDelegate, RoutingModule {
     var sender: MessageSender
     var description = "Routes provided by webhooks"
     
-    
     public init(webhooks: [Webhook]?, session: URLSessionConfiguration = URLSessionConfiguration.ephemeral, sender: MessageSender) {
+        session.timeoutIntervalForResource = 10.0
         self.sender = sender
         urlSession = URLSession(configuration: session)
         
@@ -36,11 +36,11 @@ class WebHookManager: MessageDelegate, RoutingModule {
                 break
             }
             
-            notifyRoute(message, url: webhook.url)
+            notifyRoute(message, url: webhook.url, useResponse: false)
         }
     }
     
-    public func notifyRoute(_ message: Message, url: String) {
+    public func notifyRoute(_ message: Message, url: String, useResponse: Bool) {
         guard let parsedUrl = URL(string: url) else {
             return
         }
@@ -51,7 +51,27 @@ class WebHookManager: MessageDelegate, RoutingModule {
         request.httpBody = webhookBody
         request.addValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
         
-        urlSession.dataTask(with: request).resume()
+        urlSession.dataTask(with: request) { data, response, error in
+            guard useResponse, error == nil, let data = data else {
+                NSLog("Retrieved empty data from webhook")
+                return
+            }
+            guard let decoded = try? JSONDecoder().decode(WebhookResponse.self, from: data) else {
+                NSLog("Unable to parse response from webhook")
+                return
+            }
+            
+            if (decoded.success) {
+                if let decodedBody = decoded.body?.message {
+                    self.sender.send(decodedBody, to: message.RespondTo())
+                }
+            } else {
+                if let decodedError = decoded.error {
+                    NSLog("Got back error from webhook. \(decodedError)")
+                    return
+                }
+            }
+        }.resume()
     }
     
     public func updateHooks(to hooks: [Webhook]?) {
@@ -60,7 +80,7 @@ class WebHookManager: MessageDelegate, RoutingModule {
             newHook.routes = (newHook.routes ?? []).map({ (route) -> Route in
                 var newRoute = route
                 newRoute.call = {[weak self] in
-                    self?.notifyRoute($0, url: newHook.url)
+                    self?.notifyRoute($0, url: newHook.url, useResponse: true)
                 }
                 return newRoute
             })

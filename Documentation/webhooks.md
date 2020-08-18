@@ -43,3 +43,26 @@ The body of the POST request is in the following format:
   "date": "2019-02-03T22:05:05.000Z"
 }
 ```
+
+
+```
+{
+  "success": true,
+  "body": { 
+    "message": "hello" 
+  }
+}
+```
+
+```
+"routes": [
+  {
+    "name": "/hello",
+    "description": "a test route",
+    "parameterSyntax": "/hello",
+    "comparisons": {
+      "startsWith": ["/hello"]
+    }
+  }
+]
+```
