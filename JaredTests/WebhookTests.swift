@@ -16,10 +16,12 @@ class WebhookTests: XCTestCase {
     let SAMPLE_MESSAGE = Message(body: TextBody("hello there jared"), date: Date(timeIntervalSince1970: TimeInterval(1495061841)), sender: Person(givenName: "zeke", handle: "zeke@email.com", isMe: true), recipient: Person(givenName: "jared", handle: "jared@email.com", isMe: false))
     
     var config: URLSessionConfiguration!
+    var sender: JaredMock!
     
     override func setUp() {
         config = URLSessionConfiguration.ephemeral
         config.protocolClasses = [URLProtocolMock.self]
+        sender = JaredMock()
     }
     
     override func tearDown() {
@@ -30,7 +32,9 @@ class WebhookTests: XCTestCase {
         // set up first call to webhook with one url
         let url = URL(string: WEBHOOK_TEST_URL)
         URLProtocolMock.testURLs = [url: Data(MESSAGE_SERIALIZED.utf8)]
-        let webhookManager = WebHookManager(webhooks: [WEBHOOK_TEST_URL], session: config)
+        let webhook = Webhook(url: WEBHOOK_TEST_URL, routes: [])
+        let webhookTwo = Webhook(url: WEBHOOK_TEST_URL_TWO, routes: [])
+        let webhookManager = WebHookManager(webhooks: [webhook], session: config, sender: sender)
         
         webhookManager.didProcess(message: SAMPLE_MESSAGE)
         
@@ -42,7 +46,7 @@ class WebhookTests: XCTestCase {
         
         // setup for second call which adds another url to the webhook
         // list
-        webhookManager.updateHooks(to: [WEBHOOK_TEST_URL, WEBHOOK_TEST_URL_TWO])
+        webhookManager.updateHooks(to: [webhook, webhookTwo])
         let urlTwo = URL(string: WEBHOOK_TEST_URL_TWO)
         URLProtocolMock.testURLs = [
             url: Data(MESSAGE_SERIALIZED.utf8),

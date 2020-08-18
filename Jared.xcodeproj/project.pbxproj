@@ -53,6 +53,7 @@
 		B36C8D7F24EA655900C00A99 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36C8D7E24EA655900C00A99 /* Configuration.swift */; };
 		B375A65921EB14470073F09F /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B375A65821EB14470073F09F /* AboutViewController.swift */; };
 		B37E82821FA85B210069E15D /* SendTextSingleBuddy.scpt in Resources */ = {isa = PBXBuildFile; fileRef = B37E82811FA85B210069E15D /* SendTextSingleBuddy.scpt */; };
+		B38BB6AD24EB99BE000700F7 /* Webhook.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B7E52824EA579600A3FBD1 /* Webhook.swift */; };
 		B39A65E01CC1FB1B003E26B0 /* PluginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39A65DF1CC1FB1B003E26B0 /* PluginManager.swift */; };
 		B39F2B391CB3BCA700C0D35C /* SendText.scpt in Resources */ = {isa = PBXBuildFile; fileRef = B39F2B381CB3BCA700C0D35C /* SendText.scpt */; };
 		B3A4C61423B867E300B7F009 /* MessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A4C61323B867E300B7F009 /* MessageRequest.swift */; };
@@ -836,6 +837,7 @@
 				B347A4AD24DD170C00E93657 /* ActionTest.swift in Sources */,
 				B36710E224DFB5EC00DA1C5D /* JaredMock.swift in Sources */,
 				B3B844C224D8FA7D00DC162A /* DatabaseTestHelper.swift in Sources */,
+				B38BB6AD24EB99BE000700F7 /* Webhook.swift in Sources */,
 				B3B844BA24D77A4900DC162A /* SendStyleTest.swift in Sources */,
 				B3327DD8220682ED009DD882 /* WebhookTests.swift in Sources */,
 				B3EF1DB02206E4EB00953DE7 /* MessageTests.swift in Sources */,
