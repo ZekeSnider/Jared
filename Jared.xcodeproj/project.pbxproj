@@ -17,7 +17,6 @@
 		7FF077EB1CBCFFCB008E33CB /* SendImage.scpt in Resources */ = {isa = PBXBuildFile; fileRef = 7FF077EA1CBCFFCB008E33CB /* SendImage.scpt */; };
 		B30578D324F1927D00C43037 /* ConfigurationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30578D224F1927D00C43037 /* ConfigurationHelper.swift */; };
 		B30578D424F1927D00C43037 /* ConfigurationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30578D224F1927D00C43037 /* ConfigurationHelper.swift */; };
-		B30F765624C5742800ADF57B /* SendTextUI.scpt in Resources */ = {isa = PBXBuildFile; fileRef = B30F765424C5740800ADF57B /* SendTextUI.scpt */; };
 		B319235724DD311B001904BA /* InternalModuleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B319235624DD311B001904BA /* InternalModuleTest.swift */; };
 		B319235824DD319D001904BA /* InternalModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BF17C3244EBF4900CC44C5 /* InternalModule.swift */; };
 		B319236224DE76A2001904BA /* JaredUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B319236124DE76A2001904BA /* JaredUITests.swift */; };
@@ -160,7 +159,6 @@
 		7FF077EA1CBCFFCB008E33CB /* SendImage.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = SendImage.scpt; sourceTree = "<group>"; };
 		8490C38E773007C8CC882DCB /* Pods-Jared.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Jared.release.xcconfig"; path = "Pods/Target Support Files/Pods-Jared/Pods-Jared.release.xcconfig"; sourceTree = "<group>"; };
 		B30578D224F1927D00C43037 /* ConfigurationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationHelper.swift; sourceTree = "<group>"; };
-		B30F765424C5740800ADF57B /* SendTextUI.scpt */ = {isa = PBXFileReference; lastKnownFileType = text; path = SendTextUI.scpt; sourceTree = "<group>"; };
 		B30F765724C574FD00ADF57B /* JaredRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = JaredRelease.entitlements; sourceTree = "<group>"; };
 		B319235624DD311B001904BA /* InternalModuleTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternalModuleTest.swift; sourceTree = "<group>"; };
 		B319235F24DE76A2001904BA /* JaredUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JaredUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -420,7 +418,6 @@
 				7FF077EA1CBCFFCB008E33CB /* SendImage.scpt */,
 				B37E82801FA85B170069E15D /* SendImageSingleBuddy.scpt */,
 				B39F2B381CB3BCA700C0D35C /* SendText.scpt */,
-				B30F765424C5740800ADF57B /* SendTextUI.scpt */,
 				B37E82811FA85B210069E15D /* SendTextSingleBuddy.scpt */,
 				B361EEBA1F1DE24C0041113C /* config.json */,
 				B3EF1DA92206E09B00953DE7 /* Jared.swift */,
@@ -646,7 +643,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B369509524DF224D0027CB1E /* SendImageSingleBuddy.scpt in Resources */,
-				B30F765624C5742800ADF57B /* SendTextUI.scpt in Resources */,
 				B369509424DE963D0027CB1E /* Configuration.plist in Resources */,
 				7F84B62E1CC511B80059A82B /* Localizable.strings in Resources */,
 				B39F2B391CB3BCA700C0D35C /* SendText.scpt in Resources */,
