@@ -3,16 +3,15 @@
 [![Swift 5.0](https://img.shields.io/badge/Swift-5.0-orange.svg?style=flat)](https://developer.apple.com/swift/)
 
 <a name='Jared'/>
-
-# Jared - A Chat Bot for iMessage
+![Jared - An iMessage chat bot](/Documentation/Screenshots/JaredBanner.png)
 
 <a name='Download'/>
 
 ## Download Links  
-Please check out the latest [release](https://github.com/ZekeSnider/Jared/releases/latest) page an up to date download.
+Please check out the latest [release](https://github.com/ZekeSnider/Jared/releases/latest) page for an up to date download.
 
 ## What is Jared?  
-A powerful and easily extensible iMessage bot. It makes it possible to add chat bot features to any iMessage conversation. It currently includes some basic scheduling commands built in. API integrations, games, custom emotes, and much more can be added by installing plug-ins. 
+A powerful and easily extensible iMessage bot. It makes it possible to add chat bot features to any iMessage conversation. It includes some basic commands built in. API integrations, games, custom emotes, and much more can be added by installing plug-ins. 
 
 Any pull requests and new GitHub issues are much appreciated! If you would like to develop a plugin for Jared, see the plugin section below. I'm always available on [Twitter](https://twitter.com/zekesnider) if you have any ideas/suggestions.
 
@@ -52,7 +51,6 @@ If you are running macOS Catalina or later, you may see a system dialog requesti
 Once you have Jared setup you can type `/help` to get a list of commands. `/help,[command name]` will give you specific information. Use `/reload` to reload plugins.
 
 ## Commands
-
 Type `/help` in a group chat with Jared to see a full list of commands. Type `/help,"name of command here"` to get detail on that specific command. 
 
 ### Built in commands
@@ -91,4 +89,4 @@ To include JaredFramework you have 3 options:
 2. Use [Carthage](https://github.com/Carthage/Carthage)
 3. Use [CocoaPods](https://cocoapods.org) (coming soon)
 
-Take a look at the [Sample project](/SampleModule) to see how the project should be configured. The README there contains instructions for how to build a plugin. Also look at the modules in contained in the main project for examples of more complicated routings.  
+Take a look at the [Sample project](/Documentation/SampleModule) to see how the project should be configured. The README there contains instructions for how to build a plugin. Also look at the modules in contained in the main project for examples of more complicated routings.  

@@ -131,7 +131,7 @@ class ViewController: NSViewController, DiskAccessDelegate {
                 self.sendStatusImage.image = NSImage(named: NSImage.statusUnavailableName)
                 self.sendStatusButton.title = "Manage automation"
             case .notDetermined:
-                self.sendStatusLabel.stringValue = "Messages send automation permissions not set."
+                self.sendStatusLabel.stringValue = "Messages automation permissions not set."
                 self.sendStatusImage.image = NSImage(named: NSImage.statusPartiallyAvailableName)
                 self.sendStatusButton.title = "Enable automation"
             case .notRunning:
@@ -139,7 +139,7 @@ class ViewController: NSViewController, DiskAccessDelegate {
                 self.sendStatusImage.image = NSImage(named: NSImage.statusPartiallyAvailableName)
                 self.sendStatusButton.title = "Recheck"
             case .none, .unknown:
-                self.sendStatusLabel.stringValue = "Messages send automation status unkown"
+                self.sendStatusLabel.stringValue = "Messages automation status unkown"
                 self.sendStatusImage.image = NSImage(named: NSImage.statusPartiallyAvailableName)
                 self.sendStatusButton.title = "Manage automation"
             }

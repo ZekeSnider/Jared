@@ -36,11 +36,11 @@ class WebHookManager: MessageDelegate, RoutingModule {
                 break
             }
             
-            notifyRoute(message, url: webhook.url, useResponse: false)
+            notifyRoute(message, url: webhook.url)
         }
     }
     
-    public func notifyRoute(_ message: Message, url: String, useResponse: Bool) {
+    public func notifyRoute(_ message: Message, url: String) {
         guard let parsedUrl = URL(string: url) else {
             return
         }
@@ -52,7 +52,8 @@ class WebHookManager: MessageDelegate, RoutingModule {
         request.addValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
         
         urlSession.dataTask(with: request) { data, response, error in
-            guard useResponse, error == nil, let data = data else {
+            guard error == nil, let data = data, let httpResponse = response as? HTTPURLResponse,
+                httpResponse.statusCode == 200 else {
                 return
             }
             guard let decoded = try? JSONDecoder().decode(WebhookResponse.self, from: data) else {
@@ -81,7 +82,7 @@ class WebHookManager: MessageDelegate, RoutingModule {
             newHook.routes = (newHook.routes ?? []).map({ (route) -> Route in
                 var newRoute = route
                 newRoute.call = {[weak self] in
-                    self?.notifyRoute($0, url: newHook.url, useResponse: true)
+                    self?.notifyRoute($0, url: newHook.url)
                 }
                 return newRoute
             })
