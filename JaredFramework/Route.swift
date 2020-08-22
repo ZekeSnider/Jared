@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum Compare {
+public enum Compare: String, Codable {
     case startsWith
     case contains
     case `is`
@@ -16,12 +16,19 @@ public enum Compare {
     case isReaction
 }
 
-public struct Route {
+public struct Route: Decodable {
     public var name: String
     public var comparisons: [Compare: [String]]
     public var parameterSyntax: String?
     public var description: String?
     public var call: (Message) -> Void
+    
+    enum CodingKeys : String, CodingKey {
+        case name
+        case comparisons
+        case parameterSyntax
+        case description
+    }
     
     public init(name: String, comparisons:[Compare: [String]], call: @escaping (Message) -> Void) {
         self.name = name
@@ -41,10 +48,38 @@ public struct Route {
         self.description = description
         self.parameterSyntax = parameterSyntax
     }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.name = try container.decode(String.self, forKey: .name)
+        self.comparisons = try container.decode([Compare: [String]].self, forKey: .comparisons)
+        self.description = try container.decode(String.self, forKey: .description)
+        self.parameterSyntax = try container.decode(String.self, forKey: .parameterSyntax)
+        
+        self.call = { _ in }
+    }
 }
 
 public protocol RoutingModule {
     var routes: [Route] {get}
     var description: String {get}
     init(sender: MessageSender)
+}
+
+
+public extension KeyedDecodingContainer  {
+    func decode(_ type: [Compare: [String]].Type, forKey key: Key) throws -> [Compare: [String]] {
+        let stringDictionary = try self.decode([String: [String]].self, forKey: key)
+        var dictionary = [Compare: [String]]()
+
+        for (key, value) in stringDictionary {
+            guard let anEnum = Compare(rawValue: key) else {
+                let context = DecodingError.Context(codingPath: codingPath, debugDescription: "Could not parse json key to an Compare object")
+                throw DecodingError.dataCorrupted(context)
+            }
+            dictionary[anEnum] = value
+        }
+
+        return dictionary
+    }
 }

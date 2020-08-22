@@ -1,7 +1,28 @@
 {
 	"routes": {
-		"/ping": {
+		"/remote": {
 			"disabled": true
 		}
+	},
+	"webhooks": [
+		{
+			"url": "https://webhook.site/1"
+		},
+		{
+	      "url": "https://webhook.site/2",
+	      "routes": [
+	        {
+	          "name": "/hello",
+	          "description": "a test route",
+	          "parameterSyntax": "/hello",
+	          "comparisons": {
+	            "startsWith": ["/hello"]
+	          }
+	        }
+	      ]
+	    },
+	],
+	"webServer": {
+		"port": 3001
 	}
 }

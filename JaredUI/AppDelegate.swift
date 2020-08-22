@@ -12,7 +12,7 @@ import Contacts
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
     var sender: Jared
-    var router: PluginManager
+    var pluginManager: PluginManager
     var server: JaredWebServer
     var databaseHelper: DatabaseHandler!
     override init() {
@@ -22,15 +22,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             JaredConstants.contactsAccess: CNAuthorizationStatus.notDetermined.rawValue,
             JaredConstants.fullDiskAccess: true
         ])
-        let _ = PermissionsHelper.getContactsStatus()
         
-        let configurationURL = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
-            .appendingPathComponent("Jared")
-            .appendingPathComponent("config.json")
+        let config = ConfigurationHelper.getConfiguration()
         
         sender = Jared()
-        router = PluginManager(sender: sender)
-        server = JaredWebServer(sender: sender, configurationURL: configurationURL)
+        pluginManager = PluginManager(sender: sender, configuration: config, pluginDir: ConfigurationHelper.getPluginDirectory())
+        server = JaredWebServer(sender: sender, configuration: config.webServer)
         super.init()
     }
 
@@ -42,7 +39,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let messageDatabaseURL = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask)[0]
             .appendingPathComponent("Messages").appendingPathComponent("chat.db")
         let viewController = NSApplication.shared.keyWindow?.contentViewController as? ViewController
-		databaseHelper = DatabaseHandler(router: router.router, databaseLocation: messageDatabaseURL, diskAccessDelegate: viewController)
+		databaseHelper = DatabaseHandler(router: pluginManager.router, databaseLocation: messageDatabaseURL, diskAccessDelegate: viewController)
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {

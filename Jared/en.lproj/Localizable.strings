@@ -25,7 +25,7 @@
 
 /* Version */
 "versionDescription" = "Get what version Jared is running";
-"versionResponse" = "I am version 3.1 of Jared, compiled on Swift 4.0.3!";
+"versionResponse" = "I am version 1.4 of Jared, compiled on Swift 5!";
 
 /* send */
 "sendSyntax" = "/send,[number of times],[send delay],[message to send]";

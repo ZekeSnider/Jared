@@ -13,56 +13,37 @@ class PluginManager: PluginManagerDelegate {
     var FrameworkVersion: String = "J3.0.0"
     private var modules: [RoutingModule] = []
     private var bundles: [Bundle] = []
-    var supportDir: URL?
+    var pluginDir: URL
     var disabled = false
-    var routeConfig: [String: [String:AnyObject]]?
+    var config: ConfigurationFile
     var webhooks: [String]?
-    var webHookManager: WebHookManager?
+    var webHookManager: WebHookManager
     var sender: MessageSender
     public var router: Router!
     
-    init (sender: MessageSender) {
+    init (sender: MessageSender, configuration: ConfigurationFile, pluginDir: URL) {
         self.sender = sender
-        let filemanager = FileManager.default
-        let appsupport = filemanager.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
-        let supportDir = appsupport.appendingPathComponent("Jared")
-        let pluginDir = supportDir.appendingPathComponent("Plugins")
-        var webhooks: [String]?
+        self.pluginDir = pluginDir
+        self.config = configuration
         
-        try! filemanager.createDirectory(at: supportDir, withIntermediateDirectories: true, attributes: nil)
-        try! filemanager.createDirectory(at: pluginDir, withIntermediateDirectories: true, attributes: nil)
+        webHookManager = WebHookManager(webhooks: configuration.webhooks, sender: sender)
+        router = Router(pluginManager: self, messageDelegates: [webHookManager])
         
-        let configPath = supportDir.appendingPathComponent("config.json")
-        do {
-            //Copy an empty config file if the conig file does not exist
-            if !filemanager.fileExists(atPath: configPath.path) {
-                try! filemanager.copyItem(at: (Bundle.main.resourceURL?.appendingPathComponent("config.json"))!, to: configPath)
-            }
-            
-            //Read the JSON config file
-            let jsonData = try! NSData(contentsOfFile: supportDir.appendingPathComponent("config.json").path, options: .mappedIfSafe)
-            if let jsonResult = try! JSONSerialization.jsonObject(with: jsonData as Data, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String:AnyObject]
-            {
-                routeConfig = jsonResult["routes"] as? [String : [String: AnyObject]]
-                webhooks = jsonResult["webhooks"] as? [String]
-            }
-        }
-        
-        router = Router(pluginManager: self, messageDelegates: [WebHookManager(webhooks: webhooks ?? [])])
-        
-        loadPlugins(pluginDir)
+        loadPlugins()
         addInternalModules()
     }
     
     private func addInternalModules() {
         modules.append(CoreModule(sender: sender))
         modules.append(InternalModule(sender: sender, pluginManager: self))
+        modules.append(webHookManager)
     }
     
-    func loadPlugins(_ pluginDir: URL) {
+    func loadPlugins() {
         //Loop through all files in our plugin directory
         let filemanager = FileManager.default
-        let files = filemanager.enumerator(at: pluginDir, includingPropertiesForKeys: [], options: [.skipsHiddenFiles, .skipsPackageDescendants], errorHandler: nil)
+        let files = filemanager.enumerator(at: pluginDir, includingPropertiesForKeys: [],
+            options: [.skipsHiddenFiles, .skipsPackageDescendants], errorHandler: nil)
         
         while let file = files?.nextObject() as? URL {
             if let bundle = validateBundle(file) {
@@ -104,11 +85,7 @@ class PluginManager: PluginManagerDelegate {
         modules.append(module)
     }
     
-    func reload() {
-        let appsupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
-        let supportDir = appsupport.appendingPathComponent("Jared")
-        let pluginDir = supportDir.appendingPathComponent("Plugins")
-        
+    func reload() {        
         modules.removeAll()
         
         for bundle in bundles {
@@ -117,13 +94,13 @@ class PluginManager: PluginManagerDelegate {
         
         bundles.removeAll()
         
-        loadPlugins(pluginDir)
+        loadPlugins()
         addInternalModules()
     }
     
     func enabled(routeName: String) -> Bool {
-        if (routeConfig?[routeName.lowercased()]?["disabled"] as? Bool == true) {
-            return false
+        if let routeConfig = config.routes[routeName.lowercased()] {
+            return !routeConfig.disabled
         } else {
             return true
         }

@@ -64,7 +64,7 @@ class CoreModule: RoutingModule {
         
         let name = Route(name: "/name", comparisons: [.startsWith: ["/name"]], call: {[weak self] in self?.changeName($0)}, description: "Change what Jared calls you", parameterSyntax: "/name,[your preferred name]")
         
-        let schedule = Route(name: "/schedule", comparisons: [.startsWith: ["/schedule"]], call: {[weak self] in self?.schedule($0)}, description: NSLocalizedString("scheduleDescription"), parameterSyntax: "/schedule")
+        let schedule = Route(name: "/schedule", comparisons: [.startsWith: ["/schedule"]], call: {[weak self] in self?.schedule($0)}, description: NSLocalizedString("scheduleDescription"), parameterSyntax: "Must be one of these type of inputs: /schedule,add,1,Week,5,full Message\n/schedule,delete,1\n/schedule,list")
         
         let barf = Route(name: "/barf", comparisons: [.startsWith: ["/barf"]], call: {[weak self] in self?.barf($0)}, description: NSLocalizedString("barfDescription"))
         
@@ -167,7 +167,7 @@ class CoreModule: RoutingModule {
     }
     
     func schedule(_ message: Message) {
-        // /schedule,add,1,week,5,full Message
+        // /schedule,add,1,Week,5,full Message
         // /schedule,delete,1
         // /schedule,list
         guard let parameters = message.getTextBody()?.components(separatedBy: ",") else {

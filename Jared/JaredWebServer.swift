@@ -8,17 +8,15 @@ class JaredWebServer: NSObject {
     var server: Server!
     var port: Int!
     var sender: MessageSender
-    var configurationURL: URL
     
-    init(sender: MessageSender, configurationURL: URL) {
-        self.configurationURL = configurationURL
+    init(sender: MessageSender, configuration: WebserverConfiguration) {
         self.sender = sender
         super.init()
         defaults = UserDefaults.standard
         server = Server()
         server.route(.POST, "message", handleMessageRequest)
         
-        port = assignPort()
+        port = configuration.port
         
         defaults.addObserver(self, forKeyPath: JaredConstants.restApiIsDisabled, options: .new, context: nil)
         updateServerState()
@@ -27,35 +25,6 @@ class JaredWebServer: NSObject {
     deinit {
         stop()
         UserDefaults.standard.removeObserver(self, forKeyPath: JaredConstants.jaredIsDisabled)
-    }
-    
-    // Attempt to pull the port number from the config
-    func assignPort() -> Int {
-        let filemanager = FileManager.default
-        do {
-            // If config file does not exist, use default port
-            guard filemanager.fileExists(atPath: configurationURL.path) else {
-                return JaredWebServer.DEFAULT_PORT
-            }
-            
-            //Read the JSON config file
-            let jsonData = try! NSData(contentsOfFile: configurationURL.path, options: .mappedIfSafe)
-            
-            // If the JSON format is not as expected at all, use the default port
-            guard let jsonResult = ((try? JSONSerialization.jsonObject(with: jsonData as Data, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String:AnyObject]) as [String : AnyObject]??) else {
-                return JaredWebServer.DEFAULT_PORT
-            }
-            
-            guard let serverConfig = jsonResult?["webserver"] as? [String : AnyObject] else {
-                return JaredWebServer.DEFAULT_PORT
-            }
-            
-            guard let configPort = serverConfig["port"] as? NSNumber else {
-                return JaredWebServer.DEFAULT_PORT
-            }
-            
-            return Int(truncating: configPort)
-        }
     }
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
@@ -73,11 +42,11 @@ class JaredWebServer: NSObject {
         
     }
     
-    func start() {
+    public func start() {
         try? server.start(port: port)
     }
     
-    func stop() {
+    public func stop() {
         server.stop()
     }
     
