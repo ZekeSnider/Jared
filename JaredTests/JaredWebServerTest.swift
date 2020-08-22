@@ -19,9 +19,8 @@ class JaredWebServerTest: XCTestCase {
     
     override func setUp() {
         jaredMock = JaredMock()
-        let bundle = Bundle(for: type(of: self))
-        testDatabaseLocation = bundle.url(forResource: "config", withExtension: "json")
-        webServer = JaredWebServer(sender: jaredMock, configurationURL: testDatabaseLocation)
+        let configuration = WebserverConfiguration(port: 3005)
+        webServer = JaredWebServer(sender: jaredMock, configuration: configuration)
     }
     
     override func tearDown() {

@@ -74,6 +74,8 @@ class WebHookManager: MessageDelegate, RoutingModule {
     }
     
     public func updateHooks(to hooks: [Webhook]?) {
+        // Change all routes to have a callback that calls the webhook manager's
+        // notify route method
         self.webhooks = (hooks ?? []).map({ (hook) -> Webhook in
             var newHook = hook
             newHook.routes = (newHook.routes ?? []).map({ (route) -> Route in

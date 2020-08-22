@@ -8,16 +8,22 @@
 
 import Foundation
 
-class ConfigurationFile: Decodable {
+struct ConfigurationFile: Decodable {
     let routes: [String: RouteConfiguration]
     let webhooks: [Webhook]
     let webServer: WebserverConfiguration
+    
+    init() {
+        routes = [:]
+        webhooks = []
+        webServer = WebserverConfiguration(port: 3000)
+    }
 }
 
-class WebserverConfiguration: Decodable {
+struct WebserverConfiguration: Decodable {
     let port: Int
 }
 
-class RouteConfiguration: Decodable {
+struct RouteConfiguration: Decodable {
     let disabled: Bool
 }

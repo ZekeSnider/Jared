@@ -13,7 +13,7 @@ class PluginManager: PluginManagerDelegate {
     var FrameworkVersion: String = "J3.0.0"
     private var modules: [RoutingModule] = []
     private var bundles: [Bundle] = []
-    var supportDir: URL?
+    var pluginDir: URL
     var disabled = false
     var config: ConfigurationFile
     var webhooks: [String]?
@@ -21,40 +21,17 @@ class PluginManager: PluginManagerDelegate {
     var sender: MessageSender
     public var router: Router!
     
-    init (sender: MessageSender) {
+    init (sender: MessageSender, configuration: ConfigurationFile, pluginDir: URL) {
         self.sender = sender
-        let filemanager = FileManager.default
-        let appsupport = filemanager.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
-        let supportDir = appsupport.appendingPathComponent("Jared")
-        let pluginDir = supportDir.appendingPathComponent("Plugins")
+        self.pluginDir = pluginDir
+        self.config = configuration
         
-        try! filemanager.createDirectory(at: supportDir, withIntermediateDirectories: true, attributes: nil)
-        try! filemanager.createDirectory(at: pluginDir, withIntermediateDirectories: true, attributes: nil)
-        
-        let configPath = supportDir.appendingPathComponent("config.json")
-        do {
-            PluginManager.createConfigFileIfNotExists(at: configPath, using: filemanager)
-            
-            //Read the JSON config file
-            let jsonData = try! NSData(contentsOfFile: supportDir.appendingPathComponent("config.json").path, options: .mappedIfSafe)
-            self.config = try! JSONDecoder().decode(ConfigurationFile.self, from: jsonData as Data)
-        }
-        
-        webHookManager = WebHookManager(webhooks: config.webhooks, sender: sender)
+        webHookManager = WebHookManager(webhooks: configuration.webhooks, sender: sender)
         router = Router(pluginManager: self, messageDelegates: [webHookManager])
         
-        loadPlugins(pluginDir)
+        loadPlugins()
         addInternalModules()
     }
-    
-    //Copy an empty config file if the conig file does not exist
-    private static func createConfigFileIfNotExists(at path: URL, using fileManager: FileManager) {
-        //Copy an empty config file if the conig file does not exist
-        if !fileManager.fileExists(atPath: path.path) {
-            try! fileManager.copyItem(at: (Bundle.main.resourceURL?.appendingPathComponent("config.json"))!, to: path)
-        }
-    }
-    
     
     private func addInternalModules() {
         modules.append(CoreModule(sender: sender))
@@ -62,7 +39,7 @@ class PluginManager: PluginManagerDelegate {
         modules.append(webHookManager)
     }
     
-    func loadPlugins(_ pluginDir: URL) {
+    func loadPlugins() {
         //Loop through all files in our plugin directory
         let filemanager = FileManager.default
         let files = filemanager.enumerator(at: pluginDir, includingPropertiesForKeys: [],
@@ -108,11 +85,7 @@ class PluginManager: PluginManagerDelegate {
         modules.append(module)
     }
     
-    func reload() {
-        let appsupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
-        let supportDir = appsupport.appendingPathComponent("Jared")
-        let pluginDir = supportDir.appendingPathComponent("Plugins")
-        
+    func reload() {        
         modules.removeAll()
         
         for bundle in bundles {
@@ -121,7 +94,7 @@ class PluginManager: PluginManagerDelegate {
         
         bundles.removeAll()
         
-        loadPlugins(pluginDir)
+        loadPlugins()
         addInternalModules()
     }
     
