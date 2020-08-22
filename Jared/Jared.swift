@@ -45,14 +45,10 @@ public class Jared: MessageSender {
             var scriptPath: String?
             let body = textBody.message
             
-            if #available(OSX 10.16, *) {
-                scriptPath = Bundle.main.url(forResource: "SendTextUI", withExtension: "scpt")?.path
+            if message.recipient.handle.contains(";+;") {
+                scriptPath = Bundle.main.url(forResource: "SendText", withExtension: "scpt")?.path
             } else {
-                if message.recipient.handle.contains(";+;") {
-                    scriptPath = Bundle.main.url(forResource: "SendText", withExtension: "scpt")?.path
-                } else {
-                    scriptPath = Bundle.main.url(forResource: "SendTextSingleBuddy", withExtension: "scpt")?.path
-                }
+                scriptPath = Bundle.main.url(forResource: "SendTextSingleBuddy", withExtension: "scpt")?.path
             }
             
             queue.addOperation {
