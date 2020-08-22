@@ -3,7 +3,7 @@
 ## Configuration
 To add webhooks, add their URLs to `config.json`'s `webhooks` key. You can define two types of webhooks:
 1. Route webhook  
-This is a webhook that is only called for messages that match specific routes defined.
+This is a webhook that is only called for messages that match specific routes defined. For more information, see the [routes documentation](routes.md).
 2. Global webhook  
 This is a webhook that is called for every single message sent or received.
 
@@ -40,6 +40,8 @@ When a webhook is triggered, The body of the POST request is in the following fo
   "body": {
     "message": "Jared is an amazing app"
   },
+  "sendStyle": "regular",
+  "attachments": [],
   "recipient": {
     "handle": "+14256667777",
     "givenName": "Zeke",
@@ -50,7 +52,8 @@ When a webhook is triggered, The body of the POST request is in the following fo
     "givenName": "Taylor",
     "isMe": false
   },
-  "date": "2019-02-03T22:05:05.000Z"
+  "date": "2019-02-03T22:05:05.000Z",
+  "guid": "EA123B39-7A45-40D9-BF04-A748B3148695"
 }
 ```
 
@@ -60,6 +63,8 @@ When a webhook is triggered, The body of the POST request is in the following fo
   "body": {
     "message": "bloodline is the best song on thank u next"
   },
+  "sendStyle": "regular",
+  "attachments": [],
   "recipient": {
     "handle": "ariana@grande.com",
     "givenName": "Ariana",
@@ -70,7 +75,8 @@ When a webhook is triggered, The body of the POST request is in the following fo
     "givenName": "Zeke",
     "isMe": true
   },
-  "date": "2019-02-03T22:05:05.000Z"
+  "date": "2019-02-03T22:05:05.000Z",
+  "guid": "EA123B39-7A45-40D9-BF04-A748B3148614"
 }
 ```
 
@@ -134,8 +140,41 @@ When a webhook is triggered, The body of the POST request is in the following fo
 }
 ```
 
+*incoming group message*
+```
+{
+  "sender": {
+    "handle": "handle@icloud.com",
+    "givenName": "Jared",
+    "isMe": false
+  },
+  "sendStyle": "regular",
+  "date": "2020-08-22T19:59:13.000Z",
+  "attachments": [],
+  "recipient": {
+    "name": "Testing Room",
+    "handle": "iMessage;+;chat123456789999111888",
+    "participants": [
+      {
+        "handle": "handle@icloud.com",
+        "givenName": "Name",
+        "isMe": false
+      },
+      {
+        "handle": "handle2@gmail.com",
+        "isMe": false
+      }
+    ]
+  },
+  "body": {
+    "message": "Hi"
+  },
+  "guid": "760B85F7-122D-42A5-ACE0-44F44150BF04"
+}
+```
+
 ## Webhook Responses
-When called, Jared will wait for 10 seconds for a response from the webhook endpoint. If a response is received in time, Jared will then respond to the triggering message with the content of the webhook response. The response must have a `200` http status code, and be in the following format:
+When called, Jared will wait for 10 seconds for a response from the webhook endpoint. If a response is received in time, Jared will then respond to the triggering message with the content of the webhook response. The response must have a `200` HTTP status code, and be in the following format:
 ```
 {
   "success": true,
