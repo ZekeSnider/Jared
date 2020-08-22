@@ -61,7 +61,7 @@ When a webhook is triggered, The body of the POST request is in the following fo
 ```
 {
   "body": {
-    "message": "bloodline is the best song on thank u next"
+    "message": "thank u next"
   },
   "sendStyle": "regular",
   "attachments": [],
@@ -99,7 +99,7 @@ When a webhook is triggered, The body of the POST request is in the following fo
     }
   ],
   "recipient": {
-    "handle": "handle@icloud.com",
+    "handle": "friend@icloud.com",
     "isMe": false
   },
   "body": {
@@ -134,7 +134,7 @@ When a webhook is triggered, The body of the POST request is in the following fo
     ]
   },
   "body": {
-    "message": "!"
+    "message": "Don't take the money"
   },
   "guid": "441F4CA4-22C3-44DC-9E2A-6A23C44D61F1"
 }
@@ -156,8 +156,8 @@ When a webhook is triggered, The body of the POST request is in the following fo
     "handle": "iMessage;+;chat123456789999111888",
     "participants": [
       {
-        "handle": "handle@icloud.com",
-        "givenName": "Name",
+        "handle": "friend@icloud.com",
+        "givenName": "Betty",
         "isMe": false
       },
       {
@@ -167,7 +167,7 @@ When a webhook is triggered, The body of the POST request is in the following fo
     ]
   },
   "body": {
-    "message": "Hi"
+    "message": "We can talk it so good"
   },
   "guid": "760B85F7-122D-42A5-ACE0-44F44150BF04"
 }
@@ -179,7 +179,7 @@ When called, Jared will wait for 10 seconds for a response from the webhook endp
 {
   "success": true,
   "body": { 
-    "message": "hello" 
+    "message": "We're on each other's team" 
   }
 }
 ```

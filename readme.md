@@ -84,6 +84,6 @@ Jared supports webhooks for sending your server information about incoming and o
 Jared contains a web server with a REST API that can be enabled. This allows you make HTTP requests to send messages to any recipient. For more information, [check out the REST API documentation](Documentation/restapi.md).
 
 ## How Jared works  
-Jared reads from the Messages database on a set interval and queries for new messages. It provides a routing framework for actioning on messages, and uses AppleScript to send outgoing messages. It's also multi-threaded so it can take care of multiple requests at once. Jared allows expansion via `.bundle` plugin files. This allows commands to be added without modifying the main Jared code base. 
+Jared reads from the Messages database on a set interval and queries for new messages. It provides a routing framework for actioning on messages, and uses AppleScript to send outgoing messages. It's also multi-threaded so it can take care of multiple requests at once. Jared allows expansion via `.bundle` plugin files, webhooks, and a REST API. This allows commands to be added without modifying the main Jared code base. 
 
 I've tried using private APIs such as MessagesKit to send/receive messages to no avail so far. If you have any leads on this front I'd love to hear about it. 

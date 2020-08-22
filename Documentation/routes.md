@@ -29,7 +29,6 @@ The following is an example configuration of one of Jared's built in routes, `/s
 	}
 	"parameterSyntax": "/send,[number of times],[send delay],[message to send]",
 	"description": "Send a message repeatedly"
-
 }
 ```
 
