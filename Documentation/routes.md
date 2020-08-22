@@ -4,7 +4,7 @@ By using either native plugins, or a webhook configuration, you can define route
 
 ## Parameters
 
-`name`: A string for the name of the route. This must be globally unique.
+`name`: A string for the name of the route. This must be globally unique.  
 `comparisons`: A dictionary of `[Comapare: [String]]` that defines triggers for your route. The following is a list of `Compare` types:
 
 + `startsWith`: String starts with

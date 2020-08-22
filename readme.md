@@ -12,9 +12,9 @@
 Please check out the [release](https://github.com/ZekeSnider/Jared/releases/latest) page for an up to date pre-compiled download.
 
 ## What is Jared?  
-![Jared usage screenshot](/Documentation/Screenshots/Example.png)
-
 A powerful and easily extensible iMessage bot. It makes it possible to add chat bot features to any iMessage conversation. It includes some basic commands built in. API integrations, games, custom emotes, and much more can be added by using webhooks, the REST API, or by installing plugins. 
+
+![Jared usage screenshot](/Documentation/Screenshots/Example.png)
 
 Any pull requests and new GitHub issues are much appreciated! If you would like to develop a plugin for Jared, see the plugin section below. I'm always available on [Twitter](https://twitter.com/zekesnider) if you have any ideas/suggestions.
 
