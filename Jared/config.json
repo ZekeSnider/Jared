@@ -1,9 +1,9 @@
 {
-	"routes": {
-	},
+    "routes": {
+    },
     "webhooks": [
     ],
-    "webserver": {
+    "webServer": {
         "port": 3005
     }
 }
