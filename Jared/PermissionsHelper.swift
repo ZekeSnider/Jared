@@ -15,7 +15,12 @@ class PermissionsHelper {
     }
     
     static func canSendMessages(shouldPrompt: Bool = false) -> AutomationPermissionState {
-        let target = NSAppleEventDescriptor(bundleIdentifier: "com.apple.iChat")
+        let target: NSAppleEventDescriptor
+        if #available(OSX 11.0, *) {
+            target = NSAppleEventDescriptor(bundleIdentifier: "com.apple.MobileSMS")
+        } else {
+            target = NSAppleEventDescriptor(bundleIdentifier: "com.apple.iChat")
+        }
         if #available(OSX 10.14, *) {
             let permission = AEDeterminePermissionToAutomateTarget(target.aeDesc, typeWildCard, typeWildCard, shouldPrompt)
             var permissionEnum: AutomationPermissionState
