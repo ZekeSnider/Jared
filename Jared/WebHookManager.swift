@@ -41,7 +41,10 @@ class WebHookManager: MessageDelegate, RoutingModule {
     }
     
     public func notifyRoute(_ message: Message, url: String) {
+        NSLog("Notifying \(url) of new message event")
+        
         guard let parsedUrl = URL(string: url) else {
+            NSLog("Unable to parse URL for webhook \(url)")
             return
         }
         let webhookBody = WebHookManager.createWebhookBody(message)
@@ -54,6 +57,7 @@ class WebHookManager: MessageDelegate, RoutingModule {
         urlSession.dataTask(with: request) { data, response, error in
             guard error == nil, let data = data, let httpResponse = response as? HTTPURLResponse,
                 httpResponse.statusCode == 200 else {
+                NSLog("Received error while requesting webhook \(error.debugDescription)")
                 return
             }
             guard let decoded = try? JSONDecoder().decode(WebhookResponse.self, from: data) else {
@@ -91,6 +95,7 @@ class WebHookManager: MessageDelegate, RoutingModule {
         })
         
         self.routes = self.webhooks.flatMap({ $0.routes ?? [] })
+        NSLog("Webhooks updated to: \(self.webhooks.map{ $0.url }.joined(separator: ", "))")
     }
 
     static private func createWebhookBody(_ message: Message) -> Data? {
