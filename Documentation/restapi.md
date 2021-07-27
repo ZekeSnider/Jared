@@ -17,3 +17,18 @@ This allows you to send text messages to any Person or Group. You will receive a
   }
 }
 ```
+
+You may also specify attachments (such as images) to send. Simply specify file paths in the attachments array of the request body. Note that the file path specified must be accessible by the user that Jared is running under.
+
+```
+{
+  "attachments": [
+    {
+      "filePath": "/Users/username/Pictures/funnyimage.jpeg"
+    }
+  ],
+  "recipient": {
+    "handle": "handle@email.com"
+  }
+}
+```
