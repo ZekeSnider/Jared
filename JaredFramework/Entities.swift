@@ -27,7 +27,7 @@ public struct AbstractRecipient: RecipientEntity, Codable, Equatable {
     }
     
     public func getSpecificEntity() -> RecipientEntity {
-        if handle.contains(";-;") {
+        if handle.contains(";+;") {
             return Group(name: nil, handle: handle, participants: [])
         } else {
             return Person(handle: handle)
