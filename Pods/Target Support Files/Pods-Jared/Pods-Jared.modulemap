@@ -1,6 +1,0 @@
-framework module Pods_Jared {
-  umbrella header "Pods-Jared-umbrella.h"
-
-  export *
-  module * { export * }
-}
