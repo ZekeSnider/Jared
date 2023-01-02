@@ -19,6 +19,24 @@ Send iMessage messages to any Person or Group. You will receive a `200 OK` statu
 }
 ```
 
+You can also send group messages by using the Group Chat's GUID. The GUID can by either:
+
+1. Inspecting [webhook](webhooks.md) content.
+2. Using the /barf command
+3. Inspecting the chat database located at `~/Library/Messages/chat.db` using a SQLite database viewer.
+
+
+```
+{
+  "body": {
+    "message": "This is a group chat message."
+  },
+  "recipient": {
+    "handle": "iMessage;+;chat100000000000",
+  }
+}
+```
+
 You may also specify attachments (such as images) to send. Simply specify file paths in the attachments array of the request body. Note that the file path specified must be accessible by the user that Jared is running under.
 
 ```

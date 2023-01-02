@@ -45,7 +45,7 @@ public class Jared: MessageSender {
             var scriptPath: String?
             let body = textBody.message
             
-            if message.recipient.handle.contains(";+;") {
+            if message.recipient.isGroupHandle() {
                 scriptPath = Bundle.main.url(forResource: "SendText", withExtension: "scpt")?.path
             } else {
                 scriptPath = Bundle.main.url(forResource: "SendTextSingleBuddy", withExtension: "scpt")?.path
@@ -59,7 +59,7 @@ public class Jared: MessageSender {
         if let attachments = message.attachments {
             var scriptPath: String?
             
-            if message.recipient.handle.contains(";+;") {
+            if message.recipient.isGroupHandle() {
                 scriptPath = Bundle.main.url(forResource: "SendImage", withExtension: "scpt")?.path
             } else {
                 scriptPath = Bundle.main.url(forResource: "SendImageSingleBuddy", withExtension: "scpt")?.path

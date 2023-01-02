@@ -8,11 +8,19 @@
 
 import Foundation
 
-public protocol RecipientEntity: Codable {
+public protocol Entity: Codable {
     var handle: String {get set}
 }
-public protocol SenderEntity: Codable {
-    var handle: String {get set}
+
+extension Entity {
+    public func isGroupHandle() -> Bool {
+        return handle.contains(";+;") || handle.contains(";-;")
+    }
+}
+
+public protocol RecipientEntity: Entity, Codable {
+}
+public protocol SenderEntity: Entity, Codable {
     var givenName: String? {get set}
 }
 
@@ -27,7 +35,7 @@ public struct AbstractRecipient: RecipientEntity, Codable, Equatable {
     }
     
     public func getSpecificEntity() -> RecipientEntity {
-        if handle.contains(";+;") {
+        if isGroupHandle() {
             return Group(name: nil, handle: handle, participants: [])
         } else {
             return Person(handle: handle)

@@ -1,5 +1,7 @@
 # Webhooks
 
+Jared provides a webhook API which allows you to be notified of messages being sent/received. You can reply inline to the webhook requests to respond, or make separate requests to the [REST API](restapi.md). You can use a site like https://webhook.site/ to debug and view webhook content.
+
 ## Configuration
 To add webhooks, add their URLs to `config.json`'s `webhooks` key. You can define two types of webhooks:
 1. Route webhook  
