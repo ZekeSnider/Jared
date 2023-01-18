@@ -47,7 +47,7 @@ If you wish to use the REST API, you will need to enable it. If you have a firew
 ## Built in commands
 For reference, here is a list of the commands built in to Jared. Because functionality can be added with plugins, the built in functionality is kept light.
 
-+ `/help`: Lists all commands. `/help,[command name]` will give you information on a specific route.
++ `/help`: Lists all commands. `/help [command name]` will give you information on a specific route.
 + `/reload`: Reload plugins
 + `/enable`: Enables Jared
 + `/disable`: Disables Jared
